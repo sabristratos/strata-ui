@@ -25,7 +25,7 @@ A comprehensive Laravel Blade component library built with Tailwind CSS v4, Alpi
 ### 1. Install the Package
 
 ```bash
-composer require strata/ui
+composer require stratosdigital/strata-ui
 ```
 
 ### 2. Publish Assets (Optional)
@@ -66,7 +66,7 @@ Add Strata UI paths to your CSS file using Tailwind v4's `@source` directive:
 @import "tailwindcss";
 
 /* Add Strata UI template paths */
-@source "../../vendor/strata/ui/resources/views/**/*.blade.php";
+@source "../../vendor/stratosdigital/strata-ui/resources/views/**/*.blade.php";
 ```
 
 ### 5. Import Strata Theme (Optional)
@@ -78,10 +78,10 @@ If you want to use Strata's design system, import the theme in your main CSS fil
 @import "tailwindcss";
 
 /* Add Strata UI template paths */
-@source "../../vendor/strata/ui/resources/views/**/*.blade.php";
+@source "../../vendor/stratosdigital/strata-ui/resources/views/**/*.blade.php";
 
 /* Import Strata UI theme (optional) */
-@import "../../vendor/strata/ui/resources/css/strata-theme.css";
+@import "../../vendor/stratosdigital/strata-ui/resources/css/strata-theme.css";
 ```
 
 ## Basic Usage

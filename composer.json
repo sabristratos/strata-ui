@@ -1,19 +1,19 @@
 {
-    "name": "strata/ui",
+    "name": "stratosdigital/strata-ui",
     "description": "A comprehensive Laravel Blade component library built with Tailwind CSS v4, Alpine.js, and full Livewire integration",
     "keywords": ["laravel", "blade", "components", "ui", "tailwindcss", "alpinejs", "livewire"],
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Strata Team",
-            "email": "hello@strata-ui.com"
+            "name": "Sabri Ben Chaabane",
+            "email": "sabri@stratosdigital.io"
         }
     ],
-    "homepage": "https://github.com/strata-ui/ui",
+    "homepage": "https://github.com/sabristratos/strata-ui",
     "support": {
-        "issues": "https://github.com/strata-ui/ui/issues",
-        "source": "https://github.com/strata-ui/ui"
+        "issues": "https://github.com/sabristratos/strata-ui/issues",
+        "source": "https://github.com/sabristratos/strata-ui"
     },
     "require": {
         "php": "^8.2",
