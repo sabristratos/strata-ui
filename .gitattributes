@@ -1,0 +1,44 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# PHP files
+*.php text eol=lf
+
+# JavaScript files
+*.js text eol=lf
+*.json text eol=lf
+
+# CSS files
+*.css text eol=lf
+
+# Blade templates
+*.blade.php text eol=lf
+
+# Documentation
+*.md text eol=lf
+
+# Configuration
+*.xml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Exclude development files from package exports
+/.github export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/node_modules export-ignore
+/tests export-ignore
+/.editorconfig export-ignore
+/phpunit.xml export-ignore
+/vite.config.js export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/DEVELOPMENT.md export-ignore
+/vendor export-ignore
+/.env.example export-ignore
+
+# Always include compiled assets in distribution
+/resources/dist/* -export-ignore
+
+# Language files for different systems
+*.po diff=php

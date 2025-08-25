@@ -1,0 +1,61 @@
+{
+    "name": "strata/ui",
+    "description": "A comprehensive Laravel Blade component library built with Tailwind CSS v4, Alpine.js, and full Livewire integration",
+    "keywords": ["laravel", "blade", "components", "ui", "tailwindcss", "alpinejs", "livewire"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Strata Team",
+            "email": "hello@strata-ui.com"
+        }
+    ],
+    "homepage": "https://github.com/strata-ui/ui",
+    "support": {
+        "issues": "https://github.com/strata-ui/ui/issues",
+        "source": "https://github.com/strata-ui/ui"
+    },
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^11.0|^12.0",
+        "illuminate/support": "^11.0|^12.0",
+        "blade-ui-kit/blade-icons": "^1.5",
+        "blade-ui-kit/blade-heroicons": "^2.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.0",
+        "orchestra/testbench": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Strata\\UI\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Strata\\UI\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Strata\\UI\\StrataServiceProvider"
+            ],
+            "aliases": {
+                "Strata": "Strata\\UI\\Facades\\Strata"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage"
+    }
+}

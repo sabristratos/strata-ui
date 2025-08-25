@@ -1,0 +1,349 @@
+:root {
+    /* ----------------------------------------- */
+    /* Color Palette               */
+    /* ----------------------------------------- */
+    --slate-0: oklch(1.0000 0 0); /* White */
+    --slate-50: oklch(0.9777 0.0041 301.4256);
+    --slate-100: oklch(0.9554 0.0082 301.3541);
+    --slate-200: oklch(0.9329 0.0124 301.2783);
+    --slate-300: oklch(0.8957 0.0265 300.2416);
+    --slate-400: oklch(0.8719 0.0198 302.1690);
+    --slate-500: oklch(0.8447 0.0226 300.1421);
+    --slate-600: oklch(0.5288 0.0375 290.7895);
+    --slate-900: oklch(0.3651 0.0325 287.0807);
+
+    --primary-500: oklch(0.6104 0.0767 299.7335);
+    --accent-500: oklch(0.7889 0.0802 359.9375);
+    --accent-900: oklch(0.3394 0.0441 1.7583);
+    --destructive-500: oklch(0.6332 0.1578 22.6734);
+
+    --teal-500: oklch(0.7321 0.0749 169.8670);
+    --yellow-500: oklch(0.8540 0.0882 76.8292);
+    --yellow-600: oklch(0.7540 0.0982 76.8292);
+    --indigo-500: oklch(0.7857 0.0645 258.0839);
+
+    /* ----------------------------------------- */
+    /* Semantic Variables            */
+    /* ----------------------------------------- */
+    --background: var(--slate-50);
+    --foreground: var(--slate-900);
+    --card: var(--slate-0);
+    --card-foreground: var(--slate-900);
+    --popover: var(--slate-0);
+    --popover-foreground: var(--slate-900);
+    --primary: var(--primary-500);
+    --primary-foreground: var(--slate-50);
+    --secondary: var(--slate-300);
+    --secondary-foreground: var(--slate-900);
+    --muted: var(--slate-300);
+    --muted-foreground: var(--slate-600);
+    --accent: var(--accent-500);
+    --accent-foreground: var(--accent-900);
+    --destructive: var(--destructive-500);
+    --destructive-foreground: var(--slate-50);
+    --border: var(--slate-500);
+    --input: var(--slate-200);
+    --ring: var(--primary-500);
+    
+    /* Rating Colors */
+    --rating-star: var(--yellow-600);
+    --rating-star-foreground: var(--slate-950);
+
+    /* Chart Colors */
+    --chart-1: var(--primary-500);
+    --chart-2: var(--accent-500);
+    --chart-3: var(--teal-500);
+    --chart-4: var(--yellow-500);
+    --chart-5: var(--indigo-500);
+
+    /* Sidebar */
+    --sidebar: var(--slate-100);
+    --sidebar-foreground: var(--slate-900);
+    --sidebar-primary: var(--primary-500);
+    --sidebar-primary-foreground: var(--slate-50);
+    --sidebar-accent: var(--accent-500);
+    --sidebar-accent-foreground: var(--accent-900);
+    --sidebar-border: var(--slate-400);
+    --sidebar-ring: var(--primary-500);
+
+    /* ----------------------------------------- */
+    /* Other Variables             */
+    /* ----------------------------------------- */
+    --font-sans: Geist, sans-serif;
+    --font-serif: "Lora", Georgia, serif;
+    --font-mono: "Fira Code", "Courier New", monospace;
+    --radius: 0.5rem;
+    --shadow-2xs: 1px 2px 5px 1px hsl(0 0% 0% / 0.03);
+    --shadow-xs: 1px 2px 5px 1px hsl(0 0% 0% / 0.03);
+    --shadow-sm: 1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 1px 2px 0px hsl(0 0% 0% / 0.06);
+    --shadow: 1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 1px 2px 0px hsl(0 0% 0% / 0.06);
+    --shadow-md: 1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 2px 4px 0px hsl(0 0% 0% / 0.06);
+    --shadow-lg: 1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 4px 6px 0px hsl(0 0% 0% / 0.06);
+    --shadow-xl: 1px 2px 5px 1px hsl(0 0% 0% / 0.06), 1px 8px 10px 0px hsl(0 0% 0% / 0.06);
+    --shadow-2xl: 1px 2px 5px 1px hsl(0 0% 0% / 0.15);
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+}
+
+.dark {
+    /* ----------------------------------------- */
+    /* Dark Mode Palette              */
+    /* ----------------------------------------- */
+    --slate-50: oklch(0.9053 0.0245 293.5570); /* Lightest Text */
+    --slate-400: oklch(0.6974 0.0282 300.0614);
+    --slate-600: oklch(0.4604 0.0472 295.5578);
+    --slate-700: oklch(0.3063 0.0359 293.3367);
+    --slate-800: oklch(0.2847 0.0346 291.2726);
+    --slate-850: oklch(0.2560 0.0320 294.8380);
+    --slate-900: oklch(0.2544 0.0301 292.7315);
+    --slate-950: oklch(0.2166 0.0215 292.8474); /* Darkest Background */
+    --slate-1000: oklch(0.1985 0.0200 293.6639); /* Sidebar */
+
+    --primary-500: oklch(0.7058 0.0777 302.0489);
+    --accent-500: oklch(0.3181 0.0321 308.6149);
+    --accent-900: oklch(0.8391 0.0692 2.6681);
+    --destructive-500: oklch(0.6875 0.1420 21.4566);
+
+    /* ----------------------------------------- */
+    /* Dark Mode Semantic Mapping        */
+    /* ----------------------------------------- */
+    --background: var(--slate-950);
+    --foreground: var(--slate-50);
+    --card: var(--slate-900);
+    --card-foreground: var(--slate-50);
+    --popover: var(--slate-900);
+    --popover-foreground: var(--slate-50);
+    --primary: var(--primary-500);
+    --primary-foreground: var(--slate-950);
+    --secondary: var(--slate-600);
+    --secondary-foreground: var(--slate-50);
+    --muted: var(--slate-850);
+    --muted-foreground: var(--slate-400);
+    --accent: var(--accent-500);
+    --accent-foreground: var(--accent-900);
+    --destructive: var(--destructive-500);
+    --destructive-foreground: var(--slate-950);
+    --border: var(--slate-700);
+    --input: var(--slate-800);
+    --ring: var(--primary-500);
+    
+    /* Rating Colors */
+    --rating-star: var(--yellow-500);
+    --rating-star-foreground: var(--slate-950);
+
+    /* Chart Colors */
+    --chart-2: var(--accent-900); /* Remap chart-2 to the lighter accent for dark mode */
+
+    /* Sidebar */
+    --sidebar: var(--slate-1000);
+    --sidebar-foreground: var(--slate-50);
+    --sidebar-primary: var(--primary-500);
+    --sidebar-primary-foreground: var(--slate-950);
+    --sidebar-accent: var(--accent-500);
+    --sidebar-accent-foreground: var(--accent-900);
+    --sidebar-border: var(--slate-800);
+    --sidebar-ring: var(--primary-500);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-rating-star: var(--rating-star);
+    --color-rating-star-foreground: var(--rating-star-foreground);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+
+    --font-sans: var(--font-sans);
+    --font-mono: var(--font-mono);
+    --font-serif: var(--font-serif);
+
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+
+    --shadow-2xs: var(--shadow-2xs);
+    --shadow-xs: var(--shadow-xs);
+    --shadow-sm: var(--shadow-sm);
+    --shadow: var(--shadow);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
+    --shadow-2xl: var(--shadow-2xl);
+}
+
+/* ----------------------------------------- */
+/* Typography Defaults                      */
+/* ----------------------------------------- */
+@layer base {
+    /* Headings */
+    h1 {
+        @apply text-4xl font-bold text-foreground leading-tight tracking-tight;
+    }
+    
+    h2 {
+        @apply text-3xl font-bold text-foreground leading-tight tracking-tight;
+    }
+    
+    h3 {
+        @apply text-2xl font-semibold text-foreground leading-tight tracking-tight;
+    }
+    
+    h4 {
+        @apply text-xl font-semibold text-foreground leading-tight;
+    }
+    
+    h5 {
+        @apply text-lg font-medium text-foreground leading-tight;
+    }
+    
+    h6 {
+        @apply text-base font-medium text-foreground leading-tight;
+    }
+
+    /* Body text */
+    p {
+        @apply text-base text-foreground leading-relaxed;
+    }
+
+    /* Small text */
+    small {
+        @apply text-sm text-muted-foreground;
+    }
+
+    /* Links */
+    a {
+        @apply text-accent font-medium no-underline hover:underline underline-offset-4;
+    }
+
+    /* Lists */
+    ul, ol {
+        @apply text-foreground leading-relaxed;
+    }
+    
+    li {
+        @apply mb-1;
+    }
+
+    /* Emphasis */
+    strong, b {
+        @apply font-semibold text-foreground;
+    }
+    
+    em, i {
+        @apply italic;
+    }
+
+    /* Code */
+    code {
+        @apply font-mono text-sm bg-muted px-1.5 py-0.5 rounded-sm text-foreground;
+    }
+
+    /* Blockquotes */
+    blockquote {
+        @apply border-l-4 border-accent pl-4 text-foreground italic;
+    }
+
+    /* Set font families */
+    html {
+        font-family: var(--font-sans);
+    }
+    
+    code, kbd, samp, pre {
+        font-family: var(--font-mono);
+    }
+}
+
+/* ----------------------------------------- */
+/* Input Components Utility                 */
+/* ----------------------------------------- */
+@layer utilities {
+    .input-base {
+        @apply flex w-full rounded-md border border-input bg-card text-foreground placeholder:text-muted-foreground;
+        @apply focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring;
+        @apply disabled:cursor-not-allowed disabled:opacity-50;
+        @apply px-3 py-2 text-sm transition-colors;
+    }
+}
+
+/* ----------------------------------------- */
+/* Tabs Components Utilities                */
+/* ----------------------------------------- */
+@layer utilities {
+    /* Default tabs variant */
+    .tabs-default [role="tablist"] {
+        @apply border-b border-border;
+    }
+    
+    .tabs-default [role="tab"] {
+        @apply border-b-2 border-transparent;
+        @apply data-[state=active]:border-primary data-[state=active]:text-foreground;
+    }
+    
+    /* Pills variant */
+    .tabs-pills [role="tablist"] {
+        @apply bg-muted rounded-lg p-1;
+        @apply border-0;
+    }
+    
+    .tabs-pills [role="tab"] {
+        @apply rounded-md border-0;
+        @apply data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm;
+    }
+    
+    /* Underline variant */
+    .tabs-underline [role="tablist"] {
+        @apply border-b-0;
+    }
+    
+    .tabs-underline [role="tab"] {
+        @apply border-b-2 border-transparent rounded-none;
+        @apply hover:border-border;
+        @apply data-[state=active]:border-primary data-[state=active]:text-primary;
+    }
+    
+    /* Vertical orientation adjustments */
+    .tabs-default.grid [role="tablist"].lg\:flex-col [role="tab"] {
+        @apply lg:border-b-0 lg:border-0 lg:rounded-md;
+        @apply lg:data-[state=active]:bg-background lg:data-[state=active]:shadow-sm;
+        @apply lg:hover:bg-background/50;
+    }
+    
+    .tabs-underline.grid [role="tablist"].lg\:flex-col [role="tab"] {
+        @apply lg:border-b-0 lg:border-0 lg:rounded-md;
+        @apply lg:data-[state=active]:bg-background lg:data-[state=active]:shadow-sm lg:data-[state=active]:text-foreground;
+        @apply lg:hover:bg-background/50;
+    }
+    
+    .tabs-pills.grid [role="tablist"].lg\:flex-col [role="tab"] {
+        @apply lg:data-[state=active]:bg-background lg:data-[state=active]:shadow-sm;
+    }
+}

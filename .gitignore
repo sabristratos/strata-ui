@@ -1,0 +1,33 @@
+# Dependencies
+/node_modules
+/vendor
+
+# IDE
+/.vscode
+/.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Laravel
+.env
+.env.backup
+.env.production
+
+# Testing
+.phpunit.result.cache
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build artifacts (keep compiled JS for distribution)
+# /resources/dist
+
+# Package specific
+composer.lock
+package-lock.json
