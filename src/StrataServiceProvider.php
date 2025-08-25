@@ -74,7 +74,7 @@ class StrataServiceProvider extends ServiceProvider
     {
         Blade::directive('strataScripts', function () {
             $route = route('strata.scripts');
-            return "\"<script src='{$route}' defer></script>\"";
+            return "<?php echo '<script src=\"{$route}\" defer></script>'; ?>";
         });
     }
 }
