@@ -1,0 +1,16 @@
+{
+  "resources/css/strata.css": {
+    "file": "strata-css.css",
+    "src": "resources/css/strata.css",
+    "isEntry": true,
+    "names": [
+      "strata-css.css"
+    ]
+  },
+  "resources/js/strata.js": {
+    "file": "strata.js",
+    "name": "strata",
+    "src": "resources/js/strata.js",
+    "isEntry": true
+  }
+}

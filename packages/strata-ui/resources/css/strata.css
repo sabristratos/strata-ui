@@ -1,0 +1,227 @@
+@import "tailwindcss";
+@import "./theme.css";
+
+:root {
+    @apply scheme-light-dark;
+    interpolate-size: allow-keywords;
+}
+
+details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 0.3s, content-visibility 0.3s;
+    transition-behavior: allow-discrete;
+}
+
+details[open]::details-content {
+    block-size: auto;
+}
+
+[popover] {
+    position: absolute;
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: visible;
+    opacity: 0;
+    scale: 0.95;
+    --popover-offset: 8px;
+    transition:
+        opacity 0.2s ease-in-out,
+        scale 0.2s ease-in-out,
+        display 0.2s ease-in-out allow-discrete,
+        overlay 0.2s ease-in-out allow-discrete;
+}
+
+[popover]:popover-open {
+    opacity: 1;
+    scale: 1;
+}
+
+@starting-style {
+    [popover]:popover-open {
+        opacity: 0;
+        scale: 0.95;
+    }
+}
+
+[popover].popover-placement-top {
+    top: auto;
+    bottom: calc(anchor(top) + var(--popover-offset));
+    left: anchor(left);
+    right: auto;
+    position-try-fallbacks: --try-bottom, --try-left, --try-right;
+}
+
+[popover].popover-placement-top-start {
+    top: auto;
+    bottom: calc(anchor(top) + var(--popover-offset));
+    left: anchor(left);
+    right: auto;
+    position-try-fallbacks: --try-bottom-start, --try-top-end, --try-bottom-end;
+}
+
+[popover].popover-placement-top-end {
+    top: auto;
+    bottom: calc(anchor(top) + var(--popover-offset));
+    left: auto;
+    right: anchor(right);
+    position-try-fallbacks: --try-bottom-end, --try-top-start, --try-bottom-start;
+}
+
+[popover].popover-placement-bottom {
+    top: calc(anchor(bottom) + var(--popover-offset));
+    bottom: auto;
+    left: anchor(left);
+    right: auto;
+    position-try-fallbacks: --try-top, --try-left, --try-right;
+}
+
+[popover].popover-placement-bottom-start {
+    top: calc(anchor(bottom) + var(--popover-offset));
+    bottom: auto;
+    left: anchor(left);
+    right: auto;
+    position-try-fallbacks: --try-top-start, --try-bottom-end, --try-top-end;
+}
+
+[popover].popover-placement-bottom-end {
+    top: calc(anchor(bottom) + var(--popover-offset));
+    bottom: auto;
+    left: auto;
+    right: anchor(right);
+    position-try-fallbacks: --try-top-end, --try-bottom-start, --try-top-start;
+}
+
+[popover].popover-placement-left {
+    top: anchor(top);
+    bottom: auto;
+    left: auto;
+    right: calc(anchor(left) + var(--popover-offset));
+    position-try-fallbacks: --try-right, --try-top, --try-bottom;
+}
+
+[popover].popover-placement-left-start {
+    top: anchor(top);
+    bottom: auto;
+    left: auto;
+    right: calc(anchor(left) + var(--popover-offset));
+    position-try-fallbacks: --try-right-start, --try-left-end, --try-right-end;
+}
+
+[popover].popover-placement-left-end {
+    top: auto;
+    bottom: anchor(bottom);
+    left: auto;
+    right: calc(anchor(left) + var(--popover-offset));
+    position-try-fallbacks: --try-right-end, --try-left-start, --try-right-start;
+}
+
+[popover].popover-placement-right {
+    top: anchor(top);
+    bottom: auto;
+    left: calc(anchor(right) + var(--popover-offset));
+    right: auto;
+    position-try-fallbacks: --try-left, --try-top, --try-bottom;
+}
+
+[popover].popover-placement-right-start {
+    top: anchor(top);
+    bottom: auto;
+    left: calc(anchor(right) + var(--popover-offset));
+    right: auto;
+    position-try-fallbacks: --try-left-start, --try-right-end, --try-left-end;
+}
+
+[popover].popover-placement-right-end {
+    top: auto;
+    bottom: anchor(bottom);
+    left: calc(anchor(right) + var(--popover-offset));
+    right: auto;
+    position-try-fallbacks: --try-left-end, --try-right-start, --try-left-start;
+}
+
+@position-try --try-top {
+    top: auto;
+    bottom: calc(anchor(top) + var(--popover-offset));
+    left: anchor(left);
+    right: auto;
+}
+
+@position-try --try-bottom {
+    top: calc(anchor(bottom) + var(--popover-offset));
+    bottom: auto;
+    left: anchor(left);
+    right: auto;
+}
+
+@position-try --try-left {
+    top: anchor(top);
+    bottom: auto;
+    left: auto;
+    right: calc(anchor(left) + var(--popover-offset));
+}
+
+@position-try --try-right {
+    top: anchor(top);
+    bottom: auto;
+    left: calc(anchor(right) + var(--popover-offset));
+    right: auto;
+}
+
+@position-try --try-top-start {
+    top: auto;
+    bottom: calc(anchor(top) + var(--popover-offset));
+    left: anchor(left);
+    right: auto;
+}
+
+@position-try --try-top-end {
+    top: auto;
+    bottom: calc(anchor(top) + var(--popover-offset));
+    left: auto;
+    right: anchor(right);
+}
+
+@position-try --try-bottom-start {
+    top: calc(anchor(bottom) + var(--popover-offset));
+    bottom: auto;
+    left: anchor(left);
+    right: auto;
+}
+
+@position-try --try-bottom-end {
+    top: calc(anchor(bottom) + var(--popover-offset));
+    bottom: auto;
+    left: auto;
+    right: anchor(right);
+}
+
+@position-try --try-left-start {
+    top: anchor(top);
+    bottom: auto;
+    left: auto;
+    right: calc(anchor(left) + var(--popover-offset));
+}
+
+@position-try --try-left-end {
+    top: auto;
+    bottom: anchor(bottom);
+    left: auto;
+    right: calc(anchor(left) + var(--popover-offset));
+}
+
+@position-try --try-right-start {
+    top: anchor(top);
+    bottom: auto;
+    left: calc(anchor(right) + var(--popover-offset));
+    right: auto;
+}
+
+@position-try --try-right-end {
+    top: auto;
+    bottom: anchor(bottom);
+    left: calc(anchor(right) + var(--popover-offset));
+    right: auto;
+}

@@ -1,0 +1,46 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Force -Name)",
+      "Bash(Select-Object -First 20)",
+      "Bash(Test-Path:*)",
+      "Bash(Test-Path package.json)",
+      "Bash(php artisan:*)",
+      "Bash(tree:*)",
+      "Bash(cat:*)",
+      "Bash(php convert-icons.php:*)",
+      "WebFetch(domain:www.nikolailehbr.ink)",
+      "Bash(php vendor/bin/pint:*)",
+      "Bash(dir /b \"C:\\Users\\chaab\\Herd\\strata-ui\\packages\\strata-ui\\resources\\views\\components\")",
+      "Bash(Get-ChildItem \"C:\\Users\\chaab\\Herd\\strata-ui\\app\\Livewire\" -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object -First 5)",
+      "mcp__laravel-boost__search-docs",
+      "Bash(Get-ChildItem -Force -Name \"C:\\Users\\chaab\\Herd\\strata-ui\\packages\\strata-ui\\resources\\views\\components\\icon\")",
+      "Bash(powershell:*)",
+      "Bash(curl:*)",
+      "Bash(npm install)",
+      "mcp__herd__get_site_information",
+      "Bash(vendor/bin/pint:*)",
+      "Bash(New-Item -ItemType Directory -Path \"packages\\strata-ui\\src\\Enums\" -Force)",
+      "Bash(Get-ChildItem \"C:\\Users\\chaab\\Herd\\strata-ui\\packages\\strata-ui\\resources\\views\\components\" -File -Name)",
+      "Bash(find:*)",
+      "Bash(dir /s /b \"C:\\Users\\chaab\\Herd\\strata-ui\\temp-wireui\\src\\Components\\Select\")",
+      "Bash(Get-ChildItem -Path \"C:\\Users\\chaab\\Herd\\strata-ui\\packages\\strata-ui\\resources\\views\\components\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(Get-ChildItem \"packages\\strata-ui\\resources\\views\\components\" -Directory -Name)",
+      "Read(//tmp/**)",
+      "Bash(dir \"C:\\Users\\chaab\\Herd\\strata-ui\\packages\\strata-ui\\resources\\views\\components\\icon\\chevron*.blade.php\" /b)",
+      "Bash(New-Item -ItemType Directory -Path \"packages\\strata-ui\\resources\\views\\components\\calendar\" -Force)",
+      "WebFetch(domain:joelmale.com)",
+      "Bash(git init:*)",
+      "Bash(git remote:*)",
+      "Bash(git add:*)",
+      "Bash(Select-String \"nul\")"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "laravel-boost",
+    "herd"
+  ]
+}

@@ -1,0 +1,12 @@
+/node_modules
+/public/build
+/public/hot
+/vendor
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+composer.lock
+package-lock.json
+.vite
