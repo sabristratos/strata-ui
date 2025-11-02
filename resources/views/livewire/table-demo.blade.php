@@ -1,44 +1,101 @@
 <div class="space-y-12">
+    <div>
+        <h2 class="text-2xl font-bold mb-6">Table Component</h2>
+        <p class="text-muted-foreground mb-8">
+            A fully-featured, accessible table component with sorting, selection, loading states, and responsive mobile layouts.
+        </p>
+    </div>
+
+    <div class="space-y-4">
+        <h3 class="text-lg font-semibold">Interactive Controls</h3>
+        <div class="flex flex-wrap gap-4">
+            <div class="flex items-center gap-2">
+                <label class="text-sm font-medium">Variant:</label>
+                <select wire:model.live="variant" class="px-3 py-1 border border-border rounded-md text-sm">
+                    <option value="bordered">Bordered</option>
+                    <option value="striped">Striped</option>
+                    <option value="minimal">Minimal</option>
+                </select>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <label class="text-sm font-medium">Size:</label>
+                <select wire:model.live="size" class="px-3 py-1 border border-border rounded-md text-sm">
+                    <option value="sm">Small</option>
+                    <option value="md">Medium</option>
+                    <option value="lg">Large</option>
+                </select>
+            </div>
+
+            <x-strata::checkbox wire:model.live="hoverable" size="sm">Hoverable</x-strata::checkbox>
+
+            <x-strata::checkbox wire:model.live="loading" size="sm">Loading</x-strata::checkbox>
+
+            <x-strata::checkbox wire:model.live="showEmpty" size="sm">Empty State</x-strata::checkbox>
+        </div>
+
+        @if(count($selected) > 0)
+            <div class="bg-primary/10 border border-primary/20 rounded-lg p-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium">{{ count($selected) }} row(s) selected</span>
+                    <button
+                        wire:click="$set('selected', [])"
+                        class="text-sm text-primary hover:underline"
+                    >
+                        Clear selection
+                    </button>
+                </div>
+            </div>
+        @endif
+    </div>
 
     <div>
-        <h3 class="text-lg font-semibold mb-2">Bordered Variant with Sortable Columns</h3>
-        <p class="text-sm text-muted-foreground mb-4">Click column headers to sort. Hover over rows for highlight effect.</p>
-
-        <x-strata::table variant="bordered" size="md">
+        <h3 class="text-lg font-semibold mb-4">User Management Table</h3>
+        <x-strata::table
+            :variant="$variant"
+            :size="$size"
+            :hoverable="$hoverable"
+            :loading="$loading"
+            sticky
+        >
             <x-strata::table.header>
                 <x-strata::table.row>
                     <x-strata::table.head-cell class="w-12">
-                        <x-strata::checkbox wire:model.live="selectAll" />
+                        <x-strata::checkbox
+                            wire:click="toggleSelectAll"
+                            :checked="$this->allSelected"
+                            size="sm"
+                        />
                     </x-strata::table.head-cell>
                     <x-strata::table.head-cell
                         sortable
-                        :sortColumn="$sortBy === 'name' ? $sortBy : null"
-                        :sortDirection="$sortBy === 'name' ? $sortDirection : null"
-                        wire:click="sort('name')"
+                        column="name"
+                        :sortColumn="$sortColumn"
+                        :sortDirection="$sortDirection"
                     >
                         Name
                     </x-strata::table.head-cell>
                     <x-strata::table.head-cell
                         sortable
-                        :sortColumn="$sortBy === 'email' ? $sortBy : null"
-                        :sortDirection="$sortBy === 'email' ? $sortDirection : null"
-                        wire:click="sort('email')"
+                        column="email"
+                        :sortColumn="$sortColumn"
+                        :sortDirection="$sortDirection"
                     >
                         Email
                     </x-strata::table.head-cell>
                     <x-strata::table.head-cell
                         sortable
-                        :sortColumn="$sortBy === 'role' ? $sortBy : null"
-                        :sortDirection="$sortBy === 'role' ? $sortDirection : null"
-                        wire:click="sort('role')"
+                        column="role"
+                        :sortColumn="$sortColumn"
+                        :sortDirection="$sortDirection"
                     >
                         Role
                     </x-strata::table.head-cell>
                     <x-strata::table.head-cell
                         sortable
-                        :sortColumn="$sortBy === 'status' ? $sortBy : null"
-                        :sortDirection="$sortBy === 'status' ? $sortDirection : null"
-                        wire:click="sort('status')"
+                        column="status"
+                        :sortColumn="$sortColumn"
+                        :sortDirection="$sortDirection"
                     >
                         Status
                     </x-strata::table.head-cell>
@@ -49,188 +106,133 @@
             </x-strata::table.header>
 
             <x-strata::table.body>
-                @foreach($sortedUsers as $user)
-                    <x-strata::table.row :selected="in_array($user['id'], $selectedRows)">
-                        <x-strata::table.cell class="w-12" align="center">
-                            <x-strata::checkbox
-                                wire:model.live="selectedRows"
-                                :value="$user['id']"
-                            />
-                        </x-strata::table.cell>
-                        <x-strata::table.cell>
-                            <span class="font-medium">{{ $user['name'] }}</span>
-                        </x-strata::table.cell>
-                        <x-strata::table.cell>
-                            {{ $user['email'] }}
-                        </x-strata::table.cell>
-                        <x-strata::table.cell>
-                            <x-strata::badge :variant="$user['role'] === 'Admin' ? 'primary' : 'secondary'">
-                                {{ $user['role'] }}
-                            </x-strata::badge>
-                        </x-strata::table.cell>
-                        <x-strata::table.cell>
-                            <x-strata::badge :variant="$user['status'] === 'Active' ? 'success' : 'secondary'">
-                                {{ $user['status'] }}
-                            </x-strata::badge>
-                        </x-strata::table.cell>
-                        <x-strata::table.cell align="right">
-                            <div class="flex items-center justify-end gap-2">
-                                <x-strata::button.icon icon="pencil" size="sm">
-                                </x-strata::button.icon>
-                                <x-strata::button.icon icon="trash" variant="destructive" size="sm">
-                                </x-strata::button.icon>
-                            </div>
-                        </x-strata::table.cell>
-                    </x-strata::table.row>
-                @endforeach
-            </x-strata::table.body>
-        </x-strata::table>
-
-        @if(count($selectedRows) > 0)
-            <div class="mt-4 p-4 bg-primary/10 border border-primary/20 rounded-lg">
-                <p class="text-sm">
-                    <span class="font-semibold">{{ count($selectedRows) }}</span> row(s) selected:
-                    <span class="text-muted-foreground">{{ implode(', ', $selectedRows) }}</span>
-                </p>
-            </div>
-        @endif
-    </div>
-
-    <div>
-        <h3 class="text-lg font-semibold mb-2">Striped Variant - Small Size</h3>
-        <p class="text-sm text-muted-foreground mb-4">Compact table with alternating row colors.</p>
-
-        <x-strata::table variant="striped" size="sm">
-            <x-strata::table.header>
-                <x-strata::table.row>
-                    <x-strata::table.head-cell>Name</x-strata::table.head-cell>
-                    <x-strata::table.head-cell>Email</x-strata::table.head-cell>
-                    <x-strata::table.head-cell>Role</x-strata::table.head-cell>
-                    <x-strata::table.head-cell>Status</x-strata::table.head-cell>
-                </x-strata::table.row>
-            </x-strata::table.header>
-
-            <x-strata::table.body>
-                @foreach(array_slice($sortedUsers, 0, 5) as $user)
-                    <x-strata::table.row>
-                        <x-strata::table.cell>{{ $user['name'] }}</x-strata::table.cell>
-                        <x-strata::table.cell>{{ $user['email'] }}</x-strata::table.cell>
-                        <x-strata::table.cell>{{ $user['role'] }}</x-strata::table.cell>
-                        <x-strata::table.cell>{{ $user['status'] }}</x-strata::table.cell>
-                    </x-strata::table.row>
-                @endforeach
+                @if(count($this->users) === 0)
+                    <x-strata::table.empty colspan="6">
+                        <p class="text-base font-medium">No users found</p>
+                        <p class="text-sm text-muted-foreground mt-1">Get started by adding your first user.</p>
+                    </x-strata::table.empty>
+                @else
+                    @foreach($this->users as $user)
+                        <x-strata::table.row
+                            wire:key="user-{{ $user['id'] }}"
+                            :selected="in_array($user['id'], $selected)"
+                        >
+                            <x-strata::table.cell data-label="Select">
+                                <x-strata::checkbox
+                                    wire:click="toggleSelection({{ $user['id'] }})"
+                                    :checked="in_array($user['id'], $selected)"
+                                    size="sm"
+                                />
+                            </x-strata::table.cell>
+                            <x-strata::table.cell data-label="Name">
+                                <div class="font-medium">{{ $user['name'] }}</div>
+                            </x-strata::table.cell>
+                            <x-strata::table.cell data-label="Email">
+                                {{ $user['email'] }}
+                            </x-strata::table.cell>
+                            <x-strata::table.cell data-label="Role">
+                                <x-strata::badge>{{ $user['role'] }}</x-strata::badge>
+                            </x-strata::table.cell>
+                            <x-strata::table.cell data-label="Status">
+                                <x-strata::badge :variant="$user['status'] === 'Active' ? 'success' : 'secondary'">
+                                    {{ $user['status'] }}
+                                </x-strata::badge>
+                            </x-strata::table.cell>
+                            <x-strata::table.cell align="right" data-label="Actions">
+                                <div class="flex items-center justify-end gap-2">
+                                    <button class="text-sm text-primary hover:underline">Edit</button>
+                                    <button class="text-sm text-destructive hover:underline">Delete</button>
+                                </div>
+                            </x-strata::table.cell>
+                        </x-strata::table.row>
+                    @endforeach
+                @endif
             </x-strata::table.body>
         </x-strata::table>
     </div>
 
-    <div>
-        <h3 class="text-lg font-semibold mb-2">Minimal Variant - Large Size</h3>
-        <p class="text-sm text-muted-foreground mb-4">Clean design with generous spacing.</p>
-
-        <x-strata::table variant="minimal" size="lg">
-            <x-strata::table.header>
-                <x-strata::table.row>
-                    <x-strata::table.head-cell>Name</x-strata::table.head-cell>
-                    <x-strata::table.head-cell>Email</x-strata::table.head-cell>
-                    <x-strata::table.head-cell align="right">Role</x-strata::table.head-cell>
-                </x-strata::table.row>
-            </x-strata::table.header>
-
-            <x-strata::table.body>
-                @foreach(array_slice($sortedUsers, 0, 4) as $user)
-                    <x-strata::table.row>
-                        <x-strata::table.cell>
-                            <span class="font-medium">{{ $user['name'] }}</span>
-                        </x-strata::table.cell>
-                        <x-strata::table.cell>
-                            <span class="text-muted-foreground">{{ $user['email'] }}</span>
-                        </x-strata::table.cell>
-                        <x-strata::table.cell align="right">
-                            <x-strata::badge>{{ $user['role'] }}</x-strata::badge>
-                        </x-strata::table.cell>
-                    </x-strata::table.row>
-                @endforeach
-            </x-strata::table.body>
-        </x-strata::table>
-    </div>
-
-    <div>
-        <h3 class="text-lg font-semibold mb-2">Table with Footer</h3>
-        <p class="text-sm text-muted-foreground mb-4">Demonstrating table footer for totals or summaries.</p>
-
-        <x-strata::table variant="bordered" size="md">
-            <x-strata::table.header>
-                <x-strata::table.row>
-                    <x-strata::table.head-cell>Product</x-strata::table.head-cell>
-                    <x-strata::table.head-cell align="right">Quantity</x-strata::table.head-cell>
-                    <x-strata::table.head-cell align="right">Price</x-strata::table.head-cell>
-                    <x-strata::table.head-cell align="right">Total</x-strata::table.head-cell>
-                </x-strata::table.row>
-            </x-strata::table.header>
-
-            <x-strata::table.body>
-                <x-strata::table.row>
-                    <x-strata::table.cell>Laptop</x-strata::table.cell>
-                    <x-strata::table.cell align="right">2</x-strata::table.cell>
-                    <x-strata::table.cell align="right">$999.00</x-strata::table.cell>
-                    <x-strata::table.cell align="right" class="font-medium">$1,998.00</x-strata::table.cell>
-                </x-strata::table.row>
-                <x-strata::table.row>
-                    <x-strata::table.cell>Mouse</x-strata::table.cell>
-                    <x-strata::table.cell align="right">5</x-strata::table.cell>
-                    <x-strata::table.cell align="right">$29.00</x-strata::table.cell>
-                    <x-strata::table.cell align="right" class="font-medium">$145.00</x-strata::table.cell>
-                </x-strata::table.row>
-                <x-strata::table.row>
-                    <x-strata::table.cell>Keyboard</x-strata::table.cell>
-                    <x-strata::table.cell align="right">3</x-strata::table.cell>
-                    <x-strata::table.cell align="right">$79.00</x-strata::table.cell>
-                    <x-strata::table.cell align="right" class="font-medium">$237.00</x-strata::table.cell>
-                </x-strata::table.row>
-            </x-strata::table.body>
-
-            <x-strata::table.footer>
-                <x-strata::table.row>
-                    <x-strata::table.cell colspan="3" align="right" class="font-semibold">
-                        Grand Total
-                    </x-strata::table.cell>
-                    <x-strata::table.cell align="right" class="font-bold text-lg">
-                        $2,380.00
-                    </x-strata::table.cell>
-                </x-strata::table.row>
-            </x-strata::table.footer>
-        </x-strata::table>
-    </div>
-
-    <div>
-        <h3 class="text-lg font-semibold mb-2">Sticky Header (Scroll to Test)</h3>
-        <p class="text-sm text-muted-foreground mb-4">Header stays visible while scrolling through long tables.</p>
-
-        <div class="max-h-96 overflow-y-auto border border-border rounded-lg">
-            <x-strata::table variant="bordered" size="md" sticky :responsive="false">
+    <div class="space-y-6">
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Minimal Variant (No borders)</h3>
+            <x-strata::table variant="minimal" size="sm">
                 <x-strata::table.header>
                     <x-strata::table.row>
-                        <x-strata::table.head-cell>Name</x-strata::table.head-cell>
-                        <x-strata::table.head-cell>Email</x-strata::table.head-cell>
-                        <x-strata::table.head-cell>Role</x-strata::table.head-cell>
-                        <x-strata::table.head-cell>Status</x-strata::table.head-cell>
+                        <x-strata::table.head-cell>Product</x-strata::table.head-cell>
+                        <x-strata::table.head-cell align="center">Price</x-strata::table.head-cell>
+                        <x-strata::table.head-cell align="right">Stock</x-strata::table.head-cell>
                     </x-strata::table.row>
                 </x-strata::table.header>
-
                 <x-strata::table.body>
-                    @for($i = 0; $i < 20; $i++)
-                        @foreach($sortedUsers as $user)
-                            <x-strata::table.row>
-                                <x-strata::table.cell>{{ $user['name'] }}</x-strata::table.cell>
-                                <x-strata::table.cell>{{ $user['email'] }}</x-strata::table.cell>
-                                <x-strata::table.cell>{{ $user['role'] }}</x-strata::table.cell>
-                                <x-strata::table.cell>{{ $user['status'] }}</x-strata::table.cell>
-                            </x-strata::table.row>
-                        @endforeach
-                    @endfor
+                    <x-strata::table.row>
+                        <x-strata::table.cell data-label="Product">Laptop Pro</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Price">$1,299</x-strata::table.cell>
+                        <x-strata::table.cell align="right" data-label="Stock">45</x-strata::table.cell>
+                    </x-strata::table.row>
+                    <x-strata::table.row>
+                        <x-strata::table.cell data-label="Product">Wireless Mouse</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Price">$29</x-strata::table.cell>
+                        <x-strata::table.cell align="right" data-label="Stock">128</x-strata::table.cell>
+                    </x-strata::table.row>
+                    <x-strata::table.row>
+                        <x-strata::table.cell data-label="Product">USB-C Cable</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Price">$12</x-strata::table.cell>
+                        <x-strata::table.cell align="right" data-label="Stock">256</x-strata::table.cell>
+                    </x-strata::table.row>
+                </x-strata::table.body>
+                <x-strata::table.footer>
+                    <x-strata::table.row>
+                        <x-strata::table.cell class="font-semibold">Total</x-strata::table.cell>
+                        <x-strata::table.cell align="center" class="font-semibold">$1,340</x-strata::table.cell>
+                        <x-strata::table.cell align="right" class="font-semibold">429 items</x-strata::table.cell>
+                    </x-strata::table.row>
+                </x-strata::table.footer>
+            </x-strata::table>
+        </div>
+
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Striped Variant</h3>
+            <x-strata::table variant="striped">
+                <x-strata::table.header>
+                    <x-strata::table.row>
+                        <x-strata::table.head-cell>Feature</x-strata::table.head-cell>
+                        <x-strata::table.head-cell align="center">Basic</x-strata::table.head-cell>
+                        <x-strata::table.head-cell align="center">Pro</x-strata::table.head-cell>
+                        <x-strata::table.head-cell align="center">Enterprise</x-strata::table.head-cell>
+                    </x-strata::table.row>
+                </x-strata::table.header>
+                <x-strata::table.body>
+                    <x-strata::table.row>
+                        <x-strata::table.cell data-label="Feature">Users</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Basic">Up to 5</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Pro">Up to 50</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Enterprise">Unlimited</x-strata::table.cell>
+                    </x-strata::table.row>
+                    <x-strata::table.row>
+                        <x-strata::table.cell data-label="Feature">Storage</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Basic">10 GB</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Pro">100 GB</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Enterprise">1 TB</x-strata::table.cell>
+                    </x-strata::table.row>
+                    <x-strata::table.row>
+                        <x-strata::table.cell data-label="Feature">Support</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Basic">Email</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Pro">Priority Email</x-strata::table.cell>
+                        <x-strata::table.cell align="center" data-label="Enterprise">24/7 Phone</x-strata::table.cell>
+                    </x-strata::table.row>
                 </x-strata::table.body>
             </x-strata::table>
         </div>
     </div>
 
+    <div class="bg-muted/50 border border-border rounded-lg p-6">
+        <h3 class="text-lg font-semibold mb-3">Responsive Mobile Layout</h3>
+        <p class="text-sm text-muted-foreground mb-2">
+            Resize your browser window to less than 640px width (or view on mobile) to see the table transform into a stacked card layout.
+            Each row becomes a card with labels displayed on the left side.
+        </p>
+        <p class="text-sm text-muted-foreground">
+            This is achieved using the <code class="px-1 py-0.5 bg-muted rounded text-xs">data-label</code> attribute on each cell,
+            which becomes visible on mobile devices.
+        </p>
+    </div>
 </div>

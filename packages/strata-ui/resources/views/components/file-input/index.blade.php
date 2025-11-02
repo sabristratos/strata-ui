@@ -42,7 +42,7 @@ $sizes = [
 ];
 
 $stateClasses = [
-    'default' => 'border-input-border bg-background hover:border-primary hover:bg-muted/50',
+    'default' => 'border-border bg-secondary hover:border-primary hover:bg-muted/50',
     'success' => 'border-success bg-success/5 hover:bg-success/10',
     'error' => 'border-destructive bg-destructive/5 hover:bg-destructive/10',
     'warning' => 'border-warning bg-warning/5 hover:bg-warning/10',
@@ -54,7 +54,7 @@ $stateIcons = [
     'warning' => 'alert-triangle',
 ];
 
-$disabledClasses = $disabled ? 'opacity-60 cursor-not-allowed hover:border-input-border hover:bg-background' : '';
+$disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed hover:border-border hover:bg-secondary' : '';
 
 $wrapperClasses = $baseClasses . ' ' . ($sizes[$size]['wrapper'] ?? $sizes['md']['wrapper']) . ' ' . ($stateClasses[$state] ?? $stateClasses['default']) . ' ' . $disabledClasses;
 
@@ -208,7 +208,6 @@ document.addEventListener('alpine:init', () => {
             </div>
 
             @if($recommendedLayout === 'grid')
-                {{-- Gallery layout for images --}}
                 <div class="grid grid-cols-1 @sm:grid-cols-2 @md:grid-cols-3 @lg:grid-cols-4 gap-4">
                     @foreach($processedExistingFiles as $file)
                         <div class="group relative aspect-square rounded-lg overflow-hidden bg-muted border border-border hover:border-primary transition-all duration-150">
@@ -219,7 +218,6 @@ document.addEventListener('alpine:init', () => {
                                     class="w-full h-full object-cover"
                                 />
 
-                                {{-- Overlay with file info on hover --}}
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                                     <div class="absolute bottom-0 left-0 right-0 p-3 text-white">
                                         <p class="text-sm font-medium truncate">{{ $file->name }}</p>
@@ -232,7 +230,6 @@ document.addEventListener('alpine:init', () => {
                                     </div>
                                 </div>
 
-                                {{-- Action buttons --}}
                                 <div class="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                                     <a href="{{ $file->url }}" download="{{ $file->name }}">
                                         <x-strata::button.icon
@@ -261,7 +258,6 @@ document.addEventListener('alpine:init', () => {
                     @endforeach
                 </div>
             @else
-                {{-- List layout for documents --}}
                 <div class="space-y-2">
                     @foreach($processedExistingFiles as $file)
                         <x-strata::file-input.item
@@ -279,6 +275,7 @@ document.addEventListener('alpine:init', () => {
 
     <div
         data-strata-file-input-container
+        data-strata-field-type="file-input"
         x-data="strataFileInput({{ $disabled ? 'true' : 'false' }}, {{ $maxSizeBytes ?? 'null' }}, '{{ $maxSizeMB }}', {{ json_encode($acceptTypes) }}, '{{ $accept }}', {{ $maxFiles ?? 'null' }}, {{ $hasWireModel ? 'true' : 'false' }})"
     >
         <div
@@ -304,7 +301,7 @@ document.addEventListener('alpine:init', () => {
             @change="handleChange"
         />
 
-        <div x-show="isUploading" class="absolute inset-0 bg-background/80 flex items-center justify-center rounded-lg z-10" x-cloak>
+        <div x-show="isUploading" class="absolute inset-0 bg-secondary/80 flex items-center justify-center rounded-lg z-10" x-cloak>
             <div class="text-center">
                 <x-strata::icon.loader-circle class="w-8 h-8 text-primary animate-spin mx-auto mb-2" />
                 <p class="text-sm text-muted-foreground">Uploading...</p>

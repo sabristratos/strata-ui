@@ -5,9 +5,10 @@
 <tr
     data-strata-table-row
     :class="{
-        'hover:bg-table-row-hover transition-colors': hoverable,
-        'bg-primary/10': @js($selected)
+        'hover:bg-table-row-hover transition-colors duration-150': hoverable,
+        'bg-table-row-selected': @js($selected)
     }"
+    aria-selected="{{ $selected ? 'true' : 'false' }}"
     {{ $attributes }}
 >
     {{ $slot }}

@@ -10,33 +10,33 @@
 $variants = [
     'primary' => [
         'filled' => 'bg-primary text-primary-foreground',
-        'outlined' => 'bg-transparent text-primary border border-primary-border',
-        'soft' => 'bg-primary-subtle text-primary-subtle-foreground',
+        'outlined' => 'bg-transparent text-primary border border-primary',
+        'soft' => 'bg-primary/10 text-primary',
     ],
     'secondary' => [
         'filled' => 'bg-secondary text-secondary-foreground',
-        'outlined' => 'bg-transparent text-secondary border border-secondary-border',
-        'soft' => 'bg-secondary-subtle text-secondary-subtle-foreground',
+        'outlined' => 'bg-transparent text-secondary border border-secondary',
+        'soft' => 'bg-secondary/10 text-secondary-foreground',
     ],
     'success' => [
         'filled' => 'bg-success text-success-foreground',
-        'outlined' => 'bg-transparent text-success border border-success-border',
-        'soft' => 'bg-success-subtle text-success-subtle-foreground',
+        'outlined' => 'bg-transparent text-success border border-success',
+        'soft' => 'bg-success/10 text-success',
     ],
     'warning' => [
         'filled' => 'bg-warning text-warning-foreground',
-        'outlined' => 'bg-transparent text-warning border border-warning-border',
-        'soft' => 'bg-warning-subtle text-warning-subtle-foreground',
+        'outlined' => 'bg-transparent text-warning border border-warning',
+        'soft' => 'bg-warning/10 text-warning',
     ],
     'destructive' => [
         'filled' => 'bg-destructive text-destructive-foreground',
-        'outlined' => 'bg-transparent text-destructive border border-destructive-border',
-        'soft' => 'bg-destructive-subtle text-destructive-subtle-foreground',
+        'outlined' => 'bg-transparent text-destructive border border-destructive',
+        'soft' => 'bg-destructive/10 text-destructive',
     ],
     'info' => [
         'filled' => 'bg-info text-info-foreground',
-        'outlined' => 'bg-transparent text-info border border-info-border',
-        'soft' => 'bg-info-subtle text-info-subtle-foreground',
+        'outlined' => 'bg-transparent text-info border border-info',
+        'soft' => 'bg-info/10 text-info',
     ],
 ];
 

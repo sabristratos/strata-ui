@@ -8,7 +8,7 @@
 
 @php
 $baseClasses = 'fixed @container p-0 border-0 bg-transparent overflow-visible';
-$backdropClasses = 'backdrop:bg-dialog-overlay backdrop:backdrop-blur-sm backdrop:transition-all backdrop:duration-200';
+$backdropClasses = 'backdrop:bg-neutral-950/80 backdrop:backdrop-blur-sm backdrop:transition-all backdrop:duration-150';
 
 if ($variant === 'flyout') {
     $flyoutSizes = [
@@ -21,13 +21,13 @@ if ($variant === 'flyout') {
     $sizeClasses = $flyoutSizes[$size] ?? $flyoutSizes['md'];
 
     $positionClasses = match($position) {
-        'left' => 'inset-y-0 left-0 right-auto translate-x-[-100%] open:translate-x-0 starting:open:translate-x-[-100%] border-e border-dialog-border',
-        'right' => 'inset-y-0 left-auto right-0 translate-x-[100%] open:translate-x-0 starting:open:translate-x-[100%] border-s border-dialog-border',
-        default => 'inset-y-0 left-auto right-0 translate-x-[100%] open:translate-x-0 starting:open:translate-x-[100%] border-s border-dialog-border',
+        'left' => 'inset-y-0 left-0 right-auto translate-x-[-100%] open:translate-x-0 starting:open:translate-x-[-100%] border-e border-border',
+        'right' => 'inset-y-0 left-auto right-0 translate-x-[100%] open:translate-x-0 starting:open:translate-x-[100%] border-s border-border',
+        default => 'inset-y-0 left-auto right-0 translate-x-[100%] open:translate-x-0 starting:open:translate-x-[100%] border-s border-border',
     };
 
     $baseClasses = 'fixed @container m-0 flex flex-col overflow-hidden bg-dialog text-dialog-foreground shadow-2xl';
-    $variantClasses = "w-full min-h-dvh max-h-dvh $sizeClasses transition-all duration-200 ease-out $positionClasses";
+    $variantClasses = "w-full min-h-dvh max-h-dvh $sizeClasses transition-all duration-150 ease-out $positionClasses";
 } else {
     $sizes = [
         'sm' => 'max-w-sm',
@@ -37,9 +37,9 @@ if ($variant === 'flyout') {
     ];
 
     $sizeClasses = $sizes[$size] ?? $sizes['md'];
-    $variantClasses = "inset-0 m-auto w-full $sizeClasses opacity-0 scale-95 open:opacity-100 open:scale-100 starting:open:opacity-0 starting:open:scale-95 transition-all duration-200 ease-out";
+    $variantClasses = "inset-0 m-auto w-full $sizeClasses opacity-0 scale-95 open:opacity-100 open:scale-100 starting:open:opacity-0 starting:open:scale-95 transition-all duration-150 ease-out";
 
-    $contentClasses = "relative bg-dialog text-dialog-foreground border border-dialog-border rounded-lg shadow-2xl w-full";
+    $contentClasses = "relative bg-dialog text-dialog-foreground border border-border rounded-lg shadow-2xl w-full";
 }
 
 $classes = trim("$baseClasses $variantClasses $backdropClasses");

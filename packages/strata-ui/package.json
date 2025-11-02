@@ -21,7 +21,7 @@
     "author": "Chaab",
     "license": "MIT",
     "dependencies": {
-        "@oddbird/css-anchor-positioning": "^0.7.0"
+        "@floating-ui/dom": "^1.7.4"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",

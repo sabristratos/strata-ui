@@ -10,7 +10,7 @@ $alignments = [
     'between' => 'justify-between',
 ];
 
-$classes = 'flex items-center gap-3 p-6 pt-4 bg-card-subtle border-t border-card-border ' . ($alignments[$align] ?? $alignments['end']);
+$classes = 'flex items-center gap-3 p-6 pt-4 bg-muted border-t border-border ' . ($alignments[$align] ?? $alignments['end']);
 @endphp
 
 <div data-strata-card-footer {{ $attributes->merge(['class' => $classes]) }}>

@@ -37,12 +37,18 @@ $initialValue = match($mode) {
     'multiple', 'range', 'week' => is_array($value) ? $value : ($value ? [$value] : []),
     default => [],
 };
+
+$inputAttributes = $attributes->except(['class']);
+$wrapperAttributes = $attributes->only(['class']);
 @endphp
 
 <div
     data-strata-calendar-wrapper
-    {{ $attributes->merge(['class' => $classes]) }}
+    data-strata-field-type="calendar"
+    {{ $wrapperAttributes->merge(['class' => $classes]) }}
+    wire:ignore
     x-data="{
+        entangleable: null,
         mode: @js($mode),
         selectedDates: @js($initialValue),
         currentMonth: new Date(),
@@ -56,20 +62,65 @@ $initialValue = match($mode) {
         rangeEnd: null,
 
         init() {
+            this.entangleable = new window.StrataEntangleable(@js($initialValue));
+
+            const input = this.$el.querySelector('[data-strata-calendar-input]');
+            if (input) {
+                this.entangleable.setupLivewire(this, input);
+
+                this.entangleable.watch((newValue) => {
+                    this.syncFromEntangleable(newValue);
+                });
+
+                const initialValue = this.entangleable.get();
+                if (initialValue) {
+                    this.syncFromEntangleable(initialValue);
+                }
+            } else {
+                if (this.selectedDates.length > 0) {
+                    const date = new Date(this.selectedDates[0]);
+                    if (!isNaN(date.getTime())) {
+                        this.currentMonth = date;
+                    }
+                }
+
+                if (this.mode === 'range' && this.selectedDates.length === 2) {
+                    this.rangeStart = new Date(this.selectedDates[0]);
+                    this.rangeEnd = new Date(this.selectedDates[1]);
+                }
+            }
+
+            this.focusedDate = new Date();
+        },
+
+        syncFromEntangleable(value) {
+            if (this.mode === 'single') {
+                this.selectedDates = value ? [value] : [];
+            } else {
+                this.selectedDates = Array.isArray(value) ? value : (value ? [value] : []);
+            }
+
             if (this.selectedDates.length > 0) {
-                this.currentMonth = new Date(this.selectedDates[0]);
+                const date = new Date(this.selectedDates[0]);
+                if (!isNaN(date.getTime())) {
+                    this.currentMonth = date;
+                }
             }
 
             if (this.mode === 'range' && this.selectedDates.length === 2) {
                 this.rangeStart = new Date(this.selectedDates[0]);
                 this.rangeEnd = new Date(this.selectedDates[1]);
             }
+        },
 
-            this.focusedDate = new Date();
+        syncToEntangleable() {
+            if (!this.entangleable) return;
 
-            this.$watch('selectedDates', () => {
-                this.syncToLivewire();
-            });
+            if (this.mode === 'single') {
+                this.entangleable.set(this.selectedDates[0] || null);
+            } else {
+                this.entangleable.set(this.selectedDates);
+            }
         },
 
         selectDate(dateStr) {
@@ -84,9 +135,9 @@ $initialValue = match($mode) {
                 const index = this.selectedDates.indexOf(formattedDate);
 
                 if (index > -1) {
-                    this.selectedDates.splice(index, 1);
+                    this.selectedDates = this.selectedDates.filter((d, i) => i !== index);
                 } else {
-                    this.selectedDates.push(formattedDate);
+                    this.selectedDates = [...this.selectedDates, formattedDate];
                 }
             } else if (this.mode === 'range') {
                 if (!this.rangeStart || (this.rangeStart && this.rangeEnd)) {
@@ -109,6 +160,13 @@ $initialValue = match($mode) {
                 const weekDates = this.getWeekDates(date);
                 this.selectedDates = weekDates.map(d => this.formatDate(d));
             }
+
+            this.$dispatch('date-selected', {
+                dates: this.selectedDates,
+                mode: this.mode
+            });
+
+            this.syncToEntangleable();
         },
 
         getWeekDates(date) {
@@ -210,6 +268,14 @@ $initialValue = match($mode) {
                     yesterday.setDate(today.getDate() - 1);
                     this.selectedDates = [this.formatDate(yesterday)];
                     break;
+                case 'thisWeek':
+                    const weekDates = this.getWeekDates(today);
+                    if (this.mode === 'multiple') {
+                        this.selectedDates = weekDates.map(d => this.formatDate(d));
+                    } else {
+                        this.selectedDates = [this.formatDate(today)];
+                    }
+                    break;
                 case 'last7days':
                     start = new Date(today);
                     start.setDate(today.getDate() - 6);
@@ -227,9 +293,21 @@ $initialValue = match($mode) {
                 case 'thisMonth':
                     start = new Date(today.getFullYear(), today.getMonth(), 1);
                     end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-                    this.rangeStart = start;
-                    this.rangeEnd = end;
-                    this.selectedDates = [this.formatDate(start), this.formatDate(end)];
+                    if (this.mode === 'range') {
+                        this.rangeStart = start;
+                        this.rangeEnd = end;
+                        this.selectedDates = [this.formatDate(start), this.formatDate(end)];
+                    } else if (this.mode === 'multiple') {
+                        const dates = [];
+                        const current = new Date(start);
+                        while (current <= end) {
+                            dates.push(this.formatDate(new Date(current)));
+                            current.setDate(current.getDate() + 1);
+                        }
+                        this.selectedDates = dates;
+                    } else {
+                        this.selectedDates = [this.formatDate(today)];
+                    }
                     break;
                 case 'lastMonth':
                     start = new Date(today.getFullYear(), today.getMonth() - 1, 1);
@@ -238,7 +316,29 @@ $initialValue = match($mode) {
                     this.rangeEnd = end;
                     this.selectedDates = [this.formatDate(start), this.formatDate(end)];
                     break;
+                case 'thisQuarter':
+                    const quarter = Math.floor(today.getMonth() / 3);
+                    start = new Date(today.getFullYear(), quarter * 3, 1);
+                    end = new Date(today.getFullYear(), quarter * 3 + 3, 0);
+                    this.rangeStart = start;
+                    this.rangeEnd = end;
+                    this.selectedDates = [this.formatDate(start), this.formatDate(end)];
+                    break;
+                case 'thisYear':
+                    start = new Date(today.getFullYear(), 0, 1);
+                    end = new Date(today.getFullYear(), 11, 31);
+                    this.rangeStart = start;
+                    this.rangeEnd = end;
+                    this.selectedDates = [this.formatDate(start), this.formatDate(end)];
+                    break;
             }
+
+            this.$dispatch('date-selected', {
+                dates: this.selectedDates,
+                mode: this.mode
+            });
+
+            this.syncToEntangleable();
         },
 
         handleKeydown(event) {
@@ -272,23 +372,6 @@ $initialValue = match($mode) {
                     this.currentMonth = new Date(this.focusedDate.getFullYear(), this.focusedDate.getMonth(), 1);
                 }
             }
-        },
-
-        syncToLivewire() {
-            if (!this.$wire) return;
-
-            const wireModelAttribute = Array.from(this.$el.getAttributeNames())
-                .find(attr => attr.startsWith('wire:model'));
-
-            if (wireModelAttribute) {
-                const propertyName = this.$el.getAttribute(wireModelAttribute);
-
-                if (this.mode === 'single') {
-                    this.$wire.set(propertyName, this.selectedDates[0] || null);
-                } else {
-                    this.$wire.set(propertyName, this.selectedDates);
-                }
-            }
         }
     }"
     @keydown="handleKeydown($event)"
@@ -296,16 +379,24 @@ $initialValue = match($mode) {
     role="application"
     aria-label="Calendar"
 >
-    @if($showPresets)
-        <x-strata::calendar.presets />
-    @endif
+    <input
+        type="hidden"
+        data-strata-calendar-input
+        {{ $inputAttributes }}
+    />
 
-    <div class="flex gap-4">
-        @for($i = 0; $i < $monthsToShow; $i++)
-            <div class="flex-1">
-                <x-strata::calendar.header :month-offset="$i" />
-                <x-strata::calendar.grid :month-offset="$i" />
-            </div>
-        @endfor
+    <div class="flex gap-0">
+        @if($showPresets)
+            <x-strata::calendar.presets />
+        @endif
+
+        <div class="flex gap-4 flex-1">
+            @for($i = 0; $i < $monthsToShow; $i++)
+                <div class="flex-1">
+                    <x-strata::calendar.header :month-offset="$i" />
+                    <x-strata::calendar.grid :month-offset="$i" />
+                </div>
+            @endfor
+        </div>
     </div>
 </div>

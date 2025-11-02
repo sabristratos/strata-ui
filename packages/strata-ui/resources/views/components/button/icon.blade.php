@@ -10,30 +10,30 @@
 
 @php
 $filledVariants = [
-    'primary' => 'bg-primary text-primary-foreground border-primary hover:bg-primary-hover active:bg-primary-active shadow-sm',
-    'secondary' => 'bg-secondary text-secondary-foreground border-secondary hover:bg-secondary-hover active:bg-secondary-active shadow-sm',
-    'success' => 'bg-success text-success-foreground border-success hover:bg-success-hover active:bg-success-active shadow-sm',
-    'warning' => 'bg-warning text-warning-foreground border-warning hover:bg-warning-hover active:bg-warning-active shadow-sm',
-    'destructive' => 'bg-destructive text-destructive-foreground border-destructive hover:bg-destructive-hover active:bg-destructive-active shadow-sm',
-    'info' => 'bg-info text-info-foreground border-info hover:bg-info-hover active:bg-info-active shadow-sm',
+    'primary' => 'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 shadow-sm',
+    'secondary' => 'bg-secondary text-secondary-foreground hover:bg-secondary/90 active:bg-secondary/80 shadow-sm',
+    'success' => 'bg-success text-success-foreground hover:bg-success/90 active:bg-success/80 shadow-sm',
+    'warning' => 'bg-warning text-warning-foreground hover:bg-warning/90 active:bg-warning/80 shadow-sm',
+    'destructive' => 'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 shadow-sm',
+    'info' => 'bg-info text-info-foreground hover:bg-info/90 active:bg-info/80 shadow-sm',
 ];
 
 $outlinedVariants = [
-    'primary' => 'bg-transparent text-primary border-2 border-primary-border hover:bg-primary-subtle active:bg-primary-subtle/50',
-    'secondary' => 'bg-transparent text-secondary border-2 border-secondary-border hover:bg-secondary-subtle active:bg-secondary-subtle/50',
-    'success' => 'bg-transparent text-success border-2 border-success-border hover:bg-success-subtle active:bg-success-subtle/50',
-    'warning' => 'bg-transparent text-warning border-2 border-warning-border hover:bg-warning-subtle active:bg-warning-subtle/50',
-    'destructive' => 'bg-transparent text-destructive border-2 border-destructive-border hover:bg-destructive-subtle active:bg-destructive-subtle/50',
-    'info' => 'bg-transparent text-info border-2 border-info-border hover:bg-info-subtle active:bg-info-subtle/50',
+    'primary' => 'bg-transparent text-primary border-2 border-primary hover:bg-primary/10 active:bg-primary/20',
+    'secondary' => 'bg-transparent text-secondary border-2 border-secondary hover:bg-secondary/10 active:bg-secondary/20',
+    'success' => 'bg-transparent text-success border-2 border-success hover:bg-success/10 active:bg-success/20',
+    'warning' => 'bg-transparent text-warning border-2 border-warning hover:bg-warning/10 active:bg-warning/20',
+    'destructive' => 'bg-transparent text-destructive border-2 border-destructive hover:bg-destructive/10 active:bg-destructive/20',
+    'info' => 'bg-transparent text-info border-2 border-info hover:bg-info/10 active:bg-info/20',
 ];
 
 $ghostVariants = [
-    'primary' => 'bg-transparent text-primary hover:bg-primary-subtle active:bg-primary-subtle/50',
-    'secondary' => 'bg-transparent text-secondary hover:bg-secondary-subtle active:bg-secondary-subtle/50',
-    'success' => 'bg-transparent text-success hover:bg-success-subtle active:bg-success-subtle/50',
-    'warning' => 'bg-transparent text-warning hover:bg-warning-subtle active:bg-warning-subtle/50',
-    'destructive' => 'bg-transparent text-destructive hover:bg-destructive-subtle active:bg-destructive-subtle/50',
-    'info' => 'bg-transparent text-info hover:bg-info-subtle active:bg-info-subtle/50',
+    'primary' => 'bg-transparent text-primary hover:bg-primary/10 active:bg-primary/20',
+    'secondary' => 'bg-transparent text-secondary hover:bg-secondary/10 active:bg-secondary/20',
+    'success' => 'bg-transparent text-success hover:bg-success/10 active:bg-success/20',
+    'warning' => 'bg-transparent text-warning hover:bg-warning/10 active:bg-warning/20',
+    'destructive' => 'bg-transparent text-destructive hover:bg-destructive/10 active:bg-destructive/20',
+    'info' => 'bg-transparent text-info hover:bg-info/10 active:bg-info/20',
 ];
 
 $linkVariants = [

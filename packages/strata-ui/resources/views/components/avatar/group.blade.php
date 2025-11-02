@@ -41,14 +41,14 @@ $shapeClasses = $shapes[$shape] ?? $shapes['circle'];
             });
         }
     }"
-    {{ $attributes->merge(['class' => 'flex [&>[data-strata-avatar]:not(:first-child)]:-ml-2 [&>[data-strata-avatar]]:ring-2 [&>[data-strata-avatar]]:ring-background']) }}
+    {{ $attributes->merge(['class' => 'flex [&>[data-strata-avatar]:not(:first-child)]:-ml-2 [&>[data-strata-avatar]]:ring-2 [&>[data-strata-avatar]]:ring-body']) }}
 >
     {{ $slot }}
 
     <div
         x-show="remaining > 0"
         x-cloak
-        class="inline-flex items-center justify-center bg-muted text-muted-foreground font-medium ring-2 ring-background {{ $sizeClasses }} {{ $shapeClasses }}"
+        class="inline-flex items-center justify-center bg-muted text-muted-foreground font-medium ring-2 ring-body {{ $sizeClasses }} {{ $shapeClasses }}"
     >
         +<span x-text="remaining"></span>
     </div>

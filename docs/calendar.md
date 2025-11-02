@@ -30,7 +30,7 @@ A flexible, dependency-free calendar component for date selection with multiple 
 ### Date Input with Popup
 
 ```blade
-<x-strata::calendar.input
+<x-strata::date-picker
     mode="single"
     wire:model.live="selectedDate"
     placeholder="Select a date..."
@@ -128,7 +128,7 @@ Disable specific dates.
 
 ## Preset Date Ranges
 
-Add quick selection buttons for common date ranges (only for range mode).
+Add quick selection buttons for common date ranges. The available presets change based on the selected mode.
 
 ```blade
 <x-strata::calendar
@@ -138,20 +138,26 @@ Add quick selection buttons for common date ranges (only for range mode).
 />
 ```
 
-Available presets:
+**Presets for single/multiple modes:**
 - Today
 - Yesterday
+- This week
+- This month
+
+**Presets for range mode:**
 - Last 7 days
 - Last 30 days
 - This month
 - Last month
+- This quarter
+- This year
 
 ## Date Input Component
 
-The `calendar.input` component provides a text input with a popup calendar.
+The `date-picker` component provides a text input with a popup calendar.
 
 ```blade
-<x-strata::calendar.input
+<x-strata::date-picker
     mode="single"
     wire:model.live="selectedDate"
     placeholder="Select a date..."
@@ -161,7 +167,7 @@ The `calendar.input` component provides a text input with a popup calendar.
 ### Range Input with Presets
 
 ```blade
-<x-strata::calendar.input
+<x-strata::date-picker
     mode="range"
     wire:model.live="dateRange"
     placeholder="Select date range..."
@@ -173,7 +179,7 @@ The `calendar.input` component provides a text input with a popup calendar.
 ### Clearable Input
 
 ```blade
-<x-strata::calendar.input
+<x-strata::date-picker
     mode="single"
     wire:model.live="selectedDate"
     :clearable="true"
@@ -228,7 +234,7 @@ The picker is positioned as a popover below the button and closes automatically 
 
 ### Minimal
 
-No borders or padding. Used internally by `calendar.input` for embedded calendars.
+No borders or padding. Used internally by `date-picker` for embedded calendars.
 
 ```blade
 <x-strata::calendar variant="minimal" />
@@ -259,7 +265,7 @@ The calendar supports full keyboard navigation:
 - **Arrow Keys**: Navigate between dates
 - **Enter/Space**: Select focused date
 - **Tab**: Move focus to/from calendar
-- **Escape**: Close popup (when used with `calendar.input`)
+- **Escape**: Close popup (when used with `date-picker`)
 
 ## Livewire Integration
 
@@ -352,7 +358,7 @@ public function updatedSelectedDate($value): void
 | `variant` | string | `'default'` | Visual variant: `default`, `bordered`, `card`, `minimal` |
 | `size` | string | `'md'` | Size: `sm`, `md`, `lg` |
 
-### Calendar Input Component
+### Date Picker Component
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -400,7 +406,7 @@ This creates a cohesive visual indication of the selected date range.
 <div>
     <h3>Select Your Stay</h3>
 
-    <x-strata::calendar.input
+    <x-strata::date-picker
         mode="range"
         wire:model.live="bookingDates"
         :min-date="now()->format('Y-m-d')"

@@ -11,12 +11,12 @@ $sizes = [
 ];
 
 $variants = [
-    'primary' => 'bg-primary-subtle text-primary-subtle-foreground border-primary-border',
-    'secondary' => 'bg-secondary-subtle text-secondary-subtle-foreground border-secondary-border',
-    'success' => 'bg-success-subtle text-success-subtle-foreground border-success-border',
-    'warning' => 'bg-warning-subtle text-warning-subtle-foreground border-warning-border',
-    'destructive' => 'bg-destructive-subtle text-destructive-subtle-foreground border-destructive-border',
-    'info' => 'bg-info-subtle text-info-subtle-foreground border-info-border',
+    'primary' => 'bg-primary/10 text-primary border-primary',
+    'secondary' => 'bg-secondary/10 text-secondary-foreground border-secondary',
+    'success' => 'bg-success/10 text-success border-success',
+    'warning' => 'bg-warning/10 text-warning border-warning',
+    'destructive' => 'bg-destructive/10 text-destructive border-destructive',
+    'info' => 'bg-info/10 text-info border-info',
 ];
 
 $sizeClasses = $sizes[$size] ?? $sizes['md'];

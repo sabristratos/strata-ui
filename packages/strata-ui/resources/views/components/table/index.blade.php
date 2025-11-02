@@ -3,8 +3,9 @@
     'size' => 'md',
     'hoverable' => true,
     'striped' => null,
-    'responsive' => true,
+    'responsive' => 'stacked',
     'sticky' => false,
+    'loading' => false,
 ])
 
 @php
@@ -26,7 +27,9 @@ $variantClasses = $variants[$variant] ?? $variants['bordered'];
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 
 $wrapperClasses = trim(implode(' ', array_filter([
-    $responsive ? 'overflow-x-auto' : '',
+    'relative',
+    $variant === 'bordered' ? 'rounded-lg overflow-hidden' : '',
+    $responsive === 'scroll' || $responsive === true ? 'overflow-x-auto' : '',
     $responsive ? 'w-full' : '',
 ])));
 
@@ -35,6 +38,7 @@ $tableClasses = trim(implode(' ', array_filter([
     'border-collapse',
     $variantClasses,
     $sizeClasses,
+    $responsive === 'stacked' ? 'table-responsive-stacked' : '',
 ])));
 @endphp
 
@@ -45,10 +49,16 @@ $tableClasses = trim(implode(' ', array_filter([
         hoverable: @js($hoverable),
         striped: @js($striped),
         sticky: @js($sticky),
+        loading: @js($loading),
     }"
     data-strata-table-wrapper
+    @if($variant === 'striped') data-striped @endif
     {{ $attributes->only(['class', 'style'])->merge(['class' => $wrapperClasses]) }}
 >
+    @if($loading)
+        <x-strata::table.loading />
+    @endif
+
     <table
         data-strata-table
         class="{{ $tableClasses }}"

@@ -22,13 +22,13 @@ $optionAttributes = $attributes->except(['class']);
     data-strata-select-option
     data-value="{{ $value }}"
     @if($disabled) data-disabled @endif
-    @click.stop="select('{{ $value }}')"
+    @click.stop.prevent="select('{{ $value }}')"
     {{ $optionAttributes->merge(['class' => $classes]) }}
     :class="{
         '{{ $selectedClasses }}': isSelected('{{ $value }}'),
         'ring-2 ring-inset ring-primary/50': highlighted === options.findIndex(opt => opt.value === '{{ $value }}' && !opt.disabled)
     }"
-    x-show="getFilteredOptions().some(opt => opt.value === '{{ $value }}')"
+    x-show="filteredOptions.some(opt => opt.value === '{{ $value }}')"
     role="option"
     :aria-selected="isSelected('{{ $value }}')"
 >
@@ -36,7 +36,7 @@ $optionAttributes = $attributes->except(['class']);
         <div class="flex items-center justify-center w-4 h-4 border-2 rounded transition-colors duration-150"
              :class="{
                  'border-primary bg-primary': isSelected('{{ $value }}'),
-                 'border-input-border': !isSelected('{{ $value }}')
+                 'border-border': !isSelected('{{ $value }}')
              }">
             <x-strata::icon.check
                 class="w-3 h-3 text-white"

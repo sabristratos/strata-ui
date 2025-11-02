@@ -1,12 +1,7 @@
 @props([])
 
 @php
-$classes = trim(implode(' ', array_filter([
-    'bg-table-header',
-    'text-table-header-foreground',
-    'border-t',
-    'border-table-border',
-])));
+$classes = 'bg-table-footer text-table-footer-foreground border-t border-table-border';
 @endphp
 
 <tfoot

@@ -4,16 +4,29 @@ Welcome to Strata UI, a Blade and Livewire component library for Laravel applica
 
 ## Component Library
 
+### Data Display
+
+- [Table](table.md) - Full-featured table with sorting, selection, loading states, responsive mobile layouts, and accessibility
+
 ### Forms
 
 - [Calendar](calendar.md) - Date picker with multiple selection modes, keyboard navigation, and range selection
 - [File Input](file-input.md) - File upload component with drag-and-drop, previews, and Livewire integration
+- [Repeater](repeater.md) - Dynamic repeater with add/remove/reorder, deferred sync, and auto-extraction for all field types
 - [Select](select.md) - Flexible select component with single/multiselect, keyboard navigation, and customizable options
 - [Toggle](toggle.md) - Switch-style toggle component with size variants, rounded options, and Livewire integration
+
+### Navigation
+
+- [Dropdown](dropdown.md) - Comprehensive dropdown menu with actions, checkboxes, radios, nested submenus, and full ARIA keyboard navigation
 
 ### Overlays
 
 - [Modal](modal.md) - Dialog and flyout component using native `<dialog>` with Alpine.js, Livewire integration, and multiple size variants
+
+### Notifications
+
+- [Toast](toast.md) - Toast notifications with auto-dismiss, progress bar, multiple variants, positioning options, and both Livewire and JavaScript APIs
 
 ### Getting Started
 

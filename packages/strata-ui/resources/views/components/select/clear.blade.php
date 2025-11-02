@@ -10,7 +10,7 @@
         icon="x"
         :size="$size"
         variant="secondary"
-        style="ghost"
+        appearance="ghost"
         aria-label="Clear selection"
         @click.stop="clear()"
         type="button"

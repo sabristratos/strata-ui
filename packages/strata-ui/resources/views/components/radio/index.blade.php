@@ -36,7 +36,7 @@ $descriptionSizes = [
 ];
 
 $states = [
-    'default' => 'border-input-border hover:border-input-hover focus:ring-ring accent-primary',
+    'default' => 'border-border hover:border-primary/50 focus:ring-ring accent-primary',
     'success' => 'border-success hover:border-success/80 focus:ring-success accent-success',
     'error' => 'border-destructive hover:border-destructive/80 focus:ring-destructive accent-destructive',
     'warning' => 'border-warning hover:border-warning/80 focus:ring-warning accent-warning',
@@ -64,6 +64,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
                 type="radio"
                 id="{{ $radioId }}"
                 data-strata-radio
+                data-strata-field-type="radio"
                 @if($checked) checked @endif
                 @if($disabled) disabled @endif
                 @if($name) name="{{ $name }}" @endif
@@ -72,7 +73,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
                 ]) }}
             />
             <label for="{{ $radioId }}" class="cursor-pointer">
-                <div class="{{ $sizeClasses }} rounded-full bg-background border-2 border-input-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
+                <div class="{{ $sizeClasses }} rounded-full bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
                     <div class="{{ $dotSizeClasses }} rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity"></div>
                 </div>
             </label>
@@ -113,6 +114,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
             type="radio"
             id="{{ $radioId }}"
             data-strata-radio
+            data-strata-field-type="radio"
             @if($checked) checked @endif
             @if($disabled) disabled @endif
             @if($name) name="{{ $name }}" @endif
@@ -120,7 +122,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
                 'class' => "sr-only peer"
             ]) }}
         />
-        <div class="{{ $sizeClasses }} rounded-full bg-background border-2 border-input-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary mt-0.5">
+        <div class="{{ $sizeClasses }} rounded-full bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary mt-0.5">
             <div class="{{ $dotSizeClasses }} rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity"></div>
         </div>
 
@@ -158,6 +160,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
             id="{{ $radioId }}"
             data-strata-radio
             data-strata-radio-input
+            data-strata-field-type="radio"
             @if($checked) checked @endif
             @if($disabled) disabled @endif
             @if($name) name="{{ $name }}" @endif
@@ -167,7 +170,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
         />
 
         <div class="absolute top-4 right-4" data-strata-radio-indicator>
-            <div class="w-6 h-6 rounded-full border bg-background border-input-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
+            <div class="w-6 h-6 rounded-full border bg-secondary border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
                 <div class="w-2.5 h-2.5 rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity" data-strata-radio-dot></div>
             </div>
         </div>
@@ -209,6 +212,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
             type="radio"
             id="{{ $radioId }}"
             data-strata-radio
+            data-strata-field-type="radio"
             @if($checked) checked @endif
             @if($disabled) disabled @endif
             @if($name) name="{{ $name }}" @endif

@@ -109,13 +109,14 @@ $borderWidth = $style === 'bordered' ? 'border-2' : 'border';
 
     {{-- Dismiss button --}}
     @if($dismissible)
-        <button
-            type="button"
+        <x-strata::button.icon
+            icon="x"
+            size="sm"
+            variant="secondary"
+            appearance="ghost"
             @click="show = false"
-            class="flex-shrink-0 inline-flex items-center justify-center size-8 rounded-md hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
             aria-label="Dismiss"
-        >
-            <x-strata::icon.x class="size-4" />
-        </button>
+            class="flex-shrink-0"
+        />
     @endif
 </div>

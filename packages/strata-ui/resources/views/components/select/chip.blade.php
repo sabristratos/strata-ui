@@ -26,12 +26,13 @@ $classes = trim("$baseClasses $sizeClasses");
 
 <span data-strata-select-chip {{ $attributes->merge(['class' => $classes]) }}>
     <span x-text="label"></span>
-    <button
-        type="button"
+    <x-strata::button.icon
+        icon="x"
+        size="sm"
+        variant="primary"
+        appearance="ghost"
         @click.stop="$dispatch('remove')"
-        class="hover:bg-primary/20 rounded-sm transition-colors duration-150 p-0.5 -mr-1"
         aria-label="Remove"
-    >
-        <x-strata::icon.x class="{{ $iconSize }}" />
-    </button>
+        class="hover:bg-primary/20 !p-0.5 -mr-1"
+    />
 </span>

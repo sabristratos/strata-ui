@@ -7,9 +7,9 @@
 @php
 $value = $value ?? uniqid('accordion-item-');
 
-$borderedClasses = 'border border-border bg-background rounded-lg overflow-hidden';
+$borderedClasses = 'border border-border bg-secondary rounded-lg overflow-hidden';
 $dividedClasses = 'border-b border-border last:border-b-0';
-$cardClasses = 'bg-card text-card-foreground border border-card-border rounded-lg shadow-sm overflow-hidden';
+$cardClasses = 'bg-card text-card-foreground border border-border rounded-lg shadow-sm overflow-hidden';
 $minimalClasses = 'overflow-hidden';
 
 $variants = [

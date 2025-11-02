@@ -8,8 +8,8 @@
 
 @php
 $styles = [
-    'elevated' => 'bg-card text-card-foreground border border-card-border shadow-sm',
-    'outlined' => 'bg-card text-card-foreground border border-card-border',
+    'elevated' => 'bg-card text-card-foreground border border-border shadow-sm',
+    'outlined' => 'bg-card text-card-foreground border border-border',
     'filled' => 'bg-card text-card-foreground',
     'flat' => 'bg-transparent text-card-foreground',
 ];
@@ -26,7 +26,7 @@ if ($hoverable || $clickable || $href) {
     } elseif ($style === 'outlined') {
         $interactiveClasses .= ' hover:border-primary';
     } else {
-        $interactiveClasses .= ' hover:bg-card-hover';
+        $interactiveClasses .= ' hover:bg-accent';
     }
 }
 

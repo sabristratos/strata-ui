@@ -22,8 +22,13 @@ $dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
     <div
         class="grid grid-cols-7 gap-1"
+        wire:ignore
         x-data="{
             getDaysInMonth() {
+                if (!currentMonth || !(currentMonth instanceof Date)) {
+                    return [];
+                }
+
                 const year = currentMonth.getFullYear();
                 const month = currentMonth.getMonth() + {{ $monthOffset }};
                 const firstDay = new Date(year, month, 1);

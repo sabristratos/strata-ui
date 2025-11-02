@@ -3,7 +3,7 @@
 ])
 
 @php
-$classes = 'flex items-center justify-between gap-4 px-6 py-4 border-b border-dialog-border';
+$classes = 'flex items-center justify-between gap-4 px-6 py-4 border-b border-border';
 @endphp
 
 <div data-strata-modal-header {{ $attributes->merge(['class' => $classes]) }}>

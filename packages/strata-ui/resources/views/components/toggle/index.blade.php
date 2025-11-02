@@ -25,7 +25,7 @@ $thumbSizes = [
 $thumbTranslations = [
     'sm' => 'translate-x-1 group-has-[:checked]:translate-x-5',
     'md' => 'translate-x-1 group-has-[:checked]:translate-x-7',
-    'lg' => 'translate-x-1 group-has-[:checked]:translate-x-[2.75rem]',
+    'lg' => 'translate-x-1 group-has-[:checked]:translate-x-[2.5rem]',
 ];
 
 $labelSizes = [
@@ -54,20 +54,20 @@ $roundedClasses = [
 
 $states = [
     'default' => [
-        'track' => 'bg-muted group-has-[:checked]:bg-primary focus:ring-primary dark:bg-secondary dark:group-has-[:checked]:bg-secondary-700',
-        'thumb' => 'bg-white dark:bg-muted',
+        'track' => 'bg-muted group-has-[:checked]:bg-primary focus:ring-primary',
+        'thumb' => 'bg-body',
     ],
     'success' => [
-        'track' => 'bg-muted group-has-[:checked]:bg-success focus:ring-success dark:bg-secondary dark:group-has-[:checked]:bg-success',
-        'thumb' => 'bg-white dark:bg-muted',
+        'track' => 'bg-muted group-has-[:checked]:bg-success focus:ring-success',
+        'thumb' => 'bg-body',
     ],
     'error' => [
-        'track' => 'bg-muted group-has-[:checked]:bg-destructive focus:ring-destructive dark:bg-secondary dark:group-has-[:checked]:bg-destructive',
-        'thumb' => 'bg-white dark:bg-muted',
+        'track' => 'bg-muted group-has-[:checked]:bg-destructive focus:ring-destructive',
+        'thumb' => 'bg-body',
     ],
     'warning' => [
-        'track' => 'bg-muted group-has-[:checked]:bg-warning focus:ring-warning dark:bg-secondary dark:group-has-[:checked]:bg-warning',
-        'thumb' => 'bg-white dark:bg-muted',
+        'track' => 'bg-muted group-has-[:checked]:bg-warning focus:ring-warning',
+        'thumb' => 'bg-body',
     ],
 ];
 
@@ -115,6 +115,7 @@ $toggleAttributes = $attributes->except(['class', 'style']);
             type="checkbox"
             id="{{ $toggleId }}"
             data-strata-toggle
+            data-strata-field-type="toggle"
             @if($checked) checked @endif
             @if($disabled) disabled @endif
             {{ $toggleAttributes->merge(['class' => 'sr-only peer']) }}
@@ -123,7 +124,7 @@ $toggleAttributes = $attributes->except(['class', 'style']);
         <label
             for="{{ $toggleId }}"
             role="switch"
-            class="relative flex items-center cursor-pointer {{ $disabled ? 'opacity-50 cursor-not-allowed' : '' }} outline-offset-2 transition ease-in-out duration-100 focus:ring-2 focus:ring-offset-2 {{ $trackSizeClasses }} {{ $roundedClass }} {{ $stateClasses['track'] }} dark:focus:ring-offset-secondary-800"
+            class="relative flex items-center cursor-pointer {{ $disabled ? 'opacity-50 cursor-not-allowed' : '' }} outline-offset-2 transition ease-in-out duration-150 focus:ring-2 focus:ring-offset-2 {{ $trackSizeClasses }} {{ $roundedClass }} {{ $stateClasses['track'] }}"
         >
             <span class="transition ease-in-out duration-200 {{ $thumbSizeClasses }} {{ $roundedClass }} {{ $stateClasses['thumb'] }} {{ $thumbTranslateClasses }}"></span>
         </label>

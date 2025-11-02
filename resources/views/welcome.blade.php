@@ -4,133 +4,44 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Laravel') }} - Strata UI Showcase</title>
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
         @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @unless (app()->environment('local'))
-            @strataStyles
-        @endunless
+        @strataStyles
     </head>
-    <body class="bg-background p-8 space-y-8" x-data="{ darkMode: $persist(false).as('darkMode') }" :class="darkMode ? 'scheme-dark' : 'scheme-light'">
+    <body class="bg-body text-foreground p-8" x-data="{ darkMode: $persist(false).as('darkMode') }" :class="darkMode ? 'scheme-dark' : 'scheme-light'">
 
-        {{-- Select Component Demo --}}
-        <div>
-            <h2 class="text-xl font-semibold mb-4">Select - Livewire Integration Demo</h2>
-            <x-strata::card style="elevated">
-                <x-strata::card.body padding="lg">
-                    @livewire('select-demo')
-                </x-strata::card.body>
-            </x-strata::card>
+        @livewire('component-showcase')
+
+        <div class="mt-16 pt-16 border-t border-border">
+            <h1 class="text-3xl font-bold mb-8">Tabs Component</h1>
+            @livewire('tabs-demo')
         </div>
 
-        {{-- Toggle Component Demo --}}
-        <div>
-            <h2 class="text-xl font-semibold mb-4">Toggle - Livewire Integration Demo</h2>
-            <x-strata::card style="elevated">
-                <x-strata::card.body padding="lg">
-                    @livewire('toggle-demo')
-                </x-strata::card.body>
-            </x-strata::card>
+        <div class="mt-16 pt-16 border-t border-border">
+            <h1 class="text-3xl font-bold mb-8">Breadcrumbs Component</h1>
+            @livewire('breadcrumbs-demo')
         </div>
 
-        {{-- Kbd Component Demo --}}
-        <div>
-            <h2 class="text-xl font-semibold mb-4">Kbd Component Demo</h2>
-            <x-strata::card style="elevated">
-                <x-strata::card.body padding="lg">
-                    <div class="space-y-6">
-                        {{-- Sizes Demo --}}
-                        <div>
-                            <h3 class="text-lg font-medium mb-3">Sizes</h3>
-                            <div class="flex flex-wrap items-center gap-3">
-                                <x-strata::kbd size="sm">Ctrl</x-strata::kbd>
-                                <x-strata::kbd size="md">Shift</x-strata::kbd>
-                                <x-strata::kbd size="lg">Enter</x-strata::kbd>
-                            </div>
-                        </div>
-
-                        {{-- Variants Demo --}}
-                        <div>
-                            <h3 class="text-lg font-medium mb-3">Variants</h3>
-                            <div class="flex flex-wrap items-center gap-3">
-                                <x-strata::kbd variant="primary">Primary</x-strata::kbd>
-                                <x-strata::kbd variant="secondary">Secondary</x-strata::kbd>
-                                <x-strata::kbd variant="success">Success</x-strata::kbd>
-                                <x-strata::kbd variant="warning">Warning</x-strata::kbd>
-                                <x-strata::kbd variant="destructive">Destructive</x-strata::kbd>
-                                <x-strata::kbd variant="info">Info</x-strata::kbd>
-                            </div>
-                        </div>
-
-                        {{-- Practical Examples --}}
-                        <div>
-                            <h3 class="text-lg font-medium mb-3">Practical Examples</h3>
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-muted-foreground">Single key:</span>
-                                    <x-strata::kbd>⌘</x-strata::kbd>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-muted-foreground">Key combination:</span>
-                                    <x-strata::kbd>Ctrl</x-strata::kbd>
-                                    <span>+</span>
-                                    <x-strata::kbd>C</x-strata::kbd>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-muted-foreground">Command shortcut:</span>
-                                    <x-strata::kbd>⌘</x-strata::kbd>
-                                    <span>+</span>
-                                    <x-strata::kbd>K</x-strata::kbd>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-muted-foreground">Complex combination:</span>
-                                    <x-strata::kbd size="sm">Ctrl</x-strata::kbd>
-                                    <span class="text-sm">+</span>
-                                    <x-strata::kbd size="sm">Shift</x-strata::kbd>
-                                    <span class="text-sm">+</span>
-                                    <x-strata::kbd size="sm">P</x-strata::kbd>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </x-strata::card.body>
-            </x-strata::card>
+        <div class="mt-16 pt-16 border-t border-border">
+            <h1 class="text-3xl font-bold mb-8">Toast Component</h1>
+            @livewire('toast-demo')
         </div>
 
-        {{-- Modal Component Demo --}}
-        <div>
-            <h2 class="text-xl font-semibold mb-4">Modal - Livewire Integration Demo</h2>
-            <x-strata::card style="elevated">
-                <x-strata::card.body padding="lg">
-                    @livewire('modal-demo')
-                </x-strata::card.body>
-            </x-strata::card>
+        <div class="mt-16 pt-16 border-t border-border">
+            <h1 class="text-3xl font-bold mb-8">Tooltip Component</h1>
+            @livewire('tooltip-demo')
         </div>
 
-        {{-- Calendar Component Demo --}}
-        <div>
-            <h2 class="text-xl font-semibold mb-4">Calendar - Livewire Integration Demo</h2>
-            <x-strata::card style="elevated">
-                <x-strata::card.body padding="lg">
-                    @livewire('calendar-demo')
-                </x-strata::card.body>
-            </x-strata::card>
+        <div class="mt-16 pt-16 border-t border-border">
+            @livewire('table-demo')
         </div>
 
-        {{-- Repeater Component Demo --}}
-        <div>
-            <h2 class="text-xl font-semibold mb-4">Repeater - Livewire Integration Demo</h2>
-            <x-strata::card style="elevated">
-                <x-strata::card.body padding="lg">
-                    @livewire('repeater-demo')
-                </x-strata::card.body>
-            </x-strata::card>
-        </div>
+        <x-strata::toast />
 
         {{-- Theme Switcher --}}
         <button
@@ -142,9 +53,7 @@
             <x-strata::icon.moon x-show="!darkMode" class="w-5 h-5 text-foreground" />
         </button>
 
-    @unless (app()->environment('local'))
-        @strataScripts
-    @endunless
+    @strataScripts
     @livewireScripts
     </body>
 </html>

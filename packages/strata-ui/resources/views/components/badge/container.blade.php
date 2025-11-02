@@ -41,7 +41,7 @@ $showBadge = $badge !== null || $dot;
     @if($showBadge)
         <span class="absolute z-10 {{ $positionClasses }}">
             @if($dot)
-                <span class="inline-block {{ $dotColor }} {{ $dotSize }} rounded-full border-2 border-background" aria-label="{{ $badge ?? 'Indicator' }}"></span>
+                <span class="inline-block {{ $dotColor }} {{ $dotSize }} rounded-full border-2 border-body" aria-label="{{ $badge ?? 'Indicator' }}"></span>
             @else
                 <x-strata::badge :variant="$variant" :size="$size" style="filled">
                     {{ $badge }}

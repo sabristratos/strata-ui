@@ -36,7 +36,7 @@ $descriptionSizes = [
 ];
 
 $states = [
-    'default' => 'border-input-border hover:border-input-hover focus:ring-ring accent-primary',
+    'default' => 'border-border hover:border-primary/50 focus:ring-ring accent-primary',
     'success' => 'border-success hover:border-success/80 focus:ring-success accent-success',
     'error' => 'border-destructive hover:border-destructive/80 focus:ring-destructive accent-destructive',
     'warning' => 'border-warning hover:border-warning/80 focus:ring-warning accent-warning',
@@ -67,6 +67,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
                 type="checkbox"
                 id="{{ $checkboxId }}"
                 data-strata-checkbox
+                data-strata-field-type="checkbox"
                 @if($checked) checked @endif
                 @if($disabled) disabled @endif
                 {{ $checkboxAttributes->merge([
@@ -74,7 +75,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
                 ]) }}
             />
             <label for="{{ $checkboxId }}" class="cursor-pointer">
-                <div class="{{ $sizeClasses }} rounded-md bg-background border-2 border-input-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
+                <div class="{{ $sizeClasses }} rounded-md bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
                     <x-strata::icon.check
                         class="{{ $iconSizeClasses }} text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
                     />
@@ -118,13 +119,14 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
             type="checkbox"
             id="{{ $checkboxId }}"
             data-strata-checkbox
+            data-strata-field-type="checkbox"
             @if($checked) checked @endif
             @if($disabled) disabled @endif
             {{ $checkboxAttributes->merge([
                 'class' => "sr-only peer"
             ]) }}
         />
-        <div class="{{ $sizeClasses }} rounded-md bg-background border-2 border-input-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary mt-0.5">
+        <div class="{{ $sizeClasses }} rounded-md bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary mt-0.5">
             <x-strata::icon.check
                 class="{{ $iconSizeClasses }} text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
             />
@@ -173,7 +175,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
         />
 
         <div class="absolute top-4 right-4" data-strata-checkbox-indicator>
-            <div class="w-6 h-6 rounded-md border bg-background border-input-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
+            <div class="w-6 h-6 rounded-md border bg-secondary border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
                 <x-strata::icon.check
                     class="w-4 h-4 text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
                     data-strata-checkbox-icon
@@ -219,6 +221,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
             type="checkbox"
             id="{{ $checkboxId }}"
             data-strata-checkbox
+            data-strata-field-type="checkbox"
             @if($checked) checked @endif
             @if($disabled) disabled @endif
             {{ $checkboxAttributes->merge([

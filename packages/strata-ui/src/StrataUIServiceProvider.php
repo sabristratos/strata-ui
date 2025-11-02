@@ -17,6 +17,7 @@ class StrataUIServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton(FileService::class);
+        $this->app->singleton('strata', Strata::class);
     }
 
     public function boot(): void
