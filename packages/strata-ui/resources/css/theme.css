@@ -126,14 +126,14 @@
   --color-table-footer: light-dark(var(--color-neutral-50), var(--color-neutral-800));
   --color-table-footer-foreground: light-dark(var(--color-neutral-700), var(--color-neutral-200));
 
-  --color-sidebar: light-dark(var(--color-neutral-50), var(--color-neutral-950));
+  --color-sidebar: light-dark(var(--color-neutral-100), var(--color-neutral-900));
   --color-sidebar-foreground: var(--color-foreground);
   --color-sidebar-primary: light-dark(var(--color-primary-600), var(--color-primary-400));
   --color-sidebar-primary-foreground: light-dark(white, var(--color-neutral-950));
   --color-sidebar-accent: var(--color-accent);
   --color-sidebar-accent-foreground: var(--color-accent-foreground);
   --color-sidebar-border: var(--color-border);
-  --color-sidebar-hover: light-dark(var(--color-neutral-100), var(--color-neutral-900));
+  --color-sidebar-hover: light-dark(var(--color-neutral-200), var(--color-neutral-800));
   --color-sidebar-active: light-dark(var(--color-primary-100), oklch(from var(--color-primary-900) l c h / 0.3));
   --color-sidebar-active-foreground: light-dark(var(--color-primary-700), var(--color-primary-300));
 

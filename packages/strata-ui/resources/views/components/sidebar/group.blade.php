@@ -41,12 +41,27 @@ $groupId = $id ?? $attributes->get('id') ?? 'sidebar-group-' . uniqid();
     x-data="{
         groupId: @js($groupId),
         isOpen: false,
+        get hasVisibleChildren() {
+            if (!searchQuery) return true;
+            const items = this.$el.querySelectorAll('[data-strata-sidebar-item]');
+            return Array.from(items).some(item => {
+                const label = item.querySelector('[data-strata-sidebar-item-label]');
+                return label && label.textContent.toLowerCase().includes(searchQuery.toLowerCase());
+            });
+        },
         init() {
             const savedState = localStorage.getItem('sidebar-group-' + this.groupId);
             if (savedState === 'true' || @js($defaultExpanded)) {
                 this.$el.open = true;
                 this.isOpen = true;
             }
+
+            this.$watch('searchQuery', (value) => {
+                if (value && this.hasVisibleChildren) {
+                    this.$el.open = true;
+                    this.isOpen = true;
+                }
+            });
         },
         handleToggle(event) {
             this.isOpen = this.$el.open;
@@ -54,6 +69,7 @@ $groupId = $id ?? $attributes->get('id') ?? 'sidebar-group-' . uniqid();
         }
     }"
     x-on:toggle="handleToggle($event)"
+    x-show="hasVisibleChildren"
     {{ $attributes->merge(['class' => 'space-y-1']) }}
     data-strata-sidebar-group
     data-group-id="{{ $groupId }}"
@@ -65,6 +81,7 @@ $groupId = $id ?? $attributes->get('id') ?? 'sidebar-group-' . uniqid();
                transition-all duration-150 ease-out
                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
                list-none cursor-pointer"
+        :aria-expanded="isOpen.toString()"
         aria-controls="{{ $groupId }}-content"
         data-strata-sidebar-group-trigger
     >
@@ -75,18 +92,22 @@ $groupId = $id ?? $attributes->get('id') ?? 'sidebar-group-' . uniqid();
         @endif
 
         <span
-            x-show="!collapsed || isMobile"
-            x-transition.opacity.duration.150ms
-            class="flex-1 text-left truncate"
+            :class="{
+                'opacity-0 w-0 overflow-hidden': collapsed && !isMobile,
+                'opacity-100 flex-1': !collapsed || isMobile
+            }"
+            class="text-left truncate transition-all duration-150"
         >
             {{ $title }}
         </span>
 
         @if($badge)
         <span
-            x-show="!collapsed || isMobile"
-            x-transition.opacity.duration.150ms
-            class="flex-shrink-0"
+            :class="{
+                'opacity-0 w-0 overflow-hidden': collapsed && !isMobile,
+                'opacity-100': !collapsed || isMobile
+            }"
+            class="flex-shrink-0 transition-all duration-150"
         >
             <x-strata::badge :variant="$badgeVariant" size="sm">
                 {{ $badge }}
@@ -95,9 +116,12 @@ $groupId = $id ?? $attributes->get('id') ?? 'sidebar-group-' . uniqid();
         @endif
 
         <span
-            x-show="!collapsed || isMobile"
-            x-transition.opacity.duration.150ms
-            :class="isOpen ? 'rotate-90' : 'rotate-0'"
+            :class="{
+                'opacity-0 w-0 overflow-hidden': collapsed && !isMobile,
+                'opacity-100': !collapsed || isMobile,
+                'rotate-90': isOpen,
+                'rotate-0': !isOpen
+            }"
             class="flex items-center justify-center flex-shrink-0 w-4 h-4 transition-all duration-150 origin-center"
             data-strata-sidebar-group-chevron
         >

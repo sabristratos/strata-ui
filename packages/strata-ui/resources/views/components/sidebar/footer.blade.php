@@ -32,8 +32,11 @@
     data-strata-sidebar-footer
 >
     <div
-        x-show="!collapsed || isMobile"
-        x-transition.opacity.duration.150ms
+        :class="{
+            'opacity-0 h-0 overflow-hidden pointer-events-none': collapsed && !isMobile,
+            'opacity-100 h-auto': !collapsed || isMobile
+        }"
+        class="transition-all duration-150"
     >
         {{ $slot }}
     </div>

@@ -61,45 +61,42 @@ $finalClasses = $baseClasses . ' ' . $stateClasses;
     @if($active)
         aria-current="page"
     @endif
+    x-show="filterItems('{{ addslashes($slot->toHtml()) }}')"
     {{ $attributes->merge(['class' => $finalClasses]) }}
     data-strata-sidebar-item
 >
-    @if($icon || $attributes->has('icon'))
+    @if($icon)
         <span
             class="flex-shrink-0 transition-all"
             data-strata-sidebar-item-icon
         >
-            @if(isset($icon) && $icon)
-                <x-dynamic-component :component="'strata::icon.' . $icon" class="w-5 h-5" />
-            @else
-                {{ $icon ?? '' }}
-            @endif
+            <x-dynamic-component :component="'strata::icon.' . $icon" class="w-5 h-5" />
         </span>
     @endif
 
     <span
-        x-show="!collapsed || isMobile"
-        x-transition.opacity.duration.150ms
-        class="flex-1 text-left truncate"
+        :class="{
+            'opacity-0 w-0 overflow-hidden': collapsed && !isMobile,
+            'opacity-100 flex-1': !collapsed || isMobile
+        }"
+        class="text-left truncate transition-all duration-150"
         data-strata-sidebar-item-label
     >
         {{ $slot }}
     </span>
 
-    @if($badge || $attributes->has('badge'))
+    @if($badge)
         <span
-            x-show="!collapsed || isMobile"
-            x-transition.opacity.duration.150ms
-            class="flex-shrink-0"
+            :class="{
+                'opacity-0 w-0 overflow-hidden': collapsed && !isMobile,
+                'opacity-100': !collapsed || isMobile
+            }"
+            class="flex-shrink-0 transition-all duration-150"
             data-strata-sidebar-item-badge
         >
-            @if(isset($badge) && $badge)
-                <x-strata::badge :variant="$badgeVariant" size="sm">
-                    {{ $badge }}
-                </x-strata::badge>
-            @else
-                {{ $badge ?? '' }}
-            @endif
+            <x-strata::badge :variant="$badgeVariant" size="sm">
+                {{ $badge }}
+            </x-strata::badge>
         </span>
     @endif
 </{{ $tag }}>

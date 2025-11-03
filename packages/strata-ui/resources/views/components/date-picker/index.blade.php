@@ -8,6 +8,8 @@
     'weekStartsOn' => 0,
     'monthsToShow' => 1,
     'showPresets' => false,
+    'yearRangeStart' => null,
+    'yearRangeEnd' => null,
     'variant' => 'default',
     'size' => 'md',
     'state' => 'default',
@@ -18,6 +20,10 @@
 
 @php
 $id = $attributes->get('id', 'date-picker-' . uniqid());
+
+$currentYear = date('Y');
+$yearRangeStart = $yearRangeStart ?? ($currentYear - 50);
+$yearRangeEnd = $yearRangeEnd ?? ($currentYear + 10);
 
 $inputAttributes = $attributes->except(['class', 'id']);
 $wrapperAttributes = $attributes->only(['class', 'id']);
@@ -211,6 +217,8 @@ document.addEventListener('alpine:init', () => {
                     :week-starts-on="$weekStartsOn"
                     :months-to-show="$monthsToShow"
                     :show-presets="$showPresets"
+                    :year-range-start="$yearRangeStart"
+                    :year-range-end="$yearRangeEnd"
                     variant="minimal"
                 />
             </div>

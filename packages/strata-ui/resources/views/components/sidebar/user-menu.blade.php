@@ -63,9 +63,11 @@ $menuId = 'sidebar-user-menu-' . uniqid();
             @endif
 
             <div
-                x-show="!collapsed || isMobile"
-                x-transition.opacity.duration.150ms
-                class="flex-1 min-w-0 text-left"
+                :class="{
+                    'opacity-0 w-0 overflow-hidden': collapsed && !isMobile,
+                    'opacity-100 flex-1': !collapsed || isMobile
+                }"
+                class="min-w-0 text-left transition-all duration-150"
             >
                 @if($name)
                 <p class="text-sm font-medium truncate">{{ $name }}</p>
@@ -76,9 +78,12 @@ $menuId = 'sidebar-user-menu-' . uniqid();
             </div>
 
             <span
-                x-show="!collapsed || isMobile"
-                x-transition.opacity.duration.150ms
-                :class="isOpen ? 'rotate-180' : 'rotate-0'"
+                :class="{
+                    'opacity-0 w-0 overflow-hidden': collapsed && !isMobile,
+                    'opacity-100': !collapsed || isMobile,
+                    'rotate-180': isOpen,
+                    'rotate-0': !isOpen
+                }"
                 class="flex items-center justify-center flex-shrink-0 w-4 h-4 transition-all duration-150 origin-center"
             >
                 <x-strata::icon.chevron-up class="w-4 h-4" />

@@ -2,12 +2,15 @@
  * Strata UI - Main entry point
  *
  * Exports core utilities and helpers to window global scope.
- * Modules: Entangleable, Positionable, Image, Toast API
+ * Modules: Entangleable, Positionable, Image, Slider, Lightbox, Toast API
  */
 
 import Entangleable from './entangleable.js';
 import Positionable from './positionable.js';
 import Image from './image.js';
+import Slider from './slider.js';
+import Editor from './editor.js';
+import './lightbox.js';
 
 /**
  * @typedef {Object} ToastOptions
@@ -36,6 +39,18 @@ if (typeof window !== 'undefined') {
      * @type {function}
      */
     window.StrataImage = Image;
+
+    /**
+     * Slider component with carousel and form modes
+     * @type {typeof Slider}
+     */
+    window.StrataSlider = Slider;
+
+    /**
+     * Rich text editor component powered by Tiptap
+     * @type {function}
+     */
+    window.strataEditor = Editor;
 
     /**
      * Display a toast notification

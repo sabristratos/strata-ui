@@ -1,0 +1,210 @@
+[data-strata-lightbox-container] {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem 1rem;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    [data-strata-lightbox-container] {
+        padding: 4rem 2rem 2rem;
+    }
+}
+
+[data-strata-lightbox-media-container] {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 12rem);
+}
+
+@media (min-width: 640px) {
+    [data-strata-lightbox-media-container] {
+        max-width: calc(100vw - 4rem);
+    }
+}
+
+[data-strata-lightbox-video] {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+[data-strata-lightbox-document] {
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+    border: none;
+    background: white;
+}
+
+[data-strata-lightbox-navigation] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+[data-strata-lightbox-nav-group] {
+    display: flex;
+    gap: 0.5rem;
+}
+
+[data-strata-lightbox-nav-button] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-md);
+    background: rgb(255 255 255 / 0.1);
+    color: white;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    transition: all 0.15s ease;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+}
+
+[data-strata-lightbox-nav-button]:hover:not(:disabled) {
+    background: rgb(255 255 255 / 0.2);
+    border-color: rgb(255 255 255 / 0.3);
+}
+
+[data-strata-lightbox-nav-button]:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+[data-strata-lightbox-counter] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    background: rgb(255 255 255 / 0.1);
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgb(255 255 255 / 0.2);
+}
+
+[data-strata-lightbox-thumbnails] {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+}
+
+[data-strata-lightbox-thumbnails]::-webkit-scrollbar {
+    height: 6px;
+}
+
+[data-strata-lightbox-thumbnails]::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+[data-strata-lightbox-thumbnails]::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 0.2);
+    border-radius: 3px;
+}
+
+[data-strata-lightbox-thumbnail] {
+    flex-shrink: 0;
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.15s ease;
+    background: rgb(255 255 255 / 0.1);
+}
+
+[data-strata-lightbox-thumbnail]:hover {
+    border-color: rgb(255 255 255 / 0.5);
+}
+
+[data-strata-lightbox-thumbnail].active {
+    border-color: white;
+}
+
+[data-strata-lightbox-thumbnail] img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+[data-strata-lightbox-thumbnail-icon] {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255 255 255 / 0.7);
+}
+
+[data-strata-lightbox-caption] {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    color: rgb(255 255 255 / 0.9);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    max-width: 800px;
+}
+
+[data-strata-lightbox-loading] {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+[data-strata-lightbox-spinner] {
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid rgb(255 255 255 / 0.2);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: lightbox-spin 0.6s linear infinite;
+}
+
+@keyframes lightbox-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 640px) {
+    [data-strata-lightbox-nav-button] {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    [data-strata-lightbox-thumbnail] {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+}

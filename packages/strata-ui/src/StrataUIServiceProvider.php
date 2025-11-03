@@ -40,6 +40,10 @@ class StrataUIServiceProvider extends ServiceProvider
         Blade::directive('strataScripts', function () {
             return "<?php echo '<script src=\"' . asset('vendor/strata-ui/strata.js') . '\" defer></script>'; ?>";
         });
+
+        Blade::directive('strataLightbox', function () {
+            return "<?php echo view('strata-ui::components.lightbox.index')->render(); ?>";
+        });
     }
 
     protected function registerComponentNamespace(): void

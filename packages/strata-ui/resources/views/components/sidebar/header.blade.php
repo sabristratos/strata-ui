@@ -36,19 +36,20 @@
 >
     <div class="flex items-center justify-between gap-3">
         <div
-            x-show="!collapsed || isMobile"
-            x-transition.opacity.duration.150ms
-            class="flex-1 min-w-0"
+            :class="{
+                'opacity-0 w-0 overflow-hidden pointer-events-none': collapsed && !isMobile,
+                'opacity-100 flex-1': !collapsed || isMobile
+            }"
+            class="min-w-0 transition-all duration-150"
         >
             {{ $slot }}
         </div>
 
         @if($close)
         <button
-            x-show="isMobile"
             @click="close()"
             type="button"
-            class="flex-shrink-0 p-2 rounded-md hover:bg-sidebar-hover
+            class="md:hidden flex-shrink-0 p-2 rounded-md hover:bg-sidebar-hover
                    transition-colors duration-150
                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="Close sidebar"
@@ -61,8 +62,12 @@
 
     @if($search)
     <div
-        x-show="!collapsed || isMobile"
-        x-transition.opacity.duration.150ms
+        :class="{
+            'opacity-0 h-0 overflow-hidden pointer-events-none': collapsed && !isMobile,
+            'opacity-100 h-auto': !collapsed || isMobile
+        }"
+        role="search"
+        class="transition-all duration-150"
         data-strata-sidebar-search
     >
         <x-strata::input

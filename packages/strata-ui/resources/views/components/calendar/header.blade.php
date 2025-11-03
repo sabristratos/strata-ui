@@ -38,8 +38,7 @@
                 }
             });
 
-            const currentYear = new Date().getFullYear();
-            for (let i = currentYear - 100; i <= currentYear + 10; i++) {
+            for (let i = yearRangeStart; i <= yearRangeEnd; i++) {
                 this.years.push(i);
             }
 

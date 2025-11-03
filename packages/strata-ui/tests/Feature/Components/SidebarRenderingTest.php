@@ -113,6 +113,12 @@ describe('Sidebar Component', function () {
         expectComponent($this, 'sidebar', [], 'Content')
             ->toHaveClasses('transition-all', 'duration-300', 'ease-out', 'will-change-transform');
     });
+
+    test('overlay uses CSS starting-style animation', function () {
+        expectComponent($this, 'sidebar', ['overlay' => true], 'Content')
+            ->toContain('transition-discrete')
+            ->toContain('starting:opacity-0');
+    });
 });
 
 describe('Sidebar.Nav Component', function () {
@@ -192,6 +198,17 @@ describe('Sidebar.Item Component', function () {
             ->toContain('focus-visible:outline-none')
             ->toContain('focus-visible:ring-2');
     });
+
+    test('uses CSS starting-style animation', function () {
+        expectComponent($this, 'sidebar.item', slot: 'Item')
+            ->toContain('transition-discrete')
+            ->toContain('starting:opacity-0');
+    });
+
+    test('has search filtering integration', function () {
+        expectComponent($this, 'sidebar.item', slot: 'Dashboard')
+            ->toContain('x-show="filterItems(');
+    });
 });
 
 describe('Sidebar.Group Component', function () {
@@ -257,13 +274,30 @@ describe('Sidebar.Group Component', function () {
     test('has chevron icon for expansion', function () {
         expectComponent($this, 'sidebar.group', ['title' => 'Group'], 'Content')
             ->toContain('data-strata-sidebar-group-chevron')
-            ->toContain('m9 18 6-6-6-6');
+            ->toContain('<x-strata::icon.chevron-right');
     });
 
     test('has content wrapper with conditional padding', function () {
         expectComponent($this, 'sidebar.group', ['title' => 'Group'], 'Content')
             ->toContain('data-strata-sidebar-group-content')
             ->toContain(':class="collapsed ? \'\' : \'pl-6\'"');
+    });
+
+    test('has aria-expanded attribute', function () {
+        expectComponent($this, 'sidebar.group', ['title' => 'Group'], 'Content')
+            ->toContain(':aria-expanded="isOpen.toString()"');
+    });
+
+    test('uses CSS starting-style animation', function () {
+        expectComponent($this, 'sidebar.group', ['title' => 'Group'], 'Content')
+            ->toContain('transition-discrete')
+            ->toContain('starting:opacity-0');
+    });
+
+    test('has search filtering integration', function () {
+        expectComponent($this, 'sidebar.group', ['title' => 'Group'], 'Content')
+            ->toContain('hasVisibleChildren')
+            ->toContain('x-show="hasVisibleChildren"');
     });
 });
 
@@ -312,7 +346,8 @@ describe('Sidebar.Header Component', function () {
             ->toContain('data-strata-sidebar-search')
             ->toContain('<x-strata::input')
             ->toContain('type="search"')
-            ->toContain('x-model="searchQuery"');
+            ->toContain('x-model="searchQuery"')
+            ->toContain('role="search"');
     });
 
     test('renders with custom search placeholder', function () {
@@ -331,6 +366,12 @@ describe('Sidebar.Header Component', function () {
 
         expect($result->html)->not->toContain('data-strata-sidebar-close');
     });
+
+    test('uses CSS starting-style animation for collapsible elements', function () {
+        expectComponent($this, 'sidebar.header', ['search' => true], 'Logo')
+            ->toContain('transition-discrete')
+            ->toContain('starting:opacity-0');
+    });
 });
 
 describe('Sidebar.Footer Component', function () {
@@ -344,6 +385,12 @@ describe('Sidebar.Footer Component', function () {
     test('merges custom classes correctly', function () {
         expectComponent($this, 'sidebar.footer', ['class' => 'custom-footer'], 'Content')
             ->toHaveClasses('custom-footer', 'flex-shrink-0');
+    });
+
+    test('uses CSS starting-style animation', function () {
+        expectComponent($this, 'sidebar.footer', slot: 'Content')
+            ->toContain('transition-discrete')
+            ->toContain('starting:opacity-0');
     });
 });
 
@@ -385,5 +432,11 @@ describe('Sidebar.Toggle Component', function () {
     test('renders custom slot content', function () {
         expectComponent($this, 'sidebar.toggle', slot: '<span>Menu</span>')
             ->toRenderSlot('<span>Menu</span>');
+    });
+
+    test('uses icon components instead of inline SVG', function () {
+        expectComponent($this, 'sidebar.toggle')
+            ->toContain('<x-strata::icon.menu')
+            ->toContain('<x-strata::icon.chevrons-left');
     });
 });

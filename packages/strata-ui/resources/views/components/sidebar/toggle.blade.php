@@ -71,21 +71,18 @@ $toggleId = 'sidebar-toggle-' . uniqid();
         {{ $slot }}
     @else
         <template x-if="@js($variant) === 'hamburger' || (@js($variant) === 'auto' && sidebar.isMobile)">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <span>
+                <x-strata::icon.menu class="w-5 h-5" />
+            </span>
         </template>
 
         <template x-if="@js($variant) === 'collapse' || (@js($variant) === 'auto' && !sidebar.isMobile)">
-            <svg
-                class="w-5 h-5 transition-transform duration-150"
+            <span
+                class="transition-transform duration-150"
                 :class="sidebar.collapsed ? 'rotate-180' : 'rotate-0'"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
             >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-            </svg>
+                <x-strata::icon.chevrons-left class="w-5 h-5" />
+            </span>
         </template>
     @endif
 </button>

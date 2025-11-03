@@ -13,6 +13,7 @@
 <body class="bg-body text-foreground">
     {{ $slot }}
 
+    @strataLightbox
     @livewireScripts
     @strataScripts
 </body>

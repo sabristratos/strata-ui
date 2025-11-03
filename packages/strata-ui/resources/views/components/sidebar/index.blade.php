@@ -148,9 +148,10 @@ document.addEventListener('alpine:init', () => {
     @if($overlay)
     <div
         x-show="open && isMobile"
-        x-transition.opacity.duration.150ms
         @click="close()"
-        class="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm md:hidden"
+        class="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm md:hidden transition-all transition-discrete duration-150
+               opacity-100
+               starting:opacity-0"
         style="display: none;"
     ></div>
     @endif
@@ -161,6 +162,7 @@ document.addEventListener('alpine:init', () => {
         aria-label="Main navigation"
         :aria-expanded="open.toString()"
         :aria-hidden="(!open && isMobile).toString()"
+        :inert="!open && isMobile"
         x-cloak
         :class="{
             '{{ $widthClass }}': !collapsed && !isMobile,

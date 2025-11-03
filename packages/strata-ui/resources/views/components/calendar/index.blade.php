@@ -7,6 +7,8 @@
     'weekStartsOn' => 0,
     'monthsToShow' => 1,
     'showPresets' => false,
+    'yearRangeStart' => null,
+    'yearRangeEnd' => null,
     'variant' => 'default',
     'size' => 'md',
 ])
@@ -38,6 +40,10 @@ $initialValue = match($mode) {
     default => [],
 };
 
+$currentYear = date('Y');
+$yearRangeStart = $yearRangeStart ?? ($currentYear - 50);
+$yearRangeEnd = $yearRangeEnd ?? ($currentYear + 10);
+
 $inputAttributes = $attributes->except(['class']);
 $wrapperAttributes = $attributes->only(['class']);
 @endphp
@@ -58,6 +64,8 @@ $wrapperAttributes = $attributes->only(['class']);
         disabledDates: @js($disabledDates),
         weekStartsOn: @js($weekStartsOn),
         monthsToShow: @js($monthsToShow),
+        yearRangeStart: @js($yearRangeStart),
+        yearRangeEnd: @js($yearRangeEnd),
         rangeStart: null,
         rangeEnd: null,
 
