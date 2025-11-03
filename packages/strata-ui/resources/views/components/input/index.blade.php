@@ -1,3 +1,45 @@
+{{--
+/**
+ * Input Component
+ *
+ * Text input with support for icons, prefixes, suffixes, and validation states.
+ * Works with wire:model for Livewire integration.
+ *
+ * @props
+ * @prop string $type - HTML input type: 'text'|'email'|'password'|'number'|etc. (default: 'text')
+ * @prop string $state - Validation state: 'default'|'success'|'error'|'warning' (default: 'default')
+ * @prop string $size - Input size: 'sm'|'md'|'lg' (default: 'md')
+ * @prop string|null $iconLeft - Left icon name (default: null)
+ * @prop string|null $iconRight - Right icon name (default: null)
+ * @prop string|null $prefix - Text prefix (e.g., "$", "http://") (default: null)
+ * @prop string|null $suffix - Text suffix (e.g., ".com", "kg") (default: null)
+ * @prop bool $disabled - Disable input (default: false)
+ *
+ * @example Basic input
+ * <x-strata::input wire:model="name" placeholder="Enter your name" />
+ *
+ * @example Input with icon
+ * <x-strata::input
+ *     wire:model="email"
+ *     type="email"
+ *     iconLeft="mail"
+ *     placeholder="email@example.com" />
+ *
+ * @example Input with prefix/suffix
+ * <x-strata::input
+ *     wire:model="price"
+ *     type="number"
+ *     prefix="$"
+ *     suffix="USD" />
+ *
+ * @example Validation states
+ * <x-strata::input
+ *     wire:model="username"
+ *     state="error"
+ *     placeholder="Username" />
+ */
+--}}
+
 @props([
     'type' => 'text',
     'state' => 'default',

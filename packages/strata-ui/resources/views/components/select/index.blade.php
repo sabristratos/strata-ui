@@ -1,3 +1,48 @@
+{{--
+/**
+ * Select Component
+ *
+ * Multi-select and single-select dropdown with search, chips, and keyboard navigation.
+ * Uses Entangleable for Livewire sync and Positionable for dropdown positioning.
+ *
+ * @props
+ * @prop bool $multiple - Enable multiple selection (default: false)
+ * @prop string $size - Component size: 'sm'|'md'|'lg' (default: 'md')
+ * @prop string $state - Validation state: 'default'|'success'|'error'|'warning' (default: 'default')
+ * @prop string $placeholder - Placeholder text (default: 'Select an option')
+ * @prop bool $disabled - Disable the select (default: false)
+ * @prop string|null $name - Form input name (default: null)
+ * @prop mixed $value - Selected value(s) - array for multiple, string/int for single (default: null)
+ * @prop string $chips - Chip display mode: 'inline'|'below'|'summary' (default: 'inline')
+ * @prop bool $searchable - Enable search functionality (default: false)
+ * @prop int $minItemsForSearch - Minimum options before search shows (default: 0)
+ * @prop string $searchPlaceholder - Search input placeholder (default: 'Search...')
+ * @prop string $noResultsMessage - Message when search has no results (default: 'No results found')
+ * @prop string $emptyMessage - Message when no options available (default: 'No options available')
+ * @prop bool $clearable - Show clear button to reset selection (default: false)
+ *
+ * @slots
+ * @slot default - Select options using <x-strata::select.option> components
+ *
+ * @example Basic usage
+ * <x-strata::select wire:model="category" placeholder="Select category">
+ *     <x-strata::select.option value="1" label="Category 1" />
+ *     <x-strata::select.option value="2" label="Category 2" />
+ * </x-strata::select>
+ *
+ * @example Multi-select with search
+ * <x-strata::select
+ *     wire:model="tags"
+ *     :multiple="true"
+ *     :searchable="true"
+ *     chips="below"
+ *     placeholder="Select tags">
+ *     <x-strata::select.option value="laravel" label="Laravel" />
+ *     <x-strata::select.option value="php" label="PHP" />
+ * </x-strata::select>
+ */
+--}}
+
 @props([
     'multiple' => false,
     'size' => 'md',
@@ -104,7 +149,10 @@ document.addEventListener('alpine:init', () => {
             this.positionable = new window.StrataPositionable({
                 placement: 'bottom-start',
                 offset: 8,
-                strategy: 'absolute'
+                strategy: 'absolute',
+                enableSize: true,
+                matchReferenceWidth: true,
+                maxHeight: true
             });
 
             this.dropdown = this.$refs.dropdown;

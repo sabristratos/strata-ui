@@ -4,6 +4,12 @@ Welcome to Strata UI, a Blade and Livewire component library for Laravel applica
 
 ## Component Library
 
+### Typography
+
+- [Heading](heading.md) - Semantic heading component with responsive scale, gradient variant, and flexible rendering
+- [Text](text.md) - Versatile text component with presets for body, lead, muted, overline, quote, code, and more
+- [Prose](prose.md) - Rich content wrapper for markdown with beautiful typography styling
+
 ### Data Display
 
 - [Table](table.md) - Full-featured table with sorting, selection, loading states, responsive mobile layouts, and accessibility
@@ -18,7 +24,9 @@ Welcome to Strata UI, a Blade and Livewire component library for Laravel applica
 
 ### Navigation
 
+- [Bottom Navigation](bottom-nav.md) - Mobile-first bottom navigation bar with pill-style container, icon support, and multiple position variants
 - [Dropdown](dropdown.md) - Comprehensive dropdown menu with actions, checkboxes, radios, nested submenus, and full ARIA keyboard navigation
+- [Sidebar](sidebar.md) - Flexible navigation sidebar with persistent/mini variants, nested navigation, search, and responsive behavior
 
 ### Overlays
 

@@ -115,6 +115,16 @@ class ComponentShowcase extends Component
 
     public string $message = '';
 
+    public string $activeNav = 'home';
+
+    public string $activeNavIconOnly = 'home';
+
+    public string $activeNavBadge = 'home';
+
+    public string $activeNavState = 'home';
+
+    public bool $loadingProfile = false;
+
     public function mount(): void
     {
         $this->selectedColors = ['blue', 'green'];
@@ -200,6 +210,11 @@ class ComponentShowcase extends Component
     public function submit(): void
     {
         $this->message = 'Form submitted successfully! Email: '.$this->emailInput;
+    }
+
+    public function toggleProfileLoading(): void
+    {
+        $this->loadingProfile = ! $this->loadingProfile;
     }
 
     public function render()

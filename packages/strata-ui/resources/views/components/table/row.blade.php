@@ -9,7 +9,7 @@
         'bg-table-row-selected': @js($selected)
     }"
     aria-selected="{{ $selected ? 'true' : 'false' }}"
-    {{ $attributes }}
+    {{ $attributes->merge(['class' => '']) }}
 >
     {{ $slot }}
 </tr>

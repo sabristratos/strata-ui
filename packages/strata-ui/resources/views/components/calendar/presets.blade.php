@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-1 pr-4 mr-4 border-r border-border min-w-40">
+<div {{ $attributes->merge(['class' => 'flex flex-col gap-1 pr-4 mr-4 border-r border-border min-w-40']) }}>
     <div class="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
         Quick Select
     </div>

@@ -17,7 +17,7 @@ $aspectClass = $aspectRatios[$aspectRatio] ?? $aspectRatios['video'];
 $classes = "w-full $aspectClass object-cover";
 @endphp
 
-<div data-strata-card-image {{ $attributes->only('class') }}>
+<div data-strata-card-image {{ $attributes->only(['style', 'id'])->merge(['class' => '']) }}>
     @if($src)
         <img
             src="{{ $src }}"

@@ -46,7 +46,7 @@ if ($sortColumn === $column && $sortDirection) {
         @keydown.enter="$wire.sortBy('{{ $column }}')"
         @keydown.space.prevent="$wire.sortBy('{{ $column }}')"
     @endif
-    {{ $attributes }}
+    {{ $attributes->merge(['class' => '']) }}
 >
     @if($sortable)
         <div class="flex items-center gap-2"

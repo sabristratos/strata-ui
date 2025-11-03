@@ -18,6 +18,6 @@
         'hover:bg-primary/10': !isDisabled(day.date) && !isSelected(day.date),
         'ring-2 ring-primary ring-offset-2': focusedDate && isSameDay(day.date, focusedDate)
     }"
-    class="aspect-square flex items-center justify-center transition-all duration-150 text-sm font-medium focus:outline-none"
+    {{ $attributes->merge(['class' => 'aspect-square flex items-center justify-center transition-all duration-150 text-sm font-medium focus:outline-none']) }}
     x-text="day.date.getDate()"
 ></button>

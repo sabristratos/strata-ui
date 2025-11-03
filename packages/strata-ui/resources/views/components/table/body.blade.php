@@ -5,7 +5,7 @@
     :class="{
         '[&>tr:nth-child(even)]:bg-muted/50': striped
     }"
-    {{ $attributes }}
+    {{ $attributes->merge(['class' => '']) }}
 >
     {{ $slot }}
 </tbody>

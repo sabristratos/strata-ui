@@ -71,16 +71,16 @@
 
     <div class="flex-1 flex items-center justify-center gap-2 relative">
         <h2
-            class="text-lg font-semibold"
+            class="text-lg font-semibold text-foreground"
             x-text="formatMonthYear(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + {{ $monthOffset }}, 1))"
         ></h2>
 
-        <x-strata::button
+        <x-strata::button.icon
             x-ref="monthPickerButton{{ $monthOffset }}"
-            icon="chevron-down"
+            icon="calendar"
             size="sm"
-            variant="primary"
-            appearance="outlined"
+            variant="secondary"
+            appearance="ghost"
             @click="showMonthPicker = !showMonthPicker"
             aria-label="Select month and year"
         />

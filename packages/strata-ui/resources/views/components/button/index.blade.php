@@ -1,3 +1,39 @@
+{{--
+/**
+ * Button Component
+ *
+ * Versatile button component with multiple variants, appearances, sizes, and states.
+ *
+ * @props
+ * @prop string $variant - Color variant: 'primary'|'secondary'|'success'|'warning'|'destructive'|'info' (default: 'primary')
+ * @prop string $appearance - Visual style: 'filled'|'outlined'|'ghost'|'link' (default: 'filled')
+ * @prop string $size - Button size: 'sm'|'md'|'lg' (default: 'md')
+ * @prop string|null $icon - Leading icon name (default: null)
+ * @prop string|null $iconTrailing - Trailing icon name (default: null)
+ * @prop bool $loading - Show loading spinner (default: false)
+ * @prop bool $disabled - Disable button (default: false)
+ * @prop string $type - Button type attribute: 'button'|'submit'|'reset' (default: 'button')
+ *
+ * @slots
+ * @slot default - Button label text
+ *
+ * @example Basic button
+ * <x-strata::button variant="primary">
+ *     Save Changes
+ * </x-strata::button>
+ *
+ * @example Button with icon
+ * <x-strata::button variant="success" icon="check">
+ *     Confirm
+ * </x-strata::button>
+ *
+ * @example Loading state
+ * <x-strata::button :loading="true" variant="primary">
+ *     Processing...
+ * </x-strata::button>
+ */
+--}}
+
 @props([
     'variant' => 'primary',
     'appearance' => 'filled',
@@ -21,7 +57,7 @@ $filledVariants = [
 
 $outlinedVariants = [
     'primary' => 'bg-transparent text-primary border-2 border-primary hover:bg-primary/10 active:bg-primary/20',
-    'secondary' => 'bg-transparent text-secondary border-2 border-secondary hover:bg-secondary/10 active:bg-secondary/20',
+    'secondary' => 'bg-transparent text-secondary-foreground border-2 border-secondary hover:bg-secondary/10 active:bg-secondary/20',
     'success' => 'bg-transparent text-success border-2 border-success hover:bg-success/10 active:bg-success/20',
     'warning' => 'bg-transparent text-warning border-2 border-warning hover:bg-warning/10 active:bg-warning/20',
     'destructive' => 'bg-transparent text-destructive border-2 border-destructive hover:bg-destructive/10 active:bg-destructive/20',
@@ -30,7 +66,7 @@ $outlinedVariants = [
 
 $ghostVariants = [
     'primary' => 'bg-transparent text-primary hover:bg-primary/10 active:bg-primary/20',
-    'secondary' => 'bg-transparent text-secondary hover:bg-secondary/10 active:bg-secondary/20',
+    'secondary' => 'bg-transparent text-secondary-foreground hover:bg-secondary/10 active:bg-secondary/20',
     'success' => 'bg-transparent text-success hover:bg-success/10 active:bg-success/20',
     'warning' => 'bg-transparent text-warning hover:bg-warning/10 active:bg-warning/20',
     'destructive' => 'bg-transparent text-destructive hover:bg-destructive/10 active:bg-destructive/20',
@@ -39,7 +75,7 @@ $ghostVariants = [
 
 $linkVariants = [
     'primary' => 'bg-transparent text-primary hover:underline active:opacity-70',
-    'secondary' => 'bg-transparent text-secondary hover:underline active:opacity-70',
+    'secondary' => 'bg-transparent text-secondary-foreground hover:underline active:opacity-70',
     'success' => 'bg-transparent text-success hover:underline active:opacity-70',
     'warning' => 'bg-transparent text-warning hover:underline active:opacity-70',
     'destructive' => 'bg-transparent text-destructive hover:underline active:opacity-70',
@@ -75,7 +111,7 @@ if ($appearance === 'link') {
     $sizeClasses = str_replace(['px-3', 'px-4', 'px-5'], ['px-0', 'px-0', 'px-0'], $sizeClasses);
 }
 
-$disabledClasses = 'disabled:opacity-70 disabled:cursor-not-allowed disabled:pointer-events-none disabled:!border-neutral-400 disabled:!text-neutral-500';
+$disabledClasses = 'disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none';
 
 $isDisabled = $disabled || $loading;
 @endphp

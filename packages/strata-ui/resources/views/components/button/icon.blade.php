@@ -20,7 +20,7 @@ $filledVariants = [
 
 $outlinedVariants = [
     'primary' => 'bg-transparent text-primary border-2 border-primary hover:bg-primary/10 active:bg-primary/20',
-    'secondary' => 'bg-transparent text-secondary border-2 border-secondary hover:bg-secondary/10 active:bg-secondary/20',
+    'secondary' => 'bg-transparent text-secondary-foreground border-2 border-secondary hover:bg-secondary/10 active:bg-secondary/20',
     'success' => 'bg-transparent text-success border-2 border-success hover:bg-success/10 active:bg-success/20',
     'warning' => 'bg-transparent text-warning border-2 border-warning hover:bg-warning/10 active:bg-warning/20',
     'destructive' => 'bg-transparent text-destructive border-2 border-destructive hover:bg-destructive/10 active:bg-destructive/20',
@@ -29,7 +29,7 @@ $outlinedVariants = [
 
 $ghostVariants = [
     'primary' => 'bg-transparent text-primary hover:bg-primary/10 active:bg-primary/20',
-    'secondary' => 'bg-transparent text-secondary hover:bg-secondary/10 active:bg-secondary/20',
+    'secondary' => 'bg-transparent text-secondary-foreground hover:bg-secondary/10 active:bg-secondary/20',
     'success' => 'bg-transparent text-success hover:bg-success/10 active:bg-success/20',
     'warning' => 'bg-transparent text-warning hover:bg-warning/10 active:bg-warning/20',
     'destructive' => 'bg-transparent text-destructive hover:bg-destructive/10 active:bg-destructive/20',
@@ -38,7 +38,7 @@ $ghostVariants = [
 
 $linkVariants = [
     'primary' => 'bg-transparent text-primary hover:underline active:opacity-70',
-    'secondary' => 'bg-transparent text-secondary hover:underline active:opacity-70',
+    'secondary' => 'bg-transparent text-secondary-foreground hover:underline active:opacity-70',
     'success' => 'bg-transparent text-success hover:underline active:opacity-70',
     'warning' => 'bg-transparent text-warning hover:underline active:opacity-70',
     'destructive' => 'bg-transparent text-destructive hover:underline active:opacity-70',
@@ -74,7 +74,7 @@ if ($appearance === 'filled') {
     $baseClasses .= ' border-2';
 }
 
-$disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none';
+$disabledClasses = 'disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none';
 
 $isDisabled = $disabled || $loading;
 @endphp

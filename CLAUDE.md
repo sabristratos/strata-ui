@@ -169,6 +169,308 @@ Tailwind auto-generates utilities: `bg-primary`, `text-primary`, etc.
 
 Test Livewire integration by creating demo components in `app/Livewire/` and including them on the welcome page. Test `wire:model`, state changes, validation, and interactions there.
 
+## Best Practice Patterns
+
+These patterns have been proven in the codebase and should be replicated in new components:
+
+### 1. Entangleable Setup Pattern
+
+For components needing bidirectional Alpine ↔ Livewire sync (Select, Calendar, Date Picker, Rating):
+
+```javascript
+init() {
+    // Initialize Entangleable with default value
+    this.entangleable = new window.StrataEntangleable(initialValue);
+
+    // Auto-detect wire:model from hidden input
+    const input = this.$el.querySelector('[data-strata-select-input]');
+    if (input) {
+        this.entangleable.setupLivewire(this, input);
+    }
+
+    // Watch for changes and react
+    this.entangleable.watch((newValue) => {
+        // Update UI based on new value
+        this.updateChips();
+    });
+}
+```
+
+### 2. Positionable Setup Pattern
+
+For positioned components (Dropdown, Popover, Tooltip, Date Picker):
+
+```javascript
+init() {
+    // Initialize Positionable with config
+    this.positionable = new window.StrataPositionable({
+        placement: 'bottom-start',
+        offset: 8,
+        strategy: 'absolute'  // ALWAYS absolute, never 'fixed'
+    });
+
+    // Connect trigger and floating elements
+    const content = this.$refs.content;
+    const trigger = document.querySelector('[data-dropdown-trigger="id"]');
+
+    if (content && trigger) {
+        this.positionable.start(this, trigger, content);
+    }
+
+    // Sync positioning with open state
+    this.$watch('open', (value) => {
+        if (value) {
+            this.positionable.open();
+        } else {
+            this.positionable.close();
+        }
+    });
+
+    // Handle external closes
+    this.positionable.watch((state) => {
+        if (!state) {
+            this.open = false;
+        }
+    });
+}
+```
+
+### 3. Nested Alpine Scope Pattern
+
+Child components can access parent Alpine scope directly - no need for events or stores:
+
+```blade
+<!-- Parent: calendar/header.blade.php -->
+<div x-data="{
+    showMonthPicker: false,
+    currentMonth: new Date(),
+    goToMonth(month) { ... }
+}">
+    <!-- Child can access ALL parent scope properties -->
+    <x-strata::calendar.month-picker />
+</div>
+
+<!-- Child: calendar/month-picker.blade.php -->
+<div x-show="showMonthPicker"
+     @click.outside="showMonthPicker = false">
+
+    <button @click="goToMonth(month)">
+        <!-- Direct access to parent methods! -->
+    </button>
+</div>
+```
+
+**When to use:**
+- Parent-child communication (Month Picker → Header → Calendar)
+- Dropdown submenus accessing parent state
+- Modal/dialog content accessing trigger state
+
+**Alternatives:**
+- `Alpine.store()` for true global state
+- `$dispatch()` for event-based communication across tree
+
+### 4. CSS Animation Pattern
+
+Always use CSS with `@starting-style`, never Alpine `x-transition`:
+
+```blade
+<div x-show="open"
+     class="transition-all transition-discrete duration-150 ease-out
+            will-change-[transform,opacity]
+            opacity-100 scale-100
+            starting:opacity-0 starting:scale-95">
+```
+
+**Key classes:**
+- `transition-discrete` - Required for discrete properties
+- `will-change-[transform,opacity]` - Performance optimization
+- `starting:*` - Entry state (replaces x-transition-enter-from)
+- `opacity-100 scale-100` - Default state
+
+### 5. Component Size/State Maps
+
+Consistent pattern across all components:
+
+```php
+$sizes = [
+    'sm' => 'h-9 px-3 text-sm',
+    'md' => 'h-10 px-3 text-base',
+    'lg' => 'h-11 px-4 text-lg',
+];
+
+$states = [
+    'default' => 'border-border focus:ring-ring',
+    'success' => 'border-success focus:ring-success/20',
+    'error' => 'border-destructive focus:ring-destructive/20',
+    'warning' => 'border-warning focus:ring-warning/20',
+];
+
+$sizeClasses = $sizes[$size] ?? $sizes['md'];
+$stateClasses = $states[$state] ?? $states['default'];
+```
+
+### 6. Data Attribute Pattern
+
+Consistent naming for reliable DOM queries:
+
+```blade
+<div data-strata-{component}>
+    <input
+        data-strata-{component}-input
+        data-strata-field-type="{type}"
+    />
+    <div data-strata-{component}-dropdown>
+        <div data-strata-{component}-option>
+            ...
+        </div>
+    </div>
+</div>
+```
+
+**JavaScript usage:**
+```javascript
+// Find parent component
+this.$el.closest('[data-strata-select]')
+
+// Find child elements
+this.$el.querySelector('[data-strata-select-input]')
+this.$el.querySelectorAll('[data-strata-select-option]')
+
+// Filter by field type (CSS or JS)
+document.querySelectorAll('[data-strata-field-type="select"]')
+```
+
+### 7. ID Generation Pattern
+
+Standardized across all components:
+
+```php
+$componentId = $id ?? $attributes->get('id') ?? '{component}-' . uniqid();
+```
+
+**Examples:**
+- `'dropdown-' . uniqid()`
+- `'tooltip-' . uniqid()`
+- `'checkbox-' . uniqid()`
+
+**DO NOT use:**
+- `Str::random()` - inconsistent
+- Custom prefixes without `uniqid()` - collision risk
+
+## Testing Strategy
+
+### Test Structure
+
+**Package Tests:** `packages/strata-ui/tests/`
+- Unit tests for PHP components
+- Feature tests for Blade rendering
+- JavaScript tests for Alpine modules
+
+**Test Infrastructure:**
+- Orchestra Testbench for isolated package testing
+- Pest 4 for PHP tests
+- Vitest for JavaScript tests
+
+### Running Tests
+
+```bash
+# PHP Tests (from package directory)
+cd packages/strata-ui
+composer test
+
+# JavaScript Tests
+npm test              # Run once
+npm run test:watch    # Watch mode
+npm run test:ui       # UI mode
+npm run test:coverage # With coverage
+
+# From root directory
+vendor/bin/pest packages/strata-ui/tests
+```
+
+### Writing Component Tests
+
+**Use `expectComponent()` helper for Blade components:**
+
+```php
+test('renders with default props', function () {
+    expectComponent('button', slot: 'Click Me')
+        ->toHaveTag('button')
+        ->toHaveAttribute('type', 'button')
+        ->toHaveClasses('bg-primary', 'text-primary-foreground')
+        ->toRenderSlot('Click Me');
+});
+
+test('renders all sizes', function () {
+    expectComponent('input', ['size' => 'sm'])
+        ->toHaveClasses('h-9', 'px-3', 'text-sm');
+
+    expectComponent('input', ['size' => 'lg'])
+        ->toHaveClasses('h-11', 'px-4', 'text-lg');
+});
+```
+
+**Custom Pest Expectations:**
+- `expectComponent(component, attributes, slot)` - Render and test component
+- `toHaveClasses(...classes)` - Assert CSS classes
+- `toHaveDataAttribute(attr, value)` - Assert data attributes
+- `toRenderSlot(content)` - Assert slot content
+- `toHaveAttribute(attr, value)` - Assert HTML attributes
+- `toHaveTag(tag)` - Assert HTML tag
+
+**JavaScript Testing Pattern:**
+
+```javascript
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import Entangleable from '../../resources/js/entangleable.js';
+
+describe('Module Name', () => {
+    let instance;
+
+    beforeEach(() => {
+        instance = new Entangleable();
+    });
+
+    test('functionality', () => {
+        expect(instance.value).toBeNull();
+    });
+});
+```
+
+### Test Coverage Goals
+
+**Phase 1 (Completed):**
+- ✅ Test infrastructure setup
+- ✅ Core form components (Button, Input, Textarea, Checkbox, Radio, Toggle, Group)
+- ✅ JavaScript module (Entangleable)
+- **Result:** 148 test cases (112 PHP + 36 JS)
+
+**Phase 2 (Next):**
+- Complex components (Select, Calendar, Date Picker, Rating)
+- Positionable JavaScript module tests
+
+**Phase 3 (Future):**
+- Positioned components (Dropdown, Popover, Tooltip, Modal)
+- Advanced components (Table, Accordion, Tabs, Toast, File Input)
+- Presentational components (Badge, Avatar, Card, Alert, etc.)
+
+### Test-Driven Development
+
+When creating new components:
+1. Write tests for expected behavior first
+2. Implement component to pass tests
+3. Verify all variants and edge cases
+4. Check accessibility attributes
+
+**Required test coverage for each component:**
+- Default rendering
+- All size variants
+- All state/variant types
+- Slot content rendering
+- Custom class merging
+- Accessibility attributes (sr-only, aria-*, role)
+- Data attributes for JS targeting
+
 ## Code Quality Rules (Non-Negotiable)
 
 1. **Absolutely no comments in code** (PHPDoc blocks allowed)
@@ -178,6 +480,7 @@ Test Livewire integration by creating demo components in `app/Livewire/` and inc
 5. Use modern, simple approaches
 6. Check for existing components before creating new ones
 7. Reuse existing components when building new ones
+8. **If it's not tested, it's not production-ready**
 
 ## Laravel Conventions
 

@@ -1,0 +1,101 @@
+@props([
+    'as' => 'div',
+    'size' => 'base',
+])
+
+@php
+    $sizeClasses = [
+        'sm' => 'prose-sm',
+        'base' => 'prose',
+        'lg' => 'prose-lg',
+        'xl' => 'prose-xl',
+        '2xl' => 'prose-2xl',
+    ];
+
+    $sizeClass = $sizeClasses[$size] ?? $sizeClasses['base'];
+
+    static $customizations = null;
+    if ($customizations === null) {
+        $customizations = implode(' ', [
+            '[&_h1]:text-foreground',
+            '[&_h2]:text-foreground',
+            '[&_h3]:text-foreground',
+            '[&_h4]:text-foreground',
+            '[&_h5]:text-foreground',
+            '[&_h6]:text-foreground',
+            '[&_p]:text-foreground',
+            '[&_strong]:text-foreground',
+            '[&_strong]:font-semibold',
+            '[&_code]:text-foreground',
+            '[&_code]:bg-muted',
+            '[&_code]:px-1.5',
+            '[&_code]:py-0.5',
+            '[&_code]:rounded',
+            '[&_code]:font-medium',
+            '[&_code]:before:content-none',
+            '[&_code]:after:content-none',
+            '[&_pre]:bg-muted',
+            '[&_pre]:border',
+            '[&_pre]:border-border',
+            '[&_pre]:rounded-md',
+            '[&_pre]:overflow-x-auto',
+            '[&_pre_code]:bg-transparent',
+            '[&_pre_code]:p-0',
+            '[&_pre_code]:rounded-none',
+            '[&_pre_code]:font-normal',
+            '[&_a]:text-primary',
+            '[&_a]:decoration-primary',
+            '[&_a]:transition-colors',
+            '[&_a:hover]:text-primary',
+            '[&_blockquote]:text-foreground',
+            '[&_blockquote]:border-l-primary',
+            '[&_hr]:border-border',
+            '[&_thead]:border-border',
+            '[&_tbody_tr]:border-border',
+            '[&_th]:text-foreground',
+            '[&_td]:text-foreground',
+            '[&_ul]:text-foreground',
+            '[&_ol]:text-foreground',
+            '[&_li]:text-foreground',
+            '[&_li::marker]:text-muted-foreground',
+            '[&_figcaption]:text-muted-foreground',
+            '[&_dl]:text-foreground',
+            '[&_dt]:text-foreground',
+            '[&_dt]:font-semibold',
+            '[&_dd]:text-foreground',
+            '[&_dd]:ml-4',
+            '[&_kbd]:bg-muted',
+            '[&_kbd]:text-foreground',
+            '[&_kbd]:px-1.5',
+            '[&_kbd]:py-0.5',
+            '[&_kbd]:rounded',
+            '[&_kbd]:font-mono',
+            '[&_kbd]:text-sm',
+            '[&_mark]:bg-warning',
+            '[&_mark]:text-foreground',
+            '[&_del]:text-muted-foreground',
+            '[&_del]:line-through',
+            '[&_ins]:text-foreground',
+            '[&_ins]:underline',
+            '[&_abbr]:cursor-help',
+            '[&_cite]:italic',
+            '[&_cite]:text-muted-foreground',
+            '[&_li_code]:bg-muted',
+            '[&_li_code]:px-1',
+            '[&_li_code]:py-0.5',
+            '[&_li_code]:rounded',
+            '[&_td_code]:bg-muted',
+            '[&_td_code]:px-1',
+            '[&_td_code]:py-0.5',
+            '[&_td_code]:rounded',
+            '[&_blockquote_code]:bg-muted',
+            '[&_blockquote_code]:px-1',
+            '[&_blockquote_code]:py-0.5',
+            '[&_blockquote_code]:rounded',
+        ]);
+    }
+@endphp
+
+<{{ $as }} {{ $attributes->merge(['class' => $sizeClass . ' ' . $customizations]) }} data-strata-prose data-strata-prose-size="{{ $size }}">
+    {{ $slot }}
+</{{ $as }}>

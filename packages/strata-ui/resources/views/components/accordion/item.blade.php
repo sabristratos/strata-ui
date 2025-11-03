@@ -49,7 +49,7 @@ $variants = [
     x-on:toggle="handleToggle($event)"
     data-strata-accordion-item
     data-value="{{ $value }}"
-    {{ $attributes }}
+    {{ $attributes->merge(['class' => '']) }}
 >
     <summary class="flex items-center justify-between w-full cursor-pointer select-none transition-colors duration-200 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 list-none"
         :class="{

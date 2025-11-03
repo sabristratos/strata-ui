@@ -42,8 +42,12 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
-        }
+            "Tests\\": "tests/",
+            "Stratos\\StrataUI\\Tests\\": "packages/strata-ui/tests/"
+        },
+        "files": [
+            "packages/strata-ui/tests/helpers.php"
+        ]
     },
     "scripts": {
         "setup": [

@@ -621,6 +621,232 @@
                 </div>
             </x-strata::card.body>
         </x-strata::card>
+
+        {{-- Separator --}}
+        <x-strata::card style="elevated">
+            <x-strata::card.body padding="lg">
+                <h3 class="text-xl font-semibold mb-4">Separator</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">Horizontal Separator</h4>
+                        <div class="space-y-4">
+                            <div>Section 1</div>
+                            <x-strata::separator />
+                            <div>Section 2</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">Separator with Text</h4>
+                        <div class="space-y-4">
+                            <div>Content above</div>
+                            <x-strata::separator>OR</x-strata::separator>
+                            <div>Content below</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">Separator with Icon Button</h4>
+                        <div class="space-y-4">
+                            <div>Previous content</div>
+                            <x-strata::separator>
+                                <x-strata::button.icon icon="plus" size="sm" variant="secondary" appearance="ghost" aria-label="Add new" />
+                            </x-strata::separator>
+                            <div>Next content</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">Separator with Long Text</h4>
+                        <div class="space-y-4">
+                            <div>First section</div>
+                            <x-strata::separator>Continue Reading</x-strata::separator>
+                            <div>Second section</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">Vertical Separator</h4>
+                        <div class="flex items-center gap-4" style="height: 80px;">
+                            <div>Item 1</div>
+                            <x-strata::separator orientation="vertical" />
+                            <div>Item 2</div>
+                            <x-strata::separator orientation="vertical" />
+                            <div>Item 3</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">In Flex Layout</h4>
+                        <div class="flex items-center gap-4">
+                            <x-strata::button size="sm">Button 1</x-strata::button>
+                            <x-strata::separator orientation="vertical" class="h-6" />
+                            <x-strata::button size="sm">Button 2</x-strata::button>
+                            <x-strata::separator orientation="vertical" class="h-6" />
+                            <x-strata::button size="sm">Button 3</x-strata::button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">In Card Sections</h4>
+                        <x-strata::card style="outlined">
+                            <x-strata::card.body padding="sm">
+                                <p class="text-sm">Card header content</p>
+                            </x-strata::card.body>
+                            <x-strata::separator />
+                            <x-strata::card.body padding="sm">
+                                <p class="text-sm">Card body content</p>
+                            </x-strata::card.body>
+                            <x-strata::separator />
+                            <x-strata::card.body padding="sm">
+                                <p class="text-sm">Card footer content</p>
+                            </x-strata::card.body>
+                        </x-strata::card>
+                    </div>
+                </div>
+            </x-strata::card.body>
+        </x-strata::card>
+
+        {{-- Bottom Navigation --}}
+        <x-strata::card style="elevated">
+            <x-strata::card.body padding="lg">
+                <h3 class="text-xl font-semibold mb-4">Bottom Navigation</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">Default Bottom Navigation</h4>
+                        <div class="relative h-64 bg-muted/20 rounded-lg border border-border overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center text-muted-foreground">
+                                Content Area
+                            </div>
+                            <x-strata::bottom-nav>
+                                <x-strata::bottom-nav.item icon="home" :active="$activeNav === 'home'" wire:click="$set('activeNav', 'home')">
+                                    Home
+                                </x-strata::bottom-nav.item>
+                                <x-strata::bottom-nav.item icon="user" :active="$activeNav === 'profile'" wire:click="$set('activeNav', 'profile')">
+                                    Profile
+                                </x-strata::bottom-nav.item>
+                                <x-strata::bottom-nav.item icon="newspaper" :active="$activeNav === 'news'" wire:click="$set('activeNav', 'news')">
+                                    News
+                                </x-strata::bottom-nav.item>
+                            </x-strata::bottom-nav>
+                        </div>
+                        <div class="mt-4 p-4 bg-muted rounded-lg">
+                            <p class="text-sm text-muted-foreground">Active: {{ $activeNav }}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">Icon Only Navigation</h4>
+                        <div class="relative h-64 bg-muted/20 rounded-lg border border-border overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center text-muted-foreground">
+                                Content Area
+                            </div>
+                            <x-strata::bottom-nav>
+                                <x-strata::bottom-nav.item icon="home" :show-label="false" :active="$activeNavIconOnly === 'home'" wire:click="$set('activeNavIconOnly', 'home')">
+                                    Home
+                                </x-strata::bottom-nav.item>
+                                <x-strata::bottom-nav.item icon="user" :show-label="false" :active="$activeNavIconOnly === 'profile'" wire:click="$set('activeNavIconOnly', 'profile')">
+                                    Profile
+                                </x-strata::bottom-nav.item>
+                                <x-strata::bottom-nav.item icon="newspaper" :show-label="false" :active="$activeNavIconOnly === 'news'" wire:click="$set('activeNavIconOnly', 'news')">
+                                    News
+                                </x-strata::bottom-nav.item>
+                            </x-strata::bottom-nav>
+                        </div>
+                        <div class="mt-4 p-4 bg-muted rounded-lg">
+                            <p class="text-sm text-muted-foreground">Active: {{ $activeNavIconOnly }}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">Different Sizes</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm text-muted-foreground mb-2">Small</p>
+                                <div class="relative h-48 bg-muted/20 rounded-lg border border-border overflow-hidden">
+                                    <x-strata::bottom-nav size="sm">
+                                        <x-strata::bottom-nav.item icon="home" size="sm" active>Home</x-strata::bottom-nav.item>
+                                        <x-strata::bottom-nav.item icon="user" size="sm">Profile</x-strata::bottom-nav.item>
+                                        <x-strata::bottom-nav.item icon="newspaper" size="sm">News</x-strata::bottom-nav.item>
+                                    </x-strata::bottom-nav>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm text-muted-foreground mb-2">Large</p>
+                                <div class="relative h-56 bg-muted/20 rounded-lg border border-border overflow-hidden">
+                                    <x-strata::bottom-nav size="lg">
+                                        <x-strata::bottom-nav.item icon="home" size="lg" active>Home</x-strata::bottom-nav.item>
+                                        <x-strata::bottom-nav.item icon="user" size="lg">Profile</x-strata::bottom-nav.item>
+                                        <x-strata::bottom-nav.item icon="newspaper" size="lg">News</x-strata::bottom-nav.item>
+                                    </x-strata::bottom-nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">Static Position (Inline)</h4>
+                        <div class="bg-muted/20 rounded-lg border border-border p-4">
+                            <x-strata::bottom-nav position="static">
+                                <x-strata::bottom-nav.item icon="home" active>Home</x-strata::bottom-nav.item>
+                                <x-strata::bottom-nav.item icon="user">Profile</x-strata::bottom-nav.item>
+                                <x-strata::bottom-nav.item icon="newspaper">News</x-strata::bottom-nav.item>
+                            </x-strata::bottom-nav>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">With Badges</h4>
+                        <div class="relative h-64 bg-muted/20 rounded-lg border border-border overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center text-muted-foreground">
+                                Content Area
+                            </div>
+                            <x-strata::bottom-nav>
+                                <x-strata::bottom-nav.item icon="home" :active="$activeNavBadge === 'home'" wire:click="$set('activeNavBadge', 'home')">
+                                    Home
+                                </x-strata::bottom-nav.item>
+                                <x-strata::bottom-nav.item icon="bell" badge="5" badge-variant="destructive" :active="$activeNavBadge === 'notifications'" wire:click="$set('activeNavBadge', 'notifications')">
+                                    Notifications
+                                </x-strata::bottom-nav.item>
+                                <x-strata::bottom-nav.item icon="inbox" :badge-dot="true" :active="$activeNavBadge === 'messages'" wire:click="$set('activeNavBadge', 'messages')">
+                                    Messages
+                                </x-strata::bottom-nav.item>
+                            </x-strata::bottom-nav>
+                        </div>
+                        <div class="mt-4 p-4 bg-muted rounded-lg">
+                            <p class="text-sm text-muted-foreground">Active: {{ $activeNavBadge }}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-medium mb-3">Disabled and Loading States</h4>
+                        <div class="relative h-64 bg-muted/20 rounded-lg border border-border overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center text-muted-foreground">
+                                Content Area
+                            </div>
+                            <x-strata::bottom-nav>
+                                <x-strata::bottom-nav.item icon="home" :active="$activeNavState === 'home'" wire:click="$set('activeNavState', 'home')">
+                                    Home
+                                </x-strata::bottom-nav.item>
+                                <x-strata::bottom-nav.item icon="settings" disabled>
+                                    Settings
+                                </x-strata::bottom-nav.item>
+                                <x-strata::bottom-nav.item icon="user" :loading="$loadingProfile" :active="$activeNavState === 'profile'" wire:click="toggleProfileLoading">
+                                    Profile
+                                </x-strata::bottom-nav.item>
+                            </x-strata::bottom-nav>
+                        </div>
+                        <div class="mt-4 p-4 bg-muted rounded-lg space-y-2">
+                            <p class="text-sm text-muted-foreground">Active: {{ $activeNavState }}</p>
+                            <p class="text-sm text-muted-foreground">Profile Loading: {{ $loadingProfile ? 'Yes' : 'No' }}</p>
+                            <x-strata::button size="sm" wire:click="toggleProfileLoading">
+                                Toggle Loading
+                            </x-strata::button>
+                        </div>
+                    </div>
+                </div>
+            </x-strata::card.body>
+        </x-strata::card>
     </section>
 
     {{-- Feedback & Overlays --}}

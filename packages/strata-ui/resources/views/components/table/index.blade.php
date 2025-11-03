@@ -12,7 +12,7 @@
 $striped = $striped ?? ($variant === 'striped');
 
 $variants = [
-    'bordered' => 'border border-table-border',
+    'bordered' => '',
     'striped' => 'border-y border-table-border',
     'minimal' => '',
 ];
@@ -28,7 +28,7 @@ $sizeClasses = $sizes[$size] ?? $sizes['md'];
 
 $wrapperClasses = trim(implode(' ', array_filter([
     'relative',
-    $variant === 'bordered' ? 'rounded-lg overflow-hidden' : '',
+    $variant === 'bordered' ? 'border border-table-border rounded-lg overflow-hidden' : '',
     $responsive === 'scroll' || $responsive === true ? 'overflow-x-auto' : '',
     $responsive ? 'w-full' : '',
 ])));

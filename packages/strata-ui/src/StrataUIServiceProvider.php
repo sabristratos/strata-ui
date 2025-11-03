@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Stratos\StrataUI\Commands\BuildCommand;
 use Stratos\StrataUI\Services\FileService;
+use Stratos\StrataUI\View\Components\Image;
 
 class StrataUIServiceProvider extends ServiceProvider
 {
@@ -44,6 +45,8 @@ class StrataUIServiceProvider extends ServiceProvider
     protected function registerComponentNamespace(): void
     {
         Blade::anonymousComponentNamespace('strata-ui::components', 'strata');
+
+        Blade::component('strata::image', Image::class);
     }
 
     protected function registerPublishing(): void

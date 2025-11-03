@@ -99,12 +99,12 @@ $borderWidth = $style === 'bordered' ? 'border-2' : 'border';
     {{-- Content --}}
     <div class="flex-1 pt-0.5">
         @if($title)
-            <h5 class="font-semibold text-base mb-1">{{ $title }}</h5>
+            <x-strata::heading level="5" size="font-semibold text-base mb-1">{{ $title }}</x-strata::heading>
         @endif
 
-        <div class="text-sm {{ $title ? 'opacity-90' : '' }}">
+        <x-strata::text variant="small" :class="$title ? 'opacity-90' : ''">
             {{ $slot }}
-        </div>
+        </x-strata::text>
     </div>
 
     {{-- Dismiss button --}}

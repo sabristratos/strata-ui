@@ -46,7 +46,10 @@ document.addEventListener('alpine:init', () => {
             this.positionable = new window.StrataPositionable({
                 placement: 'bottom-start',
                 offset: 8,
-                strategy: 'absolute'
+                strategy: 'absolute',
+                enableSize: true,
+                maxHeight: true,
+                matchReferenceWidth: false
             });
 
             this.dropdown = this.$refs.dropdown;

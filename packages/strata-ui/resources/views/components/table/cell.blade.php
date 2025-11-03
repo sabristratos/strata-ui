@@ -29,7 +29,7 @@ $borderClasses = 'border-b border-table-border';
         '{{ $paddingSizes['lg'] }}': size === 'lg',
         '{{ $borderClasses }}': variant === 'bordered'
     }"
-    {{ $attributes }}
+    {{ $attributes->merge(['class' => '']) }}
 >
     {{ $slot }}
 </td>

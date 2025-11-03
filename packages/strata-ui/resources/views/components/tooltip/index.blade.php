@@ -7,7 +7,7 @@
 ])
 
 @php
-    $tooltipId = 'tooltip-' . Str::random(8);
+    $tooltipId = 'tooltip-' . uniqid();
 
     $hasNamedSlot = isset($content);
     $tooltipContent = $hasNamedSlot ? $content : $text;
@@ -26,7 +26,9 @@ document.addEventListener('alpine:init', () => {
             this.positionable = new window.StrataPositionable({
                 placement: placement,
                 offset: offset,
-                strategy: 'absolute'
+                strategy: 'absolute',
+                enableHide: true,
+                hideStrategy: 'referenceHidden'
             });
 
             const trigger = this.$refs.trigger;

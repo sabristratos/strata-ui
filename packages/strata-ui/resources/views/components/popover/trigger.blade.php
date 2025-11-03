@@ -21,7 +21,7 @@ if (!$target) {
         }
     }"
     data-popover-trigger="{{ $target }}"
-    {{ $attributes }}
+    {{ $attributes->merge(['class' => '']) }}
 >
     {{ $slot }}
 </div>

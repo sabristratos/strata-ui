@@ -10,7 +10,7 @@ $classes = 'bg-table-header text-table-header-foreground';
         'sticky top-0 z-10': sticky,
         '{{ $classes }}': true
     }"
-    {{ $attributes }}
+    {{ $attributes->merge(['class' => '']) }}
 >
     {{ $slot }}
 </thead>

@@ -6,8 +6,7 @@ $classes = 'bg-table-footer text-table-footer-foreground border-t border-table-b
 
 <tfoot
     data-strata-table-footer
-    class="{{ $classes }}"
-    {{ $attributes }}
+    {{ $attributes->merge(['class' => $classes]) }}
 >
     {{ $slot }}
 </tfoot>

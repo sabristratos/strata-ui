@@ -10,7 +10,7 @@ $classes = 'flex items-start justify-between gap-4 p-6 pb-4';
 <div data-strata-card-header {{ $attributes->merge(['class' => $classes]) }}>
     <div class="flex-1 min-w-0">
         @if($title)
-            <h3 class="text-lg font-semibold text-card-foreground">{{ $title }}</h3>
+            <x-strata::heading level="3" size="text-lg font-semibold" class="text-card-foreground">{{ $title }}</x-strata::heading>
         @endif
 
         @if($slot->isNotEmpty() && !$title)
@@ -20,7 +20,7 @@ $classes = 'flex items-start justify-between gap-4 p-6 pb-4';
         @endif
 
         @if($subtitle)
-            <p class="mt-1 text-sm text-muted-foreground">{{ $subtitle }}</p>
+            <x-strata::text variant="small" class="mt-1">{{ $subtitle }}</x-strata::text>
         @endif
     </div>
 
