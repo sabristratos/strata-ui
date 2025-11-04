@@ -82,6 +82,32 @@ Use **Entangleable** for:
 - ✅ Entangleable: Rating component (half-star precision, hover states)
 - ✅ Nested Alpine data: Month picker accessing parent header's `showMonthPicker` state
 
+**Livewire Morphing Compatibility:**
+
+For detailed strategies on building Alpine components that work seamlessly with Livewire's DOM morphing, see [Livewire Morphing Strategies](docs/livewire-morphing-strategies.md).
+
+**Key patterns for morphing-resistant components:**
+- Hidden input with `class="hidden" hidden` for Entangleable components
+- `x-show` over `x-if` for predictable DOM structure
+- Strategic `x-ref` and data attributes for reliable DOM queries
+- Attribute filtering with `whereDoesntStartWith('wire:model')` and `whereStartsWith('wire:model')`
+
+**About wire:ignore:**
+
+You may notice some components use `wire:ignore`. This directive is ONLY needed for:
+- ✅ Components with complex external libraries (Editor.js, Chart.js)
+- ✅ Components where Livewire must NEVER morph the content
+- ✅ Calendar component (complex date grid manipulation)
+
+For most Entangleable components, `wire:ignore` is **NOT needed** because:
+- ❌ Hidden input + Entangleable pattern handles Livewire sync
+- ❌ Alpine manages UI independently
+- ❌ Morphing doesn't break the pattern
+
+**Examples:**
+- ✅ Uses `wire:ignore`: Calendar, Editor (complex DOM, external libs)
+- ❌ No `wire:ignore`: Date Picker, Time Picker, Select (hidden input pattern)
+
 ### Positioning Strategy
 
 **Use Floating UI for ALL positioned elements** (dropdowns, popovers, tooltips, menus).
@@ -92,6 +118,92 @@ Pattern:
 - `strategy: 'absolute'` (NOT 'fixed')
 - NO `animationFrame: true` in autoUpdate (causes issues with 4+ components)
 - Disable on mobile (`< 640px`)
+
+### Alpine vs Blade Separation of Concerns
+
+**CRITICAL:** Blade handles static rendering and PHP logic, Alpine handles runtime interactivity ONLY.
+
+**Blade Responsibilities:**
+- Static HTML structure and markup
+- PHP-based prop processing (sizes, variants, states)
+- CSS class assignment from PHP variables/maps
+- Slot rendering and content projection
+- Initial value normalization and defaults
+- `wire:ignore` placement for Alpine-managed DOM areas
+- **ALL Tailwind class definitions** (never in Alpine)
+
+**Alpine Responsibilities:**
+- Runtime interactivity (clicks, hovers, keyboard events)
+- Dynamic state management (open/closed, selected values, search)
+- DOM updates (show/hide, filter, highlight, scroll)
+- Livewire synchronization via Entangleable
+- Dropdown positioning via Positionable
+- Computed properties and reactive watchers
+- Event listeners and dispatchers
+
+**Styling Rules (NON-NEGOTIABLE):**
+- ✅ **Tailwind classes ALWAYS written in Blade templates**
+- ✅ **Alpine ONLY toggles predefined classes using `:class`**
+- ❌ **NEVER generate class strings in Alpine** (no `'h-' + size` or ternary class selection)
+- ❌ **NEVER use x-transition** (use CSS `@starting-style` instead)
+
+**Critical Pattern Examples:**
+
+```blade
+<!-- ✅ CORRECT: Blade assigns all classes, Alpine toggles them conditionally -->
+<div class="transition-all duration-200 rotate-0"
+     :class="{ 'rotate-180': open }">
+
+<!-- ✅ CORRECT: Multiple conditional classes -->
+<div class="px-4 py-2 rounded-md"
+     :class="{
+         'bg-primary text-primary-foreground': isSelected,
+         'hover:bg-accent': !isSelected,
+         'opacity-40': isDisabled
+     }">
+
+<!-- ✅ CORRECT: Blade handles size variants -->
+@php
+$sizes = [
+    'sm' => 'h-9 px-3 text-sm',
+    'md' => 'h-10 px-3 text-base',
+    'lg' => 'h-11 px-4 text-lg',
+];
+@endphp
+<button class="{{ $sizes[$size] }}">
+
+<!-- ❌ WRONG: Generating classes in Alpine -->
+<div :class="open ? 'block' : 'hidden'">  <!-- Use x-show instead! -->
+
+<!-- ❌ WRONG: Building class strings -->
+<div :class="'h-' + size + ' px-' + padding">  <!-- Do this in Blade! -->
+
+<!-- ❌ WRONG: Using x-transition -->
+<div x-show="open" x-transition>  <!-- Use CSS @starting-style instead! -->
+```
+
+**Livewire Integration Pattern:**
+
+In Livewire components, **NEVER call methods directly in Blade attributes**:
+
+```php
+// ❌ WRONG: Method call in Blade
+<x-component :prop="$this->getComputedValue()" />
+
+// ✅ CORRECT: Use property updated via hook
+class MyComponent extends Component {
+    public array $computedValue = [];
+
+    public function updatedSomeProperty(): void {
+        $this->computedValue = $this->getComputedValue();
+    }
+}
+```
+
+```blade
+<!-- Then in Blade -->
+<x-component :prop="$computedValue" />
+```
 
 ### Animations
 
@@ -118,6 +230,48 @@ components/
 ```
 
 Laravel auto-resolves `folder/index.blade.php` when you use `<x-strata::folder />`.
+
+### Component Props Pattern
+
+All Strata UI components use `@props([...])` directive to extract and declare component props:
+
+**Implementation:**
+```blade
+@props([
+    'id' => null,
+    'name' => null,
+    'size' => 'md',
+    'state' => 'default',
+    'disabled' => false,
+    'clearable' => true,
+    // ... all props with defaults
+])
+
+@php
+// Process props in PHP
+$componentId = $id ?? $attributes->get('id') ?? 'component-' . uniqid();
+$sizeClasses = $sizes[$size] ?? $sizes['md'];
+@endphp
+
+<div {{ $attributes->merge(['class' => 'relative']) }}>
+    <!-- Component markup -->
+</div>
+```
+
+**Benefits:**
+- Explicit prop declaration with defaults
+- Removes props from `$attributes` bag (prevents HTML attribute pollution)
+- Type-safe in IDE with Laravel Blade Plugin
+- Clear API surface for component users
+- Self-documenting component interface
+
+**Why NOT `$attributes->get('prop', 'default')`:**
+- `@props` is Laravel's official pattern for components
+- Auto-completes in IDEs with proper plugins
+- Props are extracted before rendering, preventing attribute leakage
+- More maintainable and consistent across codebase
+
+**Required for all components:** Every Strata UI component must declare its props using `@props([...])`.
 
 ### Data Attributes
 
@@ -165,10 +319,6 @@ Tailwind auto-generates utilities: `bg-primary`, `text-primary`, etc.
 - Show variants, props tables, real examples
 - Keep README.md minimal
 
-### Testing Strategy
-
-Test Livewire integration by creating demo components in `app/Livewire/` and including them on the welcome page. Test `wire:model`, state changes, validation, and interactions there.
-
 ## Best Practice Patterns
 
 These patterns have been proven in the codebase and should be replicated in new components:
@@ -177,6 +327,7 @@ These patterns have been proven in the codebase and should be replicated in new 
 
 For components needing bidirectional Alpine ↔ Livewire sync (Select, Calendar, Date Picker, Rating):
 
+**JavaScript:**
 ```javascript
 init() {
     // Initialize Entangleable with default value
@@ -195,6 +346,51 @@ init() {
     });
 }
 ```
+
+**Blade: Attribute Filtering Pattern**
+
+For components using Entangleable with hidden inputs, filter `wire:model` attributes correctly:
+
+```blade
+@props([
+    'id' => null,
+    'name' => null,
+    // ... other props
+])
+
+<div
+    x-data="window.strataDatePicker({ ... })"
+    data-strata-datepicker
+    data-strata-field-type="date"
+    {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative']) }}
+>
+    <!-- Hidden input for Livewire binding -->
+    <div class="hidden" hidden>
+        <input
+            type="hidden"
+            id="{{ $componentId }}"
+            name="{{ $name ?? '' }}"
+            x-ref="input"
+            x-bind:value="JSON.stringify(entangleable.value)"
+            data-strata-datepicker-input
+            {{ $attributes->whereStartsWith('wire:model') }}
+        />
+    </div>
+
+    <!-- Trigger and dropdown markup -->
+</div>
+```
+
+**Why Filter Attributes:**
+- `whereDoesntStartWith('wire:model')` - Apply all attributes EXCEPT wire:model to wrapper
+- `whereStartsWith('wire:model')` - Apply ONLY wire:model to hidden input
+- Prevents duplicate wire:model on both wrapper and input
+- Keeps Livewire binding on the correct element (hidden input)
+- Wrapper gets other attributes like `class`, `id`, custom data attributes
+
+**When to Use:**
+- ✅ Required for Entangleable components with hidden inputs (Date Picker, Time Picker, Select with form mode)
+- ❌ Not needed for simple components with direct wire:model (Input, Textarea, Checkbox)
 
 ### 2. Positionable Setup Pattern
 
@@ -357,6 +553,67 @@ $componentId = $id ?? $attributes->get('id') ?? '{component}-' . uniqid();
 - `Str::random()` - inconsistent
 - Custom prefixes without `uniqid()` - collision risk
 
+### 8. Reactive Display Property Pattern
+
+For components that need to format/display Entangleable values (Date Picker, Time Picker):
+
+**❌ WRONG: Computed Getter (Breaks Alpine Reactivity)**
+```javascript
+return {
+    entangleable: null,
+
+    get display() {
+        // Alpine doesn't track changes to entangleable.value
+        return this.computeDisplay(this.entangleable.value);
+    }
+}
+```
+
+**Problem:** Alpine's reactivity doesn't track external object properties like `entangleable.value`. The getter won't re-evaluate when the value changes.
+
+**✅ CORRECT: Reactive Property + Watcher**
+```javascript
+return {
+    entangleable: null,
+    display: '',  // Reactive Alpine property
+
+    init() {
+        this.entangleable = new window.StrataEntangleable(initialValue);
+
+        // Update display when entangleable value changes
+        this.entangleable.watch((newValue) => {
+            this.display = this.computeDisplay(newValue);
+        });
+
+        // Set initial display
+        this.display = this.computeDisplay(this.entangleable.value);
+    },
+
+    // Helper method (not getter)
+    computeDisplay(value) {
+        if (!value) return '';
+        return this.formatDate(value);  // or formatTime, formatNumber, etc.
+    }
+}
+```
+
+**Why This Works:**
+- Alpine tracks `display` as a reactive property
+- Watcher updates `display` when entangleable changes
+- Template reactively updates when `display` changes
+- Computed helper avoids duplicate logic
+- Display value is cached for performance
+
+**When to Use:**
+- ✅ Components displaying formatted Entangleable values (dates, times, numbers)
+- ✅ Components needing reactive computed displays
+- ✅ Anywhere Alpine reactivity on computed values is needed
+- ❌ Simple getters that don't depend on external objects
+
+**Used In:**
+- Date Picker (formats dates as "Jan 15, 2025" or "Jan 15 - Jan 20, 2025")
+- Time Picker (formats times as "2:30 PM" or "14:30")
+
 ## Testing Strategy
 
 ### Test Structure
@@ -370,6 +627,36 @@ $componentId = $id ?? $attributes->get('id') ?? '{component}-' . uniqid();
 - Orchestra Testbench for isolated package testing
 - Pest 4 for PHP tests
 - Vitest for JavaScript tests
+
+### Testing Approaches
+
+Strata UI uses three complementary testing approaches:
+
+**1. Feature Tests (Primary Approach)**
+- **Purpose:** Test component rendering, props, classes, attributes
+- **Tool:** Pest with `expectComponent()` helper
+- **Location:** `packages/strata-ui/tests/Feature/Components/`
+- **When to use:** All components, all variants, all states
+- **Example:** `DatePickerRenderingTest.php`, `ButtonRenderingTest.php`
+
+**2. Livewire Integration Tests**
+- **Purpose:** Test `wire:model` binding, state synchronization, Livewire morphing compatibility
+- **Tool:** Pest with real Livewire components
+- **Location:** `packages/strata-ui/tests/Feature/`
+- **When to use:** Components using Entangleable, value objects, custom Livewire synthesizers
+- **Example:** `ValueObjectsLivewireTest.php`
+
+**3. Demo Components (Manual Testing)**
+- **Purpose:** Manual browser testing during development
+- **Tool:** Real Livewire components in development app
+- **Location:** `app/Livewire/` (development app, not package)
+- **When to use:** Interactive testing, visual QA, user experience validation
+- **Example:** `AppointmentBookingDemo.php`
+
+**Priority Order:**
+1. Write Feature tests for all components (required)
+2. Add Livewire Integration tests for Entangleable components (recommended)
+3. Create Demo components for complex interactions (optional)
 
 ### Running Tests
 

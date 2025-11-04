@@ -31,9 +31,9 @@
         icon="x"
         :size="$size"
         variant="secondary"
-        style="ghost"
+        appearance="ghost"
         aria-label="Clear input"
-        @click="clear()"
+        @click.stop="clear()"
         type="button"
         {{ $attributes }}
     />

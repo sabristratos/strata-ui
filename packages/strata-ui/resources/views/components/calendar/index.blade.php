@@ -36,7 +36,12 @@ $classes = trim("$baseClasses $sizeClasses $variantClasses");
 
 $initialValue = match($mode) {
     'single' => $value ? [$value] : [],
-    'multiple', 'range', 'week' => is_array($value) ? $value : ($value ? [$value] : []),
+    'range' => is_array($value)
+        ? (isset($value['start']) && isset($value['end'])
+            ? [$value['start'], $value['end']]
+            : $value)
+        : ($value ? [$value] : []),
+    'multiple', 'week' => is_array($value) ? $value : ($value ? [$value] : []),
     default => [],
 };
 
@@ -262,6 +267,12 @@ $wrapperAttributes = $attributes->only(['class']);
         },
 
         selectPreset(preset) {
+            console.log('[Calendar] selectPreset called', {
+                preset: preset,
+                mode: this.mode,
+                currentSelectedDates: this.selectedDates
+            });
+
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
@@ -341,6 +352,13 @@ $wrapperAttributes = $attributes->only(['class']);
                     break;
             }
 
+            console.log('[Calendar] Dispatching date-selected event', {
+                selectedDates: this.selectedDates,
+                mode: this.mode,
+                rangeStart: this.rangeStart,
+                rangeEnd: this.rangeEnd
+            });
+
             this.$dispatch('date-selected', {
                 dates: this.selectedDates,
                 mode: this.mode
@@ -390,6 +408,7 @@ $wrapperAttributes = $attributes->only(['class']);
     <input
         type="hidden"
         data-strata-calendar-input
+        wire:ignore
         {{ $inputAttributes }}
     />
 

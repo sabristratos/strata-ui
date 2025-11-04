@@ -136,15 +136,16 @@ $wrapperPadding = $peekMode ? "pl-[{$peekAmount}] pr-[{$peekAmount}]" : '';
 $snapAlignClass = "snap-{$snapAlign}";
 $scrollPadding = $peekMode ? "scroll-pl-[{$peekAmount}] scroll-pr-[{$peekAmount}]" : 'scroll-pr-4';
 
-$normalizedValue = $isFormMode ? ($value ?? 0) : 0;
+$normalizedValue = $isFormMode ? ($value ?? null) : 0;
 
-$sliderConfig = json_encode([
+$sliderConfig = [
     'mode' => $mode,
     'loop' => $loopMode,
     'autoplay' => $autoplayEnabled,
     'autoplayDelay' => (int)$autoplayDelay,
     'peek' => $peekMode,
-], JSON_UNESCAPED_SLASHES);
+    'value' => $normalizedValue,
+];
 
 $wrapperAttributes = $attributes->only(['class', 'style']);
 $inputAttributes = $attributes->except(['class', 'style', 'id'])->merge(['name' => $name]);
@@ -158,61 +159,61 @@ $inputAttributes = $attributes->except(['class', 'style', 'id'])->merge(['name' 
         'role' => 'region',
         'aria-roledescription' => 'carousel',
         'aria-label' => 'Content slider',
-        'class' => $sizeClasses . ' ' . $borderClasses,
     ]) }}
-    x-data="{ currentSlide: {{ $normalizedValue }}, totalSlides: 0, slider: null, init() { this.slider = new window.StrataSlider({{ Js::from(json_decode($sliderConfig, true)) }}); this.slider.init(this); }, destroy() { if (this.slider) { this.slider.destroy(); } } }"
-    x-init="init()"
-    x-destroy="destroy()"
-    tabindex="0"
+    x-data="strataSlider({{ Js::from($sliderConfig) }})"
+    x-on:mouseenter="console.log('[DOM] Mouseenter fired'); pauseAutoplay()"
+    x-on:mouseleave="console.log('[DOM] Mouseleave fired'); resumeAutoplay()"
 >
     @if($isFormMode)
         <input
             type="hidden"
             data-strata-slider-input
             {{ $inputAttributes }}
-            value="{{ $normalizedValue }}"
+            value="{{ $normalizedValue ?? '' }}"
         />
     @endif
 
     <div
         data-strata-slider-live-region
         class="sr-only"
-        aria-live="polite"
+        aria-live="{{ $autoplayEnabled ? 'off' : 'polite' }}"
         aria-atomic="true"
     ></div>
 
-    <div
-        data-strata-slider-container
-        class="w-full overflow-x-auto snap-x snap-proximity scroll-smooth {{ $scrollPadding }} [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-        x-ref="container"
-        x-on:scroll.debounce.150ms="slider?.updateCurrentSlide()"
-        x-on:mouseenter="slider?.pauseAutoplay()"
-        x-on:mouseleave="slider?.resumeAutoplay()"
-        role="list"
-    >
+    <div class="relative {{ $sizeClasses }} {{ $borderClasses }}">
         <div
-            data-strata-slider-items-wrapper
-            data-item-width-class="{{ $itemWidthClass }}"
-            data-snap-align-class="{{ $snapAlignClass }}"
-            class="flex {{ $gapClass }} {{ $wrapperPadding }}"
+            data-strata-slider-container
+            class="w-full overflow-x-auto snap-x snap-proximity scroll-smooth {{ $scrollPadding }} [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden group"
+            x-ref="container"
+            x-on:scroll.debounce.150ms="slider?.updateCurrentSlide()"
         >
-            {{ $slot }}
+            <div
+                data-strata-slider-items-wrapper
+                data-item-width-class="{{ $itemWidthClass }}"
+                data-snap-align-class="{{ $snapAlignClass }}"
+                class="flex {{ $gapClass }} {{ $wrapperPadding }}"
+            >
+                {{ $slot }}
+            </div>
         </div>
+
+        @if($showNav)
+            <x-strata::slider.navigation
+                :size="$size"
+                position="sides"
+                variant="floating"
+                class="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+        @endif
+
+        @if($showDotsValue)
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
+                <div class="bg-black/20 backdrop-blur-sm rounded-full px-3 py-2 pointer-events-auto">
+                    <div class="-mt-4">
+                        <x-strata::slider.dots :size="$size" variant="default" />
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
-
-    @if($showNav)
-        <div @mouseenter="slider?.pauseAutoplay()" @mouseleave="slider?.resumeAutoplay()">
-            <x-strata::slider.navigation :size="$size" />
-        </div>
-    @endif
-
-    @if($showDotsValue)
-        <div @mouseenter="slider?.pauseAutoplay()" @mouseleave="slider?.resumeAutoplay()">
-            <x-strata::slider.dots :size="$size" />
-        </div>
-    @endif
-
-    @if($autoplayEnabled)
-        <x-strata::slider.controls :size="$size" />
-    @endif
 </div>

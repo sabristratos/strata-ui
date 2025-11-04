@@ -35,8 +35,8 @@ $variantClasses = match($variant) {
     <template x-for="(slide, index) in totalSlides" x-bind:key="index">
         <button
             type="button"
-            x-on:click="slider?.pauseAutoplay(); slider?.goTo(index)"
-            x-bind:class="currentSlide === index ? 'bg-primary w-8' : 'bg-muted w-2'"
+            x-on:click="pauseAutoplay(); goTo(index)"
+            x-bind:class="currentSlide === index ? 'bg-primary w-8' : 'bg-white/40 w-2'"
             x-bind:aria-label="`Go to slide ${index + 1} of ${totalSlides}`"
             x-bind:aria-current="currentSlide === index ? 'true' : 'false'"
             x-bind:aria-selected="currentSlide === index ? 'true' : 'false'"

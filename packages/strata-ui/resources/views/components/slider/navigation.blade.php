@@ -43,9 +43,9 @@ $buttonClasses = match($variant) {
 >
     <button
         type="button"
-        x-on:click="slider?.pauseAutoplay(); slider?.prev()"
-        x-bind:disabled="!slider?.config.loop && currentSlide === 0"
-        x-bind:aria-label="`Previous slide${(!slider?.config.loop && currentSlide === 0) ? ' (disabled - at first slide)' : ''}`"
+        x-on:click="pauseAutoplay(); prev()"
+        x-bind:disabled="!engine?.config.loop && currentSlide === 0"
+        x-bind:aria-label="`Previous slide${(!engine?.config.loop && currentSlide === 0) ? ' (disabled - at first slide)' : ''}`"
         class="{{ $buttonClasses }}"
         data-strata-slider-navigation-prev
     >
@@ -56,9 +56,9 @@ $buttonClasses = match($variant) {
 
     <button
         type="button"
-        x-on:click="slider?.pauseAutoplay(); slider?.next()"
-        x-bind:disabled="!slider?.config.loop && currentSlide >= totalSlides - 1"
-        x-bind:aria-label="`Next slide${(!slider?.config.loop && currentSlide >= totalSlides - 1) ? ' (disabled - at last slide)' : ''}`"
+        x-on:click="pauseAutoplay(); next()"
+        x-bind:disabled="!engine?.config.loop && currentSlide >= totalSlides - 1"
+        x-bind:aria-label="`Next slide${(!engine?.config.loop && currentSlide >= totalSlides - 1) ? ' (disabled - at last slide)' : ''}`"
         class="{{ $buttonClasses }}"
         data-strata-slider-navigation-next
     >

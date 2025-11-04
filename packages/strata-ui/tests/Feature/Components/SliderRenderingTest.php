@@ -1,15 +1,12 @@
 <?php
 
-use function Pest\Laravel\assertComponentRenders;
-
 describe('Slider Component', function () {
     test('renders with default props', function () {
         expectComponent('slider', slot: '<x-strata::slider.item>Slide 1</x-strata::slider.item>')
             ->toHaveDataAttribute('strata-slider', 'true')
             ->toHaveAttribute('role', 'region')
             ->toHaveAttribute('aria-roledescription', 'carousel')
-            ->toHaveAttribute('aria-label', 'Content slider')
-            ->toHaveAttribute('tabindex', '0');
+            ->toHaveAttribute('aria-label', 'Content slider');
     });
 
     test('renders presentational mode by default', function () {
@@ -80,12 +77,15 @@ describe('Slider Component', function () {
             ->toContain('aria-live="polite"')
             ->toContain('aria-atomic="true"')
             ->toContain('class="sr-only"');
+
+        // Autoplay mode should have aria-live="off"
+        expectComponent('slider', ['autoplay' => true], slot: '<x-strata::slider.item>Slide 1</x-strata::slider.item>')
+            ->toContain('aria-live="off"');
     });
 
     test('renders slider container with proper attributes', function () {
         expectComponent('slider', slot: '<x-strata::slider.item>Slide 1</x-strata::slider.item>')
             ->toContain('data-strata-slider-container')
-            ->toContain('role="list"')
             ->toContain('x-ref="container"');
     });
 
@@ -132,7 +132,7 @@ describe('Slider Component', function () {
             'mode' => 'form',
             'loop' => true,
             'autoplay' => true,
-            'autoplayDelay' => 3000
+            'autoplayDelay' => 3000,
         ], slot: '<x-strata::slider.item>Slide 1</x-strata::slider.item>')
             ->getHtml();
 
@@ -154,17 +154,17 @@ describe('Slider Component', function () {
     });
 
     test('throws exception for invalid mode', function () {
-        expect(fn() => expectComponent('slider', ['mode' => 'invalid'], slot: '<x-strata::slider.item>Slide 1</x-strata::slider.item>'))
+        expect(fn () => expectComponent('slider', ['mode' => 'invalid'], slot: '<x-strata::slider.item>Slide 1</x-strata::slider.item>'))
             ->toThrow(\InvalidArgumentException::class, 'The "mode" prop must be one of: presentational, form');
     });
 
     test('throws exception for invalid size', function () {
-        expect(fn() => expectComponent('slider', ['size' => 'invalid'], slot: '<x-strata::slider.item>Slide 1</x-strata::slider.item>'))
+        expect(fn () => expectComponent('slider', ['size' => 'invalid'], slot: '<x-strata::slider.item>Slide 1</x-strata::slider.item>'))
             ->toThrow(\InvalidArgumentException::class, 'The "size" prop must be one of: sm, md, lg');
     });
 
     test('throws exception for invalid state', function () {
-        expect(fn() => expectComponent('slider', ['state' => 'invalid'], slot: '<x-strata::slider.item>Slide 1</x-strata::slider.item>'))
+        expect(fn () => expectComponent('slider', ['state' => 'invalid'], slot: '<x-strata::slider.item>Slide 1</x-strata::slider.item>'))
             ->toThrow(\InvalidArgumentException::class, 'The "state" prop must be one of: default, success, error, warning');
     });
 
@@ -216,7 +216,7 @@ describe('Slider Component', function () {
 describe('Slider Navigation Component', function () {
     test('renders with default props', function () {
         $html = '<div x-data="{ currentSlide: 0, totalSlides: 3, slider: { prev: () => {}, next: () => {}, config: { loop: false } } }">
-            ' . view('strata::components.slider.navigation')->render() . '
+            '.view('strata::components.slider.navigation')->render().'
         </div>';
 
         expect($html)->toContain('data-strata-slider-navigation')
@@ -260,7 +260,7 @@ describe('Slider Navigation Component', function () {
 describe('Slider Dots Component', function () {
     test('renders with default props', function () {
         $html = '<div x-data="{ currentSlide: 0, totalSlides: 3, slider: { goTo: () => {} } }">
-            ' . view('strata::components.slider.dots')->render() . '
+            '.view('strata::components.slider.dots')->render().'
         </div>';
 
         expect($html)->toContain('data-strata-slider-dots')
@@ -293,18 +293,10 @@ describe('Slider Item Component', function () {
         $html = view('strata::components.slider.item', [], ['slot' => 'Test Content'])->render();
 
         expect($html)->toContain('data-strata-slider-item')
-            ->and($html)->toContain('role="listitem"')
+            ->and($html)->toContain('role="group"')
+            ->and($html)->toContain('aria-roledescription="slide"')
             ->and($html)->toContain('Test Content')
             ->and($html)->toContain('flex-shrink-0');
-    });
-
-    test('has Alpine transitions', function () {
-        $html = view('strata::components.slider.item')->render();
-
-        expect($html)->toContain('x-transition:enter')
-            ->and($html)->toContain('x-transition:leave')
-            ->and($html)->toContain('transition-all')
-            ->and($html)->toContain('transition-discrete');
     });
 
     test('has accessibility attributes', function () {

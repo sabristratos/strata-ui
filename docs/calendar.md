@@ -329,6 +329,97 @@ public function mount(): void
 />
 ```
 
+### DateRange Value Object
+
+Use the `DateRange` object for type-safe range handling with preset support and rich API methods:
+
+```php
+use Stratos\StrataUI\Data\DateRange;
+
+class Dashboard extends Component
+{
+    public DateRange $reportingPeriod;
+
+    public function mount(): void
+    {
+        // Use preset factory methods
+        $this->reportingPeriod = DateRange::last30Days();
+    }
+
+    public function getOrdersProperty()
+    {
+        // Use directly with Eloquent whereBetween
+        return Order::whereBetween('created_at', $this->reportingPeriod)->get();
+    }
+
+    public function setPreset(string $preset): void
+    {
+        $this->reportingPeriod = match ($preset) {
+            'today' => DateRange::today(),
+            'yesterday' => DateRange::yesterday(),
+            'this-week' => DateRange::thisWeek(),
+            'last-week' => DateRange::lastWeek(),
+            'last-7-days' => DateRange::last7Days(),
+            'last-30-days' => DateRange::last30Days(),
+            'this-month' => DateRange::thisMonth(),
+            'last-month' => DateRange::lastMonth(),
+            'this-quarter' => DateRange::thisQuarter(),
+            'last-quarter' => DateRange::lastQuarter(),
+            'this-year' => DateRange::thisYear(),
+            'last-year' => DateRange::lastYear(),
+            'year-to-date' => DateRange::yearToDate(),
+            default => DateRange::last30Days(),
+        };
+    }
+}
+```
+
+```blade
+<x-strata::calendar
+    mode="range"
+    wire:model.live="reportingPeriod"
+/>
+
+<div class="text-sm text-muted-foreground mt-2">
+    Showing {{ $reportingPeriod->count() }} days
+    from {{ $reportingPeriod->getStartDate()->format('M j') }}
+    to {{ $reportingPeriod->getEndDate()->format('M j, Y') }}
+</div>
+
+{{-- Preset buttons --}}
+<div class="flex gap-2 mt-4">
+    <button wire:click="setPreset('last-7-days')">Last 7 Days</button>
+    <button wire:click="setPreset('last-30-days')">Last 30 Days</button>
+    <button wire:click="setPreset('this-month')">This Month</button>
+</div>
+```
+
+**DateRange API Methods:**
+
+```php
+// Access dates (from Carbon\CarbonPeriod)
+$range->getStartDate();           // Carbon instance
+$range->getEndDate();             // Carbon instance
+
+// Calculate duration (from Carbon\CarbonPeriod)
+$range->count();                  // Number of days
+
+// Check containment (from Carbon\CarbonPeriod)
+$range->contains(now());          // bool
+$range->contains('2024-11-15');   // bool
+
+// Get preset
+$range->preset();                 // DateRangePreset enum or null
+$range->hasPreset();              // bool
+
+// Iterate over dates
+foreach ($range as $date) {
+    // $date is a Carbon instance
+}
+```
+
+See [Value Objects](value-objects.md) for complete DateRange documentation.
+
 ### Reactive Updates
 
 ```php

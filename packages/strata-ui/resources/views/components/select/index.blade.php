@@ -51,7 +51,7 @@
     'disabled' => false,
     'name' => null,
     'value' => null,
-    'chips' => 'inline',
+    'chips' => false,
     'searchable' => false,
     'minItemsForSearch' => 0,
     'searchPlaceholder' => 'Search...',
@@ -61,9 +61,7 @@
 ])
 
 @php
-if (!in_array($chips, ['inline', 'below', 'summary'])) {
-    throw new \InvalidArgumentException('The "chips" prop must be one of: inline, below, summary. Got: ' . $chips);
-}
+$chips = filter_var($chips, FILTER_VALIDATE_BOOLEAN);
 
 $baseClasses = 'w-full inline-flex items-center justify-between gap-2 bg-input border rounded-lg transition-all duration-150';
 
@@ -92,8 +90,7 @@ $normalizedValue = $multiple
     ? (is_array($value) ? $value : ($value ? [$value] : []))
     : $value;
 
-$wrapperAttributes = $attributes->only(['class', 'style', 'id']);
-$selectAttributes = $attributes->except(['class', 'style', 'id'])->merge(['name' => $name]);
+$componentId = $attributes->get('id') ?? 'select-' . uniqid();
 @endphp
 
 @once
@@ -112,6 +109,7 @@ document.addEventListener('alpine:init', () => {
         minItemsForSearch: minItemsForSearch,
         clearable: clearable,
         search: '',
+        display: '',
 
         get selected() {
             return this.entangleable?.get() ?? (multiple ? [] : null);
@@ -162,14 +160,19 @@ document.addEventListener('alpine:init', () => {
                 this.positionable.start(this, this.trigger, this.dropdown);
             }
 
-            this.$nextTick(() => {
-                this.collectOptions();
-            });
-
             const input = this.$el.querySelector('[data-strata-select-input]');
             if (input) {
                 this.entangleable.setupLivewire(this, input);
             }
+
+            this.$nextTick(() => {
+                this.collectOptions();
+                this.display = this.computeDisplay(this.entangleable.value);
+
+                this.entangleable.watch((newValue) => {
+                    this.display = this.computeDisplay(newValue);
+                });
+            });
 
             this.$watch('search', () => {
                 this.highlighted = -1;
@@ -380,89 +383,115 @@ document.addEventListener('alpine:init', () => {
                     break;
             }
         },
+
+        computeDisplay(value) {
+            if (this.multiple) {
+                if (!value || value.length === 0) return '';
+                const labels = this.options
+                    .filter(opt => value.includes(opt.value))
+                    .map(opt => opt.label);
+
+                if (this.chips) {
+                    return labels.join(', ');
+                }
+
+                return `${value.length} ${value.length === 1 ? 'selection' : 'selections'}`;
+            }
+
+            const option = this.options.find(opt => opt.value === value);
+            return option ? option.label : '';
+        },
+
+        getLabelForValue(value) {
+            const option = this.options.find(opt => opt.value === value);
+            return option ? option.label : value;
+        },
+
+        destroy() {
+            if (this.entangleable) {
+                this.entangleable.destroy();
+            }
+            if (this.positionable) {
+                this.positionable.destroy();
+            }
+        },
     }));
 });
 </script>
 @endonce
 
 <div
-    x-data="strataSelect(@js($normalizedValue), {{ $multiple ? 'true' : 'false' }}, {{ $disabled ? 'true' : 'false' }}, '{{ $chips }}', {{ $searchable ? 'true' : 'false' }}, {{ $minItemsForSearch }}, {{ $clearable ? 'true' : 'false' }})"
+    x-data="strataSelect(@js($normalizedValue), {{ $multiple ? 'true' : 'false' }}, {{ $disabled ? 'true' : 'false' }}, {{ $chips ? 'true' : 'false' }}, {{ $searchable ? 'true' : 'false' }}, {{ $minItemsForSearch }}, {{ $clearable ? 'true' : 'false' }})"
     data-strata-select
     data-strata-field-type="select"
     @keydown.escape="positionable.close()"
     tabindex="0"
-    {{ $wrapperAttributes->merge(['class' => 'relative']) }}
+    {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative']) }}
 >
-    <input
-        type="hidden"
-        data-strata-select-input
-        {{ $selectAttributes }}
-    />
-
-    <button
-        type="button"
-        x-ref="trigger"
-        data-strata-select-trigger
-        {{ $attributes->only(['aria-label', 'aria-describedby']) }}
-        :disabled="disabled"
-        @click.prevent.stop="toggle()"
-        @keydown="handleKeydown"
-        class="{{ $triggerClasses }}"
-        aria-haspopup="listbox"
-        :aria-expanded="positionable.state"
-        :aria-activedescendant="positionable.state ? getActiveDescendant() : ''"
-        :aria-multiselectable="multiple"
-    >
-            <div class="flex-1 text-left truncate">
-                <template x-if="multiple && selected.length > 0">
-                    <div>
-                        <template x-if="chips === 'inline'">
-                            <div class="flex flex-wrap gap-1 max-h-20 overflow-y-auto" wire:ignore>
-                                <template x-for="label in selectedLabels" :key="label">
-                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-sm rounded">
-                                        <span x-text="label"></span>
-                                    </span>
-                                </template>
-                            </div>
-                        </template>
-                        <template x-if="chips === 'summary' || chips === 'below'">
-                            <span x-text="`${selected.length} ${selected.length === 1 ? 'selection' : 'selections'}`"></span>
-                        </template>
-                    </div>
-                </template>
-
-                <template x-if="!multiple && selected">
-                    <span x-text="selectedLabels[0]"></span>
-                </template>
-
-                <template x-if="(!multiple && !selected) || (multiple && selected.length === 0)">
-                    <span class="text-muted-foreground">{{ $placeholder }}</span>
-                </template>
-            </div>
-
-            <x-strata::icon.chevron-down
-                class="{{ $iconSize }} text-muted-foreground transition-transform duration-150 ease-out"
-                ::class="{ 'rotate-180': positionable.state }"
-            />
-    </button>
-
-    <div class="absolute right-10 top-1/2 -translate-y-1/2 pointer-events-auto">
-        <x-strata::select.clear :size="$size" />
+    <div class="hidden" hidden>
+        <input
+            type="hidden"
+            id="{{ $componentId }}"
+            name="{{ $name ?? '' }}"
+            x-ref="input"
+            x-bind:value="{{ $multiple ? 'JSON.stringify(entangleable.value)' : 'entangleable.value' }}"
+            data-strata-select-input
+            {{ $attributes->whereStartsWith('wire:model') }}
+        />
     </div>
 
-    <template x-if="multiple && chips === 'below' && selected.length > 0">
-        <div class="flex flex-wrap gap-2 mt-2">
-            <div wire:ignore class="flex flex-wrap gap-2">
-                <template x-for="(label, index) in selectedLabels" :key="label">
-                    <x-strata::select.chip
-                        :size="$size"
-                        x-bind:label="label"
-                        @remove="remove(selected[index])"
-                    />
-                </template>
-            </div>
+    <div class="relative">
+        <button
+            type="button"
+            x-ref="trigger"
+            data-strata-select-trigger
+            {{ $attributes->only(['aria-label', 'aria-describedby']) }}
+            :disabled="disabled"
+            @click.prevent.stop="toggle()"
+            @keydown="handleKeydown"
+            class="{{ $triggerClasses }}"
+            aria-haspopup="listbox"
+            :aria-expanded="positionable.state"
+            :aria-activedescendant="positionable.state ? getActiveDescendant() : ''"
+            :aria-multiselectable="multiple"
+        >
+                <div class="flex-1 text-left truncate">
+                    <template x-if="multiple && selected.length > 0">
+                        <div>
+                            <template x-if="chips">
+                                <div class="flex flex-wrap gap-1 max-h-20 overflow-y-auto">
+                                    <template x-for="value in selected" :key="value">
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-sm rounded">
+                                            <span x-text="getLabelForValue(value)"></span>
+                                        </span>
+                                    </template>
+                                </div>
+                            </template>
+                            <template x-if="!chips">
+                                <span x-text="`${selected.length} ${selected.length === 1 ? 'selection' : 'selections'}`"></span>
+                            </template>
+                        </div>
+                    </template>
+
+                    <template x-if="!multiple && selected">
+                        <span x-text="display"></span>
+                    </template>
+
+                    <template x-if="(!multiple && !selected) || (multiple && selected.length === 0)">
+                        <span class="text-muted-foreground">{{ $placeholder }}</span>
+                    </template>
+                </div>
+
+                <x-strata::icon.chevron-down
+                    class="{{ $iconSize }} text-muted-foreground transition-transform duration-150 ease-out"
+                    ::class="{ 'rotate-180': positionable.state }"
+                />
+        </button>
+
+        <div class="absolute right-10 top-1/2 -translate-y-1/2 pointer-events-auto">
+            <x-strata::select.clear size="sm" />
         </div>
-    </template>
+    </div>
 
     <div
         x-ref="dropdown"
@@ -477,7 +506,6 @@ document.addEventListener('alpine:init', () => {
             tabindex="-1"
             data-strata-select-dropdown
             class="overflow-hidden bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm ring-1 ring-black/5 dark:ring-white/10 p-0 m-0 transition-all transition-discrete duration-150 ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95 {{ $dropdownSizeClasses }}"
-            wire:ignore.self
             role="listbox"
             :aria-multiselectable="multiple"
         >
@@ -526,7 +554,7 @@ document.addEventListener('alpine:init', () => {
                     </div>
                 </template>
 
-                <div wire:ignore class="space-y-1">
+                <div class="space-y-1">
                     {{ $slot }}
                 </div>
             </div>

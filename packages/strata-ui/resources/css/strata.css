@@ -97,6 +97,10 @@ details[open]::details-content {
 
 [data-strata-editor-content] {
     .tiptap {
+        color: var(--color-foreground);
+        max-width: none !important;
+        width: 100%;
+
         &:focus {
             outline: none;
         }
@@ -110,7 +114,20 @@ details[open]::details-content {
         }
     }
 
-    .tiptap p,
+    .tiptap p {
+        color: var(--color-foreground);
+        margin-top: 1em;
+        margin-bottom: 1em;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
     .tiptap ul,
     .tiptap ol,
     .tiptap blockquote,
@@ -133,6 +150,7 @@ details[open]::details-content {
     .tiptap h4,
     .tiptap h5,
     .tiptap h6 {
+        color: var(--color-foreground);
         line-height: 1.1;
         margin-top: 2.5rem;
         margin-bottom: 1rem;
@@ -166,7 +184,8 @@ details[open]::details-content {
     }
 
     .tiptap blockquote {
-        border-left: 3px solid var(--color-border);
+        color: var(--color-foreground);
+        border-left: 3px solid var(--color-primary);
         margin: 1.5rem 0;
         padding-left: 1rem;
     }
@@ -192,7 +211,13 @@ details[open]::details-content {
     }
 
     .tiptap li {
+        color: var(--color-foreground);
         margin-top: 0.25em;
+    }
+
+    .tiptap strong {
+        color: var(--color-foreground);
+        font-weight: 600;
     }
 
     .tiptap a {

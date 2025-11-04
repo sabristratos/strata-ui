@@ -2,7 +2,7 @@
  * Strata UI - Main entry point
  *
  * Exports core utilities and helpers to window global scope.
- * Modules: Entangleable, Positionable, Image, Slider, Lightbox, Toast API
+ * Modules: Entangleable, Positionable, Image, Slider, Editor, DatePicker, TimePicker, Lightbox, Toast API
  */
 
 import Entangleable from './entangleable.js';
@@ -10,6 +10,8 @@ import Positionable from './positionable.js';
 import Image from './image.js';
 import Slider from './slider.js';
 import Editor from './editor.js';
+import DatePicker from './date-picker.js';
+import TimePicker from './time-picker.js';
 import './lightbox.js';
 
 /**
@@ -42,15 +44,27 @@ if (typeof window !== 'undefined') {
 
     /**
      * Slider component with carousel and form modes
-     * @type {typeof Slider}
+     * @type {function}
      */
-    window.StrataSlider = Slider;
+    window.strataSlider = Slider;
 
     /**
      * Rich text editor component powered by Tiptap
      * @type {function}
      */
     window.strataEditor = Editor;
+
+    /**
+     * Date picker component with single/range modes and presets
+     * @type {function}
+     */
+    window.strataDatePicker = DatePicker;
+
+    /**
+     * Time picker component with 12/24 hour formats and presets
+     * @type {function}
+     */
+    window.strataTimePicker = TimePicker;
 
     /**
      * Display a toast notification

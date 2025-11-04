@@ -4,8 +4,12 @@ namespace Stratos\StrataUI;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 use Stratos\StrataUI\Commands\BuildCommand;
 use Stratos\StrataUI\Services\FileService;
+use Stratos\StrataUI\Synthesizers\DateValueSynthesizer;
+use Stratos\StrataUI\Synthesizers\DateRangeSynthesizer;
+use Stratos\StrataUI\Synthesizers\TimeValueSynthesizer;
 use Stratos\StrataUI\View\Components\Image;
 
 class StrataUIServiceProvider extends ServiceProvider
@@ -29,6 +33,7 @@ class StrataUIServiceProvider extends ServiceProvider
         $this->registerComponentNamespace();
         $this->registerPublishing();
         $this->registerCommands();
+        $this->registerLivewireSynthesizers();
     }
 
     protected function registerBladeDirectives(): void
@@ -84,5 +89,16 @@ class StrataUIServiceProvider extends ServiceProvider
         $basePath = config('strata-ui.asset_path', 'vendor/strata-ui');
 
         return asset("{$basePath}/{$file}");
+    }
+
+    protected function registerLivewireSynthesizers(): void
+    {
+        if (! class_exists(Livewire::class)) {
+            return;
+        }
+
+        Livewire::propertySynthesizer(DateValueSynthesizer::class);
+        Livewire::propertySynthesizer(DateRangeSynthesizer::class);
+        Livewire::propertySynthesizer(TimeValueSynthesizer::class);
     }
 }

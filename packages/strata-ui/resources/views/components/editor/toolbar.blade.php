@@ -5,7 +5,8 @@
     <div class="flex items-center gap-0.5">
         <x-strata::editor.button
             @click="toggleBold()"
-            :active="isActive('bold')"
+            ::class="{ 'bg-primary/20 text-primary': isActive('bold') }"
+            ::aria-pressed="isActive('bold') ? 'true' : 'false'"
             aria-label="Toggle bold"
             title="Bold (Ctrl+B)"
         >
@@ -16,7 +17,8 @@
 
         <x-strata::editor.button
             @click="toggleItalic()"
-            :active="isActive('italic')"
+            ::class="{ 'bg-primary/20 text-primary': isActive('italic') }"
+            ::aria-pressed="isActive('italic') ? 'true' : 'false'"
             aria-label="Toggle italic"
             title="Italic (Ctrl+I)"
         >
@@ -27,7 +29,8 @@
 
         <x-strata::editor.button
             @click="toggleStrike()"
-            :active="isActive('strike')"
+            ::class="{ 'bg-primary/20 text-primary': isActive('strike') }"
+            ::aria-pressed="isActive('strike') ? 'true' : 'false'"
             aria-label="Toggle strikethrough"
             title="Strikethrough"
         >
@@ -38,7 +41,8 @@
 
         <x-strata::editor.button
             @click="toggleCode()"
-            :active="isActive('code')"
+            ::class="{ 'bg-primary/20 text-primary': isActive('code') }"
+            ::aria-pressed="isActive('code') ? 'true' : 'false'"
             aria-label="Toggle code"
             title="Inline code"
         >
@@ -53,7 +57,8 @@
     <div class="flex items-center gap-0.5">
         <x-strata::editor.button
             @click="toggleHeading(1)"
-            :active="isActive('heading', { level: 1 })"
+            ::class="{ 'bg-primary/20 text-primary': isActive('heading', { level: 1 }) }"
+            ::aria-pressed="isActive('heading', { level: 1 }) ? 'true' : 'false'"
             aria-label="Toggle heading 1"
             title="Heading 1"
         >
@@ -62,7 +67,8 @@
 
         <x-strata::editor.button
             @click="toggleHeading(2)"
-            :active="isActive('heading', { level: 2 })"
+            ::class="{ 'bg-primary/20 text-primary': isActive('heading', { level: 2 }) }"
+            ::aria-pressed="isActive('heading', { level: 2 }) ? 'true' : 'false'"
             aria-label="Toggle heading 2"
             title="Heading 2"
         >
@@ -71,7 +77,8 @@
 
         <x-strata::editor.button
             @click="toggleHeading(3)"
-            :active="isActive('heading', { level: 3 })"
+            ::class="{ 'bg-primary/20 text-primary': isActive('heading', { level: 3 }) }"
+            ::aria-pressed="isActive('heading', { level: 3 }) ? 'true' : 'false'"
             aria-label="Toggle heading 3"
             title="Heading 3"
         >
@@ -84,7 +91,8 @@
     <div class="flex items-center gap-0.5">
         <x-strata::editor.button
             @click="toggleBulletList()"
-            :active="isActive('bulletList')"
+            ::class="{ 'bg-primary/20 text-primary': isActive('bulletList') }"
+            ::aria-pressed="isActive('bulletList') ? 'true' : 'false'"
             aria-label="Toggle bullet list"
             title="Bullet list"
         >
@@ -95,7 +103,8 @@
 
         <x-strata::editor.button
             @click="toggleOrderedList()"
-            :active="isActive('orderedList')"
+            ::class="{ 'bg-primary/20 text-primary': isActive('orderedList') }"
+            ::aria-pressed="isActive('orderedList') ? 'true' : 'false'"
             aria-label="Toggle ordered list"
             title="Numbered list"
         >
@@ -106,7 +115,8 @@
 
         <x-strata::editor.button
             @click="toggleBlockquote()"
-            :active="isActive('blockquote')"
+            ::class="{ 'bg-primary/20 text-primary': isActive('blockquote') }"
+            ::aria-pressed="isActive('blockquote') ? 'true' : 'false'"
             aria-label="Toggle blockquote"
             title="Blockquote"
         >
@@ -117,7 +127,8 @@
 
         <x-strata::editor.button
             @click="toggleCodeBlock()"
-            :active="isActive('codeBlock')"
+            ::class="{ 'bg-primary/20 text-primary': isActive('codeBlock') }"
+            ::aria-pressed="isActive('codeBlock') ? 'true' : 'false'"
             aria-label="Toggle code block"
             title="Code block"
         >
@@ -132,7 +143,8 @@
     <div class="flex items-center gap-0.5">
         <x-strata::editor.button
             @click="setTextAlign('left')"
-            :active="isActive({ textAlign: 'left' })"
+            ::class="{ 'bg-primary/20 text-primary': isActive({ textAlign: 'left' }) }"
+            ::aria-pressed="isActive({ textAlign: 'left' }) ? 'true' : 'false'"
             aria-label="Align left"
             title="Align left"
         >
@@ -143,7 +155,8 @@
 
         <x-strata::editor.button
             @click="setTextAlign('center')"
-            :active="isActive({ textAlign: 'center' })"
+            ::class="{ 'bg-primary/20 text-primary': isActive({ textAlign: 'center' }) }"
+            ::aria-pressed="isActive({ textAlign: 'center' }) ? 'true' : 'false'"
             aria-label="Align center"
             title="Align center"
         >
@@ -154,7 +167,8 @@
 
         <x-strata::editor.button
             @click="setTextAlign('right')"
-            :active="isActive({ textAlign: 'right' })"
+            ::class="{ 'bg-primary/20 text-primary': isActive({ textAlign: 'right' }) }"
+            ::aria-pressed="isActive({ textAlign: 'right' }) ? 'true' : 'false'"
             aria-label="Align right"
             title="Align right"
         >
@@ -165,7 +179,8 @@
 
         <x-strata::editor.button
             @click="setTextAlign('justify')"
-            :active="isActive({ textAlign: 'justify' })"
+            ::class="{ 'bg-primary/20 text-primary': isActive({ textAlign: 'justify' }) }"
+            ::aria-pressed="isActive({ textAlign: 'justify' }) ? 'true' : 'false'"
             aria-label="Justify"
             title="Justify"
         >
@@ -180,7 +195,8 @@
     <div class="flex items-center gap-0.5">
         <x-strata::editor.button
             @click="setLink()"
-            :active="isActive('link')"
+            ::class="{ 'bg-primary/20 text-primary': isActive('link') }"
+            ::aria-pressed="isActive('link') ? 'true' : 'false'"
             aria-label="Add link"
             title="Link"
         >
@@ -205,7 +221,7 @@
     <div class="flex items-center gap-0.5">
         <x-strata::editor.button
             @click="undo()"
-            :disabled="!canUndo()"
+            x-bind:disabled="!canUndo()"
             aria-label="Undo"
             title="Undo (Ctrl+Z)"
         >
@@ -216,7 +232,7 @@
 
         <x-strata::editor.button
             @click="redo()"
-            :disabled="!canRedo()"
+            x-bind:disabled="!canRedo()"
             aria-label="Redo"
             title="Redo (Ctrl+Shift+Z)"
         >

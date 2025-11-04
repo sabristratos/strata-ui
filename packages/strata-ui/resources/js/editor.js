@@ -6,10 +6,11 @@ import TextAlign from '@tiptap/extension-text-align';
 
 export default (initialValue = null) => {
     let editor;
+    let syncTimeout;
 
     return {
         entangleable: null,
-        updatedAt: Date.now(),
+        activeStates: {},
 
         init() {
             this.entangleable = new window.StrataEntangleable(initialValue);
@@ -23,7 +24,9 @@ export default (initialValue = null) => {
                 element: this.$refs.editor,
                 content: this.entangleable.get(),
                 extensions: [
-                    StarterKit,
+                    StarterKit.configure({
+                        link: false,
+                    }),
                     Link.configure({
                         openOnClick: false,
                         HTMLAttributes: {
@@ -41,18 +44,21 @@ export default (initialValue = null) => {
                 ],
                 editorProps: {
                     attributes: {
-                        class: 'prose prose-sm sm:prose lg:prose-lg dark:prose-invert max-w-none focus:outline-none p-4',
+                        class: 'prose prose-sm sm:prose lg:prose-lg dark:prose-invert focus:outline-none p-4',
                     },
                 },
                 onCreate: () => {
-                    this.updatedAt = Date.now();
+                    this.updateActiveStates();
                 },
                 onUpdate: ({ editor }) => {
-                    this.entangleable.set(editor.getJSON());
-                    this.updatedAt = Date.now();
+                    clearTimeout(syncTimeout);
+                    syncTimeout = setTimeout(() => {
+                        this.entangleable.set(editor.getJSON());
+                    }, 300);
+                    this.updateActiveStates();
                 },
                 onSelectionUpdate: () => {
-                    this.updatedAt = Date.now();
+                    this.updateActiveStates();
                 },
             });
 
@@ -123,11 +129,28 @@ export default (initialValue = null) => {
         },
 
         addImage() {
-            const url = window.prompt('Image URL');
+            this.$refs.imageInput?.click();
+        },
 
-            if (url) {
-                editor.chain().focus().setImage({ src: url }).run();
+        async handleImageSelect(event) {
+            const file = event.target.files?.[0];
+            if (!file || !file.type.includes('image')) {
+                return;
             }
+
+            const base64 = await this.blobToBase64(file);
+            editor.chain().focus().setImage({ src: base64 }).run();
+
+            event.target.value = '';
+        },
+
+        blobToBase64(blob) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = (error) => reject(error);
+            });
         },
 
         undo() {
@@ -138,8 +161,34 @@ export default (initialValue = null) => {
             editor.chain().focus().redo().run();
         },
 
+        updateActiveStates() {
+            this.activeStates = {
+                bold: editor.isActive('bold'),
+                italic: editor.isActive('italic'),
+                strike: editor.isActive('strike'),
+                code: editor.isActive('code'),
+                heading1: editor.isActive('heading', { level: 1 }),
+                heading2: editor.isActive('heading', { level: 2 }),
+                heading3: editor.isActive('heading', { level: 3 }),
+                bulletList: editor.isActive('bulletList'),
+                orderedList: editor.isActive('orderedList'),
+                blockquote: editor.isActive('blockquote'),
+                codeBlock: editor.isActive('codeBlock'),
+                link: editor.isActive('link'),
+                alignLeft: editor.isActive({ textAlign: 'left' }),
+                alignCenter: editor.isActive({ textAlign: 'center' }),
+                alignRight: editor.isActive({ textAlign: 'right' }),
+                alignJustify: editor.isActive({ textAlign: 'justify' }),
+            };
+        },
+
         isActive(type, opts = {}) {
-            return editor.isActive(type, opts);
+            if (typeof type === 'object' && type.textAlign) {
+                const alignmentKey = `align${type.textAlign.charAt(0).toUpperCase() + type.textAlign.slice(1)}`;
+                return this.activeStates[alignmentKey] ?? false;
+            }
+            const key = opts.level ? `${type}${opts.level}` : type;
+            return this.activeStates[key] ?? false;
         },
 
         canUndo() {

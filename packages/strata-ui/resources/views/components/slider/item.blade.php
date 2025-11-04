@@ -2,7 +2,8 @@
     {{ $attributes->merge([
         'data-strata-slider-item' => true,
         'class' => 'flex-shrink-0',
-        'role' => 'listitem',
+        'role' => 'group',
+        'aria-roledescription' => 'slide',
     ]) }}
     x-init="
         $nextTick(() => {

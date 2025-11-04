@@ -30,8 +30,8 @@ $iconSizes = match($size) {
         type="button"
         x-show="slider?.config.autoplay"
         x-on:click="if (slider?.togglePlayPause) slider.togglePlayPause()"
-        x-bind:aria-label="slider?.isPlaying ? 'Pause autoplay' : 'Resume autoplay'"
-        x-bind:title="slider?.isPlaying ? 'Pause autoplay' : 'Resume autoplay'"
+        x-bind:aria-label="slider?.isPlaying ? 'Stop slide rotation' : 'Start slide rotation'"
+        x-bind:title="slider?.isPlaying ? 'Stop slide rotation' : 'Start slide rotation'"
         class="{{ $sizeClasses }} rounded-md bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
         data-strata-slider-play-pause
     >

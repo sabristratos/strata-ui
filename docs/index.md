@@ -22,6 +22,10 @@ Welcome to Strata UI, a Blade and Livewire component library for Laravel applica
 - [Select](select.md) - Flexible select component with single/multiselect, keyboard navigation, and customizable options
 - [Toggle](toggle.md) - Switch-style toggle component with size variants, rounded options, and Livewire integration
 
+### Data Objects
+
+- [Value Objects](value-objects.md) - Type-safe DateValue, DateRange, and TimeValue objects with Livewire integration
+
 ### Navigation
 
 - [Bottom Navigation](bottom-nav.md) - Mobile-first bottom navigation bar with pill-style container, icon support, and multiple position variants

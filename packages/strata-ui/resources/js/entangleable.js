@@ -107,10 +107,35 @@ export default class Entangleable {
     /**
      * Sync current value to Livewire component
      *
+     * Re-detects wire:model property on each sync to handle morphing scenarios
+     * where the wire:model attribute may have changed (e.g., switching between
+     * wire:model="appointmentDate" and wire:model="recurringDateRange").
+     *
      * @private
      */
     syncToLivewire() {
-        if (this.component?.$wire && this.wireModelProperty) {
+        if (!this.component?.$wire) return;
+
+        const inputElement = this.component.$refs?.input ||
+                            this.component.$el?.querySelector('[data-strata-date-picker-input]') ||
+                            this.component.$el?.querySelector('[data-strata-datepicker-input]') ||
+                            this.component.$el?.querySelector('[data-strata-select-input]') ||
+                            this.component.$el?.querySelector('[data-strata-calendar-input]') ||
+                            this.component.$el?.querySelector('[wire\\:model]');
+
+        if (inputElement) {
+            const wireModelAttribute = Array.from(inputElement.getAttributeNames())
+                .find(attr => attr.startsWith('wire:model'));
+
+            if (wireModelAttribute) {
+                const currentProperty = inputElement.getAttribute(wireModelAttribute);
+                if (currentProperty !== this.wireModelProperty) {
+                    this.wireModelProperty = currentProperty;
+                }
+            }
+        }
+
+        if (this.wireModelProperty) {
             this.component.$wire.set(this.wireModelProperty, this.value);
         }
     }

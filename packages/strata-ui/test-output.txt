@@ -1,1551 +1,1072 @@
 
-  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\Components\ButtonRenderingTest[39m
-  [31;1m⨯[39;22m[90m [39m[37mButton Component[39m[90m → renders with default props[39m[90m                                                               [39m [90m0.53s[39m  
-  [32;1m✓[39;22m[90m [39m[37mButton Component[39m[90m → renders all variant types[39m[90m                                                                [39m [90m0.11s[39m  
-  [32;1m✓[39;22m[90m [39m[37mButton Component[39m[90m → renders all appearances[39m[90m                                                                  [39m [90m0.12s[39m  
-  [32;1m✓[39;22m[90m [39m[37mButton Component[39m[90m → renders all sizes[39m[90m                                                                        [39m [90m0.12s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mButton Component[39m[90m → renders with leading icon[39m[90m                                                                [39m [90m0.15s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mButton Component[39m[90m → renders with trailing icon[39m[90m                                                               [39m [90m0.07s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mButton Component[39m[90m → renders loading state[39m[90m                                                                    [39m [90m0.05s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mButton Component[39m[90m → renders disabled state[39m[90m                                                                   [39m [90m0.03s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mButton Component[39m[90m → renders different button types[39m[90m                                                           [39m [90m0.06s[39m  
-  [32;1m✓[39;22m[90m [39m[37mButton Component[39m[90m → merges custom classes[39m[90m                                                                    [39m [90m0.06s[39m  
-  [32;1m✓[39;22m[90m [39m[37mButton Component[39m[90m → renders with focus visible styles[39m[90m                                                        [39m [90m0.04s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mButton Component[39m[90m → loading state prevents icon display[39m[90m                                                      [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mButton Component[39m[90m → link appearance removes padding[39m[90m                                                          [39m [90m0.05s[39m  
-  [32;1m✓[39;22m[90m [39m[37mButton Component[39m[90m → renders with inset shadow for filled appearance[39m[90m                                          [39m [90m0.10s[39m  
-
-  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\Components\CheckboxRenderingTest[39m
-  [31;1m⨯[39;22m[90m [39m[37mCheckbox Component[39m[90m → renders default variant with correct structure[39m[90m                                         [39m [90m0.06s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → renders all sizes[39m[90m                                                                      [39m [90m0.06s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → renders all variants[39m[90m                                                                   [39m [90m0.07s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mCheckbox Component[39m[90m → renders checked state[39m[90m                                                                  [39m [90m0.07s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mCheckbox Component[39m[90m → renders disabled state[39m[90m                                                                 [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → renders with label and description[39m[90m                                                     [39m [90m0.03s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mCheckbox Component[39m[90m → generates unique ID when not provided[39m[90m                                                  [39m [90m0.02s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mCheckbox Component[39m[90m → uses provided ID[39m[90m                                                                       [39m [90m0.06s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mCheckbox Component[39m[90m → renders check icon with correct classes[39m[90m                                                [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → renders indeterminate state with Alpine data[39m[90m                                           [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → card variant has indicator in correct position[39m[90m                                         [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → pill variant has responsive sizing[39m[90m                                                     [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → bordered and card variants show hover effects when not disabled[39m[90m                        [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → checkbox uses sr-only for accessibility[39m[90m                                                [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → renders slot content when no label provided[39m[90m                                            [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → description has correct sizing[39m[90m                                                         [39m [90m0.07s[39m  
-  [32;1m✓[39;22m[90m [39m[37mCheckbox Component[39m[90m → checked state changes background and border[39m[90m                                            [39m [90m0.06s[39m  
-
-  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\Components\GroupRenderingTest[39m
-  [32;1m✓[39;22m[90m [39m[37mGroup Component[39m[90m → renders with horizontal orientation by default[39m[90m                                            [39m [90m0.07s[39m  
-  [32;1m✓[39;22m[90m [39m[37mGroup Component[39m[90m → renders with vertical orientation[39m[90m                                                         [39m [90m0.02s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mGroup Component[39m[90m → horizontal orientation removes right borders except last[39m[90m                                  [39m [90m0.02s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mGroup Component[39m[90m → horizontal orientation removes rounded corners for middle items[39m[90m                           [39m [90m0.02s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mGroup Component[39m[90m → vertical orientation removes bottom borders except last[39m[90m                                   [39m [90m0.03s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mGroup Component[39m[90m → vertical orientation removes rounded corners for middle items[39m[90m                             [39m [90m0.02s[39m  
-  [32;1m✓[39;22m[90m [39m[37mGroup Component[39m[90m → merges custom classes[39m[90m                                                                     [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mGroup Component[39m[90m → renders multiple children[39m[90m                                                                 [39m [90m0.03s[39m  
-
-  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\Components\InputRenderingTest[39m
-  [31;1m⨯[39;22m[90m [39m[37mInput Component[39m[90m → renders with default props[39m[90m                                                                [39m [90m0.04s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mInput Component[39m[90m → renders all input types[39m[90m                                                                   [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mInput Component[39m[90m → renders all sizes[39m[90m                                                                         [39m [90m0.05s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mInput Component[39m[90m → renders all validation states[39m[90m                                                             [39m [90m0.06s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mInput Component[39m[90m → renders with left icon[39m[90m                                                                    [39m [90m0.04s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mInput Component[39m[90m → renders with right icon[39m[90m                                                                   [39m [90m0.06s[39m  
-  [32;1m✓[39;22m[90m [39m[37mInput Component[39m[90m → renders with prefix[39m[90m                                                                       [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mInput Component[39m[90m → renders with suffix[39m[90m                                                                       [39m [90m0.03s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mInput Component[39m[90m → renders disabled state[39m[90m                                                                    [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mInput Component[39m[90m → renders with slot content[39m[90m                                                                 [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mInput Component[39m[90m → merges custom classes on wrapper[39m[90m                                                          [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mInput Component[39m[90m → state icons have correct colors[39m[90m                                                           [39m [90m0.08s[39m  
-  [32;1m✓[39;22m[90m [39m[37mInput Component[39m[90m → default state does not show icon[39m[90m                                                          [39m [90m0.04s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mInput Component[39m[90m → renders with placeholder attribute[39m[90m                                                        [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mInput Component[39m[90m → input has transparent background[39m[90m                                                          [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mInput Component[39m[90m → wrapper has focus-within ring[39m[90m                                                             [39m [90m0.06s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mInput Component[39m[90m → renders with all decorations combined[39m[90m                                                     [39m [90m0.05s[39m  
-
-  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\Components\RadioRenderingTest[39m
-  [31;1m⨯[39;22m[90m [39m[37mRadio Component[39m[90m → renders default variant with correct structure[39m[90m                                            [39m [90m0.06s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → renders all sizes[39m[90m                                                                         [39m [90m0.05s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → renders all variants[39m[90m                                                                      [39m [90m0.12s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mRadio Component[39m[90m → renders checked state[39m[90m                                                                     [39m [90m0.07s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mRadio Component[39m[90m → renders disabled state[39m[90m                                                                    [39m [90m0.06s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → renders with label and description[39m[90m                                                        [39m [90m0.04s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mRadio Component[39m[90m → generates unique ID when not provided[39m[90m                                                     [39m [90m0.02s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mRadio Component[39m[90m → uses provided ID[39m[90m                                                                          [39m [90m0.02s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → renders dot indicator with correct classes[39m[90m                                                [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → dot sizes match radio sizes[39m[90m                                                               [39m [90m0.09s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → card variant has indicator in correct position[39m[90m                                            [39m [90m0.05s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → pill variant has responsive sizing[39m[90m                                                        [39m [90m0.08s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → bordered and card variants show hover effects when not disabled[39m[90m                           [39m [90m0.05s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → radio uses sr-only for accessibility[39m[90m                                                      [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → renders slot content when no label provided[39m[90m                                               [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → description has correct sizing[39m[90m                                                            [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → checked state changes background and border[39m[90m                                               [39m [90m0.02s[39m  
-  [32;1m✓[39;22m[90m [39m[37mRadio Component[39m[90m → radio is rounded full[39m[90m                                                                     [39m [90m0.03s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mRadio Component[39m[90m → name attribute is required for radio groups[39m[90m                                               [39m [90m0.03s[39m  
-
-  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\Components\TextareaRenderingTest[39m
-  [31;1m⨯[39;22m[90m [39m[37mTextarea Component[39m[90m → renders with default props[39m[90m                                                             [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mTextarea Component[39m[90m → renders all sizes[39m[90m                                                                      [39m [90m0.03s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mTextarea Component[39m[90m → renders all validation states[39m[90m                                                          [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mTextarea Component[39m[90m → renders all resize options[39m[90m                                                             [39m [90m0.04s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mTextarea Component[39m[90m → renders custom row count[39m[90m                                                               [39m [90m0.02s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mTextarea Component[39m[90m → renders disabled state[39m[90m                                                                 [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mTextarea Component[39m[90m → state icons are positioned correctly[39m[90m                                                   [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mTextarea Component[39m[90m → state icons have correct colors[39m[90m                                                        [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mTextarea Component[39m[90m → default state does not show icon[39m[90m                                                       [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mTextarea Component[39m[90m → renders with slot content below textarea[39m[90m                                               [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mTextarea Component[39m[90m → textarea has transparent background[39m[90m                                                    [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mTextarea Component[39m[90m → textarea has minimum height[39m[90m                                                            [39m [90m0.02s[39m  
-  [32;1m✓[39;22m[90m [39m[37mTextarea Component[39m[90m → merges custom classes on wrapper[39m[90m                                                       [39m [90m0.03s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mTextarea Component[39m[90m → renders with placeholder attribute[39m[90m                                                     [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mTextarea Component[39m[90m → wrapper has focus ring[39m[90m                                                                 [39m [90m0.04s[39m  
-
-  [39;41;1m FAIL [39;49;22m[39m Tests\Feature\Components\ToggleRenderingTest[39m
-  [31;1m⨯[39;22m[90m [39m[37mToggle Component[39m[90m → renders with correct structure[39m[90m                                                           [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → renders all track sizes[39m[90m                                                                  [39m [90m0.05s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → renders all thumb sizes[39m[90m                                                                  [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → thumb translations match sizes[39m[90m                                                           [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → renders all rounded variants[39m[90m                                                             [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → renders all states[39m[90m                                                                       [39m [90m0.07s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mToggle Component[39m[90m → renders checked state[39m[90m                                                                    [39m [90m0.03s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mToggle Component[39m[90m → renders disabled state[39m[90m                                                                   [39m [90m0.02s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → renders with label and description[39m[90m                                                       [39m [90m0.02s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mToggle Component[39m[90m → generates unique ID when not provided[39m[90m                                                    [39m [90m0.01s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mToggle Component[39m[90m → uses provided ID[39m[90m                                                                         [39m [90m0.02s[39m  
-  [31;1m⨯[39;22m[90m [39m[37mToggle Component[39m[90m → label has role switch for accessibility[39m[90m                                                  [39m [90m0.02s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → toggle uses sr-only for input accessibility[39m[90m                                              [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → renders slot content when no label provided[39m[90m                                              [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → description has correct sizing[39m[90m                                                           [39m [90m0.05s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → track has transition classes[39m[90m                                                             [39m [90m0.02s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → thumb has transition classes[39m[90m                                                             [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → wrapper is flex justify between for label and toggle[39m[90m                                     [39m [90m0.02s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → track has focus ring[39m[90m                                                                     [39m [90m0.04s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → thumb has correct background color[39m[90m                                                       [39m [90m0.02s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → unchecked state has muted background[39m[90m                                                     [39m [90m0.03s[39m  
-  [32;1m✓[39;22m[90m [39m[37mToggle Component[39m[90m → toggle is shrink-0 to prevent squishing[39m[90m                                                  [39m [90m0.03s[39m  
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ButtonRenderingTest[22m [90m>[39m `Button Component` → renders with default props               
-[39;1m  Expecting '[39;22m[39;1m<button
-    type="button"
-    class="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 shadow-sm h-10 px-3 text-base gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none"
-             style="box-shadow: inset 0 1px color-mix(in oklab, white 20%, transparent)" >[39;22m[39;1m
-
-    
-    [39;22m[39;1m<span class="relative">[39;22m[39;1mClick Me[39;22m[39;1m</span>[39;22m[39;1m
-
-    [39;22m[39;1m</button>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\ButtonRenderingTest.php[39m:[32m9[39m
-      5▕ describe('Button Component', function () {
-      6▕     test('renders with default props', function () {
-      7▕         expectComponent($this, 'button', slot: 'Click Me')
-      8▕             ->toHaveTag('button')
-  ➜   9▕             ->toHaveAttribute('type', 'button')
-     10▕             ->toHaveClasses('bg-primary', 'text-primary-foreground', 'h-10')
-     11▕             ->toRenderSlot('Click Me');
-     12▕     });
-     13▕
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ButtonRenderingTest[22m [90m>[39m `Button Component` → renders with leading icon                
-[39;1m  Expected: [39;22m[31m<button\n
-    type="button"\n
-    class="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 shadow-sm h-10 px-3 text-base gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none"\n
-             style="box-shadow: inset 0 1px color-mix(in oklab, white 20%, transparent)" >[39m[31m\n
-\n
-            [39m[31m<svg class="inline-block w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<path d="M20 6 9 17l-5-5"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-    \n
-    [39m[31m<span class="relative">[39m[31mConfirm[39m[31m</span>[39m[31m\n
-\n
-    [39m[31m</button>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32mstrata::icon.check[39m
-
-  at [32mtests\Feature\Components\ButtonRenderingTest.php[39m:[32m52[39m
-     48▕     });
-     49▕ 
-     50▕     test('renders with leading icon', function () {
-     51▕         expectComponent($this, 'button', ['icon' => 'check'], 'Confirm')
-  ➜  52▕             ->toContain('strata::icon.check')
-     53▕             ->toRenderSlot('Confirm');
-     54▕     });
-     55▕ 
-     56▕     test('renders with trailing icon', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ButtonRenderingTest[22m [90m>[39m `Button Component` → renders with trailing icon               
-[39;1m  Expected: [39;22m[31m<button\n
-    type="button"\n
-    class="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 shadow-sm h-10 px-3 text-base gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none"\n
-             style="box-shadow: inset 0 1px color-mix(in oklab, white 20%, transparent)" >[39m[31m\n
-\n
-    \n
-    [39m[31m<span class="relative">[39m[31mNext[39m[31m</span>[39m[31m\n
-\n
-            [39m[31m<svg class="inline-block w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<path d="M5 12h14"/>[39m[31m\n
-  [39m[31m<path d="m12 5 7 7-7 7"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-    [39m[31m</button>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32mstrata::icon.arrow-right[39m
-
-  at [32mtests\Feature\Components\ButtonRenderingTest.php[39m:[32m58[39m
-     54▕     });
-     55▕ 
-     56▕     test('renders with trailing icon', function () {
-     57▕         expectComponent($this, 'button', ['iconTrailing' => 'arrow-right'], 'Next')
-  ➜  58▕             ->toContain('strata::icon.arrow-right')
-     59▕             ->toRenderSlot('Next');
-     60▕     });
-     61▕ 
-     62▕     test('renders loading state', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ButtonRenderingTest[22m [90m>[39m `Button Component` → renders loading state                    
-[39;1m  Expected: [39;22m[31m<button\n
-    type="button"\n
-    class="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 shadow-sm h-10 px-3 text-base gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none"\n
-    disabled     aria-busy="true"      style="box-shadow: inset 0 1px color-mix(in oklab, white 20%, transparent)" >[39m[31m\n
-\n
-            [39m[31m<svg class="inline-block animate-spin w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<path d="M21 12a9 9 0 1 1-6.219-8.56"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-    \n
-    [39m[31m<span class="relative">[39m[31mProcessing[39m[31m</span>[39m[31m\n
-\n
-    [39m[31m</button>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32mstrata::icon.loader-2[39m
-
-  at [32mtests\Feature\Components\ButtonRenderingTest.php[39m:[32m64[39m
-     60▕     });
-     61▕ 
-     62▕     test('renders loading state', function () {
-     63▕         expectComponent($this, 'button', ['loading' => true], 'Processing')
-  ➜  64▕             ->toContain('strata::icon.loader-2')
-     65▕             ->toContain('animate-spin')
-     66▕             ->toHaveAttribute('disabled')
-     67▕             ->toHaveAttribute('aria-busy', 'true');
-     68▕     });
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ButtonRenderingTest[22m [90m>[39m `Button Component` → renders disabled state                   
-[39;1m  Expecting '[39;22m[39;1m<button
-    type="button"
-    class="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 shadow-sm h-10 px-3 text-base gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none"
-    disabled         style="box-shadow: inset 0 1px color-mix(in oklab, white 20%, transparent)" >[39;22m[39;1m
-
-    
-    [39;22m[39;1m<span class="relative">[39;22m[39;1mDisabled[39;22m[39;1m</span>[39;22m[39;1m
-
-    [39;22m[39;1m</button>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\ButtonRenderingTest.php[39m:[32m72[39m
-     68▕     });
-     69▕ 
-     70▕     test('renders disabled state', function () {
-     71▕         expectComponent($this, 'button', ['disabled' => true], 'Disabled')
-  ➜  72▕             ->toHaveAttribute('disabled')
-     73▕             ->toHaveClasses('disabled:opacity-60', 'disabled:cursor-not-allowed');
-     74▕     });
-     75▕ 
-     76▕     test('renders different button types', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ButtonRenderingTest[22m [90m>[39m `Button Component` → renders different button types           
-[39;1m  Expecting '[39;22m[39;1m<button
-    type="submit"
-    class="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 shadow-sm h-10 px-3 text-base gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none"
-             style="box-shadow: inset 0 1px color-mix(in oklab, white 20%, transparent)" >[39;22m[39;1m
-
-    
-    [39;22m[39;1m<span class="relative">[39;22m[39;1mSubmit[39;22m[39;1m</span>[39;22m[39;1m
-
-    [39;22m[39;1m</button>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\ButtonRenderingTest.php[39m:[32m78[39m
-     74▕     });
-     75▕ 
-     76▕     test('renders different button types', function () {
-     77▕         expectComponent($this, 'button', ['type' => 'submit'], 'Submit')
-  ➜  78▕             ->toHaveAttribute('type', 'submit');
-     79▕ 
-     80▕         expectComponent($this, 'button', ['type' => 'reset'], 'Reset')
-     81▕             ->toHaveAttribute('type', 'reset');
-     82▕     });
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ButtonRenderingTest[22m [90m>[39m `Button Component` → loading state prevents ico… [41;1m TypeError [49;22m  
-[39;1m  expectComponent(): Argument #2 ($component) must be of type ?string, array given, called in C:\Users\chaab\Herd\strata-ui\packages\strata-ui\tests\Feature\Components\ButtonRenderingTest.php on line 97[39;22m
-
-  at [32mtests\helpers.php[39m:[32m4[39m
-      1▕ <?php
-      2▕ 
-      3▕ if (! function_exists('expectComponent')) {
-  ➜   4▕     function expectComponent(mixed $testOrComponent, ?string $component = null, array $attributes = [], string $slot = ''): \Pest\Expectation
-      5▕     {
-      6▕         // Support both signatures: expectComponent('button', [...]) and expectComponent($this, 'button', [...])
-      7▕         if (is_string($testOrComponent)) {
-      8▕             // New signature: expectComponent('button', [...])
-      9▕             $test = test();
-
-  [33m1   [39m[39;1mtests\helpers.php[39;22m:[39;1m4[39;22m
-  [33m2   [39m[39;1mtests\Feature\Components\ButtonRenderingTest.php[39;22m:[39;1m97[39;22m
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\CheckboxRenderingTest[22m [90m>[39m `Checkbox Component` → renders default variant with corr…   
-[39;1m  Expecting '[39;22m[39;1m<div
-        x-data="{}"
-        data-strata-checkbox-wrapper
-        class="group inline-flex items-center gap-3"
-    >[39;22m[39;1m
-        [39;22m[39;1m<div class="relative flex items-center">[39;22m[39;1m
-            [39;22m[39;1m<input
-                type="checkbox"
-                id="checkbox-6907d7b095dcb"
-                data-strata-checkbox
-                data-strata-field-type="checkbox"
-                                                class="sr-only peer"
-            />[39;22m[39;1m
-            [39;22m[39;1m<label for="checkbox-6907d7b095dcb" class="cursor-pointer">[39;22m[39;1m
-                [39;22m[39;1m<div class="w-5 h-5 rounded-md bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">[39;22m[39;1m
-                    [39;22m[39;1m<svg class="inline-block w-3.5 h-3.5 text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39;22m[39;1m
-  [39;22m[39;1m<path d="M20 6 9 17l-5-5"/>[39;22m[39;1m
-[39;22m[39;1m</svg>[39;22m[39;1m
-                [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</label>[39;22m[39;1m
-        [39;22m[39;1m</div>[39;22m[39;1m
-
-                    [39;22m[39;1m<div class="flex flex-col gap-0.5">[39;22m[39;1m
-                [39;22m[39;1m<label
-                    for="checkbox-6907d7b095dcb"
-                    class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-                >[39;22m[39;1m
-                                            Accept terms
-                                    [39;22m[39;1m</label>[39;22m[39;1m
-
-                            [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\CheckboxRenderingTest.php[39m:[32m7[39m
-      3▕ describe('Checkbox Component', function () {
-      4▕     test('renders default variant with correct structure', function () {
-      5▕         expectComponent($this, 'checkbox', ['label' => 'Accept terms'])
-      6▕             ->toHaveTag('input')
-  ➜   7▕             ->toHaveAttribute('type', 'checkbox')
-      8▕             ->toHaveDataAttribute('strata-checkbox')
-      9▕             ->toHaveDataAttribute('strata-field-type', 'checkbox')
-     10▕             ->toHaveDataAttribute('strata-checkbox-wrapper')
-     11▕             ->toRenderSlot('Accept terms');
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\CheckboxRenderingTest[22m [90m>[39m `Checkbox Component` → renders checked state                
-[39;1m  Expecting '[39;22m[39;1m<div
-        x-data="{}"
-        data-strata-checkbox-wrapper
-        class="group inline-flex items-center gap-3"
-    >[39;22m[39;1m
-        [39;22m[39;1m<div class="relative flex items-center">[39;22m[39;1m
-            [39;22m[39;1m<input
-                type="checkbox"
-                id="checkbox-6907d7b0c6e64"
-                data-strata-checkbox
-                data-strata-field-type="checkbox"
-                 checked                                 class="sr-only peer"
-            />[39;22m[39;1m
-            [39;22m[39;1m<label for="checkbox-6907d7b0c6e64" class="cursor-pointer">[39;22m[39;1m
-                [39;22m[39;1m<div class="w-5 h-5 rounded-md bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">[39;22m[39;1m
-                    [39;22m[39;1m<svg class="inline-block w-3.5 h-3.5 text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39;22m[39;1m
-  [39;22m[39;1m<path d="M20 6 9 17l-5-5"/>[39;22m[39;1m
-[39;22m[39;1m</svg>[39;22m[39;1m
-                [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</label>[39;22m[39;1m
-        [39;22m[39;1m</div>[39;22m[39;1m
-
-                    [39;22m[39;1m<div class="flex flex-col gap-0.5">[39;22m[39;1m
-                [39;22m[39;1m<label
-                    for="checkbox-6907d7b0c6e64"
-                    class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-                >[39;22m[39;1m
-                                            Checked
-                                    [39;22m[39;1m</label>[39;22m[39;1m
-
-                            [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\CheckboxRenderingTest.php[39m:[32m42[39m
-     38▕     });
-     39▕ 
-     40▕     test('renders checked state', function () {
-     41▕         expectComponent($this, 'checkbox', ['checked' => true, 'label' => 'Checked'])
-  ➜  42▕             ->toHaveAttribute('checked');
-     43▕     });
-     44▕ 
-     45▕     test('renders disabled state', function () {
-     46▕         expectComponent($this, 'checkbox', ['disabled' => true, 'label' => 'Disabled'])
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\CheckboxRenderingTest[22m [90m>[39m `Checkbox Component` → renders disabled state               
-[39;1m  Expecting '[39;22m[39;1m<div
-        x-data="{}"
-        data-strata-checkbox-wrapper
-        class="group inline-flex items-center gap-3"
-    >[39;22m[39;1m
-        [39;22m[39;1m<div class="relative flex items-center">[39;22m[39;1m
-            [39;22m[39;1m<input
-                type="checkbox"
-                id="checkbox-6907d7b0d17a7"
-                data-strata-checkbox
-                data-strata-field-type="checkbox"
-                                 disabled                 class="sr-only peer"
-            />[39;22m[39;1m
-            [39;22m[39;1m<label for="checkbox-6907d7b0d17a7" class="cursor-pointer">[39;22m[39;1m
-                [39;22m[39;1m<div class="w-5 h-5 rounded-md bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">[39;22m[39;1m
-                    [39;22m[39;1m<svg class="inline-block w-3.5 h-3.5 text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39;22m[39;1m
-  [39;22m[39;1m<path d="M20 6 9 17l-5-5"/>[39;22m[39;1m
-[39;22m[39;1m</svg>[39;22m[39;1m
-                [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</label>[39;22m[39;1m
-        [39;22m[39;1m</div>[39;22m[39;1m
-
-                    [39;22m[39;1m<div class="flex flex-col gap-0.5">[39;22m[39;1m
-                [39;22m[39;1m<label
-                    for="checkbox-6907d7b0d17a7"
-                    class="text-base text-foreground cursor-pointer select-none opacity-50 cursor-not-allowed"
-                >[39;22m[39;1m
-                                            Disabled
-                                    [39;22m[39;1m</label>[39;22m[39;1m
-
-                            [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\CheckboxRenderingTest.php[39m:[32m47[39m
-     43▕     });
-     44▕ 
-     45▕     test('renders disabled state', function () {
-     46▕         expectComponent($this, 'checkbox', ['disabled' => true, 'label' => 'Disabled'])
-  ➜  47▕             ->toHaveAttribute('disabled')
-     48▕             ->toContain('opacity-50')
-     49▕             ->toContain('cursor-not-allowed');
-     50▕     });
-     51▕
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\CheckboxRenderingTest[22m [90m>[39m `Checkbox Component` → generates unique ID wh… [41;1m TypeError [49;22m  
-[39;1m  expectComponent(): Argument #2 ($component) must be of type ?string, array given, called in C:\Users\chaab\Herd\strata-ui\packages\strata-ui\tests\Feature\Components\CheckboxRenderingTest.php on line 62[39;22m
-
-  at [32mtests\helpers.php[39m:[32m4[39m
-      1▕ <?php
-      2▕ 
-      3▕ if (! function_exists('expectComponent')) {
-  ➜   4▕     function expectComponent(mixed $testOrComponent, ?string $component = null, array $attributes = [], string $slot = ''): \Pest\Expectation
-      5▕     {
-      6▕         // Support both signatures: expectComponent('button', [...]) and expectComponent($this, 'button', [...])
-      7▕         if (is_string($testOrComponent)) {
-      8▕             // New signature: expectComponent('button', [...])
-      9▕             $test = test();
-
-  [33m1   [39m[39;1mtests\helpers.php[39;22m:[39;1m4[39;22m
-  [33m2   [39m[39;1mtests\Feature\Components\CheckboxRenderingTest.php[39;22m:[39;1m62[39;22m
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\CheckboxRenderingTest[22m [90m>[39m `Checkbox Component` → uses provided ID                     
-[39;1m  Expecting '[39;22m[39;1m<div
-        x-data="{}"
-        data-strata-checkbox-wrapper
-        class="group inline-flex items-center gap-3"
-    >[39;22m[39;1m
-        [39;22m[39;1m<div class="relative flex items-center">[39;22m[39;1m
-            [39;22m[39;1m<input
-                type="checkbox"
-                id="custom-id"
-                data-strata-checkbox
-                data-strata-field-type="checkbox"
-                                                class="sr-only peer"
-            />[39;22m[39;1m
-            [39;22m[39;1m<label for="custom-id" class="cursor-pointer">[39;22m[39;1m
-                [39;22m[39;1m<div class="w-5 h-5 rounded-md bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">[39;22m[39;1m
-                    [39;22m[39;1m<svg class="inline-block w-3.5 h-3.5 text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39;22m[39;1m
-  [39;22m[39;1m<path d="M20 6 9 17l-5-5"/>[39;22m[39;1m
-[39;22m[39;1m</svg>[39;22m[39;1m
-                [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</label>[39;22m[39;1m
-        [39;22m[39;1m</div>[39;22m[39;1m
-
-                    [39;22m[39;1m<div class="flex flex-col gap-0.5">[39;22m[39;1m
-                [39;22m[39;1m<label
-                    for="custom-id"
-                    class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-                >[39;22m[39;1m
-                                            Custom
-                                    [39;22m[39;1m</label>[39;22m[39;1m
-
-                            [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\CheckboxRenderingTest.php[39m:[32m68[39m
-     64▕     });
-     65▕ 
-     66▕     test('uses provided ID', function () {
-     67▕         expectComponent($this, 'checkbox', ['id' => 'custom-id', 'label' => 'Custom'])
-  ➜  68▕             ->toHaveAttribute('id', 'custom-id')
-     69▕             ->toContain('for="custom-id"');
-     70▕     });
-     71▕ 
-     72▕     test('renders check icon with correct classes', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\CheckboxRenderingTest[22m [90m>[39m `Checkbox Component` → renders check icon with correct c…   
-[39;1m  Expected: [39;22m[31m<div\n
-        x-data="{}"\n
-        data-strata-checkbox-wrapper\n
-        class="group inline-flex items-center gap-3"\n
-    >[39m[31m\n
-        [39m[31m<div class="relative flex items-center">[39m[31m\n
-            [39m[31m<input\n
-                type="checkbox"\n
-                id="checkbox-6907d7b1022f7"\n
-                data-strata-checkbox\n
-                data-strata-field-type="checkbox"\n
-                                                class="sr-only peer"\n
-            />[39m[31m\n
-            [39m[31m<label for="checkbox-6907d7b1022f7" class="cursor-pointer">[39m[31m\n
-                [39m[31m<div class="w-5 h-5 rounded-md bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">[39m[31m\n
-                    [39m[31m<svg class="inline-block w-3.5 h-3.5 text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<path d="M20 6 9 17l-5-5"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-                [39m[31m</div>[39m[31m\n
-            [39m[31m</label>[39m[31m\n
-        [39m[31m</div>[39m[31m\n
-\n
-                    [39m[31m<div class="flex flex-col gap-0.5">[39m[31m\n
-                [39m[31m<label\n
-                    for="checkbox-6907d7b1022f7"\n
-                    class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"\n
-                >[39m[31m\n
-                                            Check\n
-                                    [39m[31m</label>[39m[31m\n
-\n
-                            [39m[31m</div>[39m[31m\n
-            [39m[31m</div>[39m[31m\n
-\n
-[39m[39;1m
-
-  To contain: [39;22m[32mstrata::icon.check[39m
-
-  at [32mtests\Feature\Components\CheckboxRenderingTest.php[39m:[32m74[39m
-     70▕     });
-     71▕ 
-     72▕     test('renders check icon with correct classes', function () {
-     73▕         expectComponent($this, 'checkbox', ['label' => 'Check'])
-  ➜  74▕             ->toContain('strata::icon.check')
-     75▕             ->toContain('text-primary-foreground')
-     76▕             ->toContain('opacity-0')
-     77▕             ->toContain('group-has-[:checked]:opacity-100');
-     78▕     });
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\GroupRenderingTest[22m [90m>[39m `Group Component` → horizontal orientation removes right bo…   
-[39;1m  Expected: [39;22m[31m<div class="flex flex-row [&amp;&gt;*]:border-r-0 [&amp;&gt;*:last-child]:border-r-2 [&amp;&gt;*:not(:first-child)]:rounded-l-none [&amp;&gt;*:not(:last-child)]:rounded-r-none">[39m[31m\n
-    [39m[31m<button>[39m[31mOne[39m[31m</button>[39m[31m\n
-[39m[31m</div>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32m[&>*]:border-r-0[39m
-
-  at [32mtests\Feature\Components\GroupRenderingTest.php[39m:[32m19[39m
-     15▕     });
-     16▕ 
-     17▕     test('horizontal orientation removes right borders except last', function () {
-     18▕         expectComponent($this, 'group', ['orientation' => 'horizontal'], '<button>One</button>')
-  ➜  19▕             ->toContain('[&>*]:border-r-0')
-     20▕             ->toContain('[&>*:last-child]:border-r-2');
-     21▕     });
-     22▕ 
-     23▕     test('horizontal orientation removes rounded corners for middle items', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\GroupRenderingTest[22m [90m>[39m `Group Component` → horizontal orientation removes rounded…    
-[39;1m  Expected: [39;22m[31m<div class="flex flex-row [&amp;&gt;*]:border-r-0 [&amp;&gt;*:last-child]:border-r-2 [&amp;&gt;*:not(:first-child)]:rounded-l-none [&amp;&gt;*:not(:last-child)]:rounded-r-none">[39m[31m\n
-    [39m[31m<button>[39m[31mOne[39m[31m</button>[39m[31m\n
-[39m[31m</div>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32m[&>*:not(:first-child)]:rounded-l-none[39m
-
-  at [32mtests\Feature\Components\GroupRenderingTest.php[39m:[32m25[39m
-     21▕     });
-     22▕ 
-     23▕     test('horizontal orientation removes rounded corners for middle items', function () {
-     24▕         expectComponent($this, 'group', ['orientation' => 'horizontal'], '<button>One</button>')
-  ➜  25▕             ->toContain('[&>*:not(:first-child)]:rounded-l-none')
-     26▕             ->toContain('[&>*:not(:last-child)]:rounded-r-none');
-     27▕     });
-     28▕ 
-     29▕     test('vertical orientation removes bottom borders except last', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\GroupRenderingTest[22m [90m>[39m `Group Component` → vertical orientation removes bottom bor…   
-[39;1m  Expected: [39;22m[31m<div class="flex flex-col [&amp;&gt;*]:border-b-0 [&amp;&gt;*:last-child]:border-b-2 [&amp;&gt;*:not(:first-child)]:rounded-t-none [&amp;&gt;*:not(:last-child)]:rounded-b-none">[39m[31m\n
-    [39m[31m<button>[39m[31mOne[39m[31m</button>[39m[31m\n
-[39m[31m</div>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32m[&>*]:border-b-0[39m
-
-  at [32mtests\Feature\Components\GroupRenderingTest.php[39m:[32m31[39m
-     27▕     });
-     28▕ 
-     29▕     test('vertical orientation removes bottom borders except last', function () {
-     30▕         expectComponent($this, 'group', ['orientation' => 'vertical'], '<button>One</button>')
-  ➜  31▕             ->toContain('[&>*]:border-b-0')
-     32▕             ->toContain('[&>*:last-child]:border-b-2');
-     33▕     });
-     34▕ 
-     35▕     test('vertical orientation removes rounded corners for middle items', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\GroupRenderingTest[22m [90m>[39m `Group Component` → vertical orientation removes rounded co…   
-[39;1m  Expected: [39;22m[31m<div class="flex flex-col [&amp;&gt;*]:border-b-0 [&amp;&gt;*:last-child]:border-b-2 [&amp;&gt;*:not(:first-child)]:rounded-t-none [&amp;&gt;*:not(:last-child)]:rounded-b-none">[39m[31m\n
-    [39m[31m<button>[39m[31mOne[39m[31m</button>[39m[31m\n
-[39m[31m</div>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32m[&>*:not(:first-child)]:rounded-t-none[39m
-
-  at [32mtests\Feature\Components\GroupRenderingTest.php[39m:[32m37[39m
-     33▕     });
-     34▕ 
-     35▕     test('vertical orientation removes rounded corners for middle items', function () {
-     36▕         expectComponent($this, 'group', ['orientation' => 'vertical'], '<button>One</button>')
-  ➜  37▕             ->toContain('[&>*:not(:first-child)]:rounded-t-none')
-     38▕             ->toContain('[&>*:not(:last-child)]:rounded-b-none');
-     39▕     });
-     40▕ 
-     41▕     test('merges custom classes', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\InputRenderingTest[22m [90m>[39m `Input Component` → renders with default props                 
-[39;1m  Expecting '[39;22m[39;1m<div data-strata-input-wrapper class="flex items-center gap-2 bg-input border rounded-lg transition-all duration-150 h-10 px-3 text-base border-border focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">[39;22m[39;1m
-    
-    
-    [39;22m[39;1m<input
-        data-strata-input
-        data-strata-field-type="input"
-        type="text"
-        class="flex-1 bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed"
-            />[39;22m[39;1m
-
-    
-    
-    
-    [39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\InputRenderingTest.php[39m:[32m9[39m
-      5▕ describe('Input Component', function () {
-      6▕     test('renders with default props', function () {
-      7▕         expectComponent('input')
-      8▕             ->toHaveTag('input')
-  ➜   9▕             ->toHaveAttribute('type', 'text')
-     10▕             ->toHaveDataAttribute('strata-input')
-     11▕             ->toHaveDataAttribute('strata-field-type', 'input')
-     12▕             ->toHaveDataAttribute('strata-input-wrapper');
-     13▕     });
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\InputRenderingTest[22m [90m>[39m `Input Component` → renders all input types                    
-[39;1m  Expecting '[39;22m[39;1m<div data-strata-input-wrapper class="flex items-center gap-2 bg-input border rounded-lg transition-all duration-150 h-10 px-3 text-base border-border focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">[39;22m[39;1m
-    
-    
-    [39;22m[39;1m<input
-        data-strata-input
-        data-strata-field-type="input"
-        type="text"
-        class="flex-1 bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed"
-            />[39;22m[39;1m
-
-    
-    
-    
-    [39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\InputRenderingTest.php[39m:[32m20[39m
-     16▕         $types = ['text', 'email', 'password', 'number', 'tel', 'url'];
-     17▕ 
-     18▕         foreach ($types as $type) {
-     19▕             expectComponent($this, 'input', ['type' => $type])
-  ➜  20▕                 ->toHaveAttribute('type', $type);
-     21▕         }
-     22▕     });
-     23▕ 
-     24▕     test('renders all sizes', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\InputRenderingTest[22m [90m>[39m `Input Component` → renders all validation states              
-[39;1m  Expected: [39;22m[31m<div data-strata-input-wrapper class="flex items-center gap-2 bg-input border rounded-lg transition-all duration-150 h-10 px-3 text-base border-success focus-within:ring-2 focus-within:ring-success/20 focus-within:ring-offset-2">[39m[31m\n
-    \n
-    \n
-    [39m[31m<input\n
-        data-strata-input\n
-        data-strata-field-type="input"\n
-        type="text"\n
-        class="flex-1 bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed"\n
-            />[39m[31m\n
-\n
-            [39m[31m<svg class="inline-block w-5 h-5 flex-shrink-0 text-success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>[39m[31m\n
-  [39m[31m<path d="m9 11 3 3L22 4"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-    \n
-    \n
-    \n
-    [39m[31m</div>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32mstrata::icon.check-circle[39m
-
-  at [32mtests\Feature\Components\InputRenderingTest.php[39m:[32m43[39m
-     39▕ 
-     40▕         expectComponent($this, 'input', ['state' => 'success'])
-     41▕             ->toHaveClasses('border-success')
-     42▕             ->toContain('focus-within:ring-success/20')
-  ➜  43▕             ->toContain('strata::icon.check-circle');
-     44▕ 
-     45▕         expectComponent($this, 'input', ['state' => 'error'])
-     46▕             ->toHaveClasses('border-destructive')
-     47▕             ->toContain('focus-within:ring-destructive/20')
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\InputRenderingTest[22m [90m>[39m `Input Component` → renders with left icon                     
-[39;1m  Expected: [39;22m[31m<div data-strata-input-wrapper class="flex items-center gap-2 bg-input border rounded-lg transition-all duration-150 h-10 px-3 text-base border-border focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">[39m[31m\n
-            [39m[31m<svg class="inline-block w-5 h-5 text-muted-foreground flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<rect width="20" height="16" x="2" y="4" rx="2"/>[39m[31m\n
-  [39m[31m<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-    \n
-    \n
-    [39m[31m<input\n
-        data-strata-input\n
-        data-strata-field-type="input"\n
-        type="text"\n
-        class="flex-1 bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed"\n
-            />[39m[31m\n
-\n
-    \n
-    \n
-    \n
-    [39m[31m</div>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32mstrata::icon.mail[39m
-
-  at [32mtests\Feature\Components\InputRenderingTest.php[39m:[32m58[39m
-     54▕     });
-     55▕ 
-     56▕     test('renders with left icon', function () {
-     57▕         expectComponent($this, 'input', ['iconLeft' => 'mail'])
-  ➜  58▕             ->toContain('strata::icon.mail')
-     59▕             ->toContain('w-5 h-5 text-muted-foreground');
-     60▕     });
-     61▕ 
-     62▕     test('renders with right icon', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\InputRenderingTest[22m [90m>[39m `Input Component` → renders with right icon                    
-[39;1m  Expected: [39;22m[31m<div data-strata-input-wrapper class="flex items-center gap-2 bg-input border rounded-lg transition-all duration-150 h-10 px-3 text-base border-border focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">[39m[31m\n
-    \n
-    \n
-    [39m[31m<input\n
-        data-strata-input\n
-        data-strata-field-type="input"\n
-        type="text"\n
-        class="flex-1 bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed"\n
-            />[39m[31m\n
-\n
-    \n
-    \n
-            [39m[31m<svg class="inline-block w-5 h-5 text-muted-foreground flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<circle cx="11" cy="11" r="8"/>[39m[31m\n
-  [39m[31m<path d="m21 21-4.3-4.3"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-    \n
-    [39m[31m</div>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32mstrata::icon.search[39m
-
-  at [32mtests\Feature\Components\InputRenderingTest.php[39m:[32m64[39m
-     60▕     });
-     61▕ 
-     62▕     test('renders with right icon', function () {
-     63▕         expectComponent($this, 'input', ['iconRight' => 'search'])
-  ➜  64▕             ->toContain('strata::icon.search')
-     65▕             ->toContain('w-5 h-5 text-muted-foreground');
-     66▕     });
-     67▕ 
-     68▕     test('renders with prefix', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\InputRenderingTest[22m [90m>[39m `Input Component` → renders disabled state                     
-[39;1m  Expecting '[39;22m[39;1m<div data-strata-input-wrapper class="flex items-center gap-2 bg-input border rounded-lg transition-all duration-150 h-10 px-3 text-base border-border focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 opacity-50 cursor-not-allowed">[39;22m[39;1m
-    
-    
-    [39;22m[39;1m<input
-        data-strata-input
-        data-strata-field-type="input"
-        type="text"
-        class="flex-1 bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed"
-        disabled    />[39;22m[39;1m
-
-    
-    
-    
-    [39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\InputRenderingTest.php[39m:[32m80[39m
-     76▕     });
-     77▕ 
-     78▕     test('renders disabled state', function () {
-     79▕         expectComponent($this, 'input', ['disabled' => true])
-  ➜  80▕             ->toHaveAttribute('disabled')
-     81▕             ->toHaveClasses('opacity-50', 'cursor-not-allowed');
-     82▕     });
-     83▕ 
-     84▕     test('renders with slot content', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\InputRenderingTest[22m [90m>[39m `Input Component` → renders with placeholder attribute         
-[39;1m  Expecting '[39;22m[39;1m<div data-strata-input-wrapper class="flex items-center gap-2 bg-input border rounded-lg transition-all duration-150 h-10 px-3 text-base border-border focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">[39;22m[39;1m
-    
-    
-    [39;22m[39;1m<input
-        data-strata-input
-        data-strata-field-type="input"
-        type="text"
-        class="flex-1 bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed" placeholder="Enter text"
-            />[39;22m[39;1m
-
-    
-    
-    
-    [39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\InputRenderingTest.php[39m:[32m114[39m
-    110▕     });
-    111▕ 
-    112▕     test('renders with placeholder attribute', function () {
-    113▕         expectComponent($this, 'input', ['placeholder' => 'Enter text'])
-  ➜ 114▕             ->toHaveAttribute('placeholder', 'Enter text');
-    115▕     });
-    116▕ 
-    117▕     test('input has transparent background', function () {
-    118▕         expectComponent('input')
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\InputRenderingTest[22m [90m>[39m `Input Component` → renders with all decorations combined      
-[39;1m  Expected: [39;22m[31m<div data-strata-input-wrapper class="flex items-center gap-2 bg-input border rounded-lg transition-all duration-150 h-10 px-3 text-base border-success focus-within:ring-2 focus-within:ring-success/20 focus-within:ring-offset-2">[39m[31m\n
-            [39m[31m<svg class="inline-block w-5 h-5 text-muted-foreground flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<rect width="20" height="16" x="2" y="4" rx="2"/>[39m[31m\n
-  [39m[31m<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-    \n
-            [39m[31m<span class="text-muted-foreground flex-shrink-0">[39m[31mhttps://[39m[31m</span>[39m[31m\n
-    \n
-    [39m[31m<input\n
-        data-strata-input\n
-        data-strata-field-type="input"\n
-        type="text"\n
-        class="flex-1 bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed"\n
-            />[39m[31m\n
-\n
-            [39m[31m<svg class="inline-block w-5 h-5 flex-shrink-0 text-success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>[39m[31m\n
-  [39m[31m<path d="m9 11 3 3L22 4"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-    \n
-            [39m[31m<span class="text-muted-foreground flex-shrink-0">[39m[31m.com[39m[31m</span>[39m[31m\n
-    \n
-            [39m[31m<svg class="inline-block w-5 h-5 text-muted-foreground flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<path d="M15 3h6v6"/>[39m[31m\n
-  [39m[31m<path d="M10 14 21 3"/>[39m[31m\n
-  [39m[31m<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-    \n
-    [39m[31m</div>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32mstrata::icon.mail[39m
-
-  at [32mtests\Feature\Components\InputRenderingTest.php[39m:[32m139[39m
-    135▕             'suffix' => '.com',
-    136▕             'iconRight' => 'external-link',
-    137▕             'state' => 'success'
-    138▕         ])
-  ➜ 139▕             ->toContain('strata::icon.mail')
-    140▕             ->toContain('https://')
-    141▕             ->toContain('.com')
-    142▕             ->toContain('strata::icon.external-link')
-    143▕             ->toContain('strata::icon.check-circle');
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\RadioRenderingTest[22m [90m>[39m `Radio Component` → renders default variant with correct st…   
-[39;1m  Expecting '[39;22m[39;1m<div
-        data-strata-radio-wrapper
-        class="group inline-flex items-center gap-3"
-    >[39;22m[39;1m
-        [39;22m[39;1m<div class="relative flex items-center">[39;22m[39;1m
-            [39;22m[39;1m<input
-                type="radio"
-                id="radio-6907d7b260911"
-                data-strata-radio
-                data-strata-field-type="radio"
-                                                 name="option"                 class="sr-only peer"
-            />[39;22m[39;1m
-            [39;22m[39;1m<label for="radio-6907d7b260911" class="cursor-pointer">[39;22m[39;1m
-                [39;22m[39;1m<div class="w-5 h-5 rounded-full bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">[39;22m[39;1m
-                    [39;22m[39;1m<div class="w-2 h-2 rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity">[39;22m[39;1m</div>[39;22m[39;1m
-                [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</label>[39;22m[39;1m
-        [39;22m[39;1m</div>[39;22m[39;1m
-
-                    [39;22m[39;1m<div class="flex flex-col gap-0.5">[39;22m[39;1m
-                [39;22m[39;1m<label
-                    for="radio-6907d7b260911"
-                    class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-                >[39;22m[39;1m
-                                            Option 1
-                                    [39;22m[39;1m</label>[39;22m[39;1m
-
-                            [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\RadioRenderingTest.php[39m:[32m7[39m
-      3▕ describe('Radio Component', function () {
-      4▕     test('renders default variant with correct structure', function () {
-      5▕         expectComponent($this, 'radio', ['label' => 'Option 1', 'name' => 'option'])
-      6▕             ->toHaveTag('input')
-  ➜   7▕             ->toHaveAttribute('type', 'radio')
-      8▕             ->toHaveAttribute('name', 'option')
-      9▕             ->toHaveDataAttribute('strata-radio')
-     10▕             ->toHaveDataAttribute('strata-field-type', 'radio')
-     11▕             ->toHaveDataAttribute('strata-radio-wrapper')
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\RadioRenderingTest[22m [90m>[39m `Radio Component` → renders checked state                      
-[39;1m  Expecting '[39;22m[39;1m<div
-        data-strata-radio-wrapper
-        class="group inline-flex items-center gap-3"
-    >[39;22m[39;1m
-        [39;22m[39;1m<div class="relative flex items-center">[39;22m[39;1m
-            [39;22m[39;1m<input
-                type="radio"
-                id="radio-6907d7b29cf45"
-                data-strata-radio
-                data-strata-field-type="radio"
-                 checked                                  name="test"                 class="sr-only peer"
-            />[39;22m[39;1m
-            [39;22m[39;1m<label for="radio-6907d7b29cf45" class="cursor-pointer">[39;22m[39;1m
-                [39;22m[39;1m<div class="w-5 h-5 rounded-full bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">[39;22m[39;1m
-                    [39;22m[39;1m<div class="w-2 h-2 rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity">[39;22m[39;1m</div>[39;22m[39;1m
-                [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</label>[39;22m[39;1m
-        [39;22m[39;1m</div>[39;22m[39;1m
-
-                    [39;22m[39;1m<div class="flex flex-col gap-0.5">[39;22m[39;1m
-                [39;22m[39;1m<label
-                    for="radio-6907d7b29cf45"
-                    class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-                >[39;22m[39;1m
-                                            Checked
-                                    [39;22m[39;1m</label>[39;22m[39;1m
-
-                            [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\RadioRenderingTest.php[39m:[32m43[39m
-     39▕     });
-     40▕ 
-     41▕     test('renders checked state', function () {
-     42▕         expectComponent($this, 'radio', ['checked' => true, 'label' => 'Checked', 'name' => 'test'])
-  ➜  43▕             ->toHaveAttribute('checked');
-     44▕     });
-     45▕ 
-     46▕     test('renders disabled state', function () {
-     47▕         expectComponent($this, 'radio', ['disabled' => true, 'label' => 'Disabled', 'name' => 'test'])
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\RadioRenderingTest[22m [90m>[39m `Radio Component` → renders disabled state                     
-[39;1m  Expecting '[39;22m[39;1m<div
-        data-strata-radio-wrapper
-        class="group inline-flex items-center gap-3"
-    >[39;22m[39;1m
-        [39;22m[39;1m<div class="relative flex items-center">[39;22m[39;1m
-            [39;22m[39;1m<input
-                type="radio"
-                id="radio-6907d7b2ac61a"
-                data-strata-radio
-                data-strata-field-type="radio"
-                                 disabled                  name="test"                 class="sr-only peer"
-            />[39;22m[39;1m
-            [39;22m[39;1m<label for="radio-6907d7b2ac61a" class="cursor-pointer">[39;22m[39;1m
-                [39;22m[39;1m<div class="w-5 h-5 rounded-full bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">[39;22m[39;1m
-                    [39;22m[39;1m<div class="w-2 h-2 rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity">[39;22m[39;1m</div>[39;22m[39;1m
-                [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</label>[39;22m[39;1m
-        [39;22m[39;1m</div>[39;22m[39;1m
-
-                    [39;22m[39;1m<div class="flex flex-col gap-0.5">[39;22m[39;1m
-                [39;22m[39;1m<label
-                    for="radio-6907d7b2ac61a"
-                    class="text-base text-foreground cursor-pointer select-none opacity-50 cursor-not-allowed"
-                >[39;22m[39;1m
-                                            Disabled
-                                    [39;22m[39;1m</label>[39;22m[39;1m
-
-                            [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\RadioRenderingTest.php[39m:[32m48[39m
-     44▕     });
-     45▕ 
-     46▕     test('renders disabled state', function () {
-     47▕         expectComponent($this, 'radio', ['disabled' => true, 'label' => 'Disabled', 'name' => 'test'])
-  ➜  48▕             ->toHaveAttribute('disabled')
-     49▕             ->toContain('opacity-50')
-     50▕             ->toContain('cursor-not-allowed');
-     51▕     });
-     52▕
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\RadioRenderingTest[22m [90m>[39m `Radio Component` → generates unique ID when not… [41;1m TypeError [49;22m  
-[39;1m  expectComponent(): Argument #2 ($component) must be of type ?string, array given, called in C:\Users\chaab\Herd\strata-ui\packages\strata-ui\tests\Feature\Components\RadioRenderingTest.php on line 64[39;22m
-
-  at [32mtests\helpers.php[39m:[32m4[39m
-      1▕ <?php
-      2▕ 
-      3▕ if (! function_exists('expectComponent')) {
-  ➜   4▕     function expectComponent(mixed $testOrComponent, ?string $component = null, array $attributes = [], string $slot = ''): \Pest\Expectation
-      5▕     {
-      6▕         // Support both signatures: expectComponent('button', [...]) and expectComponent($this, 'button', [...])
-      7▕         if (is_string($testOrComponent)) {
-      8▕             // New signature: expectComponent('button', [...])
-      9▕             $test = test();
-
-  [33m1   [39m[39;1mtests\helpers.php[39;22m:[39;1m4[39;22m
-  [33m2   [39m[39;1mtests\Feature\Components\RadioRenderingTest.php[39;22m:[39;1m64[39;22m
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\RadioRenderingTest[22m [90m>[39m `Radio Component` → uses provided ID                           
-[39;1m  Expecting '[39;22m[39;1m<div
-        data-strata-radio-wrapper
-        class="group inline-flex items-center gap-3"
-    >[39;22m[39;1m
-        [39;22m[39;1m<div class="relative flex items-center">[39;22m[39;1m
-            [39;22m[39;1m<input
-                type="radio"
-                id="custom-id"
-                data-strata-radio
-                data-strata-field-type="radio"
-                                                 name="test"                 class="sr-only peer"
-            />[39;22m[39;1m
-            [39;22m[39;1m<label for="custom-id" class="cursor-pointer">[39;22m[39;1m
-                [39;22m[39;1m<div class="w-5 h-5 rounded-full bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">[39;22m[39;1m
-                    [39;22m[39;1m<div class="w-2 h-2 rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity">[39;22m[39;1m</div>[39;22m[39;1m
-                [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</label>[39;22m[39;1m
-        [39;22m[39;1m</div>[39;22m[39;1m
-
-                    [39;22m[39;1m<div class="flex flex-col gap-0.5">[39;22m[39;1m
-                [39;22m[39;1m<label
-                    for="custom-id"
-                    class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-                >[39;22m[39;1m
-                                            Custom
-                                    [39;22m[39;1m</label>[39;22m[39;1m
-
-                            [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\RadioRenderingTest.php[39m:[32m70[39m
-     66▕     });
-     67▕ 
-     68▕     test('uses provided ID', function () {
-     69▕         expectComponent($this, 'radio', ['id' => 'custom-id', 'label' => 'Custom', 'name' => 'test'])
-  ➜  70▕             ->toHaveAttribute('id', 'custom-id')
-     71▕             ->toContain('for="custom-id"');
-     72▕     });
-     73▕ 
-     74▕     test('renders dot indicator with correct classes', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\RadioRenderingTest[22m [90m>[39m `Radio Component` → name attribute is required for radio gr…   
-[39;1m  Expecting '[39;22m[39;1m<div
-        data-strata-radio-wrapper
-        class="group inline-flex items-center gap-3"
-    >[39;22m[39;1m
-        [39;22m[39;1m<div class="relative flex items-center">[39;22m[39;1m
-            [39;22m[39;1m<input
-                type="radio"
-                id="radio-6907d7b347963"
-                data-strata-radio
-                data-strata-field-type="radio"
-                                                 name="group1"                 class="sr-only peer"
-            />[39;22m[39;1m
-            [39;22m[39;1m<label for="radio-6907d7b347963" class="cursor-pointer">[39;22m[39;1m
-                [39;22m[39;1m<div class="w-5 h-5 rounded-full bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">[39;22m[39;1m
-                    [39;22m[39;1m<div class="w-2 h-2 rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity">[39;22m[39;1m</div>[39;22m[39;1m
-                [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</label>[39;22m[39;1m
-        [39;22m[39;1m</div>[39;22m[39;1m
-
-                    [39;22m[39;1m<div class="flex flex-col gap-0.5">[39;22m[39;1m
-                [39;22m[39;1m<label
-                    for="radio-6907d7b347963"
-                    class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-                >[39;22m[39;1m
-                                            Test
-                                    [39;22m[39;1m</label>[39;22m[39;1m
-
-                            [39;22m[39;1m</div>[39;22m[39;1m
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\RadioRenderingTest.php[39m:[32m161[39m
-    157▕     });
-    158▕ 
-    159▕     test('name attribute is required for radio groups', function () {
-    160▕         expectComponent($this, 'radio', ['label' => 'Test', 'name' => 'group1'])
-  ➜ 161▕             ->toHaveAttribute('name', 'group1');
-    162▕     });
-    163▕ });
-    164▕
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\TextareaRenderingTest[22m [90m>[39m `Textarea Component` → renders with default props           
-[39;1m  Expecting '[39;22m[39;1m<div>[39;22m[39;1m
-    [39;22m[39;1m<div data-strata-textarea-wrapper class="w-full bg-input border rounded-lg transition-all duration-150 px-3 py-2.5 text-base border-border focus:ring-2 focus:ring-ring focus:ring-offset-2  relative">[39;22m[39;1m
-        [39;22m[39;1m<textarea
-            data-strata-textarea
-            data-strata-field-type="textarea"
-            rows="4"
-            class="w-full bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed min-h-20 resize-y"
-                    >[39;22m[39;1m</textarea>[39;22m[39;1m
-
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-    [39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\TextareaRenderingTest.php[39m:[32m7[39m
-      3▕ describe('Textarea Component', function () {
-      4▕     test('renders with default props', function () {
-      5▕         expectComponent('textarea')
-      6▕             ->toHaveTag('textarea')
-  ➜   7▕             ->toHaveAttribute('rows', '4')
-      8▕             ->toHaveDataAttribute('strata-textarea')
-      9▕             ->toHaveDataAttribute('strata-field-type', 'textarea')
-     10▕             ->toHaveDataAttribute('strata-textarea-wrapper');
-     11▕     });
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\TextareaRenderingTest[22m [90m>[39m `Textarea Component` → renders all validation states        
-[39;1m  Expected: [39;22m[31m<div>[39m[31m\n
-    [39m[31m<div data-strata-textarea-wrapper class="w-full bg-input border rounded-lg transition-all duration-150 px-3 py-2.5 text-base border-success focus:ring-2 focus:ring-success/20 focus:ring-offset-2  relative">[39m[31m\n
-        [39m[31m<textarea\n
-            data-strata-textarea\n
-            data-strata-field-type="textarea"\n
-            rows="4"\n
-            class="w-full bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed min-h-20 resize-y"\n
-                    >[39m[31m</textarea>[39m[31m\n
-\n
-                    [39m[31m<svg class="inline-block w-5 h-5 absolute top-2 right-2 pointer-events-none text-success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">[39m[31m\n
-  [39m[31m<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>[39m[31m\n
-  [39m[31m<path d="m9 11 3 3L22 4"/>[39m[31m\n
-[39m[31m</svg>[39m[31m\n
-            [39m[31m</div>[39m[31m\n
-\n
-    [39m[31m</div>[39m[31m\n
-[39m[39;1m
-
-  To contain: [39;22m[32mstrata::icon.check-circle[39m
-
-  at [32mtests\Feature\Components\TextareaRenderingTest.php[39m:[32m32[39m
-     28▕ 
-     29▕         expectComponent($this, 'textarea', ['state' => 'success'])
-     30▕             ->toHaveClasses('border-success')
-     31▕             ->toContain('focus:ring-success/20')
-  ➜  32▕             ->toContain('strata::icon.check-circle');
-     33▕ 
-     34▕         expectComponent($this, 'textarea', ['state' => 'error'])
-     35▕             ->toHaveClasses('border-destructive')
-     36▕             ->toContain('focus:ring-destructive/20')
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\TextareaRenderingTest[22m [90m>[39m `Textarea Component` → renders custom row count             
-[39;1m  Expecting '[39;22m[39;1m<div>[39;22m[39;1m
-    [39;22m[39;1m<div data-strata-textarea-wrapper class="w-full bg-input border rounded-lg transition-all duration-150 px-3 py-2.5 text-base border-border focus:ring-2 focus:ring-ring focus:ring-offset-2  relative">[39;22m[39;1m
-        [39;22m[39;1m<textarea
-            data-strata-textarea
-            data-strata-field-type="textarea"
-            rows="10"
-            class="w-full bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed min-h-20 resize-y"
-                    >[39;22m[39;1m</textarea>[39;22m[39;1m
-
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-    [39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\TextareaRenderingTest.php[39m:[32m61[39m
-     57▕     });
-     58▕ 
-     59▕     test('renders custom row count', function () {
-     60▕         expectComponent($this, 'textarea', ['rows' => 10])
-  ➜  61▕             ->toHaveAttribute('rows', '10');
-     62▕     });
-     63▕ 
-     64▕     test('renders disabled state', function () {
-     65▕         expectComponent($this, 'textarea', ['disabled' => true])
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\TextareaRenderingTest[22m [90m>[39m `Textarea Component` → renders disabled state               
-[39;1m  Expecting '[39;22m[39;1m<div>[39;22m[39;1m
-    [39;22m[39;1m<div data-strata-textarea-wrapper class="w-full bg-input border rounded-lg transition-all duration-150 px-3 py-2.5 text-base border-border focus:ring-2 focus:ring-ring focus:ring-offset-2 opacity-50 cursor-not-allowed relative">[39;22m[39;1m
-        [39;22m[39;1m<textarea
-            data-strata-textarea
-            data-strata-field-type="textarea"
-            rows="4"
-            class="w-full bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed min-h-20 resize-y"
-            disabled        >[39;22m[39;1m</textarea>[39;22m[39;1m
-
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-    [39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\TextareaRenderingTest.php[39m:[32m66[39m
-     62▕     });
-     63▕ 
-     64▕     test('renders disabled state', function () {
-     65▕         expectComponent($this, 'textarea', ['disabled' => true])
-  ➜  66▕             ->toHaveAttribute('disabled')
-     67▕             ->toHaveClasses('opacity-50', 'cursor-not-allowed');
-     68▕     });
-     69▕ 
-     70▕     test('state icons are positioned correctly', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\TextareaRenderingTest[22m [90m>[39m `Textarea Component` → renders with placeholder attribut…   
-[39;1m  Expecting '[39;22m[39;1m<div>[39;22m[39;1m
-    [39;22m[39;1m<div data-strata-textarea-wrapper class="w-full bg-input border rounded-lg transition-all duration-150 px-3 py-2.5 text-base border-border focus:ring-2 focus:ring-ring focus:ring-offset-2  relative">[39;22m[39;1m
-        [39;22m[39;1m<textarea
-            data-strata-textarea
-            data-strata-field-type="textarea"
-            rows="4"
-            class="w-full bg-transparent border-0 outline-none text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed min-h-20 resize-y" placeholder="Enter description"
-                    >[39;22m[39;1m</textarea>[39;22m[39;1m
-
-            [39;22m[39;1m</div>[39;22m[39;1m
-
-    [39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\TextareaRenderingTest.php[39m:[32m119[39m
-    115▕     });
-    116▕ 
-    117▕     test('renders with placeholder attribute', function () {
-    118▕         expectComponent($this, 'textarea', ['placeholder' => 'Enter description'])
-  ➜ 119▕             ->toHaveAttribute('placeholder', 'Enter description');
-    120▕     });
-    121▕ 
-    122▕     test('wrapper has focus ring', function () {
-    123▕         expectComponent($this, 'textarea', ['state' => 'default'])
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ToggleRenderingTest[22m [90m>[39m `Toggle Component` → renders with correct structure           
-[39;1m  Expecting '[39;22m[39;1m<div
-    data-strata-toggle-wrapper
-    class="group flex items-center justify-between gap-3 w-full"
->[39;22m[39;1m
-            [39;22m[39;1m<div class="flex flex-col gap-0.5 flex-1">[39;22m[39;1m
-            [39;22m[39;1m<label
-                for="toggle-6907d7b3c1e8d"
-                class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-            >[39;22m[39;1m
-                                    Enable notifications
-                            [39;22m[39;1m</label>[39;22m[39;1m
-
-                    [39;22m[39;1m</div>[39;22m[39;1m
-    
-    [39;22m[39;1m<div class="relative inline-flex items-center select-none shrink-0">[39;22m[39;1m
-        [39;22m[39;1m<input
-            type="checkbox"
-            id="toggle-6907d7b3c1e8d"
-            data-strata-toggle
-            data-strata-field-type="toggle"
-                                    class="sr-only peer"
-        />[39;22m[39;1m
-
-        [39;22m[39;1m<label
-            for="toggle-6907d7b3c1e8d"
-            role="switch"
-            class="relative flex items-center cursor-pointer  outline-offset-2 transition ease-in-out duration-150 focus:ring-2 focus:ring-offset-2 h-7 w-12 rounded-full bg-muted group-has-[:checked]:bg-primary focus:ring-primary"
-        >[39;22m[39;1m
-            [39;22m[39;1m<span class="transition ease-in-out duration-200 w-4 h-4 rounded-full bg-body translate-x-1 group-has-[:checked]:translate-x-7">[39;22m[39;1m</span>[39;22m[39;1m
-        [39;22m[39;1m</label>[39;22m[39;1m
-    [39;22m[39;1m</div>[39;22m[39;1m
-[39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\ToggleRenderingTest.php[39m:[32m7[39m
-      3▕ describe('Toggle Component', function () {
-      4▕     test('renders with correct structure', function () {
-      5▕         expectComponent($this, 'toggle', ['label' => 'Enable notifications'])
-      6▕             ->toHaveTag('input')
-  ➜   7▕             ->toHaveAttribute('type', 'checkbox')
-      8▕             ->toHaveDataAttribute('strata-toggle')
-      9▕             ->toHaveDataAttribute('strata-field-type', 'toggle')
-     10▕             ->toHaveDataAttribute('strata-toggle-wrapper')
-     11▕             ->toRenderSlot('Enable notifications');
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ToggleRenderingTest[22m [90m>[39m `Toggle Component` → renders checked state                    
-[39;1m  Expecting '[39;22m[39;1m<div
-    data-strata-toggle-wrapper
-    class="group flex items-center justify-between gap-3 w-full"
->[39;22m[39;1m
-            [39;22m[39;1m<div class="flex flex-col gap-0.5 flex-1">[39;22m[39;1m
-            [39;22m[39;1m<label
-                for="toggle-6907d7b4096da"
-                class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-            >[39;22m[39;1m
-                                    Checked
-                            [39;22m[39;1m</label>[39;22m[39;1m
-
-                    [39;22m[39;1m</div>[39;22m[39;1m
-    
-    [39;22m[39;1m<div class="relative inline-flex items-center select-none shrink-0">[39;22m[39;1m
-        [39;22m[39;1m<input
-            type="checkbox"
-            id="toggle-6907d7b4096da"
-            data-strata-toggle
-            data-strata-field-type="toggle"
-             checked                         class="sr-only peer"
-        />[39;22m[39;1m
-
-        [39;22m[39;1m<label
-            for="toggle-6907d7b4096da"
-            role="switch"
-            class="relative flex items-center cursor-pointer  outline-offset-2 transition ease-in-out duration-150 focus:ring-2 focus:ring-offset-2 h-7 w-12 rounded-full bg-muted group-has-[:checked]:bg-primary focus:ring-primary"
-        >[39;22m[39;1m
-            [39;22m[39;1m<span class="transition ease-in-out duration-200 w-4 h-4 rounded-full bg-body translate-x-1 group-has-[:checked]:translate-x-7">[39;22m[39;1m</span>[39;22m[39;1m
-        [39;22m[39;1m</label>[39;22m[39;1m
-    [39;22m[39;1m</div>[39;22m[39;1m
-[39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\ToggleRenderingTest.php[39m:[32m81[39m
-     77▕     });
-     78▕ 
-     79▕     test('renders checked state', function () {
-     80▕         expectComponent($this, 'toggle', ['checked' => true, 'label' => 'Checked'])
-  ➜  81▕             ->toHaveAttribute('checked');
-     82▕     });
-     83▕ 
-     84▕     test('renders disabled state', function () {
-     85▕         expectComponent($this, 'toggle', ['disabled' => true, 'label' => 'Disabled'])
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ToggleRenderingTest[22m [90m>[39m `Toggle Component` → renders disabled state                   
-[39;1m  Expecting '[39;22m[39;1m<div
-    data-strata-toggle-wrapper
-    class="group flex items-center justify-between gap-3 w-full"
->[39;22m[39;1m
-            [39;22m[39;1m<div class="flex flex-col gap-0.5 flex-1">[39;22m[39;1m
-            [39;22m[39;1m<label
-                for="toggle-6907d7b40ea43"
-                class="text-base text-foreground cursor-pointer select-none opacity-50 cursor-not-allowed"
-            >[39;22m[39;1m
-                                    Disabled
-                            [39;22m[39;1m</label>[39;22m[39;1m
-
-                    [39;22m[39;1m</div>[39;22m[39;1m
-    
-    [39;22m[39;1m<div class="relative inline-flex items-center select-none shrink-0">[39;22m[39;1m
-        [39;22m[39;1m<input
-            type="checkbox"
-            id="toggle-6907d7b40ea43"
-            data-strata-toggle
-            data-strata-field-type="toggle"
-                         disabled             class="sr-only peer"
-        />[39;22m[39;1m
-
-        [39;22m[39;1m<label
-            for="toggle-6907d7b40ea43"
-            role="switch"
-            class="relative flex items-center cursor-pointer opacity-50 cursor-not-allowed outline-offset-2 transition ease-in-out duration-150 focus:ring-2 focus:ring-offset-2 h-7 w-12 rounded-full bg-muted group-has-[:checked]:bg-primary focus:ring-primary"
-        >[39;22m[39;1m
-            [39;22m[39;1m<span class="transition ease-in-out duration-200 w-4 h-4 rounded-full bg-body translate-x-1 group-has-[:checked]:translate-x-7">[39;22m[39;1m</span>[39;22m[39;1m
-        [39;22m[39;1m</label>[39;22m[39;1m
-    [39;22m[39;1m</div>[39;22m[39;1m
-[39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\ToggleRenderingTest.php[39m:[32m86[39m
-     82▕     });
-     83▕ 
-     84▕     test('renders disabled state', function () {
-     85▕         expectComponent($this, 'toggle', ['disabled' => true, 'label' => 'Disabled'])
-  ➜  86▕             ->toHaveAttribute('disabled')
-     87▕             ->toContain('opacity-50')
-     88▕             ->toContain('cursor-not-allowed');
-     89▕     });
-     90▕
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ToggleRenderingTest[22m [90m>[39m `Toggle Component` → generates unique ID when n… [41;1m TypeError [49;22m  
-[39;1m  expectComponent(): Argument #2 ($component) must be of type ?string, array given, called in C:\Users\chaab\Herd\strata-ui\packages\strata-ui\tests\Feature\Components\ToggleRenderingTest.php on line 101[39;22m
-
-  at [32mtests\helpers.php[39m:[32m4[39m
-      1▕ <?php
-      2▕ 
-      3▕ if (! function_exists('expectComponent')) {
-  ➜   4▕     function expectComponent(mixed $testOrComponent, ?string $component = null, array $attributes = [], string $slot = ''): \Pest\Expectation
-      5▕     {
-      6▕         // Support both signatures: expectComponent('button', [...]) and expectComponent($this, 'button', [...])
-      7▕         if (is_string($testOrComponent)) {
-      8▕             // New signature: expectComponent('button', [...])
-      9▕             $test = test();
-
-  [33m1   [39m[39;1mtests\helpers.php[39;22m:[39;1m4[39;22m
-  [33m2   [39m[39;1mtests\Feature\Components\ToggleRenderingTest.php[39;22m:[39;1m101[39;22m
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ToggleRenderingTest[22m [90m>[39m `Toggle Component` → uses provided ID                         
-[39;1m  Expecting '[39;22m[39;1m<div
-    data-strata-toggle-wrapper
-    class="group flex items-center justify-between gap-3 w-full"
->[39;22m[39;1m
-            [39;22m[39;1m<div class="flex flex-col gap-0.5 flex-1">[39;22m[39;1m
-            [39;22m[39;1m<label
-                for="custom-id"
-                class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-            >[39;22m[39;1m
-                                    Custom
-                            [39;22m[39;1m</label>[39;22m[39;1m
-
-                    [39;22m[39;1m</div>[39;22m[39;1m
-    
-    [39;22m[39;1m<div class="relative inline-flex items-center select-none shrink-0">[39;22m[39;1m
-        [39;22m[39;1m<input
-            type="checkbox"
-            id="custom-id"
-            data-strata-toggle
-            data-strata-field-type="toggle"
-                                    class="sr-only peer"
-        />[39;22m[39;1m
-
-        [39;22m[39;1m<label
-            for="custom-id"
-            role="switch"
-            class="relative flex items-center cursor-pointer  outline-offset-2 transition ease-in-out duration-150 focus:ring-2 focus:ring-offset-2 h-7 w-12 rounded-full bg-muted group-has-[:checked]:bg-primary focus:ring-primary"
-        >[39;22m[39;1m
-            [39;22m[39;1m<span class="transition ease-in-out duration-200 w-4 h-4 rounded-full bg-body translate-x-1 group-has-[:checked]:translate-x-7">[39;22m[39;1m</span>[39;22m[39;1m
-        [39;22m[39;1m</label>[39;22m[39;1m
-    [39;22m[39;1m</div>[39;22m[39;1m
-[39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\ToggleRenderingTest.php[39m:[32m107[39m
-    103▕     });
-    104▕ 
-    105▕     test('uses provided ID', function () {
-    106▕         expectComponent($this, 'toggle', ['id' => 'custom-id', 'label' => 'Custom'])
-  ➜ 107▕             ->toHaveAttribute('id', 'custom-id')
-    108▕             ->toContain('for="custom-id"');
-    109▕     });
-    110▕ 
-    111▕     test('label has role switch for accessibility', function () {
-
-  [31m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[39m  
-  [41;1m FAILED [49;22m [1mTests\Feature\Components\ToggleRenderingTest[22m [90m>[39m `Toggle Component` → label has role switch for accessibili…   
-[39;1m  Expecting '[39;22m[39;1m<div
-    data-strata-toggle-wrapper
-    class="group flex items-center justify-between gap-3 w-full"
->[39;22m[39;1m
-            [39;22m[39;1m<div class="flex flex-col gap-0.5 flex-1">[39;22m[39;1m
-            [39;22m[39;1m<label
-                for="toggle-6907d7b420e4c"
-                class="text-base text-foreground cursor-pointer select-none hover:text-foreground/90"
-            >[39;22m[39;1m
-                                    Accessible
-                            [39;22m[39;1m</label>[39;22m[39;1m
-
-                    [39;22m[39;1m</div>[39;22m[39;1m
-    
-    [39;22m[39;1m<div class="relative inline-flex items-center select-none shrink-0">[39;22m[39;1m
-        [39;22m[39;1m<input
-            type="checkbox"
-            id="toggle-6907d7b420e4c"
-            data-strata-toggle
-            data-strata-field-type="toggle"
-                                    class="sr-only peer"
-        />[39;22m[39;1m
-
-        [39;22m[39;1m<label
-            for="toggle-6907d7b420e4c"
-            role="switch"
-            class="relative flex items-center cursor-pointer  outline-offset-2 transition ease-in-out duration-150 focus:ring-2 focus:ring-offset-2 h-7 w-12 rounded-full bg-muted group-has-[:checked]:bg-primary focus:ring-primary"
-        >[39;22m[39;1m
-            [39;22m[39;1m<span class="transition ease-in-out duration-200 w-4 h-4 rounded-full bg-body translate-x-1 group-has-[:checked]:translate-x-7">[39;22m[39;1m</span>[39;22m[39;1m
-        [39;22m[39;1m</label>[39;22m[39;1m
-    [39;22m[39;1m</div>[39;22m[39;1m
-[39;22m[39;1m</div>[39;22m[39;1m
-' to be a class name or namespace, but it contains a path.[39;22m
-
-  at [32mtests\Feature\Components\ToggleRenderingTest.php[39m:[32m113[39m
-    109▕     });
-    110▕ 
-    111▕     test('label has role switch for accessibility', function () {
-    112▕         expectComponent($this, 'toggle', ['label' => 'Accessible'])
-  ➜ 113▕             ->toHaveAttribute('role', 'switch');
-    114▕     });
-    115▕ 
-    116▕     test('toggle uses sr-only for input accessibility', function () {
-    117▕         expectComponent($this, 'toggle', ['label' => 'Accessible'])
-
-
-  [90mTests:[39m    [31;1m42 failed[39;22m[90m,[39m[39m [39m[32;1m70 passed[39;22m[90m (245 assertions)[39m
-  [90mDuration:[39m [39m5.80s[39m
+> @stratos/strata-ui@0.1.0 test
+> vitest run
+
+
+[1m[46m RUN [49m[22m [36mv3.2.4 [39m[90mC:/Users/chaab/Herd/strata-ui/packages/strata-ui[39m
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2minit[2m > [22m[2minitializes engine and component references
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2minit[2m > [22m[2mcalls setupScrollListener
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2minit[2m > [22m[2mstarts autoplay when enabled and not reduced motion
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+
+ [32m✓[39m tests/JavaScript/entangleable.test.js [2m([22m[2m36 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2minit[2m > [22m[2mdoes not start autoplay when reduced motion is preferred
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2msetupFormMode[2m > [22m[2msets up Entangleable when input exists
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'form'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2msetupFormMode[2m > [22m[2mdoes nothing when no input found
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'form'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mgoTo[2m > [22m[2mnavigates to specified slide index
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mgoTo[2m > [22m[2mdoes not navigate when already navigating
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mgoTo[2m > [22m[2mdoes not navigate to negative index
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mgoTo[2m > [22m[2mdoes not navigate beyond totalSlides
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mgoTo[2m > [22m[2msets navigating flag and clears after timeout
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mnext[2m > [22m[2madvances to next slide
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mnext[2m > [22m[2mstops at last slide when not looping
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mnext[2m > [22m[2mloops to first slide when looping enabled
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mnext[2m > [22m[2mloops to first slide when looping enabled
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mtrue[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mprev[2m > [22m[2mgoes to previous slide
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mprev[2m > [22m[2mstops at first slide when not looping
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mprev[2m > [22m[2mloops to last slide when looping enabled
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mprev[2m > [22m[2mloops to last slide when looping enabled
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mtrue[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mupdateCurrentSlide[2m > [22m[2mfinds closest slide based on scroll position
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mupdateCurrentSlide[2m > [22m[2mhandles first slide position
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mupdateCurrentSlide[2m > [22m[2mhandles last slide position
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mannounceSlideChange[2m > [22m[2mupdates live region with slide information
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mannounceSlideChange[2m > [22m[2mdoes nothing when live region not found
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+ [32m✓[39m tests/JavaScript/editor.test.js [2m([22m[2m68 tests[22m[2m)[22m[32m 124[2mms[22m[39m
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mautoplay[2m > [22m[2mstartAutoplay sets interval
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mautoplay[2m > [22m[2mstartAutoplay advances slides
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mautoplay[2m > [22m[2mstopAutoplay clears interval
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] pauseAutoplay called {
+  isPlaying: [33mtrue[39m,
+  autoplayInterval: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] stopAutoplay called { hasInterval: [33mtrue[39m }
+[SliderEngine] Interval cleared
+[SliderEngine] pauseAutoplay completed { isPlaying: [33mfalse[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mautoplay[2m > [22m[2mpauseAutoplay stops and updates playing state
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] pauseAutoplay called {
+  isPlaying: [33mtrue[39m,
+  autoplayInterval: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] stopAutoplay called { hasInterval: [33mtrue[39m }
+[SliderEngine] Interval cleared
+[SliderEngine] pauseAutoplay completed { isPlaying: [33mfalse[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mautoplay[2m > [22m[2mresumeAutoplay restarts when autoplay enabled
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] pauseAutoplay called {
+  isPlaying: [33mtrue[39m,
+  autoplayInterval: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] stopAutoplay called { hasInterval: [33mtrue[39m }
+[SliderEngine] Interval cleared
+[SliderEngine] pauseAutoplay completed { isPlaying: [33mfalse[39m }
+[SliderEngine] resumeAutoplay called {
+  autoplay: [33mtrue[39m,
+  prefersReduced: [33mfalse[39m,
+  hasInterval: [33mfalse[39m,
+  canResume: [33mtrue[39m
+}
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] resumeAutoplay started { isPlaying: [33mtrue[39m }
+
+ [32m✓[39m tests/JavaScript/positionable.test.js [2m([22m[2m77 tests[22m[2m)[22m[32m 74[2mms[22m[39m
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mautoplay[2m > [22m[2mtogglePlayPause switches state
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] pauseAutoplay called {
+  isPlaying: [33mtrue[39m,
+  autoplayInterval: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] stopAutoplay called { hasInterval: [33mtrue[39m }
+[SliderEngine] Interval cleared
+[SliderEngine] pauseAutoplay completed { isPlaying: [33mfalse[39m }
+[SliderEngine] resumeAutoplay called {
+  autoplay: [33mtrue[39m,
+  prefersReduced: [33mfalse[39m,
+  hasInterval: [33mfalse[39m,
+  canResume: [33mtrue[39m
+}
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] resumeAutoplay started { isPlaying: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2msetupFocusListener[2m > [22m[2mstops autoplay when carousel receives focus
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] stopAutoplay called { hasInterval: [33mtrue[39m }
+[SliderEngine] Interval cleared
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mtouch handling[2m > [22m[2mdetects right swipe
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mtouch handling[2m > [22m[2mdetects right swipe
+[22m[39m[SliderEngine] pauseAutoplay called { isPlaying: [33mfalse[39m, autoplayInterval: [1mnull[22m }
+[SliderEngine] stopAutoplay called { hasInterval: [33mfalse[39m }
+[SliderEngine] pauseAutoplay completed { isPlaying: [33mfalse[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mtouch handling[2m > [22m[2mdetects left swipe
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mtouch handling[2m > [22m[2mdetects left swipe
+[22m[39m[SliderEngine] pauseAutoplay called { isPlaying: [33mfalse[39m, autoplayInterval: [1mnull[22m }
+[SliderEngine] stopAutoplay called { hasInterval: [33mfalse[39m }
+[SliderEngine] pauseAutoplay completed { isPlaying: [33mfalse[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mtouch handling[2m > [22m[2mignores small swipes below threshold
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mtouch handling[2m > [22m[2mpauses autoplay on swipe
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mtouch handling[2m > [22m[2mpauses autoplay on swipe
+[22m[39m[SliderEngine] pauseAutoplay called { isPlaying: [33mfalse[39m, autoplayInterval: [1mnull[22m }
+[SliderEngine] stopAutoplay called { hasInterval: [33mfalse[39m }
+[SliderEngine] pauseAutoplay completed { isPlaying: [33mfalse[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mprefersReducedMotion[2m > [22m[2mreturns true when user prefers reduced motion
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mprefersReducedMotion[2m > [22m[2mreturns false when user does not prefer reduced motion
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mfalse[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m,
+    value: [33m0[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mdestroy[2m > [22m[2mstops autoplay
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] stopAutoplay called { hasInterval: [33mtrue[39m }
+[SliderEngine] Interval cleared
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mdestroy[2m > [22m[2mdestroys entangleable in form mode
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'form'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] stopAutoplay called { hasInterval: [33mtrue[39m }
+[SliderEngine] Interval cleared
+
+[90mstdout[2m | tests/JavaScript/slider.test.js[2m > [22m[2mSlider[2m > [22m[2mdestroy[2m > [22m[2mclears component references
+[22m[39m[SliderEngine] Init called {
+  config: {
+    mode: [32m'presentational'[39m,
+    loop: [33mfalse[39m,
+    autoplay: [33mtrue[39m,
+    autoplayDelay: [33m3000[39m,
+    peek: [33mfalse[39m
+  }
+}
+[SliderEngine] Setup complete { totalSlides: [33m3[39m, hasContainer: [33mtrue[39m }
+[SliderEngine] startAutoplay called { hasInterval: [33mfalse[39m, delay: [33m3000[39m }
+[SliderEngine] startAutoplay started interval {
+  intervalId: {
+    refed: [33mtrue[39m,
+    ref: [36m[Function: ref][39m,
+    unref: [36m[Function: unref][39m,
+    hasRef: [36m[Function: hasRef][39m,
+    refresh: [36m[Function: refresh][39m,
+    [[32mSymbol(Symbol.toPrimitive)[39m]: [36m[Function: [Symbol.toPrimitive]][39m
+  }
+}
+[SliderEngine] stopAutoplay called { hasInterval: [33mtrue[39m }
+[SliderEngine] Interval cleared
+
+ [31m❯[39m tests/JavaScript/slider.test.js [2m([22m[2m41 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 123[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22minitialization[2m > [22minitializes with default config[32m 5[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22minitialization[2m > [22minitializes with custom config value[32m 1[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22minitialization[2m > [22minitializes state properties[32m 1[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22minit[2m > [22minitializes engine and component references[32m 3[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22minit[2m > [22mcalls setupScrollListener[32m 1[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22minit[2m > [22mstarts autoplay when enabled and not reduced motion[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22minit[2m > [22mdoes not start autoplay when reduced motion is preferred[32m 1[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22msetupFormMode[2m > [22msets up Entangleable when input exists[32m 5[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22msetupFormMode[2m > [22mdoes nothing when no input found[32m 1[2mms[22m[39m
+[31m   [31m×[31m Slider[2m > [22mgoTo[2m > [22mnavigates to specified slide index[39m[32m 13[2mms[22m[39m
+[31m     → expected "spy" to be called at least once[39m
+   [32m✓[39m Slider[2m > [22mgoTo[2m > [22mdoes not navigate when already navigating[32m 3[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mgoTo[2m > [22mdoes not navigate to negative index[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mgoTo[2m > [22mdoes not navigate beyond totalSlides[32m 1[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mgoTo[2m > [22msets navigating flag and clears after timeout[32m 3[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mnext[2m > [22madvances to next slide[32m 4[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mnext[2m > [22mstops at last slide when not looping[32m 1[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mnext[2m > [22mloops to first slide when looping enabled[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mprev[2m > [22mgoes to previous slide[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mprev[2m > [22mstops at first slide when not looping[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mprev[2m > [22mloops to last slide when looping enabled[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mupdateCurrentSlide[2m > [22mfinds closest slide based on scroll position[32m 1[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mupdateCurrentSlide[2m > [22mhandles first slide position[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mupdateCurrentSlide[2m > [22mhandles last slide position[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mannounceSlideChange[2m > [22mupdates live region with slide information[32m 3[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mannounceSlideChange[2m > [22mdoes nothing when live region not found[32m 3[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mautoplay[2m > [22mstartAutoplay sets interval[32m 6[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mautoplay[2m > [22mstartAutoplay advances slides[32m 6[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mautoplay[2m > [22mstopAutoplay clears interval[32m 3[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mautoplay[2m > [22mpauseAutoplay stops and updates playing state[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mautoplay[2m > [22mresumeAutoplay restarts when autoplay enabled[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mautoplay[2m > [22mtogglePlayPause switches state[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22msetupFocusListener[2m > [22mstops autoplay when carousel receives focus[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mtouch handling[2m > [22mdetects right swipe[32m 3[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mtouch handling[2m > [22mdetects left swipe[32m 6[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mtouch handling[2m > [22mignores small swipes below threshold[32m 4[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mtouch handling[2m > [22mpauses autoplay on swipe[32m 9[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mprefersReducedMotion[2m > [22mreturns true when user prefers reduced motion[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mprefersReducedMotion[2m > [22mreturns false when user does not prefer reduced motion[32m 1[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mdestroy[2m > [22mstops autoplay[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mdestroy[2m > [22mdestroys entangleable in form mode[32m 2[2mms[22m[39m
+   [32m✓[39m Slider[2m > [22mdestroy[2m > [22mclears component references[32m 1[2mms[22m[39m
+ [31m❯[39m tests/JavaScript/time-picker.test.js [2m([22m[2m95 tests[22m[2m | [22m[31m25 failed[39m[2m)[22m[32m 201[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mInitialization[2m > [22mcreates component with default values[32m 5[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mInitialization[2m > [22minitializes with 24-hour format[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mInitialization[2m > [22minitializes with seconds enabled[32m 1[2mms[22m[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mInitialization[2m > [22minitializes Entangleable with initialValue[39m[32m 13[2mms[22m[39m
+[31m     → this.syncFromEntangleable is not a function[39m
+   [32m✓[39m Time Picker Component[2m > [22mInitialization[2m > [22minitializes Positionable with correct config[32m 3[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mInitialization[2m > [22msets up positionable start with trigger and dropdown[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mInitialization[2m > [22msets up Livewire integration with hidden input[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mInitialization[2m > [22mregisters entangleable watcher[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mInitialization[2m > [22mregisters positionable watcher[32m 1[2mms[22m[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mInitialization[2m > [22msyncs from initial value on init[39m[32m 1[2mms[22m[39m
+[31m     → this.syncFromEntangleable is not a function[39m
+   [32m✓[39m Time Picker Component[2m > [22mEntangleable Integration[2m > [22msyncFromEntangleable parses 12-hour time correctly[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mEntangleable Integration[2m > [22msyncFromEntangleable parses 24-hour time correctly[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mEntangleable Integration[2m > [22msyncFromEntangleable handles time with seconds[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mEntangleable Integration[2m > [22msyncFromEntangleable resets on null value[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mEntangleable Integration[2m > [22msyncFromEntangleable resets on empty string[32m 1[2mms[22m[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mEntangleable Integration[2m > [22msyncToEntangleable updates entangleable with formatted time[39m[32m 1[2mms[22m[39m
+[31m     → this.formatTimeString is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mEntangleable Integration[2m > [22msyncToEntangleable sets null when hour is null[39m[32m 1[2mms[22m[39m
+[31m     → this.formatTimeString is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mEntangleable Integration[2m > [22msyncToEntangleable sets null when minute is null[39m[32m 1[2mms[22m[39m
+[31m     → this.formatTimeString is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mEntangleable Integration[2m > [22msyncToEntangleable dispatches time-selected event[39m[32m 1[2mms[22m[39m
+[31m     → this.formatTimeString is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mEntangleable Integration[2m > [22mdisplayValue getter returns entangleable value[39m[32m 3[2mms[22m[39m
+[31m     → expected null to be '10:30 AM' // Object.is equality[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mEntangleable Integration[2m > [22mdisplayValue setter calls entangleable set[39m[32m 3[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ '11:45 AM' ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Parsing[2m > [22mparseTime handles 12-hour format without seconds[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Parsing[2m > [22mparseTime handles 12-hour format with seconds[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Parsing[2m > [22mparseTime handles 24-hour format[32m 3[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Parsing[2m > [22mparseTime handles 24-hour format for 24h mode component[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Parsing[2m > [22mparseTime handles midnight (00:00)[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Parsing[2m > [22mparseTime handles noon (12:00)[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Parsing[2m > [22mparseTime returns null for invalid format[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Parsing[2m > [22mparseTime returns null for null input[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Formatting[2m > [22mformatTimeString formats 12-hour time without seconds[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Formatting[2m > [22mformatTimeString formats 12-hour time with seconds[32m 1[2mms[22m[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mTime Formatting[2m > [22mformatTimeString formats 24-hour time[39m[32m 3[2mms[22m[39m
+[31m     → expected '26:30' to be '14:30' // Object.is equality[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Formatting[2m > [22mformatTimeString pads single digits[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Formatting[2m > [22mformatTimeString converts 12 PM to 12:xx in 24h[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Formatting[2m > [22mformatTimeString converts 12 AM to 00:xx in 24h[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Formatting[2m > [22mformatTimeString returns empty string when hour is null[32m 6[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Formatting[2m > [22mformatTimeString returns empty string when minute is null[32m 1[2mms[22m[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mTime Formatting[2m > [22mformatDisplayValue returns displayValue[39m[32m 2[2mms[22m[39m
+[31m     → expected '' to be '10:30 AM' // Object.is equality[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Formatting[2m > [22mformatDisplayValue returns empty string for null[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Selection[2m > [22msetHour sets selectedHour and syncs[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Selection[2m > [22msetHour auto-fills minute to 0 when null[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Selection[2m > [22msetMinute sets selectedMinute and syncs[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Selection[2m > [22msetMinute auto-fills hour to 12 when null in 12h mode[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Selection[2m > [22msetMinute auto-fills hour to 0 when null in 24h mode[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Selection[2m > [22msetSecond sets selectedSecond and syncs[32m 3[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Selection[2m > [22msetMeridiem sets selectedMeridiem and syncs[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Selection[2m > [22mtoggleMeridiem switches AM to PM[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mTime Selection[2m > [22mtoggleMeridiem switches PM to AM[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mincrementHour increases hour by 1[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mincrementHour wraps from 12 to 1 in 12h mode[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mincrementHour wraps from 23 to 0 in 24h mode[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mincrementHour initializes to 1 when null in 12h mode[32m 3[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mincrementHour initializes to 0 when null in 24h mode[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mdecrementHour decreases hour by 1[32m 8[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mdecrementHour wraps from 1 to 12 in 12h mode[32m 4[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mdecrementHour wraps from 0 to 23 in 24h mode[32m 3[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mdecrementHour initializes to 12 when null in 12h mode[32m 3[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mdecrementHour initializes to 23 when null in 24h mode[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mincrementMinute increases minute by stepMinutes[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mincrementMinute wraps from 59 to 0[32m 6[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mincrementMinute initializes to 0 when null[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mdecrementMinute decreases minute by stepMinutes[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mdecrementMinute wraps negative values correctly[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mIncrement/Decrement[2m > [22mdecrementMinute initializes to 59 when null[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mValidation[2m > [22misTimeInRange returns true when no constraints[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mValidation[2m > [22misTimeInRange checks minTime constraint[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mValidation[2m > [22misTimeInRange checks maxTime constraint[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mValidation[2m > [22misTimeInRange checks both min and max constraints[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mValidation[2m > [22misTimeDisabled returns false when no disabled times[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mValidation[2m > [22misTimeDisabled checks disabledTimes array[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mValidation[2m > [22misTimeDisabled pads hour and minute for comparison[32m 2[2mms[22m[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mKeyboard Navigation[2m > [22mArrowUp increments hour[39m[32m 4[2mms[22m[39m
+[31m     → this.incrementHour is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mKeyboard Navigation[2m > [22mArrowDown decrements hour[39m[32m 3[2mms[22m[39m
+[31m     → this.decrementHour is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mKeyboard Navigation[2m > [22mArrowRight increments minute[39m[32m 3[2mms[22m[39m
+[31m     → this.incrementMinute is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mKeyboard Navigation[2m > [22mArrowLeft decrements minute[39m[32m 5[2mms[22m[39m
+[31m     → this.decrementMinute is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mKeyboard Navigation[2m > [22mEnter closes dropdown[39m[32m 4[2mms[22m[39m
+[31m     → this.scrollToSelectedValues is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mKeyboard Navigation[2m > [22mSpace closes dropdown[39m[32m 2[2mms[22m[39m
+[31m     → this.scrollToSelectedValues is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mKeyboard Navigation[2m > [22mEscape is handled but does not call close (handled by Positionable)[39m[32m 2[2mms[22m[39m
+[31m     → this.scrollToSelectedValues is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mKeyboard Navigation[2m > [22mTab toggles meridiem in 12h mode[39m[32m 1[2mms[22m[39m
+[31m     → expected "spy" to be called at least once[39m
+   [32m✓[39m Time Picker Component[2m > [22mKeyboard Navigation[2m > [22mTab does not toggle meridiem in 24h mode[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mKeyboard Navigation[2m > [22mdoes not handle keys when dropdown is closed[32m 1[2mms[22m[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mPresets[2m > [22msetPreset sets hour and minute[39m[32m 5[2mms[22m[39m
+[31m     → this.syncToEntangleable is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mPresets[2m > [22msetPreset closes dropdown after setting[39m[32m 3[2mms[22m[39m
+[31m     → this.syncToEntangleable is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mPresets[2m > [22msetPreset syncs to entangleable[39m[32m 1[2mms[22m[39m
+[31m     → this.syncToEntangleable is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mToggle & Clear[2m > [22mtoggle calls positionable.toggle when enabled[39m[32m 1[2mms[22m[39m
+[31m     → Cannot read properties of null (reading 'toggle')[39m
+   [32m✓[39m Time Picker Component[2m > [22mToggle & Clear[2m > [22mtoggle does nothing when disabled[32m 1[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mToggle & Clear[2m > [22mclearValue resets all selected values[32m 1[2mms[22m[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mToggle & Clear[2m > [22mclearValue sets displayValue to null[39m[32m 2[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ null ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mEdge Cases[2m > [22mhandles stepMinutes of 15[39m[32m 3[2mms[22m[39m
+[31m     → this.syncToEntangleable is not a function[39m
+[31m   [31m×[31m Time Picker Component[2m > [22mEdge Cases[2m > [22mhandles stepMinutes of 30[39m[32m 3[2mms[22m[39m
+[31m     → this.syncToEntangleable is not a function[39m
+   [32m✓[39m Time Picker Component[2m > [22mEdge Cases[2m > [22mhandles midnight (00:00) in 24h mode[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mEdge Cases[2m > [22mhandles noon (12:00 PM) correctly[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mEdge Cases[2m > [22mhandles midnight (12:00 AM) correctly[32m 3[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mEdge Cases[2m > [22mformats 12:00 AM as 00:00 in 24h mode[32m 2[2mms[22m[39m
+   [32m✓[39m Time Picker Component[2m > [22mEdge Cases[2m > [22mformats 12:00 PM as 12:00 in 24h mode[32m 2[2mms[22m[39m
+ [31m❯[39m tests/JavaScript/date-picker.test.js [2m([22m[2m66 tests[22m[2m | [22m[31m31 failed[39m[2m)[22m[32m 136[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mInitialization[2m > [22mcreates component with default values for single mode[32m 5[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mInitialization[2m > [22mcreates component for range mode[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mInitialization[2m > [22mcreates component for multiple mode[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mInitialization[2m > [22minitializes Entangleable with initialValue[32m 2[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mInitialization[2m > [22minitializes Positionable with correct config[32m 2[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mInitialization[2m > [22msets up positionable start with trigger and dropdown[32m 2[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mInitialization[2m > [22msets up Livewire integration with hidden input[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mInitialization[2m > [22mregisters positionable watcher[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mInitialization[2m > [22mfocuses dropdown when positionable opens[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mInitialization[2m > [22mregisters date-selected event listener[32m 2[2mms[22m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mEntangleable Integration[2m > [22mdisplayValue getter returns entangleable value for single mode[39m[32m 11[2mms[22m[39m
+[31m     → expected null to be '2024-01-15' // Object.is equality[39m
+   [32m✓[39m Date Picker Component[2m > [22mEntangleable Integration[2m > [22mdisplayValue getter returns null when empty in single mode[32m 1[2mms[22m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mEntangleable Integration[2m > [22mdisplayValue getter returns array for range mode[39m[32m 6[2mms[22m[39m
+[31m     → expected [] to deeply equal [ '2024-01-15', '2024-01-20' ][39m
+   [32m✓[39m Date Picker Component[2m > [22mEntangleable Integration[2m > [22mdisplayValue getter returns empty array when null in range mode[32m 1[2mms[22m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mEntangleable Integration[2m > [22mdisplayValue getter returns array for multiple mode[39m[32m 5[2mms[22m[39m
+[31m     → expected [] to deeply equal [ '2024-01-15', '2024-01-20', …(1) ][39m
+[31m   [31m×[31m Date Picker Component[2m > [22mEntangleable Integration[2m > [22mdisplayValue setter calls entangleable set[39m[32m 4[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ '2024-01-15' ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mEntangleable Integration[2m > [22mdisplayValue setter works with arrays[39m[32m 1[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ [ '2024-01-15', '2024-01-20' ] ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+   [32m✓[39m Date Picker Component[2m > [22mPositionable Integration[2m > [22mfocuses dropdown when positionable state changes to true[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mPositionable Integration[2m > [22mdoes not focus dropdown when positionable state changes to false[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mMode Handling[2m > [22msingle mode uses null as default displayValue[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mMode Handling[2m > [22mrange mode uses empty array as default displayValue[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mMode Handling[2m > [22mmultiple mode uses empty array as default displayValue[32m 1[2mms[22m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mMode Handling[2m > [22mclearValue sets null for single mode[39m[32m 1[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ null ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mMode Handling[2m > [22mclearValue sets empty array for range mode[39m[32m 1[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ [] ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mMode Handling[2m > [22mclearValue sets empty array for multiple mode[39m[32m 2[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ [] ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDate Selection Events[2m > [22mhandles date-selected event for single mode[39m[32m 11[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ '2024-01-15' ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDate Selection Events[2m > [22mhandles date-selected event with null for single mode[39m[32m 3[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ null ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+   [32m✓[39m Date Picker Component[2m > [22mDate Selection Events[2m > [22mcloses dropdown after single date selection[32m 3[2mms[22m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDate Selection Events[2m > [22mhandles date-selected event for range mode[39m[32m 2[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ [ '2024-01-15', '2024-01-20' ] ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+   [32m✓[39m Date Picker Component[2m > [22mDate Selection Events[2m > [22mcloses dropdown after range selection with 2 dates[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mDate Selection Events[2m > [22mdoes not close dropdown for incomplete range (1 date)[32m 1[2mms[22m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDate Selection Events[2m > [22mhandles date-selected event for multiple mode[39m[32m 2[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ Array(1) ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+   [32m✓[39m Date Picker Component[2m > [22mDate Selection Events[2m > [22mdoes not close dropdown for multiple mode selection[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mDisplay Formatting[2m > [22mformatDisplayValue returns empty string for null[32m 1[2mms[22m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDisplay Formatting[2m > [22mformatDisplayValue formats single date[39m[32m 2[2mms[22m[39m
+[31m     → expected '' to contain 'Jan'[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDisplay Formatting[2m > [22mformatDisplayValue formats range with 2 dates[39m[32m 5[2mms[22m[39m
+[31m     → expected '0 dates selected' to contain 'Jan 15'[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDisplay Formatting[2m > [22mformatDisplayValue returns empty string for incomplete range[39m[32m 2[2mms[22m[39m
+[31m     → expected '0 dates selected' to be '' // Object.is equality[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDisplay Formatting[2m > [22mformatDisplayValue shows count for multiple dates[39m[32m 1[2mms[22m[39m
+[31m     → expected '0 dates selected' to be '3 dates selected' // Object.is equality[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDisplay Formatting[2m > [22mformatDisplayValue shows count for single date in multiple mode[39m[32m 1[2mms[22m[39m
+[31m     → expected '0 dates selected' to be '1 dates selected' // Object.is equality[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDisplay Formatting[2m > [22mformatDisplayValue returns empty string for empty multiple mode array[39m[32m 1[2mms[22m[39m
+[31m     → expected '0 dates selected' to be '' // Object.is equality[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDisplay Formatting[2m > [22mformatDisplayValue handles different month range[39m[32m 2[2mms[22m[39m
+[31m     → expected '0 dates selected' to contain 'Jan 15'[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mDisplay Formatting[2m > [22mformatDisplayValue handles same year range[39m[32m 1[2mms[22m[39m
+[31m     → expected '0 dates selected' to contain 'Mar 10'[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mToggle & Clear[2m > [22mtoggle calls positionable.toggle when enabled[39m[32m 7[2mms[22m[39m
+[31m     → Cannot read properties of null (reading 'toggle')[39m
+   [32m✓[39m Date Picker Component[2m > [22mToggle & Clear[2m > [22mtoggle does nothing when disabled[32m 2[2mms[22m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mToggle & Clear[2m > [22mclearValue sets null in single mode[39m[32m 2[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ null ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mToggle & Clear[2m > [22mclearValue sets empty array in range mode[39m[32m 1[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ [] ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mToggle & Clear[2m > [22mclearValue sets empty array in multiple mode[39m[32m 6[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ [] ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+   [32m✓[39m Date Picker Component[2m > [22mToggle & Clear[2m > [22mclearValue can be called before init[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mEdge Cases[2m > [22mhandles null initialValue in single mode[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mEdge Cases[2m > [22mhandles empty array initialValue in range mode[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mEdge Cases[2m > [22mhandles empty array initialValue in multiple mode[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mEdge Cases[2m > [22mhandles disabled state[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mEdge Cases[2m > [22mhandles non-clearable state[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mEdge Cases[2m > [22mhandles missing dropdown ref[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mEdge Cases[2m > [22mhandles missing trigger ref[32m 1[2mms[22m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mEdge Cases[2m > [22mhandles date-selected with mismatched mode[39m[32m 1[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ [ '2024-01-15', '2024-01-20' ] ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mEdge Cases[2m > [22mformatDisplayValue handles invalid date object[39m[32m 1[2mms[22m[39m
+[31m     → expected '' to contain 'Invalid Date'[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mEdge Cases[2m > [22mformatDisplayValue handles range with null values[39m[32m 1[2mms[22m[39m
+[31m     → expected '0 dates selected' to be '' // Object.is equality[39m
+   [32m✓[39m Date Picker Component[2m > [22mEdge Cases[2m > [22mdisplayValue handles undefined entangleable[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mEdge Cases[2m > [22mdisplayValue setter handles undefined entangleable[32m 1[2mms[22m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mIntegration Scenarios[2m > [22mcomplete single date selection flow[39m[32m 1[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ '2024-01-15' ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mIntegration Scenarios[2m > [22mcomplete range date selection flow[39m[32m 1[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ [ '2024-01-15', '2024-01-20' ] ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mIntegration Scenarios[2m > [22mmultiple date selection remains open[39m[32m 1[2mms[22m[39m
+[31m     → expected "spy" to be called with arguments: [ Array(1) ][90m
+
+Number of calls: [1m0[22m
+[31m[39m
+[31m   [31m×[31m Date Picker Component[2m > [22mIntegration Scenarios[2m > [22mtoggle and clear workflow[39m[32m 1[2mms[22m[39m
+[31m     → Cannot read properties of null (reading 'toggle')[39m
+   [32m✓[39m Date Picker Component[2m > [22mIntegration Scenarios[2m > [22mdisabled state prevents interaction[32m 1[2mms[22m[39m
+   [32m✓[39m Date Picker Component[2m > [22mIntegration Scenarios[2m > [22mrange mode partial selection does not close[32m 2[2mms[22m[39m
+
+[2m Test Files [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[31m57 failed[39m[22m[2m | [22m[1m[32m326 passed[39m[22m[90m (383)[39m
+[2m   Start at [22m 01:05:46
+[2m   Duration [22m 1.33s[2m (transform 311ms, setup 94ms, collect 796ms, tests 682ms, environment 2.59s, prepare 1.27s)[22m
 
