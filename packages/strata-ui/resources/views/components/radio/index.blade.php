@@ -11,36 +11,16 @@
 ])
 
 @php
-$sizes = [
-    'sm' => 'w-4 h-4',
-    'md' => 'w-5 h-5',
-    'lg' => 'w-6 h-6',
-];
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Support\ComponentHelpers;
 
-$dotSizes = [
-    'sm' => 'w-1.5 h-1.5',
-    'md' => 'w-2 h-2',
-    'lg' => 'w-2.5 h-2.5',
-];
+$sizes = ComponentSizeConfig::checkboxSizes();
+$dotSizes = ComponentSizeConfig::radioInnerDotSizes();
+$labelSizes = ComponentSizeConfig::labelSizes();
+$descriptionSizes = ComponentSizeConfig::descriptionSizes();
 
-$labelSizes = [
-    'sm' => 'text-sm',
-    'md' => 'text-base',
-    'lg' => 'text-lg',
-];
-
-$descriptionSizes = [
-    'sm' => 'text-xs',
-    'md' => 'text-sm',
-    'lg' => 'text-base',
-];
-
-$states = [
-    'default' => 'border-border hover:border-primary/50 focus:ring-ring accent-primary',
-    'success' => 'border-success hover:border-success/80 focus:ring-success accent-success',
-    'error' => 'border-destructive hover:border-destructive/80 focus:ring-destructive accent-destructive',
-    'warning' => 'border-warning hover:border-warning/80 focus:ring-warning accent-warning',
-];
+$states = ComponentStateConfig::checkableStates();
 
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $dotSizeClasses = $dotSizes[$size] ?? $dotSizes['md'];
@@ -48,7 +28,7 @@ $labelSizeClasses = $labelSizes[$size] ?? $labelSizes['md'];
 $descriptionSizeClasses = $descriptionSizes[$size] ?? $descriptionSizes['md'];
 $stateClasses = $states[$state] ?? $states['default'];
 
-$radioId = $id ?? $attributes->get('id') ?? 'radio-' . uniqid();
+$componentId = ComponentHelpers::generateId('radio', $id, $attributes);
 
 $wrapperAttributes = $attributes->only(['class', 'style']);
 $radioAttributes = $attributes->except(['class', 'style']);
@@ -62,7 +42,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
         <div class="relative flex items-center">
             <input
                 type="radio"
-                id="{{ $radioId }}"
+                id="{{ $componentId }}"
                 data-strata-radio
                 data-strata-field-type="radio"
                 @if($checked) checked @endif
@@ -72,7 +52,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
                     'class' => "sr-only peer"
                 ]) }}
             />
-            <label for="{{ $radioId }}" class="cursor-pointer">
+            <label for="{{ $componentId }}" class="cursor-pointer">
                 <div class="{{ $sizeClasses }} rounded-full bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
                     <div class="{{ $dotSizeClasses }} rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity"></div>
                 </div>
@@ -82,7 +62,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
         @if($label || $description || $slot->isNotEmpty())
             <div class="flex flex-col gap-0.5">
                 <label
-                    for="{{ $radioId }}"
+                    for="{{ $componentId }}"
                     class="{{ $labelSizeClasses }} text-foreground cursor-pointer select-none {{ $disabled ? 'opacity-50 cursor-not-allowed' : 'hover:text-foreground/90' }}"
                 >
                     @if($label)
@@ -103,7 +83,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
 
 @elseif($variant === 'bordered')
     <label
-        for="{{ $radioId }}"
+        for="{{ $componentId }}"
         data-strata-radio-wrapper
         {{ $wrapperAttributes->merge([
             'class' => "group flex items-start gap-3 p-4 border border-border rounded-lg transition-all duration-200 cursor-pointer " .
@@ -112,7 +92,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
     >
         <input
             type="radio"
-            id="{{ $radioId }}"
+            id="{{ $componentId }}"
             data-strata-radio
             data-strata-field-type="radio"
             @if($checked) checked @endif
@@ -147,7 +127,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
 
 @elseif($variant === 'card')
     <label
-        for="{{ $radioId }}"
+        for="{{ $componentId }}"
         data-strata-radio-wrapper
         data-strata-radio-card
         {{ $wrapperAttributes->merge([
@@ -157,7 +137,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
     >
         <input
             type="radio"
-            id="{{ $radioId }}"
+            id="{{ $componentId }}"
             data-strata-radio
             data-strata-radio-input
             data-strata-field-type="radio"
@@ -200,7 +180,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
 
 @elseif($variant === 'pill')
     <label
-        for="{{ $radioId }}"
+        for="{{ $componentId }}"
         data-strata-radio-wrapper
         {{ $wrapperAttributes->merge([
             'class' => "inline-flex items-center justify-center rounded-full border border-border transition-all duration-200 cursor-pointer select-none " .
@@ -210,7 +190,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
     >
         <input
             type="radio"
-            id="{{ $radioId }}"
+            id="{{ $componentId }}"
             data-strata-radio
             data-strata-field-type="radio"
             @if($checked) checked @endif

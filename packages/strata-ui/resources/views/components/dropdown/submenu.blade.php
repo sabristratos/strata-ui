@@ -8,8 +8,10 @@
 ])
 
 @php
-$submenuId = 'submenu-' . uniqid();
-$itemId = 'dropdown-item-' . uniqid();
+use Stratos\StrataUI\Support\ComponentHelpers;
+
+$submenuId = ComponentHelpers::generateId('submenu', null, null);
+$itemId = ComponentHelpers::generateId('dropdown-item', null, null);
 
 $baseClasses = 'w-full flex items-center gap-3 px-4 py-2 text-left text-sm transition-colors duration-150 rounded-md';
 
@@ -24,39 +26,19 @@ $classes = trim("$baseClasses $stateClasses");
 <script>
 document.addEventListener('alpine:init', () => {
     Alpine.data('strataSubmenu', (submenuId, placement, offset, trigger, disabled) => ({
-        positionable: null,
-        open: false,
+        ...window.createPositionableMixin({
+            placement: placement,
+            offset: offset,
+            triggerRef: 'submenuTrigger',
+            floatingRef: 'submenuContent'
+        }),
+
         hoverTimeout: null,
 
         init() {
             if (disabled) return;
 
-            this.positionable = new window.StrataPositionable({
-                placement: placement,
-                offset: offset,
-                strategy: 'absolute'
-            });
-
-            const content = this.$refs.submenuContent;
-            const triggerEl = this.$refs.submenuTrigger;
-
-            if (content && triggerEl) {
-                this.positionable.start(this, triggerEl, content);
-            }
-
-            this.$watch('open', (value) => {
-                if (value) {
-                    this.positionable.open();
-                } else {
-                    this.positionable.close();
-                }
-            });
-
-            this.positionable.watch((state) => {
-                if (!state) {
-                    this.open = false;
-                }
-            });
+            this.initPositionable();
 
             const contentParent = this.$el.closest('[data-strata-dropdown-content]');
             if (contentParent) {

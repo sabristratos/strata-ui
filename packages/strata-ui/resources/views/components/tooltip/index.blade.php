@@ -7,7 +7,9 @@
 ])
 
 @php
-    $tooltipId = 'tooltip-' . uniqid();
+    use Stratos\StrataUI\Support\ComponentHelpers;
+
+    $tooltipId = ComponentHelpers::generateId('tooltip', null, null);
 
     $hasNamedSlot = isset($content);
     $tooltipContent = $hasNamedSlot ? $content : $text;
@@ -17,40 +19,19 @@
 <script>
 document.addEventListener('alpine:init', () => {
     Alpine.data('strataTooltip', (placement, offset, delay, hideDelay) => ({
-        positionable: null,
-        open: false,
+        ...window.createPositionableMixin({
+            placement: placement,
+            offset: offset,
+            enableHide: true,
+            hideStrategy: 'referenceHidden',
+            floatingRef: 'tooltip'
+        }),
+
         showTimeout: null,
         hideTimeout: null,
 
         init() {
-            this.positionable = new window.StrataPositionable({
-                placement: placement,
-                offset: offset,
-                strategy: 'absolute',
-                enableHide: true,
-                hideStrategy: 'referenceHidden'
-            });
-
-            const trigger = this.$refs.trigger;
-            const tooltip = this.$refs.tooltip;
-
-            if (trigger && tooltip) {
-                this.positionable.start(this, trigger, tooltip);
-            }
-
-            this.$watch('open', (value) => {
-                if (value) {
-                    this.positionable.open();
-                } else {
-                    this.positionable.close();
-                }
-            });
-
-            this.positionable.watch((state) => {
-                if (!state) {
-                    this.open = false;
-                }
-            });
+            this.initPositionable();
         },
 
         show() {
@@ -70,9 +51,7 @@ document.addEventListener('alpine:init', () => {
         destroy() {
             clearTimeout(this.showTimeout);
             clearTimeout(this.hideTimeout);
-            if (this.positionable) {
-                this.positionable.cleanup();
-            }
+            this.destroyPositionable();
         }
     }));
 });

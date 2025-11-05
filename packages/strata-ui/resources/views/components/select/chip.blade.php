@@ -4,17 +4,10 @@
 ])
 
 @php
-$sizes = [
-    'sm' => 'text-xs px-2 py-0.5 gap-1',
-    'md' => 'text-sm px-2 py-1 gap-1.5',
-    'lg' => 'text-base px-3 py-1.5 gap-2',
-];
+use Stratos\StrataUI\Config\ComponentSizeConfig;
 
-$iconSizes = [
-    'sm' => 'w-3 h-3',
-    'md' => 'w-4 h-4',
-    'lg' => 'w-5 h-5',
-];
+$sizes = ComponentSizeConfig::badgeSizes();
+$iconSizes = ComponentSizeConfig::badgeIconSizes();
 
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $iconSize = $iconSizes[$size] ?? $iconSizes['md'];

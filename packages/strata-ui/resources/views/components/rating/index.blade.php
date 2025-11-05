@@ -16,30 +16,20 @@
 ])
 
 @php
-$sizes = [
-    'sm' => 'w-4 h-4',
-    'md' => 'w-5 h-5',
-    'lg' => 'w-6 h-6',
-];
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Support\ComponentHelpers;
 
-$textSizes = [
-    'sm' => 'text-sm',
-    'md' => 'text-base',
-    'lg' => 'text-lg',
-];
+$sizes = ComponentSizeConfig::checkboxSizes();
+$textSizes = ComponentSizeConfig::labelSizes();
 
-$states = [
-    'default' => 'text-yellow-400',
-    'success' => 'text-success',
-    'error' => 'text-destructive',
-    'warning' => 'text-warning',
-];
+$states = ComponentStateConfig::ratingStates();
 
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $textSizeClasses = $textSizes[$size] ?? $textSizes['md'];
 $stateClass = $states[$state] ?? $states['default'];
 
-$ratingId = $id ?? $attributes->get('id') ?? 'rating-' . uniqid();
+$componentId = ComponentHelpers::generateId('rating', $id, $attributes);
 
 $isReadonly = $readonly || $variant === 'default';
 $isInteractive = !$isReadonly && !$disabled && in_array($variant, ['input', 'clearable']);
@@ -130,7 +120,7 @@ $alpineData = $isInteractive ? "rating(" . json_encode($alpineConfig) . ")" : '{
 
             <input
                 type="hidden"
-                id="{{ $ratingId }}"
+                id="{{ $componentId }}"
                 data-strata-rating-input
                 data-strata-field-type="rating"
                 x-model="value"
@@ -207,7 +197,17 @@ $alpineData = $isInteractive ? "rating(" . json_encode($alpineConfig) . ")" : '{
 <script>
 document.addEventListener('alpine:init', () => {
     Alpine.data('rating', (config) => ({
-        entangleable: null,
+        ...window.createEntangleableMixin({
+            initialValue: parseFloat(config.value || 0),
+            inputSelector: '[data-strata-rating-input]',
+            afterWatch: function(newValue) {
+                const input = this.$el.querySelector('[data-strata-rating-input]');
+                if (input) {
+                    input.value = newValue;
+                }
+            }
+        }),
+
         hoveredValue: null,
         max: config.max,
         readonly: config.readonly,
@@ -224,22 +224,8 @@ document.addEventListener('alpine:init', () => {
             this.entangleable?.set(parseFloat(newValue || 0));
         },
 
-        init() {
-            this.entangleable = new window.StrataEntangleable(parseFloat(config.value || 0));
-
-            this.entangleable.watch((newValue) => {
-                const input = this.$el.querySelector('[data-strata-rating-input]');
-                if (input) {
-                    input.value = newValue;
-                }
-            });
-        },
-
         setupLivewire(el) {
-            const input = el.querySelector('[data-strata-rating-input]');
-            if (!input) return;
-
-            this.entangleable.setupLivewire(this, input);
+            this.initEntangleable();
         },
 
         selectRating(event, starIndex) {

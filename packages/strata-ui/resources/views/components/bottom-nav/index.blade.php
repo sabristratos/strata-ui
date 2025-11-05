@@ -36,7 +36,10 @@
 ])
 
 @php
-$componentId = $id ?? $attributes->get('id') ?? 'bottom-nav-' . uniqid();
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Support\ComponentHelpers;
+
+$componentId = ComponentHelpers::generateId('bottom-nav', $id, $attributes);
 
 $positions = [
     'fixed' => 'fixed bottom-4 left-1/2 -translate-x-1/2',
@@ -44,11 +47,7 @@ $positions = [
     'static' => 'relative',
 ];
 
-$sizes = [
-    'sm' => 'px-2 py-2 gap-1',
-    'md' => 'px-3 py-2.5 gap-2',
-    'lg' => 'px-4 py-3 gap-3',
-];
+$sizes = ComponentSizeConfig::bottomNavSizes();
 
 $positionClasses = $positions[$position] ?? $positions['fixed'];
 $sizeClasses = $sizes[$size] ?? $sizes['md'];

@@ -39,7 +39,9 @@
 ])
 
 @php
-$sidebarId = $id ?? $attributes->get('id') ?? 'sidebar-' . uniqid();
+use Stratos\StrataUI\Support\ComponentHelpers;
+
+$componentId = ComponentHelpers::generateId('sidebar', $id, $attributes);
 
 $widths = [
     'sm' => 'w-60',
@@ -143,7 +145,7 @@ document.addEventListener('alpine:init', () => {
     })"
     class="contents"
     data-strata-sidebar
-    data-sidebar-id="{{ $sidebarId }}"
+    data-sidebar-id="{{ $componentId }}"
 >
     @if($overlay)
     <div
@@ -157,7 +159,7 @@ document.addEventListener('alpine:init', () => {
     @endif
 
     <aside
-        id="{{ $sidebarId }}"
+        id="{{ $componentId }}"
         role="navigation"
         aria-label="Main navigation"
         :aria-expanded="open.toString()"

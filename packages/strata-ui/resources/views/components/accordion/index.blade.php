@@ -6,6 +6,8 @@
 ])
 
 @php
+use Stratos\StrataUI\Support\ComponentHelpers;
+
 $variants = [
     'bordered' => 'space-y-2',
     'divided' => 'divide-y divide-border',
@@ -16,7 +18,7 @@ $variants = [
 $variantClasses = $variants[$variant] ?? $variants['bordered'];
 $classes = trim($variantClasses);
 
-$accordionName = $name ?? ($type === 'single' ? 'accordion-' . uniqid() : null);
+$accordionName = $name ?? ($type === 'single' ? ComponentHelpers::generateId('accordion', null, null) : null);
 @endphp
 
 <div

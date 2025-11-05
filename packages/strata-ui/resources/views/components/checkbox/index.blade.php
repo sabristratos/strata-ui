@@ -8,39 +8,20 @@
     'label' => null,
     'description' => null,
     'id' => null,
+    'name' => null,
 ])
 
 @php
-$sizes = [
-    'sm' => 'w-4 h-4',
-    'md' => 'w-5 h-5',
-    'lg' => 'w-6 h-6',
-];
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Support\ComponentHelpers;
 
-$iconSizes = [
-    'sm' => 'w-3 h-3',
-    'md' => 'w-3.5 h-3.5',
-    'lg' => 'w-4 h-4',
-];
+$sizes = ComponentSizeConfig::checkboxSizes();
+$iconSizes = ComponentSizeConfig::checkboxIconSizes();
+$labelSizes = ComponentSizeConfig::labelSizes();
+$descriptionSizes = ComponentSizeConfig::descriptionSizes();
 
-$labelSizes = [
-    'sm' => 'text-sm',
-    'md' => 'text-base',
-    'lg' => 'text-lg',
-];
-
-$descriptionSizes = [
-    'sm' => 'text-xs',
-    'md' => 'text-sm',
-    'lg' => 'text-base',
-];
-
-$states = [
-    'default' => 'border-border hover:border-primary/50 focus:ring-ring accent-primary',
-    'success' => 'border-success hover:border-success/80 focus:ring-success accent-success',
-    'error' => 'border-destructive hover:border-destructive/80 focus:ring-destructive accent-destructive',
-    'warning' => 'border-warning hover:border-warning/80 focus:ring-warning accent-warning',
-];
+$states = ComponentStateConfig::checkableStates();
 
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $iconSizeClasses = $iconSizes[$size] ?? $iconSizes['md'];
@@ -48,12 +29,12 @@ $labelSizeClasses = $labelSizes[$size] ?? $labelSizes['md'];
 $descriptionSizeClasses = $descriptionSizes[$size] ?? $descriptionSizes['md'];
 $stateClasses = $states[$state] ?? $states['default'];
 
-$checkboxId = $id ?? $attributes->get('id') ?? 'checkbox-' . uniqid();
+$componentId = ComponentHelpers::generateId('checkbox', $id, $attributes);
 
 $wrapperAttributes = $attributes->only(['class', 'style']);
 $checkboxAttributes = $attributes->except(['class', 'style']);
 
-$alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.querySelector('input').indeterminate = this.indeterminate; } }" : '{}';
+$alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.querySelector('input').indeterminate = true; } }" : '{ indeterminate: false }';
 @endphp
 
 @if($variant === 'default')
@@ -65,7 +46,8 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
         <div class="relative flex items-center">
             <input
                 type="checkbox"
-                id="{{ $checkboxId }}"
+                id="{{ $componentId }}"
+                @if($name) name="{{ $name }}" @endif
                 data-strata-checkbox
                 data-strata-field-type="checkbox"
                 @if($checked) checked @endif
@@ -74,11 +56,18 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
                     'class' => "sr-only peer"
                 ]) }}
             />
-            <label for="{{ $checkboxId }}" class="cursor-pointer">
-                <div class="{{ $sizeClasses }} rounded-md bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
-                    <x-strata::icon.check
-                        class="{{ $iconSizeClasses }} text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
-                    />
+            <label for="{{ $componentId }}" class="cursor-pointer">
+                <div class="{{ $sizeClasses }} {{ $stateClasses }} rounded-md bg-secondary border-2 flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
+                    <template x-if="!indeterminate">
+                        <x-strata::icon.check
+                            class="{{ $iconSizeClasses }} text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
+                        />
+                    </template>
+                    <template x-if="indeterminate">
+                        <x-strata::icon.minus
+                            class="{{ $iconSizeClasses }} text-primary-foreground"
+                        />
+                    </template>
                 </div>
             </label>
         </div>
@@ -86,7 +75,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
         @if($label || $description || $slot->isNotEmpty())
             <div class="flex flex-col gap-0.5">
                 <label
-                    for="{{ $checkboxId }}"
+                    for="{{ $componentId }}"
                     class="{{ $labelSizeClasses }} text-foreground cursor-pointer select-none {{ $disabled ? 'opacity-50 cursor-not-allowed' : 'hover:text-foreground/90' }}"
                 >
                     @if($label)
@@ -107,7 +96,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
 
 @elseif($variant === 'bordered')
     <label
-        for="{{ $checkboxId }}"
+        for="{{ $componentId }}"
         x-data="{{ $alpineData }}"
         data-strata-checkbox-wrapper
         {{ $wrapperAttributes->merge([
@@ -117,7 +106,8 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
     >
         <input
             type="checkbox"
-            id="{{ $checkboxId }}"
+            id="{{ $componentId }}"
+            @if($name) name="{{ $name }}" @endif
             data-strata-checkbox
             data-strata-field-type="checkbox"
             @if($checked) checked @endif
@@ -126,10 +116,17 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
                 'class' => "sr-only peer"
             ]) }}
         />
-        <div class="{{ $sizeClasses }} rounded-md bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary mt-0.5">
-            <x-strata::icon.check
-                class="{{ $iconSizeClasses }} text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
-            />
+        <div class="{{ $sizeClasses }} {{ $stateClasses }} rounded-md bg-secondary border-2 flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary mt-0.5">
+            <template x-if="!indeterminate">
+                <x-strata::icon.check
+                    class="{{ $iconSizeClasses }} text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
+                />
+            </template>
+            <template x-if="indeterminate">
+                <x-strata::icon.minus
+                    class="{{ $iconSizeClasses }} text-primary-foreground"
+                />
+            </template>
         </div>
 
         @if($label || $description || $slot->isNotEmpty())
@@ -153,7 +150,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
 
 @elseif($variant === 'card')
     <label
-        for="{{ $checkboxId }}"
+        for="{{ $componentId }}"
         x-data="{{ $alpineData }}"
         data-strata-checkbox-wrapper
         data-strata-checkbox-card
@@ -164,9 +161,10 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
     >
         <input
             type="checkbox"
-            id="{{ $checkboxId }}"
+            id="{{ $componentId }}"
+            @if($name) name="{{ $name }}" @endif
             data-strata-checkbox
-            data-strata-checkbox-input
+            data-strata-field-type="checkbox"
             @if($checked) checked @endif
             @if($disabled) disabled @endif
             {{ $checkboxAttributes->merge([
@@ -175,31 +173,37 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
         />
 
         <div class="absolute top-4 right-4" data-strata-checkbox-indicator>
-            <div class="w-6 h-6 rounded-md border bg-secondary border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
-                <x-strata::icon.check
-                    class="w-4 h-4 text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
-                    data-strata-checkbox-icon
-                />
+            <div class="{{ $stateClasses }} w-6 h-6 rounded-md border bg-secondary flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
+                <template x-if="!indeterminate">
+                    <x-strata::icon.check
+                        class="w-4 h-4 text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
+                        data-strata-checkbox-icon
+                    />
+                </template>
+                <template x-if="indeterminate">
+                    <x-strata::icon.minus
+                        class="w-4 h-4 text-primary-foreground"
+                        data-strata-checkbox-icon
+                    />
+                </template>
             </div>
         </div>
 
         <div class="pr-10">
-            @if($label || $description || $slot->isNotEmpty())
+            @if($label || $slot->isNotEmpty())
                 <div class="flex flex-col gap-2">
-                    @if($label)
-                        <div class="{{ $labelSizeClasses }} font-semibold text-foreground">
+                    <div class="{{ $labelSizeClasses }} font-semibold text-foreground">
+                        @if($label)
                             {{ $label }}
-                        </div>
-                    @endif
+                        @else
+                            {{ $slot }}
+                        @endif
+                    </div>
 
                     @if($description)
                         <div class="{{ $descriptionSizeClasses }} text-muted-foreground">
                             {{ $description }}
                         </div>
-                    @endif
-
-                    @if($slot->isNotEmpty() && !$label)
-                        {{ $slot }}
                     @endif
                 </div>
             @endif
@@ -208,7 +212,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
 
 @elseif($variant === 'pill')
     <label
-        for="{{ $checkboxId }}"
+        for="{{ $componentId }}"
         x-data="{{ $alpineData }}"
         data-strata-checkbox-wrapper
         {{ $wrapperAttributes->merge([
@@ -219,7 +223,8 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
     >
         <input
             type="checkbox"
-            id="{{ $checkboxId }}"
+            id="{{ $componentId }}"
+            @if($name) name="{{ $name }}" @endif
             data-strata-checkbox
             data-strata-field-type="checkbox"
             @if($checked) checked @endif

@@ -5,13 +5,11 @@
 ])
 
 @php
+    use Stratos\StrataUI\Config\ComponentSizeConfig;
+
     $tag = $href && !$active ? 'a' : 'span';
 
-    $iconSizes = [
-        'sm' => 'w-3.5 h-3.5',
-        'md' => 'w-4 h-4',
-        'lg' => 'w-5 h-5',
-    ];
+    $iconSizes = ComponentSizeConfig::breadcrumbsIconSizes();
 
     $baseClasses = 'inline-flex items-center gap-1.5 transition-colors';
 
@@ -32,7 +30,10 @@
 
 <{{ $tag }}
     data-strata-breadcrumbs-item
-    x-data="{ size: $el.closest('[data-strata-breadcrumbs]').__x?.$data?.size || 'md' }"
+    x-data="{
+        size: $el.closest('[data-strata-breadcrumbs]').__x?.$data?.size || 'md',
+        iconSizes: @js($iconSizes)
+    }"
     {{ $attributes->merge(['class' => $classes]) }}
     @foreach($additionalAttributes as $key => $value)
         {{ $key }}="{{ $value }}"
@@ -41,7 +42,7 @@
     @if($icon)
         <x-dynamic-component
             :component="'strata::icon.' . $icon"
-            x-bind:class="size === 'sm' ? 'w-3.5 h-3.5' : (size === 'lg' ? 'w-5 h-5' : 'w-4 h-4')"
+            x-bind:class="iconSizes[size] || iconSizes['md']"
         />
     @endif
 

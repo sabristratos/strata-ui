@@ -30,7 +30,9 @@
 ])
 
 @php
-$toggleId = 'sidebar-toggle-' . uniqid();
+use Stratos\StrataUI\Support\ComponentHelpers;
+
+$toggleId = ComponentHelpers::generateId('sidebar-toggle', null, null);
 @endphp
 
 <button

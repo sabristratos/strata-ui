@@ -3,6 +3,8 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+
 $sizeClasses = match($size) {
     'sm' => 'p-2',
     'md' => 'p-2.5',
@@ -10,12 +12,7 @@ $sizeClasses = match($size) {
     default => 'p-2.5',
 };
 
-$iconSizes = match($size) {
-    'sm' => 'w-4 h-4',
-    'md' => 'w-5 h-5',
-    'lg' => 'w-6 h-6',
-    default => 'w-5 h-5',
-};
+$iconSizes = ComponentSizeConfig::iconSizes()[$size] ?? ComponentSizeConfig::iconSizes()['md'];
 @endphp
 
 <div

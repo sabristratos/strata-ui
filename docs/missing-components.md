@@ -5,10 +5,10 @@ This document tracks components that are missing from Strata UI compared to comp
 ## Form Components
 
 ### Input Variants
-- [ ] Date Picker
+- [x] Date Picker
 - [x] Time Picker
-- [ ] Date Range Picker
-- [ ] Color Picker
+- [x] Date Range Picker
+- [x] Color Picker
 - [ ] Range Slider (dual handles)
 - [ ] Switch (if different from Toggle)
 - [ ] Pin Input / OTP Input

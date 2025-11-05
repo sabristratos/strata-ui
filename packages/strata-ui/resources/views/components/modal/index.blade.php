@@ -7,16 +7,13 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+
 $baseClasses = 'fixed @container p-0 border-0 bg-transparent overflow-visible';
 $backdropClasses = 'backdrop:bg-neutral-950/80 backdrop:backdrop-blur-sm backdrop:transition-all backdrop:duration-150';
 
 if ($variant === 'flyout') {
-    $flyoutSizes = [
-        'sm' => 'max-w-sm',
-        'md' => 'max-w-md',
-        'lg' => 'max-w-lg',
-        'xl' => 'max-w-xl',
-    ];
+    $flyoutSizes = ComponentSizeConfig::flyoutSizes();
 
     $sizeClasses = $flyoutSizes[$size] ?? $flyoutSizes['md'];
 
@@ -29,12 +26,7 @@ if ($variant === 'flyout') {
     $baseClasses = 'fixed @container m-0 flex flex-col overflow-hidden bg-dialog text-dialog-foreground shadow-2xl';
     $variantClasses = "w-full min-h-dvh max-h-dvh $sizeClasses transition-all duration-150 ease-out $positionClasses";
 } else {
-    $sizes = [
-        'sm' => 'max-w-sm',
-        'md' => 'max-w-xl',
-        'lg' => 'max-w-3xl',
-        'xl' => 'max-w-5xl',
-    ];
+    $sizes = ComponentSizeConfig::modalSizes();
 
     $sizeClasses = $sizes[$size] ?? $sizes['md'];
     $variantClasses = "inset-0 m-auto w-full $sizeClasses opacity-0 scale-95 open:opacity-100 open:scale-100 starting:open:opacity-0 starting:open:scale-95 transition-all duration-150 ease-out";

@@ -9,6 +9,8 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+
 $striped = $striped ?? ($variant === 'striped');
 
 $variants = [
@@ -17,11 +19,7 @@ $variants = [
     'minimal' => '',
 ];
 
-$sizes = [
-    'sm' => 'text-sm',
-    'md' => 'text-base',
-    'lg' => 'text-lg',
-];
+$sizes = ComponentSizeConfig::tableSizes();
 
 $variantClasses = $variants[$variant] ?? $variants['bordered'];
 $sizeClasses = $sizes[$size] ?? $sizes['md'];

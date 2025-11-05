@@ -150,7 +150,8 @@ describe('Slider', () => {
             formComponent.$el.querySelector = vi.fn(() => null);
 
             formComponent.init();
-            expect(formComponent.engine.entangleable).toBeNull();
+            expect(formComponent.engine.entangleable).toBeDefined();
+            expect(formComponent.engine.entangleable.value).toBe(0);
         });
     });
 

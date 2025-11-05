@@ -34,12 +34,14 @@
 ])
 
 @php
-$groupId = $id ?? $attributes->get('id') ?? 'sidebar-group-' . uniqid();
+use Stratos\StrataUI\Support\ComponentHelpers;
+
+$componentId = ComponentHelpers::generateId('sidebar-group', $id, $attributes);
 @endphp
 
 <details
     x-data="{
-        groupId: @js($groupId),
+        groupId: @js($componentId),
         isOpen: false,
         get hasVisibleChildren() {
             if (!searchQuery) return true;

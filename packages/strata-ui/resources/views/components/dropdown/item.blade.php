@@ -7,7 +7,9 @@
 ])
 
 @php
-$itemId = $attributes->get('id') ?? 'dropdown-item-' . uniqid();
+use Stratos\StrataUI\Support\ComponentHelpers;
+
+$itemId = ComponentHelpers::generateId('dropdown-item', null, $attributes);
 
 $baseClasses = 'w-full flex items-center gap-3 px-4 py-2 text-left text-sm transition-colors duration-150 rounded-md';
 

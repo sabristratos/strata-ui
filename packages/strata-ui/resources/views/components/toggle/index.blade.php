@@ -10,17 +10,13 @@
 ])
 
 @php
-$trackSizes = [
-    'sm' => 'h-5 w-9',
-    'md' => 'h-7 w-12',
-    'lg' => 'h-9 w-16',
-];
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Support\ComponentHelpers;
 
-$thumbSizes = [
-    'sm' => 'w-3 h-3',
-    'md' => 'w-4 h-4',
-    'lg' => 'w-5 h-5',
-];
+$toggleSizes = ComponentSizeConfig::toggleSizes();
+$trackSizes = $toggleSizes['track'];
+$thumbSizes = $toggleSizes['handle'];
 
 $thumbTranslations = [
     'sm' => 'translate-x-1 group-has-[:checked]:translate-x-5',
@@ -28,17 +24,8 @@ $thumbTranslations = [
     'lg' => 'translate-x-1 group-has-[:checked]:translate-x-[2.5rem]',
 ];
 
-$labelSizes = [
-    'sm' => 'text-sm',
-    'md' => 'text-base',
-    'lg' => 'text-lg',
-];
-
-$descriptionSizes = [
-    'sm' => 'text-xs',
-    'md' => 'text-sm',
-    'lg' => 'text-base',
-];
+$labelSizes = ComponentSizeConfig::labelSizes();
+$descriptionSizes = ComponentSizeConfig::descriptionSizes();
 
 $roundedClasses = [
     'none' => 'rounded-none',
@@ -52,24 +39,7 @@ $roundedClasses = [
     'full' => 'rounded-full',
 ];
 
-$states = [
-    'default' => [
-        'track' => 'bg-muted group-has-[:checked]:bg-primary focus:ring-primary',
-        'thumb' => 'bg-body',
-    ],
-    'success' => [
-        'track' => 'bg-muted group-has-[:checked]:bg-success focus:ring-success',
-        'thumb' => 'bg-body',
-    ],
-    'error' => [
-        'track' => 'bg-muted group-has-[:checked]:bg-destructive focus:ring-destructive',
-        'thumb' => 'bg-body',
-    ],
-    'warning' => [
-        'track' => 'bg-muted group-has-[:checked]:bg-warning focus:ring-warning',
-        'thumb' => 'bg-body',
-    ],
-];
+$states = ComponentStateConfig::toggleStates();
 
 $trackSizeClasses = $trackSizes[$size] ?? $trackSizes['md'];
 $thumbSizeClasses = $thumbSizes[$size] ?? $thumbSizes['md'];
@@ -79,7 +49,7 @@ $descriptionSizeClasses = $descriptionSizes[$size] ?? $descriptionSizes['md'];
 $roundedClass = $roundedClasses[$rounded] ?? $roundedClasses['full'];
 $stateClasses = $states[$state] ?? $states['default'];
 
-$toggleId = $id ?? $attributes->get('id') ?? 'toggle-' . uniqid();
+$componentId = ComponentHelpers::generateId('toggle', $id, $attributes);
 
 $wrapperAttributes = $attributes->only(['class', 'style']);
 $toggleAttributes = $attributes->except(['class', 'style']);
@@ -92,7 +62,7 @@ $toggleAttributes = $attributes->except(['class', 'style']);
     @if($label || $description || $slot->isNotEmpty())
         <div class="flex flex-col gap-0.5 flex-1">
             <label
-                for="{{ $toggleId }}"
+                for="{{ $componentId }}"
                 class="{{ $labelSizeClasses }} text-foreground cursor-pointer select-none {{ $disabled ? 'opacity-50 cursor-not-allowed' : 'hover:text-foreground/90' }}"
             >
                 @if($label)
@@ -113,7 +83,7 @@ $toggleAttributes = $attributes->except(['class', 'style']);
     <div class="relative inline-flex items-center select-none shrink-0">
         <input
             type="checkbox"
-            id="{{ $toggleId }}"
+            id="{{ $componentId }}"
             data-strata-toggle
             data-strata-field-type="toggle"
             @if($checked) checked @endif
@@ -122,7 +92,7 @@ $toggleAttributes = $attributes->except(['class', 'style']);
         />
 
         <label
-            for="{{ $toggleId }}"
+            for="{{ $componentId }}"
             role="switch"
             class="relative flex items-center cursor-pointer {{ $disabled ? 'opacity-50 cursor-not-allowed' : '' }} outline-offset-2 transition ease-in-out duration-150 focus:ring-2 focus:ring-offset-2 {{ $trackSizeClasses }} {{ $roundedClass }} {{ $stateClasses['track'] }}"
         >

@@ -34,7 +34,9 @@
 ])
 
 @php
-$menuId = 'sidebar-user-menu-' . uniqid();
+use Stratos\StrataUI\Support\ComponentHelpers;
+
+$menuId = ComponentHelpers::generateId('sidebar-user-menu', null, null);
 @endphp
 
 <x-strata::dropdown :id="$menuId" :placement="$placement" class="w-full">

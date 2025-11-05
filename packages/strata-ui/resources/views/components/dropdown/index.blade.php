@@ -6,13 +6,12 @@
 ])
 
 @php
-$dropdownId = $id ?? 'dropdown-' . uniqid();
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Support\ComponentHelpers;
 
-$sizes = [
-    'sm' => 'min-w-48 max-w-64',
-    'md' => 'min-w-64 max-w-96',
-    'lg' => 'min-w-80 max-w-lg',
-];
+$componentId = ComponentHelpers::generateId('dropdown', $id, $attributes);
+
+$sizes = ComponentSizeConfig::dropdownSizes();
 
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 @endphp
@@ -21,49 +20,31 @@ $sizeClasses = $sizes[$size] ?? $sizes['md'];
 <script>
 document.addEventListener('alpine:init', () => {
     Alpine.data('strataDropdown', (dropdownId, placement, offset) => ({
-        positionable: null,
-        open: false,
+        ...window.createPositionableMixin({
+            placement: placement,
+            offset: offset,
+            floatingRef: 'content',
+            triggerSelector: `[data-dropdown-trigger="${dropdownId}"]`,
+            onOpen: function() {
+                this.$refs.content?.focus();
+                this.highlighted = -1;
+            },
+            onClose: function() {
+                this.highlighted = -1;
+                this.typeaheadBuffer = '';
+            }
+        }),
+
         highlighted: -1,
         items: [],
         typeaheadBuffer: '',
         typeaheadTimeout: null,
 
         init() {
-            this.positionable = new window.StrataPositionable({
-                placement: placement,
-                offset: offset,
-                strategy: 'absolute'
-            });
-
-            const content = this.$refs.content;
-            const trigger = document.querySelector(`[data-dropdown-trigger="${dropdownId}"]`);
-
-            if (content && trigger) {
-                this.positionable.start(this, trigger, content);
-            }
+            this.initPositionable();
 
             this.$nextTick(() => {
                 this.collectItems();
-            });
-
-            this.$watch('open', (value) => {
-                if (value) {
-                    this.positionable.open();
-                    this.$nextTick(() => {
-                        this.$refs.content?.focus();
-                        this.highlighted = -1;
-                    });
-                } else {
-                    this.positionable.close();
-                    this.highlighted = -1;
-                    this.typeaheadBuffer = '';
-                }
-            });
-
-            this.positionable.watch((state) => {
-                if (!state) {
-                    this.open = false;
-                }
             });
         },
 
@@ -223,7 +204,7 @@ document.addEventListener('alpine:init', () => {
 @endonce
 
 <div
-    x-data="strataDropdown('{{ $dropdownId }}', '{{ $placement }}', {{ $offset }})"
+    x-data="strataDropdown('{{ $componentId }}', '{{ $placement }}', {{ $offset }})"
     data-strata-dropdown
     @keydown="handleKeydown"
     {{ $attributes->merge(['class' => 'relative inline-block']) }}

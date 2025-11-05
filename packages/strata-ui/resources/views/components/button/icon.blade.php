@@ -1,6 +1,6 @@
 @props([
     'variant' => 'secondary',
-    'appearance' => 'outlined',
+    'appearance' => 'filled',
     'size' => 'md',
     'icon' => null,
     'loading' => false,
@@ -9,9 +9,11 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+
 $filledVariants = [
     'primary' => 'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 shadow-sm',
-    'secondary' => 'bg-secondary text-secondary-foreground hover:bg-secondary/90 active:bg-secondary/80 shadow-sm',
+    'secondary' => 'bg-secondary text-secondary-foreground hover:bg-neutral-300 active:bg-neutral-400 shadow-sm',
     'success' => 'bg-success text-success-foreground hover:bg-success/90 active:bg-success/80 shadow-sm',
     'warning' => 'bg-warning text-warning-foreground hover:bg-warning/90 active:bg-warning/80 shadow-sm',
     'destructive' => 'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 shadow-sm',
@@ -19,17 +21,17 @@ $filledVariants = [
 ];
 
 $outlinedVariants = [
-    'primary' => 'bg-transparent text-primary border-2 border-primary hover:bg-primary/10 active:bg-primary/20',
-    'secondary' => 'bg-transparent text-secondary-foreground border-2 border-secondary hover:bg-secondary/10 active:bg-secondary/20',
-    'success' => 'bg-transparent text-success border-2 border-success hover:bg-success/10 active:bg-success/20',
-    'warning' => 'bg-transparent text-warning border-2 border-warning hover:bg-warning/10 active:bg-warning/20',
-    'destructive' => 'bg-transparent text-destructive border-2 border-destructive hover:bg-destructive/10 active:bg-destructive/20',
-    'info' => 'bg-transparent text-info border-2 border-info hover:bg-info/10 active:bg-info/20',
+    'primary' => 'bg-transparent text-primary border border-primary hover:bg-primary/10 active:bg-primary/20',
+    'secondary' => 'bg-transparent text-secondary-foreground border border-secondary-foreground hover:bg-neutral-200 active:bg-neutral-300',
+    'success' => 'bg-transparent text-success border border-success hover:bg-success/10 active:bg-success/20',
+    'warning' => 'bg-transparent text-warning border border-warning hover:bg-warning/10 active:bg-warning/20',
+    'destructive' => 'bg-transparent text-destructive border border-destructive hover:bg-destructive/10 active:bg-destructive/20',
+    'info' => 'bg-transparent text-info border border-info hover:bg-info/10 active:bg-info/20',
 ];
 
 $ghostVariants = [
     'primary' => 'bg-transparent text-primary hover:bg-primary/10 active:bg-primary/20',
-    'secondary' => 'bg-transparent text-secondary-foreground hover:bg-secondary/10 active:bg-secondary/20',
+    'secondary' => 'bg-transparent text-secondary-foreground hover:bg-neutral-200 active:bg-neutral-300',
     'success' => 'bg-transparent text-success hover:bg-success/10 active:bg-success/20',
     'warning' => 'bg-transparent text-warning hover:bg-warning/10 active:bg-warning/20',
     'destructive' => 'bg-transparent text-destructive hover:bg-destructive/10 active:bg-destructive/20',
@@ -45,17 +47,8 @@ $linkVariants = [
     'info' => 'bg-transparent text-info hover:underline active:opacity-70',
 ];
 
-$sizes = [
-    'sm' => 'p-1.5',
-    'md' => 'p-2',
-    'lg' => 'p-2.5',
-];
-
-$iconSizes = [
-    'sm' => 'w-4 h-4',
-    'md' => 'w-5 h-5',
-    'lg' => 'w-6 h-6',
-];
+$sizes = ComponentSizeConfig::buttonIconSizes();
+$iconSizes = ComponentSizeConfig::iconSizes();
 
 $variantMap = [
     'filled' => $filledVariants,
@@ -69,10 +62,6 @@ $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $iconSize = $iconSizes[$size] ?? $iconSizes['md'];
 
 $baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative overflow-hidden';
-
-if ($appearance === 'filled') {
-    $baseClasses .= ' border-2';
-}
 
 $disabledClasses = 'disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none';
 

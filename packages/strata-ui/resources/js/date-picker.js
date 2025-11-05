@@ -1,8 +1,21 @@
 export default function (props = {}) {
     return {
-        entangleable: null,
-        positionable: null,
-        open: false,
+        ...window.createEntangleableMixin({
+            initialValue: props.initialValue || null,
+            inputSelector: '[data-strata-datepicker-input]',
+            afterWatch: function(newValue) {
+                this.display = this.computeDisplay(newValue);
+                this.updateCalendarValue(newValue);
+            }
+        }),
+
+        ...window.createPositionableMixin({
+            placement: 'bottom-start',
+            offset: 8,
+            floatingRef: 'dropdown',
+            enableSize: true,
+            maxHeight: true
+        }),
         mode: props.mode || 'single',
         initialValue: props.initialValue || null,
         minDate: props.minDate || null,
@@ -13,44 +26,9 @@ export default function (props = {}) {
         display: '',
 
         init() {
-            this.entangleable = new window.StrataEntangleable(this.initialValue);
-
-            const input = this.$el.querySelector('[data-strata-datepicker-input]');
-            if (input) {
-                this.entangleable.setupLivewire(this, input);
-            }
-
-            this.entangleable.watch((newValue) => {
-                this.display = this.computeDisplay(newValue);
-                this.updateCalendarValue(newValue);
-            });
-
+            this.initEntangleable();
+            this.initPositionable();
             this.display = this.computeDisplay(this.entangleable.value);
-
-            this.positionable = new window.StrataPositionable({
-                placement: 'bottom-start',
-                offset: 8,
-                strategy: 'absolute',
-                enableSize: true,
-                maxHeight: true,
-                matchReferenceWidth: false,
-            });
-
-            this.positionable.start(this, this.$refs.trigger, this.$refs.dropdown);
-
-            this.$watch('open', (value) => {
-                if (value) {
-                    this.positionable.open();
-                } else {
-                    this.positionable.close();
-                }
-            });
-
-            this.positionable.watch((state) => {
-                if (!state) {
-                    this.open = false;
-                }
-            });
         },
 
         get calendarValue() {
@@ -264,9 +242,7 @@ export default function (props = {}) {
             if (this.entangleable) {
                 this.entangleable.destroy();
             }
-            if (this.positionable) {
-                this.positionable.destroy();
-            }
+            this.destroyPositionable();
         },
     };
 }

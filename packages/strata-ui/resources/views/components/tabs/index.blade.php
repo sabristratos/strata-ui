@@ -4,7 +4,9 @@
 ])
 
 @php
-$tabsId = $attributes->get('id') ?? 'tabs-' . uniqid();
+use Stratos\StrataUI\Support\ComponentHelpers;
+
+$componentId = ComponentHelpers::generateId('tabs', null, $attributes);
 $orientations = [
     'horizontal' => 'flex flex-col gap-4',
     'vertical' => 'flex flex-row gap-4',
@@ -79,7 +81,7 @@ document.addEventListener('alpine:init', () => {
 @endonce
 
 <div
-    x-data="strataTabs(@js($default), @js($orientation), @js($tabsId))"
+    x-data="strataTabs(@js($default), @js($orientation), @js($componentId))"
     data-strata-tabs
     {{ $attributes->merge(['class' => $orientationClasses]) }}
 >

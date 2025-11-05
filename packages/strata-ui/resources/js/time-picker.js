@@ -1,8 +1,21 @@
 export default function (props = {}) {
     return {
-        entangleable: null,
-        positionable: null,
-        open: false,
+        ...window.createEntangleableMixin({
+            initialValue: props.initialValue || null,
+            inputSelector: '[data-strata-timepicker-input]',
+            afterWatch: function(newValue) {
+                this.display = this.computeDisplay(newValue);
+            }
+        }),
+
+        ...window.createPositionableMixin({
+            placement: 'bottom-start',
+            offset: 8,
+            floatingRef: 'dropdown',
+            onOpen: function() {
+                this.scrollToSelected();
+            }
+        }),
         format: props.format || '12',
         initialValue: props.initialValue || null,
         stepMinutes: props.stepMinutes || 15,
@@ -15,43 +28,9 @@ export default function (props = {}) {
         display: '',
 
         init() {
-            this.entangleable = new window.StrataEntangleable(this.initialValue);
-
-            const input = this.$el.querySelector('[data-strata-timepicker-input]');
-            if (input) {
-                this.entangleable.setupLivewire(this, input);
-            }
-
-            this.entangleable.watch((newValue) => {
-                this.display = this.computeDisplay(newValue);
-            });
-
+            this.initEntangleable();
+            this.initPositionable();
             this.display = this.computeDisplay(this.entangleable.value);
-
-            this.positionable = new window.StrataPositionable({
-                placement: 'bottom-start',
-                offset: 8,
-                strategy: 'absolute',
-            });
-
-            this.positionable.start(this, this.$refs.trigger, this.$refs.dropdown);
-
-            this.$watch('open', (value) => {
-                if (value) {
-                    this.positionable.open();
-                    this.$nextTick(() => {
-                        this.scrollToSelected();
-                    });
-                } else {
-                    this.positionable.close();
-                }
-            });
-
-            this.positionable.watch((state) => {
-                if (!state) {
-                    this.open = false;
-                }
-            });
         },
 
         get times() {
@@ -167,9 +146,7 @@ export default function (props = {}) {
             if (this.entangleable) {
                 this.entangleable.destroy();
             }
-            if (this.positionable) {
-                this.positionable.destroy();
-            }
+            this.destroyPositionable();
         },
     };
 }

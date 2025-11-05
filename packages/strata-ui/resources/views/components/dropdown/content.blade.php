@@ -3,11 +3,9 @@
 ])
 
 @php
-$sizes = [
-    'sm' => 'min-w-48 max-w-64',
-    'md' => 'min-w-64 max-w-96',
-    'lg' => 'min-w-80 max-w-lg',
-];
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+
+$sizes = ComponentSizeConfig::dropdownSizes();
 
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 

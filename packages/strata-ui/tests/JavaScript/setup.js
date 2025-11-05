@@ -1,4 +1,6 @@
 import { beforeEach, vi } from 'vitest';
+import { createEntangleableMixin } from '../../resources/js/entangleable-mixin.js';
+import { createPositionableMixin } from '../../resources/js/positionable-mixin.js';
 
 beforeEach(() => {
   global.window = global.window || {};
@@ -16,4 +18,6 @@ beforeEach(() => {
 
   global.window.Alpine = global.Alpine;
   global.window.Livewire = global.Livewire;
+  global.window.createEntangleableMixin = createEntangleableMixin;
+  global.window.createPositionableMixin = createPositionableMixin;
 });

@@ -61,24 +61,19 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Support\ComponentHelpers;
+
 $chips = filter_var($chips, FILTER_VALIDATE_BOOLEAN);
 
 $baseClasses = 'w-full inline-flex items-center justify-between gap-2 bg-input border rounded-lg transition-all duration-150';
 
-$sizes = [
-    'sm' => ['trigger' => 'h-9 px-3 text-sm', 'icon' => 'w-4 h-4', 'dropdown' => 'min-w-48 max-w-64'],
-    'md' => ['trigger' => 'h-10 px-3 text-base', 'icon' => 'w-5 h-5', 'dropdown' => 'min-w-64 max-w-96'],
-    'lg' => ['trigger' => 'h-11 px-4 text-lg', 'icon' => 'w-6 h-6', 'dropdown' => 'min-w-80 max-w-lg'],
-];
+$sizes = ComponentSizeConfig::selectSizes();
 
 $dropdownSizeClasses = $sizes[$size]['dropdown'] ?? $sizes['md']['dropdown'];
 
-$stateClasses = [
-    'default' => 'border-border focus:ring-2 focus:ring-ring focus:ring-offset-2',
-    'success' => 'border-success focus:ring-2 focus:ring-success/20 focus:ring-offset-2',
-    'error' => 'border-destructive focus:ring-2 focus:ring-destructive/20 focus:ring-offset-2',
-    'warning' => 'border-warning focus:ring-2 focus:ring-warning/20 focus:ring-offset-2',
-];
+$stateClasses = ComponentStateConfig::focusableStates();
 
 $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary/50';
 
@@ -90,15 +85,43 @@ $normalizedValue = $multiple
     ? (is_array($value) ? $value : ($value ? [$value] : []))
     : $value;
 
-$componentId = $attributes->get('id') ?? 'select-' . uniqid();
+$componentId = ComponentHelpers::generateId('select', $id, $attributes);
 @endphp
 
 @once
 <script>
 document.addEventListener('alpine:init', () => {
     Alpine.data('strataSelect', (initialValue, multiple, disabled, chips, searchable, minItemsForSearch, clearable) => ({
-        entangleable: null,
-        positionable: null,
+        ...window.createEntangleableMixin({
+            initialValue: initialValue,
+            inputSelector: '[data-strata-select-input]',
+            afterWatch: function(newValue) {
+                this.display = this.computeDisplay(newValue);
+            }
+        }),
+
+        ...window.createPositionableMixin({
+            placement: 'bottom-start',
+            offset: 8,
+            floatingRef: 'dropdown',
+            enableSize: true,
+            matchReferenceWidth: true,
+            maxHeight: true,
+            onOpen: function() {
+                if (this.shouldShowSearch()) {
+                    const searchInput = this.$refs.dropdown.querySelector('[data-strata-select-search]');
+                    if (searchInput) {
+                        searchInput.focus();
+                    }
+                } else {
+                    this.$refs.dropdown.focus();
+                }
+            },
+            onClose: function() {
+                this.clearSearch();
+                this.$el.focus();
+            }
+        }),
         highlighted: -1,
         options: [],
         disabled: disabled,
@@ -143,57 +166,16 @@ document.addEventListener('alpine:init', () => {
         },
 
         init() {
-            this.entangleable = new window.StrataEntangleable(initialValue);
-            this.positionable = new window.StrataPositionable({
-                placement: 'bottom-start',
-                offset: 8,
-                strategy: 'absolute',
-                enableSize: true,
-                matchReferenceWidth: true,
-                maxHeight: true
-            });
-
-            this.dropdown = this.$refs.dropdown;
-            this.trigger = this.$refs.trigger;
-
-            if (this.dropdown && this.trigger) {
-                this.positionable.start(this, this.trigger, this.dropdown);
-            }
-
-            const input = this.$el.querySelector('[data-strata-select-input]');
-            if (input) {
-                this.entangleable.setupLivewire(this, input);
-            }
+            this.initEntangleable();
+            this.initPositionable();
 
             this.$nextTick(() => {
                 this.collectOptions();
                 this.display = this.computeDisplay(this.entangleable.value);
-
-                this.entangleable.watch((newValue) => {
-                    this.display = this.computeDisplay(newValue);
-                });
             });
 
             this.$watch('search', () => {
                 this.highlighted = -1;
-            });
-
-            this.positionable.watch((state) => {
-                if (state) {
-                    this.$nextTick(() => {
-                        if (this.shouldShowSearch()) {
-                            const searchInput = this.dropdown.querySelector('[data-strata-select-search]');
-                            if (searchInput) {
-                                searchInput.focus();
-                            }
-                        } else {
-                            this.dropdown.focus();
-                        }
-                    });
-                } else {
-                    this.clearSearch();
-                    this.$el.focus();
-                }
             });
         },
 
@@ -411,9 +393,7 @@ document.addEventListener('alpine:init', () => {
             if (this.entangleable) {
                 this.entangleable.destroy();
             }
-            if (this.positionable) {
-                this.positionable.destroy();
-            }
+            this.destroyPositionable();
         },
     }));
 });

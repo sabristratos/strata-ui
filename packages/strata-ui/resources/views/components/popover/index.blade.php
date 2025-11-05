@@ -6,15 +6,13 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+
 if (!$id) {
     throw new \InvalidArgumentException('Popover component requires an "id" prop');
 }
 
-$sizes = [
-    'sm' => 'min-w-48 max-w-64',
-    'md' => 'min-w-64 max-w-96',
-    'lg' => 'min-w-80 max-w-lg',
-];
+$sizes = ComponentSizeConfig::dropdownSizes();
 
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 
@@ -27,40 +25,18 @@ $classes = trim("$baseClasses $sizeClasses");
 <script>
 document.addEventListener('alpine:init', () => {
     Alpine.data('strataPopover', (placement, offset, popoverId) => ({
-        positionable: null,
-        open: false,
+        ...window.createPositionableMixin({
+            placement: placement,
+            offset: offset,
+            floatingRef: 'popover',
+            triggerSelector: '[data-popover-trigger="' + popoverId + '"]',
+            onOpen: function() {
+                this.$refs.popover?.focus();
+            }
+        }),
 
         init() {
-            this.positionable = new window.StrataPositionable({
-                placement: placement,
-                offset: offset,
-                strategy: 'absolute'
-            });
-
-            const popover = this.$refs.popover;
-            const triggerSelector = '[data-popover-trigger="' + popoverId + '"]';
-            const trigger = document.querySelector(triggerSelector);
-
-            if (popover && trigger) {
-                this.positionable.start(this, trigger, popover);
-            }
-
-            this.$watch('open', (value) => {
-                if (value) {
-                    this.positionable.open();
-                    this.$nextTick(() => {
-                        popover?.focus();
-                    });
-                } else {
-                    this.positionable.close();
-                }
-            });
-
-            this.positionable.watch((state) => {
-                if (!state) {
-                    this.open = false;
-                }
-            });
+            this.initPositionable();
         },
 
         toggle() {

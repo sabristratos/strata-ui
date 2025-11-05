@@ -16,20 +16,15 @@
 ])
 
 @php
-$componentId = $id ?? $attributes->get('id') ?? 'time-picker-' . uniqid();
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Support\ComponentHelpers;
 
-$sizes = [
-    'sm' => 'h-9 px-3 text-sm',
-    'md' => 'h-10 px-3 text-base',
-    'lg' => 'h-11 px-4 text-lg',
-];
+$componentId = ComponentHelpers::generateId('time-picker', $id, $attributes);
 
-$states = [
-    'default' => 'border-border focus-within:ring-ring',
-    'success' => 'border-success focus-within:ring-success/20',
-    'error' => 'border-destructive focus-within:ring-destructive/20',
-    'warning' => 'border-warning focus-within:ring-warning/20',
-];
+$sizes = ComponentSizeConfig::inputSizes();
+
+$states = ComponentStateConfig::pickerStates();
 
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $stateClasses = $states[$state] ?? $states['default'];

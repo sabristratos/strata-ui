@@ -35,18 +35,12 @@ if ($existingFiles && is_array($existingFiles) && count($existingFiles) > 0) {
 
 $baseClasses = 'relative flex flex-col items-center justify-center border-2 border-dashed rounded-lg transition-all duration-150 cursor-pointer';
 
-$sizes = [
-    'sm' => ['wrapper' => 'px-4 py-6 gap-2', 'icon' => 'w-8 h-8', 'label' => 'text-sm', 'hint' => 'text-xs'],
-    'md' => ['wrapper' => 'px-6 py-8 gap-3', 'icon' => 'w-10 h-10', 'label' => 'text-base', 'hint' => 'text-sm'],
-    'lg' => ['wrapper' => 'px-8 py-10 gap-4', 'icon' => 'w-12 h-12', 'label' => 'text-lg', 'hint' => 'text-base'],
-];
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Config\ComponentStateConfig;
 
-$stateClasses = [
-    'default' => 'border-border bg-secondary hover:border-primary hover:bg-muted/50',
-    'success' => 'border-success bg-success/5 hover:bg-success/10',
-    'error' => 'border-destructive bg-destructive/5 hover:bg-destructive/10',
-    'warning' => 'border-warning bg-warning/5 hover:bg-warning/10',
-];
+$sizes = ComponentSizeConfig::fileInputSizes();
+
+$stateClasses = ComponentStateConfig::fileInputStates();
 
 $stateIcons = [
     'success' => 'check-circle',

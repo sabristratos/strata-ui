@@ -52,20 +52,14 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Config\ComponentStateConfig;
+
 $baseClasses = 'flex items-center gap-2 bg-input border rounded-lg transition-all duration-150';
 
-$sizes = [
-    'sm' => 'h-9 px-3 text-sm',
-    'md' => 'h-10 px-3 text-base',
-    'lg' => 'h-11 px-4 text-lg',
-];
+$sizes = ComponentSizeConfig::inputSizes();
 
-$stateClasses = [
-    'default' => 'border-border focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
-    'success' => 'border-success focus-within:ring-2 focus-within:ring-success/20 focus-within:ring-offset-2',
-    'error' => 'border-destructive focus-within:ring-2 focus-within:ring-destructive/20 focus-within:ring-offset-2',
-    'warning' => 'border-warning focus-within:ring-2 focus-within:ring-warning/20 focus-within:ring-offset-2',
-];
+$stateClasses = ComponentStateConfig::inputStates();
 
 $stateIcons = [
     'success' => 'check-circle',

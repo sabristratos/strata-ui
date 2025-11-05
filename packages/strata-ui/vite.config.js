@@ -5,8 +5,10 @@ export default defineConfig({
     plugins: [
         tailwindcss(),
     ],
+    publicDir: false,
     build: {
         outDir: 'public/build',
+        emptyOutDir: true,
         manifest: true,
         rollupOptions: {
             input: {

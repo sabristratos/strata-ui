@@ -7,57 +7,67 @@
 ])
 
 @php
-$variants = [
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+
+$designSystemVariants = [
     'primary' => [
-        'filled' => 'bg-primary text-primary-foreground',
+        'filled' => 'bg-primary text-white/90',
         'outlined' => 'bg-transparent text-primary border border-primary',
-        'soft' => 'bg-primary/10 text-primary',
+        'soft' => 'bg-primary/10 text-primary dark:text-primary',
     ],
     'secondary' => [
         'filled' => 'bg-secondary text-secondary-foreground',
-        'outlined' => 'bg-transparent text-secondary border border-secondary',
+        'outlined' => 'bg-transparent text-secondary-foreground border border-secondary-foreground',
         'soft' => 'bg-secondary/10 text-secondary-foreground',
     ],
     'success' => [
-        'filled' => 'bg-success text-success-foreground',
+        'filled' => 'bg-success text-white/90',
         'outlined' => 'bg-transparent text-success border border-success',
-        'soft' => 'bg-success/10 text-success',
+        'soft' => 'bg-success/10 text-success dark:text-success',
     ],
     'warning' => [
-        'filled' => 'bg-warning text-warning-foreground',
+        'filled' => 'bg-warning text-white/90',
         'outlined' => 'bg-transparent text-warning border border-warning',
-        'soft' => 'bg-warning/10 text-warning',
+        'soft' => 'bg-warning/10 text-warning dark:text-warning',
     ],
     'destructive' => [
-        'filled' => 'bg-destructive text-destructive-foreground',
+        'filled' => 'bg-destructive text-white/90',
         'outlined' => 'bg-transparent text-destructive border border-destructive',
-        'soft' => 'bg-destructive/10 text-destructive',
+        'soft' => 'bg-destructive/10 text-destructive dark:text-destructive',
     ],
     'info' => [
-        'filled' => 'bg-info text-info-foreground',
+        'filled' => 'bg-info text-white/90',
         'outlined' => 'bg-transparent text-info border border-info',
-        'soft' => 'bg-info/10 text-info',
+        'soft' => 'bg-info/10 text-info dark:text-info',
     ],
 ];
 
-$sizes = [
-    'sm' => 'px-2 py-0.5 text-xs gap-1',
-    'md' => 'px-2.5 py-1 text-sm gap-1.5',
-    'lg' => 'px-3 py-1.5 text-base gap-2',
-];
+$tailwindColors = ['red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose', 'slate', 'gray', 'zinc', 'neutral', 'stone'];
 
-$iconSizes = [
-    'sm' => 'w-3 h-3',
-    'md' => 'w-4 h-4',
-    'lg' => 'w-5 h-5',
-];
+$variantClasses = '';
 
-$variantClasses = $variants[$variant][$style] ?? $variants['secondary'][$style];
+if (array_key_exists($variant, $designSystemVariants)) {
+    $variantClasses = $designSystemVariants[$variant][$style];
+} elseif (in_array($variant, $tailwindColors)) {
+    if ($style === 'filled') {
+        $variantClasses = "bg-{$variant}-500 text-white/90";
+    } elseif ($style === 'outlined') {
+        $variantClasses = "bg-transparent text-{$variant}-600 border border-{$variant}-600";
+    } elseif ($style === 'soft') {
+        $variantClasses = "bg-{$variant}-100 text-{$variant}-700 bg-{$variant}-200 text-{$variant}-600";
+    }
+} else {
+    $variantClasses = $designSystemVariants['secondary'][$style];
+}
+
+$sizes = ComponentSizeConfig::badgeSizes();
+$iconSizes = ComponentSizeConfig::badgeIconSizes();
+
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $iconSize = $iconSizes[$size] ?? $iconSizes['md'];
 @endphp
 
-<span {{ $attributes->merge(['class' => 'inline-flex items-center rounded-full font-medium ' . $variantClasses . ' ' . $sizeClasses]) }}>
+<span {{ $attributes->merge(['class' => 'inline-flex items-center font-medium rounded-lg ' . $variantClasses . ' ' . $sizeClasses]) }}>
     @if($icon)
         <x-dynamic-component :component="'strata::icon.' . $icon" :class="$iconSize" />
     @endif

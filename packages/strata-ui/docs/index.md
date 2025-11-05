@@ -56,7 +56,7 @@ That's it! You're ready to use Strata UI components.
 
 - **[Accordion](accordion.md)** - Modern collapsible panels with smooth CSS animations
 - **[Alerts](alert.md)** - Clean alerts with semantic colors and dismissible functionality
-- **[Avatars](avatars.md)** - User profile images with automatic fallback handling
+- **[Avatar](avatar.md)** - User profile images with fallback hierarchy and grouping
 - **[Badges](badges.md)** - Flexible labels, status indicators, and tags
 - **[Buttons](buttons.md)** - Realistic 3D buttons with loading states and variants
 - **[Cards](card.md)** - Flexible containers for displaying content in a structured format

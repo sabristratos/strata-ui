@@ -1,8 +1,12 @@
 @props([
-    'id' => 'strata-lightbox-' . uniqid(),
+    'id' => null,
 ])
 
 @php
+use Stratos\StrataUI\Support\ComponentHelpers;
+
+$componentId = ComponentHelpers::generateId('strata-lightbox', $id, $attributes);
+
 $dialogClasses = 'max-w-full max-h-dvh w-screen h-dvh p-0 m-0 border-0 bg-transparent overflow-hidden hidden open:flex open:items-center open:justify-center opacity-0 scale-95 open:opacity-100 open:scale-100 starting:open:opacity-0 starting:open:scale-95 transition-all duration-150 ease-out';
 $backdropClasses = 'backdrop:bg-neutral-950/95 backdrop:backdrop-blur-lg backdrop:transition-all backdrop:duration-150';
 $classes = trim("$dialogClasses $backdropClasses");
@@ -10,7 +14,7 @@ $classes = trim("$dialogClasses $backdropClasses");
 
 <dialog
     {{ $attributes->merge([
-        'id' => $id,
+        'id' => $componentId,
         'data-strata-lightbox' => true,
         'aria-modal' => 'true',
         'aria-label' => 'Lightbox gallery',

@@ -9,16 +9,23 @@ export default (initialValue = null) => {
     let syncTimeout;
 
     return {
-        entangleable: null,
+        ...window.createEntangleableMixin({
+            initialValue: initialValue,
+            inputSelector: '[data-strata-editor-input]',
+            afterWatch: function(newValue) {
+                const currentContent = JSON.stringify(editor.getJSON());
+                const newContent = JSON.stringify(newValue);
+
+                if (currentContent !== newContent) {
+                    editor.commands.setContent(newValue, false);
+                }
+            }
+        }),
+
         activeStates: {},
 
         init() {
-            this.entangleable = new window.StrataEntangleable(initialValue);
-
-            const input = this.$el.querySelector('[data-strata-editor-input]');
-            if (input) {
-                this.entangleable.setupLivewire(this, input);
-            }
+            this.initEntangleable();
 
             editor = new Editor({
                 element: this.$refs.editor,
@@ -60,15 +67,6 @@ export default (initialValue = null) => {
                 onSelectionUpdate: () => {
                     this.updateActiveStates();
                 },
-            });
-
-            this.entangleable.watch((newValue) => {
-                const currentContent = JSON.stringify(editor.getJSON());
-                const newContent = JSON.stringify(newValue);
-
-                if (currentContent !== newContent) {
-                    editor.commands.setContent(newValue, false);
-                }
             });
         },
 

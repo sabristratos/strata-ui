@@ -67,6 +67,10 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Support\ComponentHelpers;
+
 if (!in_array($mode, ['presentational', 'form'])) {
     throw new \InvalidArgumentException('The "mode" prop must be one of: presentational, form. Got: ' . $mode);
 }
@@ -79,7 +83,7 @@ if (!in_array($state, ['default', 'success', 'error', 'warning'])) {
     throw new \InvalidArgumentException('The "state" prop must be one of: default, success, error, warning. Got: ' . $state);
 }
 
-$componentId = $id ?? $attributes->get('id') ?? 'slider-' . uniqid();
+$componentId = ComponentHelpers::generateId('slider', $id, $attributes);
 $isFormMode = $mode === 'form';
 
 $peekMode = filter_var($peek, FILTER_VALIDATE_BOOLEAN);
@@ -88,18 +92,9 @@ $autoplayEnabled = filter_var($autoplay, FILTER_VALIDATE_BOOLEAN);
 $showNav = filter_var($showNavigation, FILTER_VALIDATE_BOOLEAN);
 $showDotsValue = filter_var($showDots, FILTER_VALIDATE_BOOLEAN);
 
-$sizes = [
-    'sm' => 'min-h-32',
-    'md' => 'min-h-48',
-    'lg' => 'min-h-64',
-];
+$sizes = ComponentSizeConfig::sliderSizes();
 
-$states = [
-    'default' => 'border-border',
-    'success' => 'border-success',
-    'error' => 'border-destructive',
-    'warning' => 'border-warning',
-];
+$states = ComponentStateConfig::sliderStates();
 
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $stateClasses = $isFormMode ? ($states[$state] ?? $states['default']) : '';

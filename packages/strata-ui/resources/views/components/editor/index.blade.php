@@ -63,23 +63,18 @@
 ])
 
 @php
-    $sizes = [
-        'sm' => 'min-h-32 text-sm',
-        'md' => 'min-h-60 text-base',
-        'lg' => 'min-h-96 text-lg',
-    ];
+    use Stratos\StrataUI\Config\ComponentSizeConfig;
+    use Stratos\StrataUI\Config\ComponentStateConfig;
+    use Stratos\StrataUI\Support\ComponentHelpers;
 
-    $states = [
-        'default' => 'border-border focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
-        'success' => 'border-success focus-within:ring-2 focus-within:ring-success/20 focus-within:ring-offset-2',
-        'error' => 'border-destructive focus-within:ring-2 focus-within:ring-destructive/20 focus-within:ring-offset-2',
-        'warning' => 'border-warning focus-within:ring-2 focus-within:ring-warning/20 focus-within:ring-offset-2',
-    ];
+    $sizes = ComponentSizeConfig::editorSizes();
+
+    $states = ComponentStateConfig::inputStates();
 
     $sizeClasses = $sizes[$size] ?? $sizes['md'];
     $stateClasses = $states[$state] ?? $states['default'];
 
-    $componentId = $id ?? $attributes->get('id') ?? 'editor-' . uniqid();
+    $componentId = ComponentHelpers::generateId('editor', $id, $attributes);
 
     $initialValue = null;
     if ($attributes->wire('model')->value() && isset($this)) {

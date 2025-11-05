@@ -49,7 +49,7 @@ $variants = [
     x-on:toggle="handleToggle($event)"
     data-strata-accordion-item
     data-value="{{ $value }}"
-    {{ $attributes->merge(['class' => '']) }}
+    {{ $attributes->merge(['class' => 'details-content:[display:block] details-content:[block-size:0] details-content:[overflow:hidden] details-content:[transition:block-size_0.3s,content-visibility_0.3s] details-content:transition-discrete open:details-content:[block-size:auto]']) }}
 >
     <summary class="flex items-center justify-between w-full cursor-pointer select-none transition-colors duration-200 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 list-none"
         :class="{
@@ -70,7 +70,7 @@ $variants = [
             @isset($iconSlot)
                 {{ $iconSlot }}
             @else
-                <div class="transition-transform duration-200"
+                <div class="transition-transform duration-200 origin-center"
                     :class="{ 'rotate-90': isOpen }"
                 >
                     <x-dynamic-component
@@ -83,11 +83,11 @@ $variants = [
     </summary>
 
     @if(isset($content))
-        <div class="px-4 pb-4 text-muted-foreground">
+        <div class="px-4 pt-4 pb-4 text-muted-foreground">
             {{ $content }}
         </div>
     @elseif(isset($trigger))
-        <div class="px-4 pb-4 text-muted-foreground">
+        <div class="px-4 pt-4 pb-4 text-muted-foreground">
             {{ $slot }}
         </div>
     @endif

@@ -121,6 +121,7 @@ export default class Entangleable {
                             this.component.$el?.querySelector('[data-strata-datepicker-input]') ||
                             this.component.$el?.querySelector('[data-strata-select-input]') ||
                             this.component.$el?.querySelector('[data-strata-calendar-input]') ||
+                            this.component.$el?.querySelector('[data-strata-range-slider-input]') ||
                             this.component.$el?.querySelector('[wire\\:model]');
 
         if (inputElement) {

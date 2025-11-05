@@ -7,20 +7,14 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+use Stratos\StrataUI\Config\ComponentStateConfig;
+
 $baseClasses = 'w-full bg-input border rounded-lg transition-all duration-150';
 
-$sizeClasses = [
-    'sm' => 'px-3 py-2 text-sm',
-    'md' => 'px-3 py-2.5 text-base',
-    'lg' => 'px-4 py-3 text-lg',
-];
+$sizeClasses = ComponentSizeConfig::textareaSizes();
 
-$stateClasses = [
-    'default' => 'border-border focus:ring-2 focus:ring-ring focus:ring-offset-2',
-    'success' => 'border-success focus:ring-2 focus:ring-success/20 focus:ring-offset-2',
-    'error' => 'border-destructive focus:ring-2 focus:ring-destructive/20 focus:ring-offset-2',
-    'warning' => 'border-warning focus:ring-2 focus:ring-warning/20 focus:ring-offset-2',
-];
+$stateClasses = ComponentStateConfig::focusableStates();
 
 $resizeClasses = [
     'none' => 'resize-none',

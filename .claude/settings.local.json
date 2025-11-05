@@ -1,17 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "Bash(Where-Object { $_ame -match \"date\" })",
+      "Bash(powershell -Command:*)",
+      "WebSearch",
+      "Bash(composer test:*)",
+      "Bash(../../vendor/bin/pest:*)",
+      "WebFetch(domain:developer.chrome.com)",
+      "WebFetch(domain:nerdy.dev)",
+      "WebFetch(domain:www.builder.io)",
+      "WebFetch(domain:css-tricks.com)",
       "mcp__laravel-boost__get-absolute-url",
-      "mcp__playwright__browser_navigate",
-      "Bash(php artisan strata:build:*)",
-      "mcp__playwright__browser_take_screenshot",
-      "mcp__playwright__browser_evaluate",
-      "mcp__playwright__browser_snapshot",
-      "mcp__playwright__browser_click",
-      "mcp__playwright__browser_console_messages",
-      "Bash(php artisan:*)",
-      "Bash(dir:*)"
+      "Bash(npm run build:*)",
+      "Bash(vendor/bin/pest:*)",
+      "Bash(npm test:*)"
     ],
     "deny": [],
     "ask": []

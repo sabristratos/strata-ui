@@ -5,6 +5,8 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+
 $positionClasses = match($position) {
     'sides' => 'absolute inset-y-0 left-0 right-0 flex items-center justify-between px-4 pointer-events-none',
     'bottom' => 'flex items-center justify-center gap-2 mt-4',
@@ -19,12 +21,7 @@ $sizeClasses = match($size) {
     default => 'p-2',
 };
 
-$iconSizes = match($size) {
-    'sm' => 'w-4 h-4',
-    'md' => 'w-5 h-5',
-    'lg' => 'w-6 h-6',
-    default => 'w-5 h-5',
-};
+$iconSizes = ComponentSizeConfig::iconSizes()[$size] ?? ComponentSizeConfig::iconSizes()['md'];
 
 $buttonClasses = match($variant) {
     'floating' => $sizeClasses . ' rounded-full bg-white/90 text-neutral-900 shadow-lg backdrop-blur-sm hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-all pointer-events-auto',

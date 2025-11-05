@@ -2,16 +2,20 @@
  * Strata UI - Main entry point
  *
  * Exports core utilities and helpers to window global scope.
- * Modules: Entangleable, Positionable, Image, Slider, Editor, DatePicker, TimePicker, Lightbox, Toast API
+ * Modules: Entangleable, Positionable, Image, Slider, Editor, DatePicker, TimePicker, ColorPicker, Lightbox, Toast API
  */
 
 import Entangleable from './entangleable.js';
 import Positionable from './positionable.js';
+import { createEntangleableMixin } from './entangleable-mixin.js';
+import { createPositionableMixin } from './positionable-mixin.js';
 import Image from './image.js';
 import Slider from './slider.js';
 import Editor from './editor.js';
 import DatePicker from './date-picker.js';
 import TimePicker from './time-picker.js';
+import ColorPicker from './color-picker.js';
+import RangeSlider from './range-slider.js';
 import './lightbox.js';
 
 /**
@@ -35,6 +39,18 @@ if (typeof window !== 'undefined') {
      * @type {typeof Positionable}
      */
     window.StrataPositionable = Positionable;
+
+    /**
+     * Create Entangleable mixin for Alpine components
+     * @type {function}
+     */
+    window.createEntangleableMixin = createEntangleableMixin;
+
+    /**
+     * Create Positionable mixin for Alpine components
+     * @type {function}
+     */
+    window.createPositionableMixin = createPositionableMixin;
 
     /**
      * Image component with loading/error states
@@ -65,6 +81,18 @@ if (typeof window !== 'undefined') {
      * @type {function}
      */
     window.strataTimePicker = TimePicker;
+
+    /**
+     * Color picker component with HSL/RGB picker and presets
+     * @type {function}
+     */
+    window.strataColorPicker = ColorPicker;
+
+    /**
+     * Range slider component with dual handles for numeric ranges
+     * @type {function}
+     */
+    window.strataRangeSlider = RangeSlider;
 
     /**
      * Display a toast notification

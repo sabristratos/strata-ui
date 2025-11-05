@@ -62,20 +62,9 @@
 ])
 
 @php
-$sizes = [
-    'sm' => [
-        'container' => 'min-h-11 px-3 py-2 gap-1.5 text-xs',
-        'icon' => 'w-4 h-4',
-    ],
-    'md' => [
-        'container' => 'min-h-11 px-4 py-2.5 gap-2 text-sm',
-        'icon' => 'w-5 h-5',
-    ],
-    'lg' => [
-        'container' => 'min-h-12 px-5 py-3 gap-2.5 text-base',
-        'icon' => 'w-6 h-6',
-    ],
-];
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+
+$sizes = ComponentSizeConfig::bottomNavItemSizes();
 
 $sizeConfig = $sizes[$size] ?? $sizes['md'];
 $containerClasses = $sizeConfig['container'];

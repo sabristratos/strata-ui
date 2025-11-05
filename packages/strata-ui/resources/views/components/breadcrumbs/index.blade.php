@@ -6,16 +6,14 @@
 ])
 
 @php
+    use Stratos\StrataUI\Config\ComponentSizeConfig;
+
     $variants = [
         'default' => '',
         'bold' => 'font-semibold',
     ];
 
-    $sizes = [
-        'sm' => 'text-sm gap-1.5',
-        'md' => 'text-base gap-2',
-        'lg' => 'text-lg gap-2.5',
-    ];
+    $sizes = ComponentSizeConfig::breadcrumbsSizes();
 
     $variantClasses = $variants[$variant] ?? $variants['default'];
     $sizeClasses = $sizes[$size] ?? $sizes['md'];
@@ -31,48 +29,52 @@
         separator: @js($separator),
         size: @js($size),
         variant: @js($variant),
-        showAll: false,
         init() {
             if (this.maxItems) {
                 this.$nextTick(() => {
                     const items = this.$el.querySelectorAll('[data-strata-breadcrumbs-item]');
                     if (items.length > this.maxItems) {
+                        const itemsToShow = Math.floor((this.maxItems - 1) / 2);
+
                         items.forEach((item, index) => {
-                            if (index !== 0 && index !== items.length - 1 && index >= Math.floor(this.maxItems / 2)) {
-                                item.style.display = this.showAll ? 'flex' : 'none';
+                            const shouldHide = index > itemsToShow && index < items.length - 1;
+                            if (shouldHide) {
+                                item.style.display = 'none';
                                 const separator = item.nextElementSibling;
                                 if (separator && separator.hasAttribute('data-strata-breadcrumbs-separator')) {
-                                    separator.style.display = this.showAll ? 'flex' : 'none';
+                                    separator.style.display = 'none';
                                 }
                             }
                         });
+
+                        const ellipsis = this.$refs.ellipsis;
+                        if (ellipsis) {
+                            const lastVisibleItem = items[itemsToShow];
+                            const separator = lastVisibleItem.nextElementSibling;
+                            if (separator && separator.hasAttribute('data-strata-breadcrumbs-separator')) {
+                                separator.insertAdjacentElement('afterend', ellipsis);
+                            } else {
+                                lastVisibleItem.insertAdjacentElement('afterend', ellipsis);
+                            }
+                            ellipsis.style.display = 'inline-flex';
+                        }
                     }
                 });
             }
-        },
-        toggleShowAll() {
-            this.showAll = !this.showAll;
-            this.init();
-        },
-        shouldShowEllipsis() {
-            if (!this.maxItems) return false;
-            const items = this.$el.querySelectorAll('[data-strata-breadcrumbs-item]');
-            return items.length > this.maxItems;
         }
     }"
     {{ $attributes->merge(['class' => $baseClasses]) }}
 >
-    {{ $slot }}
+    @if($maxItems)
+        <span
+            x-ref="ellipsis"
+            aria-hidden="true"
+            data-strata-breadcrumbs-ellipsis
+            class="hidden items-center justify-center text-muted-foreground px-1"
+        >
+            <x-strata::icon.more-horizontal class="w-5 h-5" />
+        </span>
+    @endif
 
-    <template x-if="shouldShowEllipsis() && !showAll">
-        <x-strata::button.icon
-            icon="more-horizontal"
-            variant="secondary"
-            appearance="ghost"
-            @click="toggleShowAll"
-            aria-label="Show all breadcrumbs"
-            x-bind:size="size === 'sm' ? 'sm' : (size === 'lg' ? 'lg' : 'md')"
-            class="!p-0"
-        />
-    </template>
+    {{ $slot }}
 </nav>

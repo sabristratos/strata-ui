@@ -40,17 +40,20 @@ class SliderEngine {
     }
 
     setupFormMode(component) {
-        const input = component.$el.querySelector('[data-strata-slider-input]');
-        if (!input) return;
-
-        this.entangleable = new window.StrataEntangleable(component.currentSlide);
-        this.entangleable.setupLivewire(component, input);
-
-        this.entangleable.watch((newValue) => {
-            if (typeof newValue === 'number' && newValue !== component.currentSlide) {
-                this.goTo(newValue, component);
+        const entangleableMixin = window.createEntangleableMixin({
+            initialValue: component.currentSlide,
+            inputSelector: '[data-strata-slider-input]',
+            afterWatch: (newValue) => {
+                if (typeof newValue === 'number' && newValue !== component.currentSlide) {
+                    this.goTo(newValue, component);
+                }
             }
         });
+
+        Object.assign(component, entangleableMixin);
+        component.initEntangleable();
+
+        this.entangleable = component.entangleable;
 
         component.$watch('currentSlide', (value) => {
             if (this.entangleable) {

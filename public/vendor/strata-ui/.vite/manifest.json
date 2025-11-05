@@ -3,6 +3,7 @@
     "file": "strata-css.css",
     "src": "resources/css/strata.css",
     "isEntry": true,
+    "name": "strata-css",
     "names": [
       "strata-css.css"
     ]

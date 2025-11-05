@@ -14,13 +14,11 @@
 ])
 
 @php
+use Stratos\StrataUI\Config\ComponentSizeConfig;
+
 $baseClasses = 'relative';
 
-$sizes = [
-    'sm' => 'text-sm',
-    'md' => 'text-base',
-    'lg' => 'text-lg',
-];
+$sizes = ComponentSizeConfig::calendarSizes();
 
 $variants = [
     'default' => '',
@@ -59,7 +57,14 @@ $wrapperAttributes = $attributes->only(['class']);
     {{ $wrapperAttributes->merge(['class' => $classes]) }}
     wire:ignore
     x-data="{
-        entangleable: null,
+        ...window.createEntangleableMixin({
+            initialValue: @js($initialValue),
+            inputSelector: '[data-strata-calendar-input]',
+            afterWatch: function(newValue) {
+                this.syncFromEntangleable(newValue);
+            }
+        }),
+
         mode: @js($mode),
         selectedDates: @js($initialValue),
         currentMonth: new Date(),
@@ -75,15 +80,9 @@ $wrapperAttributes = $attributes->only(['class']);
         rangeEnd: null,
 
         init() {
-            this.entangleable = new window.StrataEntangleable(@js($initialValue));
-
             const input = this.$el.querySelector('[data-strata-calendar-input]');
             if (input) {
-                this.entangleable.setupLivewire(this, input);
-
-                this.entangleable.watch((newValue) => {
-                    this.syncFromEntangleable(newValue);
-                });
+                this.initEntangleable();
 
                 const initialValue = this.entangleable.get();
                 if (initialValue) {

@@ -9,8 +9,8 @@ $orientationClasses = [
 ];
 
 $childClasses = $orientation === 'horizontal'
-    ? '[&>*]:border-r-0 [&>*:last-child]:border-r-2 [&>*:not(:first-child)]:rounded-l-none [&>*:not(:last-child)]:rounded-r-none'
-    : '[&>*]:border-b-0 [&>*:last-child]:border-b-2 [&>*:not(:first-child)]:rounded-t-none [&>*:not(:last-child)]:rounded-b-none';
+    ? '[&>*]:border-r-0 [&>*:last-child]:border-r [&>*:not(:first-child)]:rounded-l-none [&>*:not(:last-child)]:rounded-r-none'
+    : '[&>*]:border-b-0 [&>*:last-child]:border-b [&>*:not(:first-child)]:rounded-t-none [&>*:not(:last-child)]:rounded-b-none';
 
 $baseClasses = ($orientationClasses[$orientation] ?? $orientationClasses['horizontal']) . ' ' . $childClasses;
 @endphp
