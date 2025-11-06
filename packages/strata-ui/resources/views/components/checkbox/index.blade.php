@@ -27,7 +27,29 @@ $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $iconSizeClasses = $iconSizes[$size] ?? $iconSizes['md'];
 $labelSizeClasses = $labelSizes[$size] ?? $labelSizes['md'];
 $descriptionSizeClasses = $descriptionSizes[$size] ?? $descriptionSizes['md'];
-$stateClasses = $states[$state] ?? $states['default'];
+
+$checkboxStates = [
+    'default' => [
+        'base' => 'border-border accent-primary',
+        'interactive' => 'hover:border-primary/50 focus:ring-ring',
+    ],
+    'success' => [
+        'base' => 'border-success accent-success',
+        'interactive' => 'hover:border-success/80 focus:ring-success',
+    ],
+    'error' => [
+        'base' => 'border-destructive accent-destructive',
+        'interactive' => 'hover:border-destructive/80 focus:ring-destructive',
+    ],
+    'warning' => [
+        'base' => 'border-warning accent-warning',
+        'interactive' => 'hover:border-warning/80 focus:ring-warning',
+    ],
+];
+$checkboxState = $checkboxStates[$state] ?? $checkboxStates['default'];
+$checkboxStateBase = $checkboxState['base'];
+$checkboxStateInteractive = $checkboxState['interactive'];
+$stateClasses = $disabled ? $checkboxStateBase : $checkboxStateBase . ' ' . $checkboxStateInteractive;
 
 $componentId = ComponentHelpers::generateId('checkbox', $id, $attributes);
 
@@ -57,7 +79,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
                 ]) }}
             />
             <label for="{{ $componentId }}" class="cursor-pointer">
-                <div class="{{ $sizeClasses }} {{ $stateClasses }} rounded-md bg-secondary border-2 flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
+                <div class="{{ $sizeClasses }} {{ $stateClasses }} rounded-[6px] bg-secondary border-2 flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
                     <template x-if="!indeterminate">
                         <x-strata::icon.check
                             class="{{ $iconSizeClasses }} text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
@@ -116,7 +138,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
                 'class' => "sr-only peer"
             ]) }}
         />
-        <div class="{{ $sizeClasses }} {{ $stateClasses }} rounded-md bg-secondary border-2 flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary mt-0.5">
+        <div class="{{ $sizeClasses }} {{ $stateClasses }} rounded-[6px] bg-secondary border-2 flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary mt-0.5">
             <template x-if="!indeterminate">
                 <x-strata::icon.check
                     class="{{ $iconSizeClasses }} text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"
@@ -173,7 +195,7 @@ $alpineData = $indeterminate ? "{ indeterminate: true, init() { this.\$el.queryS
         />
 
         <div class="absolute top-4 right-4" data-strata-checkbox-indicator>
-            <div class="{{ $stateClasses }} w-6 h-6 rounded-md border bg-secondary flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
+            <div class="{{ $stateClasses }} w-6 h-6 rounded-[6px] border bg-secondary flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
                 <template x-if="!indeterminate">
                     <x-strata::icon.check
                         class="w-4 h-4 text-primary-foreground transition-opacity opacity-0 group-has-[:checked]:opacity-100"

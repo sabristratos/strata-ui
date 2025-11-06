@@ -7,7 +7,7 @@
     x-show="showMonthPicker"
     @click.outside="showMonthPicker = false"
     x-ref="monthPickerDropdown{{ $monthOffset }}"
-    class="absolute top-0 left-0 z-50"
+    class="absolute z-50"
     :style="monthPickerPositionable{{ $monthOffset }} ? monthPickerPositionable{{ $monthOffset }}.styles : {}"
     x-data="{
         scrollToCurrentYear() {

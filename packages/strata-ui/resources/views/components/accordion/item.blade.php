@@ -51,7 +51,7 @@ $variants = [
     data-value="{{ $value }}"
     {{ $attributes->merge(['class' => 'details-content:[display:block] details-content:[block-size:0] details-content:[overflow:hidden] details-content:[transition:block-size_0.3s,content-visibility_0.3s] details-content:transition-discrete open:details-content:[block-size:auto]']) }}
 >
-    <summary class="flex items-center justify-between w-full cursor-pointer select-none transition-colors duration-200 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 list-none"
+    <summary class="flex items-center justify-between w-full cursor-pointer select-none transition-colors duration-200 hover:bg-muted/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 list-none"
         :class="{
             'p-4': true,
             'cursor-not-allowed opacity-50': disabled

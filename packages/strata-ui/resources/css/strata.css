@@ -3,6 +3,12 @@
 @import "./lightbox.css";
 @plugin "@tailwindcss/typography";
 
+@layer base {
+    :focus-visible {
+        @apply outline-hidden;
+    }
+}
+
 :root {
     @apply scheme-light-dark;
     interpolate-size: allow-keywords;

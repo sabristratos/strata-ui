@@ -62,7 +62,7 @@ document.addEventListener('alpine:init', () => {
     })"
     data-strata-colorpicker
     data-strata-field-type="color"
-    {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative']) }}
+    {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative overflow-visible']) }}
 >
     <div class="hidden" hidden>
         <input

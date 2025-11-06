@@ -19,7 +19,7 @@ $dropdownClasses = [
     x-cloak
     x-show="open"
     :style="positionable.styles"
-    class="absolute top-0 left-0 z-50"
+    class="absolute z-50"
 >
     <div
         @click.outside="open = false"
@@ -33,7 +33,6 @@ $dropdownClasses = [
         <div class="flex-1 p-4">
             <x-strata::calendar
                 :mode="$mode"
-                x-bind:value="calendarValue"
                 :min-date="$minDate"
                 :max-date="$maxDate"
                 variant="minimal"

@@ -9,9 +9,10 @@
 
 @php
 $triggerClasses = [
-    'w-full inline-flex items-center gap-2 bg-input border rounded-lg',
+    'w-full inline-flex items-center gap-2 bg-input border rounded-lg inset-shadow-sm',
     'transition-all duration-150',
     'focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2',
+    'focus-visible:ring-2 focus-visible:ring-offset-2',
     $sizeClasses,
     $stateClasses,
 ];

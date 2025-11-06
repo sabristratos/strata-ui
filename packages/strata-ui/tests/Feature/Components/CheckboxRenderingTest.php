@@ -142,4 +142,15 @@ describe('Checkbox Component', function () {
             ->toContain('group-has-[:checked]:bg-primary')
             ->toContain('group-has-[:checked]:border-primary');
     });
+
+    test('uses hardcoded pixel border radius', function () {
+        expectComponent($this, 'checkbox', ['label' => 'Test'])
+            ->toContain('rounded-[6px]');
+
+        expectComponent($this, 'checkbox', ['variant' => 'bordered', 'label' => 'Test'])
+            ->toContain('rounded-[6px]');
+
+        expectComponent($this, 'checkbox', ['variant' => 'card', 'label' => 'Test'])
+            ->toContain('rounded-[6px]');
+    });
 });

@@ -61,7 +61,7 @@ $variantClasses = $variantMap[$appearance][$variant] ?? $filledVariants['primary
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $iconSize = $iconSizes[$size] ?? $iconSizes['md'];
 
-$baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative overflow-hidden';
+$baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative overflow-hidden';
 
 $disabledClasses = 'disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none';
 

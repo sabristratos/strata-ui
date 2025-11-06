@@ -33,6 +33,7 @@ document.addEventListener('alpine:init', () => {
             floatingRef: 'submenuContent'
         }),
 
+        open: false,
         hoverTimeout: null,
 
         init() {
@@ -88,7 +89,7 @@ document.addEventListener('alpine:init', () => {
                 e.stopPropagation();
                 this.openSubmenu();
                 this.$nextTick(() => {
-                    this.$refs.submenuContent?.focus();
+                    this.$refs.submenuContent?.focus({ preventScroll: true });
                 });
             } else if (e.key === 'ArrowLeft') {
                 e.preventDefault();
@@ -132,7 +133,7 @@ document.addEventListener('alpine:init', () => {
         aria-haspopup="true"
         :aria-expanded="open"
         tabindex="-1"
-        @click="handleClick()"
+        @click.stop="handleClick()"
         @keydown="handleKeydown($event)"
         {{ $attributes->only(['class', 'style'])->merge(['class' => $classes]) }}
     >

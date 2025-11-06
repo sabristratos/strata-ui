@@ -26,7 +26,51 @@ $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $dotSizeClasses = $dotSizes[$size] ?? $dotSizes['md'];
 $labelSizeClasses = $labelSizes[$size] ?? $labelSizes['md'];
 $descriptionSizeClasses = $descriptionSizes[$size] ?? $descriptionSizes['md'];
-$stateClasses = $states[$state] ?? $states['default'];
+
+$circleStates = [
+    'default' => [
+        'base' => 'border-border accent-primary',
+        'interactive' => 'hover:border-primary/50 focus:ring-ring',
+    ],
+    'success' => [
+        'base' => 'border-success accent-success',
+        'interactive' => 'hover:border-success/80 focus:ring-success',
+    ],
+    'error' => [
+        'base' => 'border-destructive accent-destructive',
+        'interactive' => 'hover:border-destructive/80 focus:ring-destructive',
+    ],
+    'warning' => [
+        'base' => 'border-warning accent-warning',
+        'interactive' => 'hover:border-warning/80 focus:ring-warning',
+    ],
+];
+$circleState = $circleStates[$state] ?? $circleStates['default'];
+$circleStateBase = $circleState['base'];
+$circleStateInteractive = $circleState['interactive'];
+$stateClasses = $disabled ? $circleStateBase : $circleStateBase . ' ' . $circleStateInteractive;
+
+$wrapperStates = [
+    'default' => [
+        'base' => 'border-border',
+        'interactive' => 'hover:border-primary/50 has-[:checked]:border-primary',
+    ],
+    'success' => [
+        'base' => 'border-success',
+        'interactive' => 'hover:border-success/80 has-[:checked]:border-success',
+    ],
+    'error' => [
+        'base' => 'border-destructive',
+        'interactive' => 'hover:border-destructive/80 has-[:checked]:border-destructive',
+    ],
+    'warning' => [
+        'base' => 'border-warning',
+        'interactive' => 'hover:border-warning/80 has-[:checked]:border-warning',
+    ],
+];
+$wrapperState = $wrapperStates[$state] ?? $wrapperStates['default'];
+$wrapperStateBase = $wrapperState['base'];
+$wrapperStateInteractive = $wrapperState['interactive'];
 
 $componentId = ComponentHelpers::generateId('radio', $id, $attributes);
 
@@ -53,7 +97,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
                 ]) }}
             />
             <label for="{{ $componentId }}" class="cursor-pointer">
-                <div class="{{ $sizeClasses }} rounded-full bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
+                <div class="{{ $sizeClasses }} {{ $stateClasses }} rounded-full bg-secondary border-2 flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
                     <div class="{{ $dotSizeClasses }} rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity"></div>
                 </div>
             </label>
@@ -86,8 +130,9 @@ $radioAttributes = $attributes->except(['class', 'style']);
         for="{{ $componentId }}"
         data-strata-radio-wrapper
         {{ $wrapperAttributes->merge([
-            'class' => "group flex items-start gap-3 p-4 border border-border rounded-lg transition-all duration-200 cursor-pointer " .
-                ($disabled ? 'opacity-50 cursor-not-allowed bg-muted' : 'hover:border-primary/50 hover:bg-accent/5 has-[:checked]:border-primary has-[:checked]:bg-primary/5')
+            'class' => "group flex items-start gap-3 p-4 border rounded-lg transition-all duration-200 cursor-pointer " .
+                $wrapperStateBase . ' ' .
+                ($disabled ? 'opacity-50 cursor-not-allowed bg-muted' : $wrapperStateInteractive . ' hover:bg-accent/5 has-[:checked]:bg-primary/5')
         ]) }}
     >
         <input
@@ -102,7 +147,7 @@ $radioAttributes = $attributes->except(['class', 'style']);
                 'class' => "sr-only peer"
             ]) }}
         />
-        <div class="{{ $sizeClasses }} rounded-full bg-secondary border-2 border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary mt-0.5">
+        <div class="{{ $sizeClasses }} {{ $stateClasses }} rounded-full bg-secondary border-2 flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary mt-0.5">
             <div class="{{ $dotSizeClasses }} rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity"></div>
         </div>
 
@@ -131,8 +176,9 @@ $radioAttributes = $attributes->except(['class', 'style']);
         data-strata-radio-wrapper
         data-strata-radio-card
         {{ $wrapperAttributes->merge([
-            'class' => "group relative flex flex-col p-6 border border-border rounded-lg transition-all duration-200 cursor-pointer " .
-                ($disabled ? 'opacity-50 cursor-not-allowed bg-muted' : 'hover:border-primary/50 hover:shadow-md has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:shadow-lg')
+            'class' => "group relative flex flex-col p-6 border rounded-lg transition-all duration-200 cursor-pointer " .
+                $wrapperStateBase . ' ' .
+                ($disabled ? 'opacity-50 cursor-not-allowed bg-muted' : $wrapperStateInteractive . ' hover:shadow-md has-[:checked]:bg-primary/5 has-[:checked]:shadow-lg')
         ]) }}
     >
         <input
@@ -150,8 +196,8 @@ $radioAttributes = $attributes->except(['class', 'style']);
         />
 
         <div class="absolute top-4 right-4" data-strata-radio-indicator>
-            <div class="w-6 h-6 rounded-full border bg-secondary border-border flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
-                <div class="w-2.5 h-2.5 rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity" data-strata-radio-dot></div>
+            <div class="w-6 h-6 {{ $stateClasses }} rounded-full border bg-secondary flex items-center justify-center transition-all duration-200 group-has-[:checked]:bg-primary group-has-[:checked]:border-primary">
+                <div class="w-[11px] h-[11px] rounded-full bg-primary-foreground opacity-0 group-has-[:checked]:opacity-100 transition-opacity" data-strata-radio-dot></div>
             </div>
         </div>
 
@@ -183,9 +229,10 @@ $radioAttributes = $attributes->except(['class', 'style']);
         for="{{ $componentId }}"
         data-strata-radio-wrapper
         {{ $wrapperAttributes->merge([
-            'class' => "inline-flex items-center justify-center rounded-full border border-border transition-all duration-200 cursor-pointer select-none " .
+            'class' => "inline-flex items-center justify-center rounded-full border transition-all duration-200 cursor-pointer select-none " .
                 ($size === 'sm' ? 'px-3 py-1 text-xs' : ($size === 'lg' ? 'px-6 py-2 text-base' : 'px-4 py-1.5 text-sm')) . ' ' .
-                ($disabled ? 'opacity-50 cursor-not-allowed bg-muted' : 'hover:border-primary/50 hover:shadow-sm has-[:checked]:bg-primary has-[:checked]:border-primary has-[:checked]:text-primary-foreground has-[:checked]:shadow-md active:scale-95')
+                $stateClasses . ' ' .
+                ($disabled ? 'opacity-50 cursor-not-allowed bg-muted' : 'hover:shadow-sm has-[:checked]:bg-primary has-[:checked]:border-primary has-[:checked]:text-primary-foreground has-[:checked]:shadow-md active:scale-95')
         ]) }}
     >
         <input

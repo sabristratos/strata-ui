@@ -1,74 +1,225 @@
-# Radio Buttons
+# Radio
 
-Flexible radio button components with full Livewire integration, support for validation states, sizes, and multiple variants.
+Flexible radio button components with multiple variants, validation states, and seamless Livewire integration. Perfect for single-choice selections, plan pickers, and surveys.
 
-## Basic Usage
+## Radio Props
+
+| Prop | Type | Default | Options | Description |
+|------|------|---------|---------|-------------|
+| `variant` | string | `default` | `default`, `bordered`, `card`, `pill` | Visual style |
+| `size` | string | `md` | `sm`, `md`, `lg` | Radio button size |
+| `state` | string | `default` | `default`, `success`, `error`, `warning` | Validation state (affects border color) |
+| `name` | string | - | - | Radio group name (required) |
+| `value` | string | - | - | Radio button value |
+| `label` | string | `null` | - | Label text |
+| `description` | string | `null` | - | Description text below label |
+| `checked` | boolean | `false` | `true`, `false` | Initial checked state |
+| `disabled` | boolean | `false` | `true`, `false` | Disable radio button |
+| `id` | string | `null` | - | Custom ID (auto-generated if omitted) |
+
+## Radio Group Props
+
+Use `<x-strata::radio.group>` to group related radio buttons.
+
+| Prop | Type | Default | Options | Description |
+|------|------|---------|---------|-------------|
+| `orientation` | string | `vertical` | `vertical`, `horizontal` | Layout direction |
+| `label` | string | `null` | - | Group label |
+| `error` | string | `null` | - | Error message |
+| `name` | string | - | - | Shared name for all radios in group |
+
+## Example
 
 ```blade
-<x-strata::radio name="plan" value="basic" label="Basic Plan" />
-<x-strata::radio name="plan" value="pro" label="Pro Plan" checked />
-<x-strata::radio name="plan" value="enterprise" label="Enterprise Plan" />
+{{-- Radio with multiple props --}}
+<x-strata::radio
+    name="plan"
+    value="pro"
+    label="Pro Plan"
+    description="For growing teams and businesses"
+    state="success"
+    size="lg"
+    checked
+/>
+
+{{-- Radio group with multiple options --}}
+<x-strata::radio.group label="Select your plan" name="plan">
+    <x-strata::radio name="plan" value="basic" label="Basic" />
+    <x-strata::radio name="plan" value="pro" label="Pro" checked />
+    <x-strata::radio name="plan" value="enterprise" label="Enterprise" />
+</x-strata::radio.group>
 ```
 
-## With Livewire
+## Livewire Integration
 
-Radio buttons work seamlessly with Livewire's `wire:model` directive:
+Radio buttons work seamlessly with `wire:model`:
+
+```blade
+<x-strata::radio.group label="Choose your subscription" name="plan">
+    <x-strata::radio
+        wire:model.live="selectedPlan"
+        name="plan"
+        value="monthly"
+        label="Monthly - $19/mo"
+        description="Billed monthly, cancel anytime"
+    />
+    <x-strata::radio
+        wire:model.live="selectedPlan"
+        name="plan"
+        value="yearly"
+        label="Annual - $15/mo"
+        description="Billed annually, save 20%"
+    />
+</x-strata::radio.group>
+
+{{-- Display selected plan --}}
+<p>Selected: {{ $selectedPlan }}</p>
+```
+
+## Variants
+
+### Default
+
+Standard radio buttons with labels and descriptions:
 
 ```blade
 <x-strata::radio
-    wire:model.live="selectedPlan"
-    name="plan"
-    value="basic"
-    label="Basic Plan"
+    name="theme"
+    value="light"
+    label="Light Mode"
+    description="Classic bright interface"
 />
 ```
 
-## Sizes
+### Bordered
 
-Available sizes: `sm`, `md` (default), `lg`
+Radio buttons with border and padding, ideal for shipping/payment options:
 
 ```blade
-<x-strata::radio size="sm" name="size" label="Small radio" />
-<x-strata::radio size="md" name="size" label="Medium radio" />
-<x-strata::radio size="lg" name="size" label="Large radio" />
+<x-strata::radio
+    variant="bordered"
+    name="shipping"
+    value="express"
+    label="Express Shipping"
+    description="2-3 business days - $15"
+/>
+```
+
+### Card
+
+Large selectable cards perfect for pricing plans or feature selection:
+
+```blade
+<div class="grid grid-cols-3 gap-4">
+    <x-strata::radio
+        variant="card"
+        wire:model="selectedPlan"
+        name="plan"
+        value="basic"
+        label="Basic Plan"
+        description="Perfect for individuals"
+    >
+        <div class="mt-4">
+            <p class="text-2xl font-bold">$9/month</p>
+            <ul class="mt-2 space-y-1 text-sm">
+                <li>✓ 10 projects</li>
+                <li>✓ 5GB storage</li>
+            </ul>
+        </div>
+    </x-strata::radio>
+
+    <x-strata::radio
+        variant="card"
+        wire:model="selectedPlan"
+        name="plan"
+        value="pro"
+        label="Pro Plan"
+        description="For growing teams"
+    >
+        <div class="mt-4">
+            <p class="text-2xl font-bold">$29/month</p>
+            <ul class="mt-2 space-y-1 text-sm">
+                <li>✓ Unlimited projects</li>
+                <li>✓ 100GB storage</li>
+            </ul>
+        </div>
+    </x-strata::radio>
+</div>
+```
+
+### Pill
+
+Compact pill-shaped radio buttons for tags or categories:
+
+```blade
+<div class="flex flex-wrap gap-2">
+    <x-strata::radio variant="pill" name="skill" value="design" label="Design" />
+    <x-strata::radio variant="pill" name="skill" value="development" label="Development" />
+    <x-strata::radio variant="pill" name="skill" value="marketing" label="Marketing" />
+</div>
 ```
 
 ## Validation States
 
-Available states: `default`, `success`, `error`, `warning`
+All variants support validation states with colored borders:
 
 ```blade
-<x-strata::radio state="default" name="status" label="Default state" />
-<x-strata::radio state="success" name="status" label="Valid option" checked />
-<x-strata::radio state="error" name="status" label="Invalid option" />
-<x-strata::radio state="warning" name="status" label="Warning state" />
+{{-- Default variant with states --}}
+<x-strata::radio state="default" name="status" value="d" label="Default" />
+<x-strata::radio state="success" name="status" value="s" label="Success" checked />
+<x-strata::radio state="error" name="status" value="e" label="Error" />
+<x-strata::radio state="warning" name="status" value="w" label="Warning" />
+
+{{-- Bordered variant with error state --}}
+<x-strata::radio
+    variant="bordered"
+    state="error"
+    name="payment"
+    value="card"
+    label="Credit Card"
+    description="Card verification failed"
+/>
+
+{{-- Card variant with success state --}}
+<x-strata::radio
+    variant="card"
+    state="success"
+    name="plan"
+    value="verified"
+    label="Verified Plan"
+/>
 ```
 
-## Disabled State
-
-```blade
-<x-strata::radio disabled name="disabled" label="Disabled unchecked" />
-<x-strata::radio disabled checked name="disabled" label="Disabled checked" />
-```
+**State colors apply to:**
+- Inner radio circle border
+- Outer wrapper border (bordered/card variants only)
+- Hover effects
 
 ## Radio Groups
-
-Group related radio buttons with consistent spacing and layout.
 
 ### Vertical Group (Default)
 
 ```blade
-<x-strata::radio.group label="Select your plan" name="plan">
-    <x-strata::radio name="plan" value="basic" label="Basic" />
-    <x-strata::radio name="plan" value="pro" label="Pro" />
-    <x-strata::radio name="plan" value="enterprise" label="Enterprise" />
+<x-strata::radio.group label="Shipping method" name="shipping">
+    <x-strata::radio
+        name="shipping"
+        value="standard"
+        label="Standard Shipping"
+        description="5-7 business days - Free"
+    />
+    <x-strata::radio
+        name="shipping"
+        value="express"
+        label="Express Shipping"
+        description="2-3 business days - $15"
+    />
 </x-strata::radio.group>
 ```
 
 ### Horizontal Group
 
 ```blade
-<x-strata::radio.group label="Choose an answer" orientation="horizontal" name="answer">
+<x-strata::radio.group label="Answer" orientation="horizontal" name="answer">
     <x-strata::radio name="answer" value="yes" label="Yes" />
     <x-strata::radio name="answer" value="no" label="No" />
     <x-strata::radio name="answer" value="maybe" label="Maybe" />
@@ -88,197 +239,9 @@ Group related radio buttons with consistent spacing and layout.
 </x-strata::radio.group>
 ```
 
-## Radios with Descriptions
-
-```blade
-<x-strata::radio
-    wire:model="selectedSize"
-    name="size"
-    value="sm"
-    label="Small"
-    description="Best for compact layouts and dense information"
-/>
-<x-strata::radio
-    wire:model="selectedSize"
-    name="size"
-    value="md"
-    label="Medium"
-    description="The default size, works well in most situations"
-/>
-```
-
-## Bordered Variant
-
-```blade
-<x-strata::radio
-    variant="bordered"
-    name="theme"
-    value="blue"
-    label="Blue Theme"
-    description="Classic and professional color scheme"
-/>
-```
-
-## Card Variant
-
-Create selectable cards perfect for pricing plans or feature selection:
-
-```blade
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <x-strata::radio
-        variant="card"
-        wire:model="selectedPlan"
-        name="plan"
-        value="basic"
-        label="Basic Plan"
-        description="Perfect for individuals and small projects"
-    >
-        <div class="mt-4">
-            <p class="text-2xl font-bold">$9/month</p>
-            <ul class="mt-2 space-y-1 text-sm">
-                <li>✓ 10 projects</li>
-                <li>✓ 5GB storage</li>
-            </ul>
-        </div>
-    </x-strata::radio>
-
-    <x-strata::radio
-        variant="card"
-        wire:model="selectedPlan"
-        name="plan"
-        value="pro"
-        label="Pro Plan"
-        description="For growing teams and businesses"
-    >
-        <div class="mt-4">
-            <p class="text-2xl font-bold">$29/month</p>
-            <ul class="mt-2 space-y-1 text-sm">
-                <li>✓ Unlimited projects</li>
-                <li>✓ 100GB storage</li>
-            </ul>
-        </div>
-    </x-strata::radio>
-</div>
-```
-
-## Pill Variant
-
-```blade
-<div class="flex flex-wrap gap-2">
-    <x-strata::radio
-        variant="pill"
-        wire:model="skill"
-        name="skill"
-        value="design"
-        label="Design"
-    />
-    <x-strata::radio
-        variant="pill"
-        wire:model="skill"
-        name="skill"
-        value="development"
-        label="Development"
-    />
-    <x-strata::radio
-        variant="pill"
-        wire:model="skill"
-        name="skill"
-        value="marketing"
-        label="Marketing"
-    />
-</div>
-```
-
-## Props Reference
-
-### Radio
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | string | `default` | Visual variant: `default`, `bordered`, `card`, `pill` |
-| `size` | string | `md` | Size variant: `sm`, `md`, `lg` |
-| `state` | string | `default` | Validation state: `default`, `success`, `error`, `warning` |
-| `disabled` | boolean | `false` | Disable the radio button |
-| `checked` | boolean | `false` | Initial checked state |
-| `label` | string | `null` | Label text (or use default slot) |
-| `description` | string | `null` | Description text below label |
-| `id` | string | `null` | Custom ID (auto-generated if not provided) |
-| `name` | string | `null` | Radio button name (required for grouping) |
-
-**Additional Attributes:**
-- All standard input attributes (`value`, `wire:*`, etc.) are passed through
-- Livewire directives work automatically
-
-### Radio Group
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `orientation` | string | `vertical` | Layout direction: `vertical`, `horizontal` |
-| `label` | string | `null` | Group label text |
-| `error` | string | `null` | Error message to display |
-
 ## Real-World Examples
 
-### Subscription Plan Selection
-
-```blade
-<form wire:submit="subscribe">
-    <x-strata::radio.group label="Choose your subscription plan" name="plan">
-        <x-strata::radio
-            wire:model="selectedPlan"
-            name="plan"
-            value="monthly"
-            label="Monthly - $19/mo"
-            description="Billed monthly, cancel anytime"
-        />
-        <x-strata::radio
-            wire:model="selectedPlan"
-            name="plan"
-            value="yearly"
-            label="Annual - $15/mo"
-            description="Billed annually, save 20%"
-        />
-    </x-strata::radio.group>
-
-    <x-strata::button type="submit" class="mt-4">
-        Continue to Payment
-    </x-strata::button>
-</form>
-```
-
-### Shipping Method Selection
-
-```blade
-<x-strata::radio.group label="Shipping method" name="shipping">
-    <x-strata::radio
-        variant="bordered"
-        wire:model="shippingMethod"
-        name="shipping"
-        value="standard"
-        label="Standard Shipping"
-        description="5-7 business days - Free"
-        checked
-    />
-    <x-strata::radio
-        variant="bordered"
-        wire:model="shippingMethod"
-        name="shipping"
-        value="express"
-        label="Express Shipping"
-        description="2-3 business days - $15"
-    />
-    <x-strata::radio
-        variant="bordered"
-        wire:model="shippingMethod"
-        name="shipping"
-        value="overnight"
-        label="Overnight Shipping"
-        description="Next business day - $30"
-    />
-</x-strata::radio.group>
-```
-
-### Payment Method Selection
+### Payment Method Selector
 
 ```blade
 <x-strata::radio.group label="Payment method" name="payment">
@@ -303,18 +266,6 @@ Create selectable cards perfect for pricing plans or feature selection:
         <div class="flex items-center gap-2">
             <x-strata::icon.wallet class="size-5" />
             <span class="font-medium">PayPal</span>
-        </div>
-    </x-strata::radio>
-
-    <x-strata::radio
-        variant="bordered"
-        wire:model="paymentMethod"
-        name="payment"
-        value="bank"
-    >
-        <div class="flex items-center gap-2">
-            <x-strata::icon.building class="size-5" />
-            <span class="font-medium">Bank Transfer</span>
         </div>
     </x-strata::radio>
 </x-strata::radio.group>
@@ -364,11 +315,11 @@ Create selectable cards perfect for pricing plans or feature selection:
 </x-strata::radio.group>
 ```
 
-## Accessibility
+## Notes
 
-Radio buttons are fully accessible:
-- Proper label associations using `for` and `id`
-- Keyboard navigation support (Arrow keys to navigate, Space to select)
-- Screen reader support
-- Disabled state properly communicated
-- Focus indicators for keyboard navigation
+- **Name attribute required:** All radios in a group must share the same `name` attribute
+- **Validation states:** Success/error/warning states change border colors for both inner circle and outer wrapper (bordered/card variants)
+- **Pixel-perfect centering:** Inner dot uses precise pixel values for perfect alignment
+- **Focus states:** All variants have visible focus rings for keyboard navigation
+- **Accessibility:** Proper label associations, keyboard support (arrow keys + space), and screen reader support
+- **Disabled state:** Hover effects are automatically removed when disabled

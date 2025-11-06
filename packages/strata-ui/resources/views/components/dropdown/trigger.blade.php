@@ -4,21 +4,16 @@
 ])
 
 @php
-$dropdownId = $attributes->get('data-dropdown-trigger');
-
-if (!$dropdownId) {
-    throw new \InvalidArgumentException('Dropdown trigger requires a data-dropdown-trigger attribute with matching dropdown id');
-}
-
-$classes = 'inline-block cursor-pointer';
+$classes = 'inline-block cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md';
 @endphp
 
 <div
-    @click="toggle()"
-    data-dropdown-trigger="{{ $dropdownId }}"
+    :popovertarget="$id('dropdown')"
+    @keydown="handleKeydown"
+    tabindex="0"
+    x-ref="trigger"
     aria-haspopup="true"
     :aria-expanded="open"
-    :aria-controls="'{{ $dropdownId }}'"
     {{ $attributes->merge(['class' => $classes]) }}
 >
     {{ $slot }}

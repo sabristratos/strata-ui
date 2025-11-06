@@ -13,6 +13,15 @@ class ComponentSizeConfig
         ];
     }
 
+    public static function datePickerSizesWithChips(): array
+    {
+        return [
+            'sm' => 'min-h-9 px-3 py-1.5 text-sm',
+            'md' => 'min-h-10 px-3 py-2 text-base',
+            'lg' => 'min-h-11 px-4 py-2.5 text-lg',
+        ];
+    }
+
     public static function textareaSizes(): array
     {
         return [
@@ -188,6 +197,27 @@ class ComponentSizeConfig
         ];
     }
 
+    public static function selectSizesWithChips(): array
+    {
+        return [
+            'sm' => [
+                'trigger' => 'min-h-9 px-3 py-1.5 text-sm',
+                'icon' => 'w-4 h-4',
+                'dropdown' => 'min-w-48 max-w-64',
+            ],
+            'md' => [
+                'trigger' => 'min-h-10 px-3 py-2 text-base',
+                'icon' => 'w-5 h-5',
+                'dropdown' => 'min-w-64 max-w-96',
+            ],
+            'lg' => [
+                'trigger' => 'min-h-11 px-4 py-2.5 text-lg',
+                'icon' => 'w-6 h-6',
+                'dropdown' => 'min-w-80 max-w-lg',
+            ],
+        ];
+    }
+
     public static function modalSizes(): array
     {
         return [
@@ -327,9 +357,9 @@ class ComponentSizeConfig
     public static function radioInnerDotSizes(): array
     {
         return [
-            'sm' => 'w-1.5 h-1.5',
-            'md' => 'w-2 h-2',
-            'lg' => 'w-2.5 h-2.5',
+            'sm' => 'w-[7px] h-[7px]',
+            'md' => 'w-[9px] h-[9px]',
+            'lg' => 'w-[11px] h-[11px]',
         ];
     }
 

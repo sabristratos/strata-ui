@@ -37,7 +37,7 @@ if ($sortColumn === $column && $sortDirection) {
         '{{ $paddingSizes['sm'] }}': size === 'sm',
         '{{ $paddingSizes['md'] }}': size === 'md',
         '{{ $paddingSizes['lg'] }}': size === 'lg',
-        'cursor-pointer select-none hover:bg-table-row-hover/30 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1': @js($sortable)
+        'cursor-pointer select-none hover:bg-table-row-hover/30 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1': @js($sortable)
     }"
     @if($sortable)
         tabindex="0"

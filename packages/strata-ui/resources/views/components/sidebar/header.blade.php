@@ -51,7 +51,7 @@
             type="button"
             class="md:hidden flex-shrink-0 p-2 rounded-md hover:bg-sidebar-hover
                    transition-colors duration-150
-                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                   focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="Close sidebar"
             data-strata-sidebar-close
         >

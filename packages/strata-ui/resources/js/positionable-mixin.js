@@ -91,11 +91,13 @@ export function createPositionableMixin(config = {}) {
                 }
             });
 
-            this.positionable.watch((state) => {
-                if (!state) {
-                    this[stateProperty] = false;
-                }
-            });
+            if (this.positionable.component) {
+                this.positionable.watch((state) => {
+                    if (!state) {
+                        this[stateProperty] = false;
+                    }
+                });
+            }
 
             if (afterInit) {
                 afterInit.call(this);

@@ -62,7 +62,7 @@ $toggleId = ComponentHelpers::generateId('sidebar-toggle', null, null);
     {{ $attributes->merge([
         'class' => 'p-2 rounded-md hover:bg-sidebar-hover
                    transition-colors duration-150
-                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
+                   focus-visible:ring-2 focus-visible:ring-ring'
     ]) }}
     :aria-label="sidebar.isMobile ? 'Toggle sidebar' : (sidebar.collapsed ? 'Expand sidebar' : 'Collapse sidebar')"
     :aria-expanded="sidebar.isMobile ? sidebar.open?.toString() : (!sidebar.collapsed)?.toString()"

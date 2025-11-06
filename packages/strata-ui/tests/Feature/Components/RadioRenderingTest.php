@@ -28,14 +28,19 @@ describe('Radio Component', function () {
             ->toContain('inline-flex items-center gap-3');
 
         expectComponent($this, 'radio', ['variant' => 'bordered', 'label' => 'Bordered', 'name' => 'test'])
-            ->toContain('p-4 border border-border rounded-lg');
+            ->toContain('p-4')
+            ->toContain('border')
+            ->toContain('border-border')
+            ->toContain('rounded-lg');
 
         expectComponent($this, 'radio', ['variant' => 'card', 'label' => 'Card', 'name' => 'test'])
             ->toHaveDataAttribute('strata-radio-card')
             ->toContain('flex flex-col p-6 border');
 
         expectComponent($this, 'radio', ['variant' => 'pill', 'label' => 'Pill', 'name' => 'test'])
-            ->toContain('rounded-full border border-border');
+            ->toContain('rounded-full')
+            ->toContain('border')
+            ->toContain('border-border');
     });
 
     test('renders checked state', function () {
@@ -80,13 +85,13 @@ describe('Radio Component', function () {
 
     test('dot sizes match radio sizes', function () {
         expectComponent($this, 'radio', ['size' => 'sm', 'label' => 'Small', 'name' => 'test'])
-            ->toContain('w-1.5 h-1.5');
+            ->toContain('w-[7px] h-[7px]');
 
         expectComponent($this, 'radio', ['size' => 'md', 'label' => 'Medium', 'name' => 'test'])
-            ->toContain('w-2 h-2');
+            ->toContain('w-[9px] h-[9px]');
 
         expectComponent($this, 'radio', ['size' => 'lg', 'label' => 'Large', 'name' => 'test'])
-            ->toContain('w-2.5 h-2.5');
+            ->toContain('w-[11px] h-[11px]');
     });
 
     test('card variant has indicator in correct position', function () {
@@ -159,5 +164,96 @@ describe('Radio Component', function () {
     test('name attribute is required for radio groups', function () {
         expectComponent($this, 'radio', ['label' => 'Test', 'name' => 'group1'])
             ->toContain('name="group1"');
+    });
+
+    test('renders with default state', function () {
+        expectComponent($this, 'radio', ['state' => 'default', 'label' => 'Default', 'name' => 'test'])
+            ->toContain('border-border')
+            ->toContain('hover:border-primary/50')
+            ->toContain('accent-primary');
+    });
+
+    test('renders with success state', function () {
+        expectComponent($this, 'radio', ['state' => 'success', 'label' => 'Success', 'name' => 'test'])
+            ->toContain('border-success')
+            ->toContain('hover:border-success/80')
+            ->toContain('accent-success');
+    });
+
+    test('renders with error state', function () {
+        expectComponent($this, 'radio', ['state' => 'error', 'label' => 'Error', 'name' => 'test'])
+            ->toContain('border-destructive')
+            ->toContain('hover:border-destructive/80')
+            ->toContain('accent-destructive');
+    });
+
+    test('renders with warning state', function () {
+        expectComponent($this, 'radio', ['state' => 'warning', 'label' => 'Warning', 'name' => 'test'])
+            ->toContain('border-warning')
+            ->toContain('hover:border-warning/80')
+            ->toContain('accent-warning');
+    });
+
+    test('state variants work with all radio variants', function () {
+        expectComponent($this, 'radio', ['variant' => 'default', 'state' => 'success', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-success');
+
+        expectComponent($this, 'radio', ['variant' => 'bordered', 'state' => 'error', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-destructive');
+
+        expectComponent($this, 'radio', ['variant' => 'card', 'state' => 'warning', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-warning');
+
+        expectComponent($this, 'radio', ['variant' => 'pill', 'state' => 'success', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-success');
+    });
+
+    test('card variant dot uses pixel-perfect sizing', function () {
+        expectComponent($this, 'radio', ['variant' => 'card', 'label' => 'Card', 'name' => 'test'])
+            ->toContain('w-[11px] h-[11px]');
+    });
+
+    test('bordered variant wrapper uses state border colors', function () {
+        expectComponent($this, 'radio', ['variant' => 'bordered', 'state' => 'default', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-border')
+            ->toContain('hover:border-primary/50')
+            ->toContain('has-[:checked]:border-primary');
+
+        expectComponent($this, 'radio', ['variant' => 'bordered', 'state' => 'success', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-success')
+            ->toContain('hover:border-success/80')
+            ->toContain('has-[:checked]:border-success');
+
+        expectComponent($this, 'radio', ['variant' => 'bordered', 'state' => 'error', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-destructive')
+            ->toContain('hover:border-destructive/80')
+            ->toContain('has-[:checked]:border-destructive');
+
+        expectComponent($this, 'radio', ['variant' => 'bordered', 'state' => 'warning', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-warning')
+            ->toContain('hover:border-warning/80')
+            ->toContain('has-[:checked]:border-warning');
+    });
+
+    test('card variant wrapper uses state border colors', function () {
+        expectComponent($this, 'radio', ['variant' => 'card', 'state' => 'default', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-border')
+            ->toContain('hover:border-primary/50')
+            ->toContain('has-[:checked]:border-primary');
+
+        expectComponent($this, 'radio', ['variant' => 'card', 'state' => 'success', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-success')
+            ->toContain('hover:border-success/80')
+            ->toContain('has-[:checked]:border-success');
+
+        expectComponent($this, 'radio', ['variant' => 'card', 'state' => 'error', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-destructive')
+            ->toContain('hover:border-destructive/80')
+            ->toContain('has-[:checked]:border-destructive');
+
+        expectComponent($this, 'radio', ['variant' => 'card', 'state' => 'warning', 'label' => 'Test', 'name' => 'test'])
+            ->toContain('border-warning')
+            ->toContain('hover:border-warning/80')
+            ->toContain('has-[:checked]:border-warning');
     });
 });

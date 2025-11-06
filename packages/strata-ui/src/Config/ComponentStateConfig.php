@@ -17,10 +17,10 @@ class ComponentStateConfig
     public static function focusableStates(): array
     {
         return [
-            'default' => 'border-border focus:ring-2 focus:ring-ring focus:ring-offset-2',
-            'success' => 'border-success focus:ring-2 focus:ring-success/20 focus:ring-offset-2',
-            'error' => 'border-destructive focus:ring-2 focus:ring-destructive/20 focus:ring-offset-2',
-            'warning' => 'border-warning focus:ring-2 focus:ring-warning/20 focus:ring-offset-2',
+            'default' => 'border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+            'success' => 'border-success focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-success/20 focus-visible:ring-offset-2',
+            'error' => 'border-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive/20 focus-visible:ring-offset-2',
+            'warning' => 'border-warning focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warning/20 focus-visible:ring-offset-2',
         ];
     }
 

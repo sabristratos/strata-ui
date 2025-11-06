@@ -5,10 +5,12 @@
  * Modules: Entangleable, Positionable, Image, Slider, Editor, DatePicker, TimePicker, ColorPicker, Lightbox, Toast API
  */
 
+import anchor from '@alpinejs/anchor';
 import Entangleable from './entangleable.js';
 import Positionable from './positionable.js';
 import { createEntangleableMixin } from './entangleable-mixin.js';
 import { createPositionableMixin } from './positionable-mixin.js';
+import { createKeyboardNavigationMixin } from './keyboard-navigation-mixin.js';
 import Image from './image.js';
 import Slider from './slider.js';
 import Editor from './editor.js';
@@ -16,7 +18,12 @@ import DatePicker from './date-picker.js';
 import TimePicker from './time-picker.js';
 import ColorPicker from './color-picker.js';
 import RangeSlider from './range-slider.js';
+import Select from './select.js';
 import './lightbox.js';
+
+document.addEventListener('alpine:init', () => {
+    window.Alpine.plugin(anchor);
+});
 
 /**
  * @typedef {Object} ToastOptions
@@ -51,6 +58,12 @@ if (typeof window !== 'undefined') {
      * @type {function}
      */
     window.createPositionableMixin = createPositionableMixin;
+
+    /**
+     * Create Keyboard Navigation mixin for Alpine components
+     * @type {function}
+     */
+    window.createKeyboardNavigationMixin = createKeyboardNavigationMixin;
 
     /**
      * Image component with loading/error states
@@ -93,6 +106,12 @@ if (typeof window !== 'undefined') {
      * @type {function}
      */
     window.strataRangeSlider = RangeSlider;
+
+    /**
+     * Select component with search, multi-select, and chips support
+     * @type {function}
+     */
+    window.strataSelect = Select;
 
     /**
      * Display a toast notification

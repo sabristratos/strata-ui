@@ -10,7 +10,7 @@
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
 
-$baseClasses = 'w-full bg-input border rounded-lg transition-all duration-150';
+$baseClasses = 'w-full bg-input border rounded-lg transition-all duration-150 inset-shadow-sm';
 
 $sizeClasses = ComponentSizeConfig::textareaSizes();
 

@@ -11,7 +11,7 @@ use Stratos\StrataUI\Support\ComponentHelpers;
 
 $itemId = ComponentHelpers::generateId('dropdown-item', null, $attributes);
 
-$baseClasses = 'w-full flex items-center gap-3 px-4 py-2 text-left text-sm transition-colors duration-150 rounded-md';
+$baseClasses = 'w-full flex items-center gap-3 px-4 py-2 text-left text-sm transition-colors duration-150 rounded-md focus:outline-none';
 
 $stateClasses = $disabled
     ? 'opacity-50 cursor-not-allowed'
@@ -19,9 +19,7 @@ $stateClasses = $disabled
         ? 'text-destructive hover:bg-destructive/10 focus:bg-destructive/10 cursor-pointer'
         : 'text-foreground hover:bg-muted focus:bg-muted cursor-pointer');
 
-$highlightedClasses = $disabled ? '' : 'aria-[current=true]:bg-accent';
-
-$classes = trim("$baseClasses $stateClasses $highlightedClasses");
+$classes = trim("$baseClasses $stateClasses");
 
 $tag = $href && !$disabled ? 'a' : 'button';
 $tagAttributes = $href && !$disabled ? ['href' => $href] : ['type' => 'button'];
@@ -33,8 +31,10 @@ $tagAttributes = $href && !$disabled ? ['href' => $href] : ['type' => 'button'];
     @if($disabled) data-disabled @endif
     role="menuitem"
     tabindex="-1"
-    :aria-current="highlighted === {{ json_encode(array_search($itemId, array_column($items ?? [], 'element.id'))) }} ? 'true' : 'false'"
-    @click="if (!{{ $disabled ? 'true' : 'false' }}) { close(); }"
+    :class="{
+        'bg-accent': highlighted === items.findIndex(item => item.element.id === '{{ $itemId }}')
+    }"
+    @click.stop="if (!{{ $disabled ? 'true' : 'false' }}) { close(); }"
     {{ $attributes->merge(['class' => $classes])->merge($tagAttributes) }}
 >
     @if($icon)

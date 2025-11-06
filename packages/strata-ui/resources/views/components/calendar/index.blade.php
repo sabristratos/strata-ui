@@ -66,7 +66,8 @@ $wrapperAttributes = $attributes->only(['class']);
         }),
 
         mode: @js($mode),
-        selectedDates: @js($initialValue),
+        selectedDates: [],
+        _parentValue: null,
         currentMonth: new Date(),
         focusedDate: null,
         minDate: @js($minDate),
@@ -81,7 +82,16 @@ $wrapperAttributes = $attributes->only(['class']);
 
         init() {
             const input = this.$el.querySelector('[data-strata-calendar-input]');
-            if (input) {
+            const hasWireModel = input?.hasAttribute('wire:model') || input?.hasAttribute('wire:model.live') || input?.hasAttribute('wire:model.defer');
+
+            console.log('[Calendar] Init', {
+                hasInput: !!input,
+                hasWireModel,
+                mode: this.mode
+            });
+
+            if (input && hasWireModel) {
+                console.log('[Calendar] Using Entangleable mode (standalone)');
                 this.initEntangleable();
 
                 const initialValue = this.entangleable.get();
@@ -89,7 +99,12 @@ $wrapperAttributes = $attributes->only(['class']);
                     this.syncFromEntangleable(initialValue);
                 }
             } else {
-                if (this.selectedDates.length > 0) {
+                console.log('[Calendar] Using nested mode (looking for parent calendarValue)');
+
+                const bladeInitialValue = @js($initialValue);
+                if (bladeInitialValue && bladeInitialValue.length > 0) {
+                    console.log('[Calendar] Setting from blade initial value:', bladeInitialValue);
+                    this.selectedDates = bladeInitialValue;
                     const date = new Date(this.selectedDates[0]);
                     if (!isNaN(date.getTime())) {
                         this.currentMonth = date;
@@ -100,9 +115,76 @@ $wrapperAttributes = $attributes->only(['class']);
                     this.rangeStart = new Date(this.selectedDates[0]);
                     this.rangeEnd = new Date(this.selectedDates[1]);
                 }
+
+                this.$nextTick(() => {
+                    const parentEl = this.$el.parentElement?.closest('[x-data]');
+                    console.log('[Calendar] Looking for parent:', {
+                        parentFound: !!parentEl,
+                        hasDataStack: !!parentEl?._x_dataStack
+                    });
+
+                    if (parentEl && parentEl._x_dataStack && parentEl._x_dataStack[0]) {
+                        const parentData = parentEl._x_dataStack[0];
+                        console.log('[Calendar] Parent has calendarValue:', typeof parentData.calendarValue !== 'undefined', parentData.calendarValue);
+
+                        if (typeof parentData.calendarValue !== 'undefined') {
+                            console.log('[Calendar] Setting up watcher for parent calendarValue');
+
+                            this.$watch(() => parentData.calendarValue, (newValue) => {
+                                console.log('[Calendar] Parent calendarValue changed:', newValue);
+                                if (JSON.stringify(newValue) !== JSON.stringify(this._parentValue)) {
+                                    this._parentValue = newValue;
+                                    this.syncFromParent(newValue);
+                                }
+                            });
+
+                            this._parentValue = parentData.calendarValue;
+                            console.log('[Calendar] Initial sync from parent:', parentData.calendarValue);
+                            this.$nextTick(() => {
+                                this.syncFromParent(parentData.calendarValue);
+                            });
+                        } else {
+                            console.log('[Calendar] Parent does not have calendarValue property');
+                        }
+                    } else {
+                        console.log('[Calendar] No parent with x-data found');
+                    }
+                });
             }
 
             this.focusedDate = new Date();
+        },
+
+        syncFromParent(value) {
+            console.log('[Calendar] syncFromParent called with:', value);
+
+            if (!value || !Array.isArray(value)) {
+                console.log('[Calendar] Invalid value, clearing selectedDates');
+                this.selectedDates = [];
+                this.rangeStart = null;
+                this.rangeEnd = null;
+                return;
+            }
+
+            this.selectedDates = value;
+            console.log('[Calendar] Set selectedDates to:', this.selectedDates);
+
+            if (value.length > 0) {
+                const date = new Date(value[0]);
+                if (!isNaN(date.getTime())) {
+                    console.log('[Calendar] Setting currentMonth to:', date);
+                    this.currentMonth = date;
+                }
+            }
+
+            if (this.mode === 'range' && value.length === 2) {
+                this.rangeStart = new Date(value[0]);
+                this.rangeEnd = new Date(value[1]);
+                console.log('[Calendar] Set range:', this.rangeStart, 'to', this.rangeEnd);
+            } else if (this.mode !== 'range') {
+                this.rangeStart = null;
+                this.rangeEnd = null;
+            }
         },
 
         syncFromEntangleable(value) {
@@ -200,7 +282,11 @@ $wrapperAttributes = $attributes->only(['class']);
             const formattedDate = this.formatDate(date);
 
             if (this.mode === 'range' && this.rangeStart && this.rangeEnd) {
-                return date >= this.rangeStart && date <= this.rangeEnd;
+                const normalizedDate = this.normalizeDate(date);
+                const normalizedStart = this.normalizeDate(this.rangeStart);
+                const normalizedEnd = this.normalizeDate(this.rangeEnd);
+
+                return normalizedDate >= normalizedStart && normalizedDate <= normalizedEnd;
             }
 
             return this.selectedDates.includes(formattedDate);
@@ -218,7 +304,12 @@ $wrapperAttributes = $attributes->only(['class']);
 
         isInRange(date) {
             if (this.mode !== 'range' || !this.rangeStart || !this.rangeEnd) return false;
-            return date > this.rangeStart && date < this.rangeEnd;
+
+            const normalizedDate = this.normalizeDate(date);
+            const normalizedStart = this.normalizeDate(this.rangeStart);
+            const normalizedEnd = this.normalizeDate(this.rangeEnd);
+
+            return normalizedDate > normalizedStart && normalizedDate < normalizedEnd;
         },
 
         isToday(date) {
@@ -230,6 +321,10 @@ $wrapperAttributes = $attributes->only(['class']);
             return date1.getFullYear() === date2.getFullYear() &&
                    date1.getMonth() === date2.getMonth() &&
                    date1.getDate() === date2.getDate();
+        },
+
+        normalizeDate(date) {
+            return new Date(date.getFullYear(), date.getMonth(), date.getDate());
         },
 
         isDisabled(date) {

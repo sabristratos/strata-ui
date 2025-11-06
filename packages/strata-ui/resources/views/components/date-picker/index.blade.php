@@ -11,6 +11,7 @@
     'size' => 'md',
     'disabled' => false,
     'clearable' => true,
+    'chips' => false,
 ])
 
 @php
@@ -21,7 +22,9 @@ use Stratos\StrataUI\Support\ComponentHelpers;
 $componentId = ComponentHelpers::generateId('date-picker', $id, $attributes);
 $placeholder = $placeholder ?? ($mode === 'range' ? 'Select date range' : 'Select date');
 
-$sizes = ComponentSizeConfig::inputSizes();
+$sizes = $chips
+    ? ComponentSizeConfig::datePickerSizesWithChips()
+    : ComponentSizeConfig::inputSizes();
 
 $states = ComponentStateConfig::pickerStates();
 
@@ -44,10 +47,11 @@ $initialValue = $value instanceof \Stratos\StrataUI\Data\DateValue
         placeholder: '{{ $placeholder }}',
         disabled: {{ $disabled ? 'true' : 'false' }},
         clearable: {{ $clearable ? 'true' : 'false' }},
+        chips: {{ $chips ? 'true' : 'false' }},
     })"
     data-strata-datepicker
     data-strata-field-type="date"
-    {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative']) }}
+    {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative overflow-visible']) }}
 >
     <div class="hidden" hidden>
         <input
@@ -68,6 +72,7 @@ $initialValue = $value instanceof \Stratos\StrataUI\Data\DateValue
             :state="$state"
             :disabled="$disabled"
             :clearable="$clearable"
+            :chips="$chips"
             :size-classes="$sizeClasses"
             :state-classes="$stateClasses"
         />

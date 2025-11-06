@@ -51,7 +51,7 @@ if ($value instanceof \Stratos\StrataUI\Data\TimeValue) {
     })"
     data-strata-timepicker
     data-strata-field-type="time"
-    {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative']) }}
+    {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative overflow-visible']) }}
 >
     <div class="hidden" hidden>
         <input

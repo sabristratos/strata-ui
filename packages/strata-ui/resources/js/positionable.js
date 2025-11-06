@@ -195,8 +195,8 @@ export default class Positionable {
         this.compute();
 
         this.watch(state => {
-            if (state && window.innerWidth >= 640 && !this.cleanup) {
-                this.component.$nextTick(() => this.syncPosition());
+            if (state && !this.cleanup) {
+                this.component?.$nextTick(() => this.syncPosition());
             }
 
             if (!state && this.cleanup) {
@@ -225,7 +225,9 @@ export default class Positionable {
      */
     watch(callback) {
         queueMicrotask(() => {
-            this.component.$watch(() => this.state, (value) => callback(value));
+            if (this.component) {
+                this.component.$watch(() => this.state, (value) => callback(value));
+            }
         });
         return this;
     }
@@ -234,15 +236,10 @@ export default class Positionable {
      * Sync position with autoUpdate
      *
      * Sets up Floating UI's autoUpdate to continuously track position changes.
-     * Disabled on mobile (< 640px width).
      *
      * @private
      */
     syncPosition() {
-        if (window.innerWidth < 640) {
-            return;
-        }
-
         this.cleanup = autoUpdate(
             this.reference,
             this.floating,
@@ -319,11 +316,6 @@ export default class Positionable {
                     apply: ({ availableWidth, availableHeight, rects, elements }) => {
                         const styles = {};
 
-                        if (this.config.maxHeight) {
-                            styles.maxHeight = `${Math.max(0, availableHeight - 10)}px`;
-                            styles.overflowY = 'auto';
-                        }
-
                         if (this.config.matchReferenceWidth) {
                             styles.minWidth = `${rects.reference.width}px`;
                         }
@@ -384,9 +376,9 @@ export default class Positionable {
     open() {
         this.closeConflictingInstances();
         this.compute();
-        this.component.$nextTick(() => {
+        this.component?.$nextTick(() => {
             this.state = true;
-        });
+        }) ?? (this.state = true);
     }
 
     /**

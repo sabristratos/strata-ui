@@ -55,7 +55,7 @@
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
 
-$baseClasses = 'flex items-center gap-2 bg-input border rounded-lg transition-all duration-150';
+$baseClasses = 'flex items-center gap-2 bg-input border rounded-lg transition-all duration-150 inset-shadow-sm';
 
 $sizes = ComponentSizeConfig::inputSizes();
 

@@ -31,12 +31,36 @@ document.addEventListener('alpine:init', () => {
             floatingRef: 'popover',
             triggerSelector: '[data-popover-trigger="' + popoverId + '"]',
             onOpen: function() {
+                this.highlighted = -1;
                 this.$refs.popover?.focus();
+            },
+            onClose: function() {
+                this.highlighted = -1;
             }
         }),
 
+        ...window.createKeyboardNavigationMixin({
+            itemSelector: '[data-strata-popover-item]:not([data-disabled])',
+            itemMapper: (el) => ({
+                element: el,
+                text: el.textContent.trim(),
+                disabled: el.hasAttribute('data-disabled')
+            }),
+            onActivate: function(item) {
+                item.element.click();
+                this.close();
+            },
+            enableTypeahead: false,
+            onClose: function() {
+                this.close();
+            }
+        }),
+
+        open: false,
+
         init() {
             this.initPositionable();
+            this.initKeyboardNavigation();
         },
 
         toggle() {
@@ -55,24 +79,8 @@ document.addEventListener('alpine:init', () => {
     x-data="strataPopover('{{ $placement }}', {{ $offset }}, '{{ $id }}')"
     id="{{ $id }}"
     data-strata-popover-wrapper
+    @keydown="handleKeyboardNavigation"
+    {{ $attributes->merge(['class' => 'relative inline-block']) }}
 >
-    <div
-        x-ref="popover"
-        x-cloak
-        x-show="open"
-        :style="positionable.styles"
-        class="absolute top-0 left-0 z-50"
-    >
-        <div
-            x-trap.nofocus="open"
-            @click.outside="close()"
-            @keydown.escape="close()"
-            data-strata-popover
-            wire:ignore.self
-            tabindex="-1"
-            {{ $attributes->merge(['class' => $classes . ' transition-all transition-discrete duration-150 ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95']) }}
-        >
-            {{ $slot }}
-        </div>
-    </div>
+    {{ $slot }}
 </div>

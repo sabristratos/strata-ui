@@ -76,7 +76,7 @@ $activeClasses = $active
 
 $disabledClasses = 'disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none';
 
-$baseClasses = 'relative inline-flex items-center justify-center font-medium rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
+$baseClasses = 'relative inline-flex items-center justify-center font-medium rounded-full transition-all duration-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
 
 $tag = $href ? 'a' : 'button';
 $isDisabled = $disabled || $loading;

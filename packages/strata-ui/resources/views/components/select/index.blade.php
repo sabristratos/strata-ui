@@ -44,6 +44,7 @@
 --}}
 
 @props([
+    'id' => null,
     'multiple' => false,
     'size' => 'md',
     'state' => 'default',
@@ -67,9 +68,10 @@ use Stratos\StrataUI\Support\ComponentHelpers;
 
 $chips = filter_var($chips, FILTER_VALIDATE_BOOLEAN);
 
-$baseClasses = 'w-full inline-flex items-center justify-between gap-2 bg-input border rounded-lg transition-all duration-150';
+$itemsAlignment = $chips ? 'items-start' : 'items-center';
+$baseClasses = 'w-full inline-flex justify-between gap-2 bg-input border rounded-lg transition-all duration-150 inset-shadow-sm';
 
-$sizes = ComponentSizeConfig::selectSizes();
+$sizes = $chips ? ComponentSizeConfig::selectSizesWithChips() : ComponentSizeConfig::selectSizes();
 
 $dropdownSizeClasses = $sizes[$size]['dropdown'] ?? $sizes['md']['dropdown'];
 
@@ -77,7 +79,7 @@ $stateClasses = ComponentStateConfig::focusableStates();
 
 $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary/50';
 
-$triggerClasses = $baseClasses . ' ' . ($sizes[$size]['trigger'] ?? $sizes['md']['trigger']) . ' ' . ($stateClasses[$state] ?? $stateClasses['default']) . ' ' . $disabledClasses;
+$triggerClasses = $baseClasses . ' ' . $itemsAlignment . ' ' . ($sizes[$size]['trigger'] ?? $sizes['md']['trigger']) . ' ' . ($stateClasses[$state] ?? $stateClasses['default']) . ' ' . $disabledClasses;
 
 $iconSize = $sizes[$size]['icon'] ?? $sizes['md']['icon'];
 
@@ -88,325 +90,21 @@ $normalizedValue = $multiple
 $componentId = ComponentHelpers::generateId('select', $id, $attributes);
 @endphp
 
-@once
-<script>
-document.addEventListener('alpine:init', () => {
-    Alpine.data('strataSelect', (initialValue, multiple, disabled, chips, searchable, minItemsForSearch, clearable) => ({
-        ...window.createEntangleableMixin({
-            initialValue: initialValue,
-            inputSelector: '[data-strata-select-input]',
-            afterWatch: function(newValue) {
-                this.display = this.computeDisplay(newValue);
-            }
-        }),
-
-        ...window.createPositionableMixin({
-            placement: 'bottom-start',
-            offset: 8,
-            floatingRef: 'dropdown',
-            enableSize: true,
-            matchReferenceWidth: true,
-            maxHeight: true,
-            onOpen: function() {
-                if (this.shouldShowSearch()) {
-                    const searchInput = this.$refs.dropdown.querySelector('[data-strata-select-search]');
-                    if (searchInput) {
-                        searchInput.focus();
-                    }
-                } else {
-                    this.$refs.dropdown.focus();
-                }
-            },
-            onClose: function() {
-                this.clearSearch();
-                this.$el.focus();
-            }
-        }),
-        highlighted: -1,
-        options: [],
-        disabled: disabled,
-        multiple: multiple,
-        chips: chips,
-        dropdown: null,
-        searchable: searchable,
-        minItemsForSearch: minItemsForSearch,
-        clearable: clearable,
-        search: '',
-        display: '',
-
-        get selected() {
-            return this.entangleable?.get() ?? (multiple ? [] : null);
-        },
-
-        set selected(value) {
-            this.entangleable?.set(value);
-        },
-
-        get filteredOptions() {
-            if (!this.search.trim()) {
-                return this.options;
-            }
-
-            const searchLower = this.search.toLowerCase();
-            return this.options.filter(opt => {
-                const labelMatch = opt.label.toLowerCase().includes(searchLower);
-                const valueMatch = String(opt.value).toLowerCase().includes(searchLower);
-                return labelMatch || valueMatch;
-            });
-        },
-
-        get selectedLabels() {
-            if (this.multiple) {
-                return this.options
-                    .filter(opt => this.selected.includes(opt.value))
-                    .map(opt => opt.label);
-            }
-            const selected = this.options.find(opt => opt.value === this.selected);
-            return selected ? [selected.label] : [];
-        },
-
-        init() {
-            this.initEntangleable();
-            this.initPositionable();
-
-            this.$nextTick(() => {
-                this.collectOptions();
-                this.display = this.computeDisplay(this.entangleable.value);
-            });
-
-            this.$watch('search', () => {
-                this.highlighted = -1;
-            });
-        },
-
-        collectOptions() {
-            const optionElements = this.$el.querySelectorAll('[data-strata-select-option]');
-            this.options = Array.from(optionElements).map(el => ({
-                value: el.dataset.value,
-                label: el.textContent.trim(),
-                disabled: el.hasAttribute('data-disabled'),
-                element: el
-            }));
-        },
-
-        toggle() {
-            if (!this.disabled) {
-                this.positionable.toggle();
-            }
-        },
-
-        openIfClosed() {
-            if (!this.disabled) {
-                this.positionable.openIfClosed();
-            }
-        },
-
-        close() {
-            this.positionable.close();
-        },
-
-        select(value) {
-            if (this.disabled) return;
-
-            if (this.multiple) {
-                const index = this.selected.indexOf(value);
-                if (index > -1) {
-                    this.selected = this.selected.filter(v => v !== value);
-                } else {
-                    this.selected = [...this.selected, value];
-                }
-            } else {
-                this.selected = value;
-                this.close();
-            }
-        },
-
-        remove(value) {
-            if (!this.disabled && this.multiple) {
-                this.selected = this.selected.filter(v => v !== value);
-            }
-        },
-
-        clear() {
-            if (!this.disabled) {
-                this.selected = this.multiple ? [] : null;
-            }
-        },
-
-        isSelected(value) {
-            if (this.multiple) {
-                return this.selected.includes(value);
-            }
-            return this.selected === value;
-        },
-
-        shouldShowSearch() {
-            return this.searchable && this.options.length >= this.minItemsForSearch;
-        },
-
-        clearSearch() {
-            this.search = '';
-            this.highlighted = -1;
-        },
-
-        hasSelection() {
-            if (this.multiple) {
-                return this.selected.length > 0;
-            }
-            return this.selected !== null && this.selected !== '';
-        },
-
-        getActiveDescendant() {
-            if (this.highlighted === -1) return '';
-            const availableOptions = this.filteredOptions.filter(opt => !opt.disabled);
-            return availableOptions[this.highlighted]?.value ? `option-${availableOptions[this.highlighted].value}` : '';
-        },
-
-        highlightNext() {
-            const availableOptions = this.filteredOptions.filter(opt => !opt.disabled);
-            if (availableOptions.length === 0) return;
-
-            if (this.highlighted === -1) {
-                this.highlighted = 0;
-            } else {
-                this.highlighted = (this.highlighted + 1) % availableOptions.length;
-            }
-            this.scrollToHighlighted();
-        },
-
-        highlightPrevious() {
-            const availableOptions = this.filteredOptions.filter(opt => !opt.disabled);
-            if (availableOptions.length === 0) return;
-
-            if (this.highlighted === -1) {
-                this.highlighted = availableOptions.length - 1;
-            } else {
-                this.highlighted = (this.highlighted - 1 + availableOptions.length) % availableOptions.length;
-            }
-            this.scrollToHighlighted();
-        },
-
-        selectHighlighted() {
-            const availableOptions = this.filteredOptions.filter(opt => !opt.disabled);
-            if (availableOptions[this.highlighted]) {
-                this.select(availableOptions[this.highlighted].value);
-            }
-        },
-
-        scrollToHighlighted() {
-            const availableOptions = this.filteredOptions.filter(opt => !opt.disabled);
-            if (availableOptions[this.highlighted]?.element) {
-                availableOptions[this.highlighted].element.scrollIntoView({
-                    block: 'nearest',
-                    behavior: 'auto'
-                });
-            }
-        },
-
-        handleKeydown(e) {
-            if (this.disabled) return;
-
-            switch(e.key) {
-                case 'Escape':
-                    if (this.positionable.state) {
-                        e.preventDefault();
-                        this.close();
-                    }
-                    break;
-                case 'ArrowDown':
-                    e.preventDefault();
-                    if (!this.positionable.state) {
-                        this.positionable.open();
-                    } else {
-                        this.highlightNext();
-                    }
-                    break;
-                case 'ArrowUp':
-                    e.preventDefault();
-                    if (!this.positionable.state) {
-                        this.positionable.open();
-                    } else {
-                        this.highlightPrevious();
-                    }
-                    break;
-                case 'Home':
-                    if (this.positionable.state) {
-                        e.preventDefault();
-                        const availableOptions = this.filteredOptions.filter(opt => !opt.disabled);
-                        if (availableOptions.length > 0) {
-                            this.highlighted = 0;
-                            this.scrollToHighlighted();
-                        }
-                    }
-                    break;
-                case 'End':
-                    if (this.positionable.state) {
-                        e.preventDefault();
-                        const availableOptions = this.filteredOptions.filter(opt => !opt.disabled);
-                        if (availableOptions.length > 0) {
-                            this.highlighted = availableOptions.length - 1;
-                            this.scrollToHighlighted();
-                        }
-                    }
-                    break;
-                case 'Tab':
-                    if (this.positionable.state) {
-                        this.close();
-                    }
-                    break;
-                case 'Enter':
-                case ' ':
-                    e.preventDefault();
-                    if (this.positionable.state) {
-                        this.selectHighlighted();
-                    } else {
-                        this.positionable.open();
-                    }
-                    break;
-            }
-        },
-
-        computeDisplay(value) {
-            if (this.multiple) {
-                if (!value || value.length === 0) return '';
-                const labels = this.options
-                    .filter(opt => value.includes(opt.value))
-                    .map(opt => opt.label);
-
-                if (this.chips) {
-                    return labels.join(', ');
-                }
-
-                return `${value.length} ${value.length === 1 ? 'selection' : 'selections'}`;
-            }
-
-            const option = this.options.find(opt => opt.value === value);
-            return option ? option.label : '';
-        },
-
-        getLabelForValue(value) {
-            const option = this.options.find(opt => opt.value === value);
-            return option ? option.label : value;
-        },
-
-        destroy() {
-            if (this.entangleable) {
-                this.entangleable.destroy();
-            }
-            this.destroyPositionable();
-        },
-    }));
-});
-</script>
-@endonce
-
 <div
-    x-data="strataSelect(@js($normalizedValue), {{ $multiple ? 'true' : 'false' }}, {{ $disabled ? 'true' : 'false' }}, {{ $chips ? 'true' : 'false' }}, {{ $searchable ? 'true' : 'false' }}, {{ $minItemsForSearch }}, {{ $clearable ? 'true' : 'false' }})"
+    x-data="window.strataSelect({
+        initialValue: @js($normalizedValue),
+        multiple: {{ $multiple ? 'true' : 'false' }},
+        chips: {{ $chips ? 'true' : 'false' }},
+        searchable: {{ $searchable ? 'true' : 'false' }},
+        minItemsForSearch: {{ $minItemsForSearch }},
+        clearable: {{ $clearable ? 'true' : 'false' }}
+    })"
+    data-disabled="{{ $disabled ? 'true' : 'false' }}"
     data-strata-select
     data-strata-field-type="select"
-    @keydown.escape="positionable.close()"
+    @keydown="!disabled && handleKeyboardNavigation($event)"
     tabindex="0"
-    {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative']) }}
+    {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative overflow-visible']) }}
 >
     <div class="hidden" hidden>
         <input
@@ -428,11 +126,11 @@ document.addEventListener('alpine:init', () => {
             {{ $attributes->only(['aria-label', 'aria-describedby']) }}
             :disabled="disabled"
             @click.prevent.stop="toggle()"
-            @keydown="handleKeydown"
+            @keydown="handleKeyboardNavigation"
             class="{{ $triggerClasses }}"
             aria-haspopup="listbox"
-            :aria-expanded="positionable.state"
-            :aria-activedescendant="positionable.state ? getActiveDescendant() : ''"
+            :aria-expanded="open"
+            :aria-activedescendant="open ? getActiveDescendant() : ''"
             :aria-multiselectable="multiple"
         >
                 <div class="flex-1 text-left truncate">
@@ -464,25 +162,23 @@ document.addEventListener('alpine:init', () => {
 
                 <x-strata::icon.chevron-down
                     class="{{ $iconSize }} text-muted-foreground transition-transform duration-150 ease-out"
-                    ::class="{ 'rotate-180': positionable.state }"
+                    ::class="{ 'rotate-180': open }"
                 />
-        </button>
 
-        <div class="absolute right-10 top-1/2 -translate-y-1/2 pointer-events-auto">
-            <x-strata::select.clear size="sm" />
-        </div>
+                <x-strata::select.clear size="sm" />
+        </button>
     </div>
 
     <div
         x-ref="dropdown"
         x-cloak
-        x-show="positionable.state"
+        x-show="open"
         :style="positionable.styles"
-        class="absolute top-0 left-0 z-50"
+        class="absolute z-50"
     >
         <div
-            x-trap.nofocus="positionable.state"
-            @click.outside="positionable.close()"
+            x-trap.nofocus="open"
+            @click.outside="close()"
             tabindex="-1"
             data-strata-select-dropdown
             class="overflow-hidden bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm ring-1 ring-black/5 dark:ring-white/10 p-0 m-0 transition-all transition-discrete duration-150 ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95 {{ $dropdownSizeClasses }}"
@@ -496,12 +192,10 @@ document.addEventListener('alpine:init', () => {
                             type="text"
                             data-strata-select-search
                             x-model="search"
-                            @keydown.down.prevent="highlightNext()"
-                            @keydown.up.prevent="highlightPrevious()"
-                            @keydown.enter.prevent="selectHighlighted()"
-                            @keydown.escape="clearSearch()"
+                            @keydown.escape="close()"
+                            @keydown.enter.prevent
                             placeholder="{{ $searchPlaceholder }}"
-                            class="w-full px-3 py-2 pr-8 text-sm bg-input border border-border rounded-md focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:border-border transition-all duration-150"
+                            class="w-full px-3 py-2 pr-8 text-sm bg-input border border-border rounded-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:border-border transition-all duration-150"
                         />
                         <template x-if="search.length > 0">
                             <x-strata::button.icon

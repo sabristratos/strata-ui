@@ -25,6 +25,7 @@
     "author": "Chaab",
     "license": "MIT",
     "dependencies": {
+        "@alpinejs/anchor": "^3.14.3",
         "@floating-ui/dom": "^1.7.4",
         "@tiptap/core": "^3.10.1",
         "@tiptap/extension-image": "^3.10.1",

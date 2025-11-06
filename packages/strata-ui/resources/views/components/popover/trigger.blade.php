@@ -6,22 +6,15 @@
 if (!$target) {
     throw new \InvalidArgumentException('Popover trigger requires a "target" prop');
 }
+
+$classes = 'inline-block cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md';
 @endphp
 
 <div
-    x-data="{
-        init() {
-            const popoverEl = document.getElementById('{{ $target }}');
-            if (popoverEl && popoverEl.__x) {
-                this.$el.firstElementChild?.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    popoverEl.__x.$data.toggle();
-                });
-            }
-        }
-    }"
+    @click.stop="toggle()"
+    tabindex="0"
     data-popover-trigger="{{ $target }}"
-    {{ $attributes->merge(['class' => '']) }}
+    {{ $attributes->merge(['class' => $classes]) }}
 >
     {{ $slot }}
 </div>

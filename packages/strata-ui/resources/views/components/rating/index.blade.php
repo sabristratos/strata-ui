@@ -95,7 +95,7 @@ $alpineData = $isInteractive ? "rating(" . json_encode($alpineConfig) . ")" : '{
                     @click="selectRating($event, starIndex)"
                     @mouseenter="hoverRating(starIndex)"
                     @mouseleave="hoveredValue = null"
-                    class="transition-all duration-150 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded"
+                    class="transition-all duration-150 hover:scale-110 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded"
                     :disabled="disabled"
                 >
                     <span class="relative inline-block">

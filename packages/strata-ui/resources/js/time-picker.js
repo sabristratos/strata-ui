@@ -11,11 +11,10 @@ export default function (props = {}) {
         ...window.createPositionableMixin({
             placement: 'bottom-start',
             offset: 8,
-            floatingRef: 'dropdown',
-            onOpen: function() {
-                this.scrollToSelected();
-            }
+            floatingRef: 'dropdown'
         }),
+
+        open: false,
         format: props.format || '12',
         initialValue: props.initialValue || null,
         stepMinutes: props.stepMinutes || 15,
@@ -111,25 +110,6 @@ export default function (props = {}) {
 
                 this.entangleable.set(value);
                 this.open = false;
-            }
-        },
-
-        scrollToSelected() {
-            if (!this.$refs.timeList) return;
-
-            const selectedValue = this.entangleable.value;
-            if (!selectedValue) return;
-
-            const buttons = this.$refs.timeList.querySelectorAll('button');
-            const selectedButton = Array.from(buttons).find(
-                (button) => button.textContent.trim() === this.display
-            );
-
-            if (selectedButton) {
-                selectedButton.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest',
-                });
             }
         },
 

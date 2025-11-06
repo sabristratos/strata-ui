@@ -27,6 +27,7 @@ document.addEventListener('alpine:init', () => {
             floatingRef: 'tooltip'
         }),
 
+        open: false,
         showTimeout: null,
         hideTimeout: null,
 
@@ -81,7 +82,7 @@ document.addEventListener('alpine:init', () => {
         :style="positionable?.styles"
         @mouseenter="show()"
         @mouseleave="hide()"
-        class="absolute top-0 left-0 z-50"
+        class="absolute z-50"
     >
         <div
             data-strata-tooltip

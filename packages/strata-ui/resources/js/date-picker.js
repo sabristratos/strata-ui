@@ -16,6 +16,8 @@ export default function (props = {}) {
             enableSize: true,
             maxHeight: true
         }),
+
+        open: false,
         mode: props.mode || 'single',
         initialValue: props.initialValue || null,
         minDate: props.minDate || null,
@@ -23,12 +25,19 @@ export default function (props = {}) {
         placeholder: props.placeholder || 'Select date',
         disabled: props.disabled || false,
         clearable: props.clearable || false,
+        chips: props.chips || false,
         display: '',
 
         init() {
             this.initEntangleable();
             this.initPositionable();
             this.display = this.computeDisplay(this.entangleable.value);
+        },
+
+        get dates() {
+            const value = this.entangleable?.get();
+            if (this.mode === 'multiple' && !value) return [];
+            return value ?? null;
         },
 
         get calendarValue() {
@@ -68,6 +77,16 @@ export default function (props = {}) {
                 return '';
             }
 
+            if (this.mode === 'multiple') {
+                if (!Array.isArray(value) || value.length === 0) return '';
+
+                if (this.chips) {
+                    return '';
+                }
+
+                return `${value.length} ${value.length === 1 ? 'date' : 'dates'}`;
+            }
+
             return '';
         },
 
@@ -80,6 +99,20 @@ export default function (props = {}) {
                     month: 'short',
                     day: 'numeric',
                     year: 'numeric',
+                }).format(date);
+            } catch (e) {
+                return dateString;
+            }
+        },
+
+        formatDateShort(dateString) {
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return dateString;
+
+                return new Intl.DateTimeFormat('en-US', {
+                    month: 'short',
+                    day: 'numeric',
                 }).format(date);
             } catch (e) {
                 return dateString;

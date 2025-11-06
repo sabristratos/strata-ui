@@ -19,7 +19,7 @@ $dropdownClasses = [
     x-cloak
     x-show="open"
     :style="positionable.styles"
-    class="absolute top-0 left-0 z-50"
+    class="absolute z-50"
     data-strata-colorpicker-dropdown
 >
     <div
