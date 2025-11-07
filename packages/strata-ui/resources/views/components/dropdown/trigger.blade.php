@@ -8,10 +8,10 @@ $classes = 'inline-block cursor-pointer focus-visible:ring-2 focus-visible:ring-
 @endphp
 
 <div
-    :popovertarget="$id('dropdown')"
+    x-popover-trigger="$id('dropdown')"
     @keydown="handleKeydown"
-    tabindex="0"
     x-ref="trigger"
+    :style="`anchor-name: --dropdown-${$id('dropdown')};`"
     aria-haspopup="true"
     :aria-expanded="open"
     {{ $attributes->merge(['class' => $classes]) }}

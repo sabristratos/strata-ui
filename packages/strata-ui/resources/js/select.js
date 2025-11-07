@@ -8,29 +8,6 @@ export default function (props = {}) {
             }
         }),
 
-        ...window.createPositionableMixin({
-            placement: 'bottom-start',
-            offset: 8,
-            floatingRef: 'dropdown',
-            enableSize: true,
-            matchReferenceWidth: true,
-            maxHeight: true,
-            onOpen: function() {
-                if (this.shouldShowSearch()) {
-                    const searchInput = this.$refs.dropdown.querySelector('[data-strata-select-search]');
-                    if (searchInput) {
-                        searchInput.focus({ preventScroll: true });
-                    }
-                } else {
-                    this.$refs.dropdown.focus({ preventScroll: true });
-                }
-            },
-            onClose: function() {
-                this.clearSearch();
-                this.$el.focus();
-            }
-        }),
-
         ...window.createKeyboardNavigationMixin({
             itemSelector: '[data-strata-select-option]:not([data-disabled])',
             itemsProperty: 'items',
@@ -93,13 +70,12 @@ export default function (props = {}) {
             return selected ? [selected.label] : [];
         },
 
-        get disabled() {
+        isDisabled() {
             return this.$el?.dataset?.disabled === 'true';
         },
 
         init() {
             this.initEntangleable();
-            this.initPositionable();
             this.initKeyboardNavigation();
 
             this.$nextTick(() => {
@@ -107,14 +83,14 @@ export default function (props = {}) {
                 this.collectKeyboardItems();
                 this.display = this.computeDisplay(this.entangleable.value);
 
-                this._optionsObserver = new MutationObserver(() => {
-                    this.collectOptions();
-                    this.collectKeyboardItems();
-                    this.display = this.computeDisplay(this.entangleable.value);
-                });
-
-                const dropdown = this.$refs.dropdown;
+                const dropdown = document.getElementById(this.$id('select-dropdown'));
                 if (dropdown) {
+                    this._optionsObserver = new MutationObserver(() => {
+                        this.collectOptions();
+                        this.collectKeyboardItems();
+                        this.display = this.computeDisplay(this.entangleable.value);
+                    });
+
                     this._optionsObserver.observe(dropdown, {
                         childList: true,
                         subtree: true
@@ -124,6 +100,28 @@ export default function (props = {}) {
 
             this.$watch('search', () => {
                 this.highlighted = -1;
+            });
+
+            this.$watch('open', (newValue) => {
+                if (newValue) {
+                    this.$nextTick(() => {
+                        if (this.shouldShowSearch()) {
+                            const dropdown = document.getElementById(this.$id('select-dropdown'));
+                            const searchInput = dropdown?.querySelector('[data-strata-select-search]');
+                            if (searchInput) {
+                                searchInput.focus({ preventScroll: true });
+                            }
+                        } else {
+                            const dropdown = document.getElementById(this.$id('select-dropdown'));
+                            if (dropdown) {
+                                dropdown.focus({ preventScroll: true });
+                            }
+                        }
+                    });
+                } else {
+                    this.clearSearch();
+                    this.$el.focus();
+                }
             });
         },
 
@@ -142,30 +140,39 @@ export default function (props = {}) {
             }));
         },
 
-        toggle() {
-            if (!this.disabled) {
+        toggleDropdown() {
+            if (!this.isDisabled()) {
                 if (!this.open) {
                     this.collectOptions();
                     this.display = this.computeDisplay(this.entangleable.value);
                 }
-                this.open = !this.open;
+                const dropdown = document.getElementById(this.$id('select-dropdown'));
+                if (dropdown) {
+                    dropdown.togglePopover();
+                }
             }
         },
 
         openIfClosed() {
-            if (!this.disabled && !this.open) {
+            if (!this.isDisabled() && !this.open) {
                 this.collectOptions();
                 this.display = this.computeDisplay(this.entangleable.value);
-                this.open = true;
+                const dropdown = document.getElementById(this.$id('select-dropdown'));
+                if (dropdown) {
+                    dropdown.showPopover();
+                }
             }
         },
 
         close() {
-            this.open = false;
+            const dropdown = document.getElementById(this.$id('select-dropdown'));
+            if (dropdown) {
+                dropdown.hidePopover();
+            }
         },
 
         select(value) {
-            if (this.disabled) return;
+            if (this.isDisabled()) return;
 
             if (this.multiple) {
                 const index = this.selected.indexOf(value);
@@ -181,13 +188,13 @@ export default function (props = {}) {
         },
 
         remove(value) {
-            if (!this.disabled && this.multiple) {
+            if (!this.isDisabled() && this.multiple) {
                 this.selected = this.selected.filter(v => v !== value);
             }
         },
 
         clear() {
-            if (!this.disabled) {
+            if (!this.isDisabled()) {
                 this.selected = this.multiple ? [] : null;
             }
         },
@@ -246,7 +253,6 @@ export default function (props = {}) {
             if (this.entangleable) {
                 this.entangleable.destroy();
             }
-            this.destroyPositionable();
         },
     };
 }

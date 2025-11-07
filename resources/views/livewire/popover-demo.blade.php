@@ -312,8 +312,8 @@
                                 <p class="text-sm font-semibold text-foreground">Are you sure?</p>
                                 <p class="text-sm text-muted-foreground">This action cannot be undone.</p>
                                 <div class="flex gap-2">
-                                    <x-strata::button wire:click="deleteItem" variant="destructive" size="sm" class="flex-1">Delete</x-strata::button>
-                                    <x-strata::button size="sm" appearance="outlined" class="flex-1" onclick="document.getElementById('delete-confirm').hidePopover()">Cancel</x-strata::button>
+                                    <x-strata::button wire:click="deleteItem" @click="$closePopover()" variant="destructive" size="sm" class="flex-1">Delete</x-strata::button>
+                                    <x-strata::button @click="$closePopover()" size="sm" appearance="outlined" class="flex-1">Cancel</x-strata::button>
                                 </div>
                             </div>
                         </x-strata::popover.content>

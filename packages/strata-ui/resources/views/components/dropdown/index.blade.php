@@ -7,9 +7,6 @@
 
 @php
 use Stratos\StrataUI\Config\ComponentSizeConfig;
-use Stratos\StrataUI\Support\ComponentHelpers;
-
-$componentId = ComponentHelpers::generateId('dropdown', $id, $attributes);
 
 $sizes = ComponentSizeConfig::dropdownSizes();
 
@@ -19,7 +16,7 @@ $sizeClasses = $sizes[$size] ?? $sizes['md'];
 @once
 <script>
 document.addEventListener('alpine:init', () => {
-    Alpine.data('strataDropdown', () => ({
+    Alpine.data('strataDropdown', (placement, offsetValue) => ({
         ...window.createKeyboardNavigationMixin({
             itemSelector: '[data-strata-dropdown-item]:not([data-disabled])',
             itemMapper: (el) => ({
@@ -59,19 +56,18 @@ document.addEventListener('alpine:init', () => {
 
         close() {
             this.open = false;
-        },
+        }
     }));
 });
 </script>
 @endonce
 
 <div
-    x-data="strataDropdown()"
+    x-data="strataDropdown('{{ $placement }}', {{ $offset }})"
     x-modelable="open"
     x-id="['dropdown']"
     x-provide="{ placement: '{{ $placement }}', offset: {{ $offset }} }"
     data-strata-dropdown
-    data-dropdown-id="{{ $componentId }}"
     @keydown="handleKeyboardNavigation"
     {{ $attributes->merge(['class' => 'relative inline-block overflow-visible']) }}
 >

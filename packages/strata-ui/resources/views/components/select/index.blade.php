@@ -59,12 +59,15 @@
     'noResultsMessage' => 'No results found',
     'emptyMessage' => 'No options available',
     'clearable' => false,
+    'placement' => 'bottom-start',
+    'offset' => 8,
 ])
 
 @php
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
 use Stratos\StrataUI\Support\ComponentHelpers;
+use Stratos\StrataUI\Support\PositioningHelper;
 
 $chips = filter_var($chips, FILTER_VALIDATE_BOOLEAN);
 
@@ -88,6 +91,11 @@ $normalizedValue = $multiple
     : $value;
 
 $componentId = ComponentHelpers::generateId('select', $id, $attributes);
+
+$positioning = PositioningHelper::getAnchorPositioning($placement, $offset);
+$positioningStyle = $positioning['style'];
+
+$animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,overlay_150ms_allow-discrete,display_150ms_allow-discrete] ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95';
 @endphp
 
 <div
@@ -99,10 +107,11 @@ $componentId = ComponentHelpers::generateId('select', $id, $attributes);
         minItemsForSearch: {{ $minItemsForSearch }},
         clearable: {{ $clearable ? 'true' : 'false' }}
     })"
+    x-id="['select-dropdown']"
     data-disabled="{{ $disabled ? 'true' : 'false' }}"
     data-strata-select
     data-strata-field-type="select"
-    @keydown="!disabled && handleKeyboardNavigation($event)"
+    @keydown="!isDisabled() && handleKeyboardNavigation($event)"
     tabindex="0"
     {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative overflow-visible']) }}
 >
@@ -119,14 +128,18 @@ $componentId = ComponentHelpers::generateId('select', $id, $attributes);
     </div>
 
     <div class="relative">
-        <button
-            type="button"
+        <div
             x-ref="trigger"
+            :style="`anchor-name: --select-${$id('select-dropdown')};`"
             data-strata-select-trigger
             {{ $attributes->only(['aria-label', 'aria-describedby']) }}
-            :disabled="disabled"
-            @click.prevent.stop="toggle()"
+            @click.prevent.stop="!isDisabled() && toggleDropdown()"
+            @keydown.enter.prevent="!isDisabled() && toggleDropdown()"
+            @keydown.space.prevent="!isDisabled() && toggleDropdown()"
             @keydown="handleKeyboardNavigation"
+            role="button"
+            tabindex="0"
+            :aria-disabled="isDisabled()"
             class="{{ $triggerClasses }}"
             aria-haspopup="listbox"
             :aria-expanded="open"
@@ -166,25 +179,24 @@ $componentId = ComponentHelpers::generateId('select', $id, $attributes);
                 />
 
                 <x-strata::select.clear size="sm" />
-        </button>
+        </div>
     </div>
 
     <div
-        x-ref="dropdown"
-        x-cloak
-        x-show="open"
-        :style="positionable.styles"
-        class="absolute z-50"
+        :id="$id('select-dropdown')"
+        popover="auto"
+        @toggle="open = $event.newState === 'open'"
+        :style="`{{ $positioningStyle }} position-anchor: --select-${$id('select-dropdown')};`"
+        data-strata-select-content
+        data-placement="{{ $placement }}"
+        x-trap.nofocus="open"
+        tabindex="-1"
+        data-strata-select-dropdown
+        wire:ignore.self
+        class="overflow-hidden bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm ring-1 ring-black/5 dark:ring-white/10 p-0 m-0 {{ $animationClasses }} {{ $dropdownSizeClasses }}"
+        role="listbox"
+        :aria-multiselectable="multiple"
     >
-        <div
-            x-trap.nofocus="open"
-            @click.outside="close()"
-            tabindex="-1"
-            data-strata-select-dropdown
-            class="overflow-hidden bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm ring-1 ring-black/5 dark:ring-white/10 p-0 m-0 transition-all transition-discrete duration-150 ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95 {{ $dropdownSizeClasses }}"
-            role="listbox"
-            :aria-multiselectable="multiple"
-        >
             <template x-if="shouldShowSearch()">
                 <div class="sticky top-0 z-10 bg-popover border-b border-border p-2">
                     <div class="relative">
@@ -232,6 +244,5 @@ $componentId = ComponentHelpers::generateId('select', $id, $attributes);
                     {{ $slot }}
                 </div>
             </div>
-        </div>
     </div>
 </div>

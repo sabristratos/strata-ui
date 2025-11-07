@@ -3,7 +3,7 @@
 ])
 
 <div
-    x-show="clearable && hasSelection() && !disabled"
+    x-show="clearable && hasSelection() && !isDisabled()"
     x-cloak
 >
     <x-strata::button.icon

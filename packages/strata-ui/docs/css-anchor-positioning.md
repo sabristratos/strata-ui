@@ -31,15 +31,13 @@ npm install @oddbird/css-anchor-positioning
 
 ### Initialization
 
-**Critical**: The polyfill must be explicitly invoked, not just imported.
+The polyfill is automatically loaded when the browser doesn't support CSS anchor positioning.
 
 ```javascript
-// ❌ WRONG - doesn't apply the polyfill
-import '@oddbird/css-anchor-positioning/fn';
-
-// ✅ CORRECT - explicitly invokes the polyfill
-import polyfill from '@oddbird/css-anchor-positioning/fn';
-polyfill();
+// Auto-load polyfill for browsers without native support
+if (!CSS.supports('anchor-name', '--test')) {
+    import('@oddbird/css-anchor-positioning');
+}
 ```
 
 **Location**: `packages/strata-ui/resources/js/strata.js`
@@ -207,104 +205,164 @@ position-try-fallbacks: top, bottom, left;
 
 ## Working Implementation
 
-### HTML Structure
+### Strata UI Approach
+
+Strata UI uses a centralized approach with:
+- **PositioningHelper** PHP class for consistent placement calculations
+- **Global CSS fallbacks** via `data-placement` attribute
+- **Dynamic anchor names** using Alpine's `x-id()` for unique instances
+
+### HTML Structure (Popover Example)
 
 ```blade
-{{-- Trigger button with anchor name --}}
-<x-strata::button
-    popovertarget="my-popover"
-    style="anchor-name: --my-anchor;"
->
-    Open Popover
-</x-strata::button>
+{{-- Popover wrapper with Alpine x-id for unique identification --}}
+<x-strata::popover placement="bottom-start">
+    {{-- Trigger with dynamic anchor-name --}}
+    <x-strata::popover.trigger>
+        <x-strata::button>Open Menu</x-strata::button>
+    </x-strata::popover.trigger>
 
-{{-- Popover with position anchor --}}
+    {{-- Content with position-anchor and placement attribute --}}
+    <x-strata::popover.content>
+        Popover content
+    </x-strata::popover.content>
+</x-strata::popover>
+```
+
+### Generated HTML
+
+```html
+<!-- Trigger sets unique anchor-name using Alpine $id() -->
 <div
-    id="my-popover"
+    x-popover-trigger="popover-1"
+    style="anchor-name: --popover-popover-1;"
+>
+    <button>Open Menu</button>
+</div>
+
+<!-- Content anchors to trigger and uses data-placement for fallbacks -->
+<div
+    id="popover-1"
     popover="auto"
-    data-placement="bottom"
-    style="position-anchor: --my-anchor;"
+    data-placement="bottom-start"
+    style="
+        position: absolute;
+        inset: auto;
+        margin-top: 8px;
+        top: anchor(bottom);
+        left: anchor(left);
+        position-anchor: --popover-popover-1;
+    "
 >
     Popover content
 </div>
 ```
 
-### CSS Implementation
+### PositioningHelper PHP Class
+
+The `PositioningHelper` class centralizes all placement-to-CSS mapping logic:
+
+```php
+// packages/strata-ui/src/Support/PositioningHelper.php
+namespace Stratos\StrataUI\Support;
+
+class PositioningHelper
+{
+    public static function getAnchorPositioning(string $placement, int $offset = 8): array
+    {
+        [$insetProperty, $anchorSide, $alignProperty, $alignSide, $marginProperty] = match ($placement) {
+            'bottom-start' => ['top', 'bottom', 'left', 'left', 'margin-top'],
+            'bottom-end' => ['top', 'bottom', 'right', 'right', 'margin-top'],
+            'bottom' => ['top', 'bottom', 'left', 'left', 'margin-top'],
+            'top-start' => ['bottom', 'top', 'left', 'left', 'margin-bottom'],
+            'top-end' => ['bottom', 'top', 'right', 'right', 'margin-bottom'],
+            'top' => ['bottom', 'top', 'left', 'left', 'margin-bottom'],
+            'right-start' => ['left', 'right', 'top', 'top', 'margin-left'],
+            'right-end' => ['left', 'right', 'bottom', 'bottom', 'margin-left'],
+            'right' => ['left', 'right', 'top', 'top', 'margin-left'],
+            'left-start' => ['right', 'left', 'top', 'top', 'margin-right'],
+            'left-end' => ['right', 'left', 'bottom', 'bottom', 'margin-right'],
+            'left' => ['right', 'left', 'top', 'top', 'margin-right'],
+            default => ['top', 'bottom', 'left', 'left', 'margin-top'],
+        };
+
+        $style = "position: absolute; inset: auto; {$marginProperty}: {$offset}px; {$insetProperty}: anchor({$anchorSide}); {$alignProperty}: anchor({$alignSide});";
+
+        return [
+            'style' => $style,
+            'insetProperty' => $insetProperty,
+            'anchorSide' => $anchorSide,
+            'alignProperty' => $alignProperty,
+            'alignSide' => $alignSide,
+        ];
+    }
+}
+```
+
+### Global CSS Fallbacks
+
+Global fallbacks defined in `anchor-positioning.css` apply to ANY element with `data-placement` attribute:
 
 ```css
-/* Base popover styles */
-[popover] {
-    position: absolute;
+/* File: packages/strata-ui/resources/css/anchor-positioning.css */
+
+/* Bottom-start fallback sequence */
+@position-try --fallback-bottom-start-1 {
     inset: auto;
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
-
-/* Bottom placement with all inset properties explicit */
-[popover].popover-placement-bottom {
-    top: anchor(bottom);
-    bottom: auto;
-    left: anchor(left);
-    right: auto;
-    position-try-fallbacks: --try-top, --try-left, --try-right;
-}
-
-/* Fallback: Position above anchor */
-@position-try --try-top {
-    top: auto;
+    margin-bottom: 8px;
     bottom: anchor(top);
     left: anchor(left);
-    right: auto;
 }
 
-/* Fallback: Position to left of anchor */
-@position-try --try-left {
-    top: anchor(top);
-    bottom: auto;
-    left: auto;
-    right: anchor(left);
-}
-
-/* Fallback: Position to right of anchor */
-@position-try --try-right {
-    top: anchor(top);
-    bottom: auto;
+@position-try --fallback-bottom-start-2 {
+    inset: auto;
+    margin-left: 4px;
     left: anchor(right);
-    right: auto;
+    top: anchor(top);
 }
+
+@position-try --fallback-bottom-start-3 {
+    inset: auto;
+    margin-right: 4px;
+    right: anchor(left);
+    top: anchor(top);
+}
+
+/* Global selector - works for dropdowns, popovers, tooltips, etc. */
+[data-placement="bottom-start"] {
+    position-try-fallbacks:
+        --fallback-bottom-start-1,
+        --fallback-bottom-start-2,
+        --fallback-bottom-start-3;
+}
+
+/* All 12 placements defined with intelligent fallback sequences */
+[data-placement="top"] { ... }
+[data-placement="top-start"] { ... }
+[data-placement="top-end"] { ... }
+[data-placement="bottom"] { ... }
+[data-placement="bottom-end"] { ... }
+[data-placement="left"] { ... }
+[data-placement="left-start"] { ... }
+[data-placement="left-end"] { ... }
+[data-placement="right"] { ... }
+[data-placement="right-start"] { ... }
+[data-placement="right-end"] { ... }
 ```
 
-### Complete Placement Example
+### Fallback Strategy
 
-```css
-/* Top placement */
-[popover].popover-placement-top {
-    top: auto;
-    bottom: anchor(top);
-    left: anchor(left);
-    right: auto;
-    position-try-fallbacks: --try-bottom, --try-left, --try-right;
-}
+Each placement has 3 intelligent fallback positions:
 
-/* Left placement */
-[popover].popover-placement-left {
-    top: anchor(top);
-    bottom: auto;
-    left: auto;
-    right: anchor(left);
-    position-try-fallbacks: --try-right, --try-top, --try-bottom;
-}
+1. **Flip on primary axis** - Bottom → Top (maintain alignment)
+2. **Try adjacent placements** - Bottom → Right/Left (maintain axis when possible)
+3. **Flip to perpendicular axis** - Bottom → Opposite side (last resort)
 
-/* Right placement */
-[popover].popover-placement-right {
-    top: anchor(top);
-    bottom: auto;
-    left: anchor(right);
-    right: auto;
-    position-try-fallbacks: --try-left, --try-top, --try-bottom;
-}
-```
+Example for `bottom-start`:
+- Primary: Below trigger, left-aligned
+- Fallback 1: Above trigger, left-aligned (flip vertical)
+- Fallback 2: Right of trigger, top-aligned (try horizontal)
+- Fallback 3: Left of trigger, top-aligned (opposite horizontal)
 
 ## Troubleshooting
 
@@ -364,14 +422,69 @@ The `@oddbird/css-anchor-positioning` polyfill provides support for:
 
 **Recommendation**: Use explicit `anchor()` functions instead of `position-area` for maximum polyfill compatibility.
 
+## Alpine Magic Helpers
+
+Strata UI provides global Alpine magic helpers for easy interaction with positioned elements:
+
+```javascript
+// packages/strata-ui/resources/js/alpine-helpers.js
+document.addEventListener('alpine:init', () => {
+    // Close nearest popover
+    Alpine.magic('closePopover', (el) => {
+        return () => {
+            const popoverContent = el.closest('[data-strata-popover-content]');
+            if (popoverContent) {
+                popoverContent.hidePopover();
+            }
+        };
+    });
+
+    // Close nearest dropdown
+    Alpine.magic('closeDropdown', (el) => {
+        return () => {
+            const dropdownContent = el.closest('[data-strata-dropdown-content]');
+            if (dropdownContent) {
+                dropdownContent.hidePopover();
+            }
+        };
+    });
+
+    // Close nearest modal/dialog
+    Alpine.magic('closeModal', (el) => {
+        return () => {
+            const dialog = el.closest('dialog[open]');
+            if (dialog) {
+                dialog.close();
+            }
+        };
+    });
+});
+```
+
+### Usage
+
+```blade
+{{-- In popover content --}}
+<button @click="$closePopover()">Close</button>
+<button wire:click="delete" @click="$closePopover()">Delete</button>
+
+{{-- In dropdown content --}}
+<x-strata::dropdown.item @click="$closeDropdown()">Action</x-strata::dropdown.item>
+
+{{-- In modal/dialog --}}
+<button @click="$closeModal()">Cancel</button>
+```
+
 ## Best Practices
 
-1. **Always use `anchor()` functions** for positioning instead of `position-area` when using the polyfill
-2. **Explicitly define all four inset properties** in both base and fallback rules
-3. **Use `auto` for reset values** instead of `revert`
-4. **Test fallback behavior** by resizing the viewport to trigger overflow
-5. **Consider native support**: Once browser support is widespread (likely 2026+), we can remove the polyfill and potentially use `position-area` directly
-6. **Avoid prop name conflicts**: Don't use common HTML attribute names as component props
+1. **Use PositioningHelper** for all placement calculations to maintain consistency
+2. **Add `data-placement` attribute** to enable global CSS fallbacks on any positioned element
+3. **Use Alpine `x-id()`** for dynamic anchor names to ensure uniqueness across multiple instances
+4. **Use directional margins** (`margin-top`, `margin-bottom`, etc.) instead of uniform `margin`
+5. **Leverage magic helpers** (`$closePopover()`, `$closeDropdown()`, etc.) for clean component interactions
+6. **Test fallback behavior** by resizing the viewport to trigger overflow
+7. **Consider native support**: Once browser support is widespread (likely 2026+), we can remove the polyfill
+8. **Avoid prop name conflicts**: Don't use common HTML attribute names as component props
 
 ## Future Considerations
 

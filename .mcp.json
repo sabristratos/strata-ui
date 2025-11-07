@@ -13,7 +13,7 @@
                 "C:/Users/chaab/.config/herd/bin/herd-mcp.phar"
             ],
             "env": {
-                "SITE_PATH": "C:\\Users\\chaab\\Herd\\strata-ui"
+                "SITE_PATH": "C:\\Work\\Swift\\strata"
             }
         }
     }

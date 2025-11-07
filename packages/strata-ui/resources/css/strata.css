@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./theme.css";
 @import "./lightbox.css";
+@import "./anchor-positioning.css";
 @plugin "@tailwindcss/typography";
 
 @layer base {

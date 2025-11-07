@@ -5,11 +5,13 @@
  * Modules: Entangleable, Positionable, Image, Slider, Editor, DatePicker, TimePicker, ColorPicker, Lightbox, Toast API
  */
 
-import anchor from '@alpinejs/anchor';
+// CSS Anchor Positioning Polyfill
+if (!CSS.supports('anchor-name', '--test')) {
+    import('@oddbird/css-anchor-positioning');
+}
+
 import Entangleable from './entangleable.js';
-import Positionable from './positionable.js';
 import { createEntangleableMixin } from './entangleable-mixin.js';
-import { createPositionableMixin } from './positionable-mixin.js';
 import { createKeyboardNavigationMixin } from './keyboard-navigation-mixin.js';
 import Image from './image.js';
 import Slider from './slider.js';
@@ -19,10 +21,12 @@ import TimePicker from './time-picker.js';
 import ColorPicker from './color-picker.js';
 import RangeSlider from './range-slider.js';
 import Select from './select.js';
+import popoverTrigger from './popover-trigger.js';
 import './lightbox.js';
+import './alpine-helpers.js';
 
 document.addEventListener('alpine:init', () => {
-    window.Alpine.plugin(anchor);
+    popoverTrigger(window.Alpine);
 });
 
 /**
@@ -42,22 +46,10 @@ if (typeof window !== 'undefined') {
     window.StrataEntangleable = Entangleable;
 
     /**
-     * Floating UI positioning for dropdowns/popovers/tooltips
-     * @type {typeof Positionable}
-     */
-    window.StrataPositionable = Positionable;
-
-    /**
      * Create Entangleable mixin for Alpine components
      * @type {function}
      */
     window.createEntangleableMixin = createEntangleableMixin;
-
-    /**
-     * Create Positionable mixin for Alpine components
-     * @type {function}
-     */
-    window.createPositionableMixin = createPositionableMixin;
 
     /**
      * Create Keyboard Navigation mixin for Alpine components
