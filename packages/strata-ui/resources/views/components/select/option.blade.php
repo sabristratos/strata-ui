@@ -21,7 +21,7 @@ $optionAttributes = $attributes->except(['class']);
 @endphp
 
 <div
-    :id="$id('option-{{ $value }}')"
+    id="option-{{ $value }}"
     data-strata-select-option
     data-value="{{ $value }}"
     @if($disabled) data-disabled @endif
@@ -29,7 +29,7 @@ $optionAttributes = $attributes->except(['class']);
     {{ $optionAttributes->merge(['class' => $classes]) }}
     :class="{
         '{{ $selectedClasses }}': isSelected('{{ $value }}'),
-        'ring-2 ring-inset ring-primary/50': highlighted === options.findIndex(opt => opt.value === '{{ $value }}' && !opt.disabled)
+        'ring-2 ring-inset ring-primary/50': filteredOptions[highlighted]?.value === '{{ $value }}'
     }"
     x-show="filteredOptions.some(opt => opt.value === '{{ $value }}')"
     role="option"

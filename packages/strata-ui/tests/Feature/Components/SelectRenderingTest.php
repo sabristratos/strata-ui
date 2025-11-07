@@ -131,7 +131,7 @@ describe('Select Component', function () {
     test('trigger has aria attributes', function () use ($slot) {
         expectComponent('select', [], $slot)
             ->toContain('aria-haspopup="listbox"')
-            ->toContain(':aria-expanded="positionable.state"');
+            ->toContain(':aria-expanded="open"');
     });
 
     test('dropdown has listbox role', function () use ($slot) {
@@ -165,14 +165,9 @@ describe('Select Component', function () {
             ->toContain('@keydown="handleKeydown"');
     });
 
-    test('dropdown closes on click outside', function () use ($slot) {
+    test('dropdown uses native popover API', function () use ($slot) {
         expectComponent('select', [], $slot)
-            ->toContain('@click.outside="positionable.close()"');
-    });
-
-    test('dropdown closes on escape key', function () use ($slot) {
-        expectComponent('select', [], $slot)
-            ->toContain('@keydown.escape="positionable.close()"');
+            ->toContain('popover="auto"');
     });
 
     test('trigger has hover effect when not disabled', function () use ($slot) {
@@ -207,9 +202,9 @@ describe('Select Component', function () {
             ->toContain('focus:ring-ring');
     });
 
-    test('dropdown has positioned styles binding', function () use ($slot) {
+    test('dropdown has CSS anchor positioning', function () use ($slot) {
         expectComponent('select', [], $slot)
-            ->toContain(':style="positionable.styles"');
+            ->toContain('position-anchor:');
     });
 
     test('dropdown has transition classes', function () use ($slot) {

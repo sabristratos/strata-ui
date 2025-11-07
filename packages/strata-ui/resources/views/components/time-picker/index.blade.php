@@ -1,3 +1,68 @@
+{{--
+/**
+ * Time Picker Component
+ *
+ * Interactive time selection component with keyboard navigation, presets, and constraints.
+ * Uses Popover API for top-layer management and CSS Anchor Positioning for layout.
+ *
+ * @props
+ * @prop string|null $id - Unique component ID (default: auto-generated)
+ * @prop string|null $name - Form input name (default: null)
+ * @prop string $format - Time format: '12'|'24' (default: '12')
+ * @prop string|null $value - Selected time in HH:MM format (default: null)
+ * @prop int $stepMinutes - Minute interval for time list: 15|30|60 (default: 15)
+ * @prop string|null $minTime - Minimum selectable time in HH:MM format (default: null)
+ * @prop string|null $maxTime - Maximum selectable time in HH:MM format (default: null)
+ * @prop array $disabledTimes - Array of disabled times in HH:MM format (default: [])
+ * @prop bool $showPresets - Show preset time buttons (Now, Morning, Noon, etc.) (default: false)
+ * @prop string $placeholder - Placeholder text (default: 'Select time')
+ * @prop string $state - Validation state: 'default'|'success'|'error'|'warning' (default: 'default')
+ * @prop string $size - Component size: 'sm'|'md'|'lg' (default: 'md')
+ * @prop bool $disabled - Disable the time picker (default: false)
+ * @prop bool $readonly - Make time picker read-only (default: false)
+ * @prop bool $required - Mark as required field (default: false)
+ * @prop bool $clearable - Show clear button to reset selection (default: true)
+ * @prop string $placement - Popover placement: 'bottom-start'|'bottom-end'|'top-start'|'top-end' (default: 'bottom-start')
+ * @prop int $offset - Offset from anchor element in pixels (default: 8)
+ *
+ * @slots
+ * @slot default - Not used, times are generated automatically
+ *
+ * @example Basic usage
+ * <x-strata::time-picker wire:model="meetingTime" />
+ *
+ * @example 24-hour format with 30-minute steps
+ * <x-strata::time-picker
+ *     wire:model="appointmentTime"
+ *     format="24"
+ *     :step-minutes="30"
+ * />
+ *
+ * @example Business hours only (9 AM - 5 PM)
+ * <x-strata::time-picker
+ *     wire:model="workTime"
+ *     min-time="09:00"
+ *     max-time="17:00"
+ *     placeholder="Select business hours"
+ * />
+ *
+ * @example With presets for quick selection
+ * <x-strata::time-picker
+ *     wire:model="reminderTime"
+ *     :show-presets="true"
+ *     :clearable="true"
+ * />
+ *
+ * @example Required field with validation
+ * <x-strata::time-picker
+ *     wire:model="requiredTime"
+ *     :required="true"
+ *     state="error"
+ *     placeholder="Time is required"
+ * />
+ */
+--}}
+
 @props([
     'id' => null,
     'name' => null,
@@ -12,13 +77,18 @@
     'state' => 'default',
     'size' => 'md',
     'disabled' => false,
+    'readonly' => false,
+    'required' => false,
     'clearable' => true,
+    'placement' => 'bottom-start',
+    'offset' => 8,
 ])
 
 @php
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
 use Stratos\StrataUI\Support\ComponentHelpers;
+use Stratos\StrataUI\Support\PositioningHelper;
 
 $componentId = ComponentHelpers::generateId('time-picker', $id, $attributes);
 
@@ -35,6 +105,11 @@ if ($value instanceof \Stratos\StrataUI\Data\TimeValue) {
 } else {
     $initialValue = $value;
 }
+
+$positioning = PositioningHelper::getAnchorPositioning($placement, $offset);
+$positioningStyle = $positioning['style'];
+
+$animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,overlay_150ms_allow-discrete,display_150ms_allow-discrete] ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95';
 @endphp
 
 <div
@@ -47,10 +122,14 @@ if ($value instanceof \Stratos\StrataUI\Data\TimeValue) {
         disabledTimes: {{ json_encode($disabledTimes) }},
         placeholder: '{{ $placeholder }}',
         disabled: {{ $disabled ? 'true' : 'false' }},
+        readonly: {{ $readonly ? 'true' : 'false' }},
+        required: {{ $required ? 'true' : 'false' }},
         clearable: {{ $clearable ? 'true' : 'false' }},
     })"
+    x-id="['timepicker-dropdown']"
     data-strata-timepicker
     data-strata-field-type="time"
+    data-disabled="{{ $disabled ? 'true' : 'false' }}"
     {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative overflow-visible']) }}
 >
     <div class="hidden" hidden>
@@ -65,24 +144,23 @@ if ($value instanceof \Stratos\StrataUI\Data\TimeValue) {
         />
     </div>
 
-    <div class="relative">
-        <x-strata::time-picker.trigger
-            :component-id="$componentId"
-            :size="$size"
-            :state="$state"
-            :disabled="$disabled"
-            :clearable="$clearable"
-            :size-classes="$sizeClasses"
-            :state-classes="$stateClasses"
-        />
-
-        <div class="absolute right-10 top-1/2 -translate-y-1/2 pointer-events-auto">
-            <x-strata::time-picker.clear size="sm" />
-        </div>
-    </div>
+    <x-strata::time-picker.trigger
+        :component-id="$componentId"
+        :size="$size"
+        :state="$state"
+        :disabled="$disabled"
+        :readonly="$readonly"
+        :required="$required"
+        :clearable="$clearable"
+        :size-classes="$sizeClasses"
+        :state-classes="$stateClasses"
+    />
 
     <x-strata::time-picker.dropdown
         :format="$format"
         :show-presets="$showPresets"
+        :positioning-style="$positioningStyle"
+        :animation-classes="$animationClasses"
+        :placement="$placement"
     />
 </div>

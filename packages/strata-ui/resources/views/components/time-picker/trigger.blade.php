@@ -16,15 +16,21 @@ if ($disabled) {
 
 <div
     {{ $attributes->merge(['class' => implode(' ', $triggerClasses)]) }}
-    @click="disabled ? null : (open = true)"
     x-ref="trigger"
-    tabindex="{{ $disabled ? '-1' : '0' }}"
-    @keydown.enter.prevent="disabled ? null : (open = true)"
-    @keydown.space.prevent="disabled ? null : (open = true)"
-    role="button"
-    aria-haspopup="true"
+    :style="`anchor-name: --timepicker-${$id('timepicker-dropdown')};`"
+    @click.prevent.stop="isDisabled() ? null : toggleDropdown()"
+    @keydown.enter.prevent="isDisabled() ? null : toggleDropdown()"
+    @keydown.space.prevent="isDisabled() ? null : toggleDropdown()"
+    @keydown="!isDisabled() && handleKeyboardNavigation($event)"
+    :tabindex="isDisabled() ? -1 : 0"
+    role="combobox"
+    aria-haspopup="listbox"
     :aria-expanded="open"
-    :aria-disabled="disabled"
+    :aria-disabled="isDisabled()"
+    :aria-controls="$id('timepicker-dropdown')"
+    :aria-activedescendant="open ? getActiveDescendant() : ''"
+    :aria-readonly="readonly"
+    :aria-required="required"
 >
     <x-strata::icon.clock
         class="w-5 h-5 shrink-0 text-muted-foreground"
@@ -43,6 +49,8 @@ if ($disabled) {
             class="text-muted-foreground"
         ></span>
     </div>
+
+    <x-strata::time-picker.clear size="sm" />
 
     <x-strata::icon.chevron-down
         class="w-5 h-5 shrink-0 text-muted-foreground transition-transform duration-150 ease-out"

@@ -1,12 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(powershell -Command \"php vendor/bin/pint packages/strata-ui/resources/views/components/popover/\")",
-      "Bash(move:*)",
-      "Bash(powershell:*)",
-      "Bash(cmd /c php vendor/bin/pint packages/strata-ui/resources/views/components/select/index.blade.php)",
-      "Bash(dir \"C:\\Work\\Swift\\strata\\packages\\strata-ui\\resources\\views\\components\" /b /a:d)",
-      "Bash(dir \"C:\\Work\\Swift\\strata\\packages\\strata-ui\\resources\\views\\components\\badge\" /b)"
+      "Bash(Select-Object -First 20 -ExpandProperty FullName)",
+      "Bash(powershell -Command \"php artisan test --filter=TimePickerRenderingTest\")",
+      "Bash(powershell -Command \"php vendor/bin/pint packages/strata-ui/resources/views/components/time-picker/\")",
+      "Bash(powershell -Command \"php artisan make:livewire TimePickerDemo --no-interaction\")",
+      "Bash(powershell -Command \"php vendor/bin/pint app/Livewire/TimePickerDemo.php\")",
+      "Bash(powershell -Command \"php vendor/bin/pint resources/views/livewire/time-picker-demo.blade.php\")",
+      "Bash(nul)",
+      "Bash(powershell -Command \"php vendor/bin/pint packages/strata-ui/src/View/Components/Select.php packages/strata-ui/src/Config/ComponentSizeConfig.php packages/strata-ui/resources/views/components/select/index.blade.php packages/strata-ui/resources/views/components/select/option.blade.php packages/strata-ui/resources/views/components/select/group.blade.php packages/strata-ui/tests/Feature/Components/SelectRenderingTest.php\")",
+      "Bash(powershell -Command \"php vendor/bin/pint packages/strata-ui/resources/views/components/time-picker/ packages/strata-ui/resources/js/time-picker.js\")"
     ],
     "deny": [],
     "ask": []

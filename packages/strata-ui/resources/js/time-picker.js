@@ -8,10 +8,32 @@ export default function (props = {}) {
             }
         }),
 
-        ...window.createPositionableMixin({
-            placement: 'bottom-start',
-            offset: 8,
-            floatingRef: 'dropdown'
+        ...window.createKeyboardNavigationMixin({
+            itemSelector: '[data-strata-time-option]:not([disabled])',
+            itemsProperty: 'timeItems',
+            highlightedProperty: 'highlighted',
+            openProperty: 'open',
+            enableTypeahead: false,
+            onActivate: function(item) {
+                if (item.value) {
+                    this.selectTime(item.value);
+                }
+            },
+            onClose: function() {
+                const dropdown = document.getElementById(this.$id('timepicker-dropdown'));
+                if (dropdown) {
+                    dropdown.hidePopover();
+                }
+            },
+            generateItemId: (item, index) => `time-option-${index}`,
+            collectItems: function() {
+                return this.times.map((time, index) => ({
+                    value: time.value,
+                    label: time.label,
+                    disabled: time.disabled,
+                    element: null
+                }));
+            }
         }),
 
         open: false,
@@ -23,13 +45,46 @@ export default function (props = {}) {
         disabledTimes: props.disabledTimes || [],
         placeholder: props.placeholder || 'Select time',
         disabled: props.disabled || false,
+        readonly: props.readonly || false,
+        required: props.required || false,
         clearable: props.clearable || false,
         display: '',
+        _disabledObserver: null,
 
         init() {
             this.initEntangleable();
-            this.initPositionable();
+            this.initKeyboardNavigation();
             this.display = this.computeDisplay(this.entangleable.value);
+
+            this.disabled = this.$el?.dataset?.disabled === 'true';
+
+            this._disabledObserver = new MutationObserver((mutations) => {
+                for (const mutation of mutations) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'data-disabled') {
+                        this.disabled = this.$el?.dataset?.disabled === 'true';
+                    }
+                }
+            });
+
+            this._disabledObserver.observe(this.$el, {
+                attributes: true,
+                attributeFilter: ['data-disabled']
+            });
+
+            this.$watch('open', (isOpen) => {
+                if (isOpen) {
+                    this.$nextTick(() => {
+                        this.collectKeyboardItems();
+                        this.scrollToSelected();
+                        this.focusTimeList();
+                    });
+                } else {
+                    this.highlighted = -1;
+                    this.$nextTick(() => {
+                        this.$refs.trigger?.focus();
+                    });
+                }
+            });
         },
 
         get times() {
@@ -81,9 +136,23 @@ export default function (props = {}) {
             return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
         },
 
+        toggleDropdown() {
+            const dropdown = document.getElementById(this.$id('timepicker-dropdown'));
+            if (dropdown) {
+                if (this.open) {
+                    dropdown.hidePopover();
+                } else {
+                    dropdown.showPopover();
+                }
+            }
+        },
+
         selectTime(timeValue) {
             this.entangleable.set(timeValue);
-            this.open = false;
+            const dropdown = document.getElementById(this.$id('timepicker-dropdown'));
+            if (dropdown) {
+                dropdown.hidePopover();
+            }
         },
 
         selectPreset(presetName) {
@@ -109,24 +178,65 @@ export default function (props = {}) {
                 }
 
                 this.entangleable.set(value);
-                this.open = false;
+                const dropdown = document.getElementById(this.$id('timepicker-dropdown'));
+                if (dropdown) {
+                    dropdown.hidePopover();
+                }
             }
         },
 
         clear() {
             this.entangleable.set(null);
-            this.open = false;
+            const dropdown = document.getElementById(this.$id('timepicker-dropdown'));
+            if (dropdown) {
+                dropdown.hidePopover();
+            }
         },
 
-        hasValue() {
+        hasSelection() {
             return this.entangleable.value !== null && this.entangleable.value !== '';
+        },
+
+        isDisabled() {
+            return this.disabled === true || this.readonly === true;
+        },
+
+        scrollToSelected() {
+            const timeList = this.$refs.timeList;
+            if (!timeList) return;
+
+            const selectedValue = this.entangleable.value;
+            if (!selectedValue) {
+                const currentTime = this.times.find(t => t.isCurrent);
+                if (currentTime) {
+                    const currentIndex = this.times.indexOf(currentTime);
+                    const currentButton = timeList.querySelector(`[data-strata-time-option]:nth-child(${currentIndex + 1})`);
+                    currentButton?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                }
+                return;
+            }
+
+            const selectedIndex = this.times.findIndex(t => t.value === selectedValue);
+            if (selectedIndex !== -1) {
+                const selectedButton = timeList.querySelector(`[data-strata-time-option]:nth-child(${selectedIndex + 1})`);
+                selectedButton?.scrollIntoView({ block: 'center', behavior: 'instant' });
+            }
+        },
+
+        focusTimeList() {
+            const timeList = this.$refs.timeList;
+            if (timeList) {
+                timeList.focus();
+            }
         },
 
         destroy() {
             if (this.entangleable) {
                 this.entangleable.destroy();
             }
-            this.destroyPositionable();
+            if (this._disabledObserver) {
+                this._disabledObserver.disconnect();
+            }
         },
     };
 }

@@ -37,7 +37,10 @@ export default function (props = {}) {
         clearable: props.clearable || false,
         search: '',
         display: '',
-        disabled: false,
+        disabled: props.disabled || false,
+        readonly: props.readonly || false,
+        loading: props.loading || false,
+        maxSelected: props.maxSelected || null,
         _optionsObserver: null,
         _disabledObserver: null,
 
@@ -73,7 +76,7 @@ export default function (props = {}) {
         },
 
         isDisabled() {
-            return this.disabled === true;
+            return this.disabled === true || this.readonly === true;
         },
 
         init() {
@@ -200,6 +203,9 @@ export default function (props = {}) {
                 if (index > -1) {
                     this.selected = this.selected.filter(v => v !== value);
                 } else {
+                    if (this.maxSelected && this.selected.length >= this.maxSelected) {
+                        return;
+                    }
                     this.selected = [...this.selected, value];
                 }
             } else {

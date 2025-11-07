@@ -45,22 +45,8 @@
 
 @props([
     'id' => null,
-    'multiple' => false,
-    'size' => 'md',
-    'state' => 'default',
-    'placeholder' => 'Select an option',
-    'disabled' => false,
     'name' => null,
-    'value' => null,
-    'chips' => false,
-    'searchable' => false,
     'minItemsForSearch' => 0,
-    'searchPlaceholder' => 'Search...',
-    'noResultsMessage' => 'No results found',
-    'emptyMessage' => 'No options available',
-    'clearable' => false,
-    'placement' => 'bottom-start',
-    'offset' => 8,
 ])
 
 @php
@@ -68,8 +54,6 @@ use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
 use Stratos\StrataUI\Support\ComponentHelpers;
 use Stratos\StrataUI\Support\PositioningHelper;
-
-$chips = filter_var($chips, FILTER_VALIDATE_BOOLEAN);
 
 $itemsAlignment = $chips ? 'items-start' : 'items-center';
 $baseClasses = 'w-full inline-flex justify-between gap-2 bg-input border rounded-lg transition-all duration-150 inset-shadow-sm';
@@ -80,9 +64,15 @@ $dropdownSizeClasses = $sizes[$size]['dropdown'] ?? $sizes['md']['dropdown'];
 
 $stateClasses = ComponentStateConfig::focusableStates();
 
-$disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary/50';
+$disabledClasses = ($disabled || $readonly) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary/50';
 
-$triggerClasses = $baseClasses . ' ' . $itemsAlignment . ' ' . ($sizes[$size]['trigger'] ?? $sizes['md']['trigger']) . ' ' . ($stateClasses[$state] ?? $stateClasses['default']) . ' ' . $disabledClasses;
+$triggerClasses = implode(' ', [
+    $baseClasses,
+    $itemsAlignment,
+    $sizes[$size]['trigger'] ?? $sizes['md']['trigger'],
+    $stateClasses[$state] ?? $stateClasses['default'],
+    $disabledClasses,
+]);
 
 $iconSize = $sizes[$size]['icon'] ?? $sizes['md']['icon'];
 
@@ -105,10 +95,15 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         chips: {{ $chips ? 'true' : 'false' }},
         searchable: {{ $searchable ? 'true' : 'false' }},
         minItemsForSearch: {{ $minItemsForSearch }},
-        clearable: {{ $clearable ? 'true' : 'false' }}
+        clearable: {{ $clearable ? 'true' : 'false' }},
+        disabled: {{ $disabled ? 'true' : 'false' }},
+        readonly: {{ $readonly ? 'true' : 'false' }},
+        loading: {{ $loading ? 'true' : 'false' }},
+        maxSelected: {{ $maxSelected ?? 'null' }}
     })"
     x-id="['select-dropdown']"
-    data-disabled="{{ $disabled ? 'true' : 'false' }}"
+    data-disabled="{{ ($disabled || $readonly) ? 'true' : 'false' }}"
+    data-size="{{ $size }}"
     data-strata-select
     data-strata-field-type="select"
     @keydown="!isDisabled() && handleKeyboardNavigation($event)"
@@ -123,6 +118,8 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
             x-ref="input"
             x-bind:value="{{ $multiple ? 'JSON.stringify(entangleable.value)' : 'entangleable.value' }}"
             data-strata-select-input
+            @if($required) required @endif
+            @if($readonly) readonly @endif
             {{ $attributes->whereStartsWith('wire:model') }}
         />
     </div>
@@ -133,7 +130,8 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
             :style="`anchor-name: --select-${$id('select-dropdown')};`"
             x-effect="isDisabled() ? $refs.trigger.setAttribute('inert', '') : $refs.trigger.removeAttribute('inert')"
             data-strata-select-trigger
-            {{ $attributes->only(['aria-label', 'aria-describedby']) }}
+            {{ $attributes->only(['aria-describedby', 'aria-errormessage']) }}
+            :aria-label="$el.getAttribute('aria-label') || (hasSelection() ? display : '{{ $placeholder }}')"
             @click.prevent.stop="toggleDropdown()"
             @keydown.enter.prevent="toggleDropdown()"
             @keydown.space.prevent="toggleDropdown()"
@@ -143,7 +141,7 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
             class="{{ $triggerClasses }}"
             aria-haspopup="listbox"
             :aria-expanded="open"
-            :aria-activedescendant="open ? getActiveDescendant() : ''"
+            :aria-activedescendant="open && highlighted >= 0 ? `option-${filteredOptions[highlighted]?.value}` : ''"
             :aria-multiselectable="multiple"
         >
                 <div class="flex-1 text-left truncate">
@@ -152,12 +150,23 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
                             <template x-if="chips">
                                 <div class="flex flex-wrap gap-1 max-h-20 overflow-y-auto">
                                     <template x-for="value in selected" :key="value">
-                                        <x-strata::select.chip
-                                            size="sm"
-                                            ::label="getLabelForValue(value)"
-                                            ::disabled="isDisabled()"
-                                            @remove.stop="!isDisabled() && remove(value)"
-                                        />
+                                        <span
+                                            data-strata-select-chip
+                                            class="inline-flex items-center bg-primary/10 text-primary rounded-md font-medium px-2 py-0.5 gap-1 text-sm transition-colors duration-150"
+                                            :class="{ 'opacity-50 cursor-not-allowed': isDisabled() }"
+                                        >
+                                            <span x-text="getLabelForValue(value)"></span>
+                                            <x-strata::button.icon
+                                                icon="x"
+                                                size="sm"
+                                                variant="primary"
+                                                appearance="ghost"
+                                                ::disabled="isDisabled()"
+                                                @click.stop="!isDisabled() && remove(value)"
+                                                ::aria-label="`Remove ${getLabelForValue(value)}`"
+                                                class="hover:bg-primary/20 !p-0.5 -mr-1"
+                                            />
+                                        </span>
                                     </template>
                                 </div>
                             </template>
@@ -192,16 +201,25 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         :style="`{{ $positioningStyle }} position-anchor: --select-${$id('select-dropdown')};`"
         data-strata-select-content
         data-placement="{{ $placement }}"
-        x-trap.nofocus="open"
+        x-trap="open && shouldShowSearch()"
+        x-trap.nofocus="open && !shouldShowSearch()"
         tabindex="-1"
         data-strata-select-dropdown
         wire:ignore.self
         class="overflow-hidden bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm p-0 m-0 {{ $animationClasses }} {{ $dropdownSizeClasses }}"
         role="listbox"
+        :aria-label="'{{ $placeholder }}'"
         :aria-multiselectable="multiple"
     >
             <template x-if="shouldShowSearch()">
                 <div class="sticky top-0 z-10 bg-popover border-b border-border p-2">
+                    <div
+                        role="status"
+                        aria-live="polite"
+                        :id="$id('search-status')"
+                        class="sr-only"
+                        x-text="`${filteredOptions.length} ${filteredOptions.length === 1 ? 'option' : 'options'} available`"
+                    ></div>
                     <x-strata::input
                         type="text"
                         size="sm"
@@ -211,6 +229,7 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
                         @keydown.escape="close()"
                         @keydown.enter.prevent
                         placeholder="{{ $searchPlaceholder }}"
+                        ::aria-describedby="$id('search-status')"
                     >
                         <x-strata::input.clear @click="clearSearch()" />
                     </x-strata::input>
@@ -221,21 +240,30 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
                 data-strata-select-options
                 class="max-h-64 overflow-y-auto p-1 space-y-1"
             >
-                <template x-if="options.length === 0">
+                <template x-if="loading">
+                    <div class="px-3 py-8 flex flex-col items-center justify-center gap-2">
+                        <x-strata::icon name="loader-circle" class="w-6 h-6 animate-spin text-muted-foreground" />
+                        <p class="text-sm text-muted-foreground">{{ $loadingMessage }}</p>
+                    </div>
+                </template>
+
+                <template x-if="!loading && options.length === 0">
                     <div class="px-3 py-8 text-center text-sm text-muted-foreground">
                         {{ $emptyMessage }}
                     </div>
                 </template>
 
-                <template x-if="options.length > 0 && filteredOptions.length === 0">
+                <template x-if="!loading && options.length > 0 && filteredOptions.length === 0">
                     <div class="px-3 py-8 text-center text-sm text-muted-foreground">
                         {{ $noResultsMessage }}
                     </div>
                 </template>
 
-                <div class="space-y-1">
-                    {{ $slot }}
-                </div>
+                <template x-if="!loading && filteredOptions.length > 0">
+                    <div class="space-y-1">
+                        {{ $slot }}
+                    </div>
+                </template>
             </div>
     </div>
 </div>

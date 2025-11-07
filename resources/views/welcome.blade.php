@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Strata UI - Select Component Showcase</title>
+    <title>Strata UI - Component Showcase</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
     @livewireStyles
@@ -19,12 +19,12 @@
 <body class="bg-body text-foreground min-h-screen" x-data="{ darkMode: $persist(false).as('darkMode') }" :class="darkMode ? 'scheme-dark' : 'scheme-light'">
     <x-strata::toast />
 
-    {{-- Select Component Demos --}}
+    {{-- Component Demos --}}
     <div class="container mx-auto p-8 space-y-12">
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h1 class="text-3xl font-bold mb-2">Strata UI Select Components</h1>
-                <p class="text-muted">Multi-select and single-select with native Popover API + CSS Anchor Positioning</p>
+                <h1 class="text-3xl font-bold mb-2">Strata UI Components</h1>
+                <p class="text-muted">Components with native Popover API + CSS Anchor Positioning</p>
             </div>
             <button
                 @click="darkMode = !darkMode"
@@ -36,6 +36,10 @@
         </div>
 
         <livewire:select-demo />
+
+        <div class="border-t border-border my-12"></div>
+
+        <livewire:time-picker-demo />
     </div>
 
     @livewireScripts

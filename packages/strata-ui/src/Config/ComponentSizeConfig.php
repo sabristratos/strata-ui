@@ -179,6 +179,11 @@ class ComponentSizeConfig
     public static function selectSizes(): array
     {
         return [
+            'xs' => [
+                'trigger' => 'h-8 px-2.5 text-xs',
+                'icon' => 'w-3.5 h-3.5',
+                'dropdown' => 'min-w-40 max-w-56',
+            ],
             'sm' => [
                 'trigger' => 'h-9 px-3 text-sm',
                 'icon' => 'w-4 h-4',
@@ -194,12 +199,22 @@ class ComponentSizeConfig
                 'icon' => 'w-6 h-6',
                 'dropdown' => 'min-w-80 max-w-lg',
             ],
+            'xl' => [
+                'trigger' => 'h-12 px-5 text-xl',
+                'icon' => 'w-7 h-7',
+                'dropdown' => 'min-w-96 max-w-2xl',
+            ],
         ];
     }
 
     public static function selectSizesWithChips(): array
     {
         return [
+            'xs' => [
+                'trigger' => 'min-h-8 px-2.5 py-1 text-xs',
+                'icon' => 'w-3.5 h-3.5',
+                'dropdown' => 'min-w-40 max-w-56',
+            ],
             'sm' => [
                 'trigger' => 'min-h-9 px-3 py-1.5 text-sm',
                 'icon' => 'w-4 h-4',
@@ -214,6 +229,11 @@ class ComponentSizeConfig
                 'trigger' => 'min-h-11 px-4 py-2.5 text-lg',
                 'icon' => 'w-6 h-6',
                 'dropdown' => 'min-w-80 max-w-lg',
+            ],
+            'xl' => [
+                'trigger' => 'min-h-12 px-5 py-3 text-xl',
+                'icon' => 'w-7 h-7',
+                'dropdown' => 'min-w-96 max-w-2xl',
             ],
         ];
     }
