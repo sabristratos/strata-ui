@@ -7,7 +7,9 @@
         "dev": "vite"
     },
     "dependencies": {
-        "@oddbird/css-anchor-positioning": "^0.7.0"
+        "@oddbird/css-anchor-positioning": "^0.7.0",
+        "flag-icons": "^7.5.0",
+        "libphonenumber-js": "^1.12.26"
     },
     "devDependencies": {
         "@tailwindcss/typography": "^0.5.19",

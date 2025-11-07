@@ -37,10 +37,7 @@ export default function (props = {}) {
         clearable: props.clearable || false,
         search: '',
         display: '',
-        disabled: props.disabled || false,
-        readonly: props.readonly || false,
-        loading: props.loading || false,
-        maxSelected: props.maxSelected || null,
+        disabled: false,
         _optionsObserver: null,
         _disabledObserver: null,
 
@@ -76,7 +73,7 @@ export default function (props = {}) {
         },
 
         isDisabled() {
-            return this.disabled === true || this.readonly === true;
+            return this.disabled === true;
         },
 
         init() {
@@ -150,7 +147,7 @@ export default function (props = {}) {
         collectOptions() {
             const optionElements = this.$el.querySelectorAll('[data-strata-select-option]');
             this.options = Array.from(optionElements).map(el => ({
-                value: String(el.dataset.value),
+                value: el.dataset.value,
                 label: el.textContent.trim(),
                 disabled: el.hasAttribute('data-disabled'),
                 element: el
@@ -164,15 +161,13 @@ export default function (props = {}) {
 
         toggleDropdown() {
             if (!this.isDisabled()) {
+                if (!this.open) {
+                    this.collectOptions();
+                    this.display = this.computeDisplay(this.entangleable.value);
+                }
                 const dropdown = document.getElementById(this.$id('select-dropdown'));
                 if (dropdown) {
-                    if (this.open) {
-                        dropdown.hidePopover();
-                    } else {
-                        this.collectOptions();
-                        this.display = this.computeDisplay(this.entangleable.value);
-                        dropdown.showPopover();
-                    }
+                    dropdown.togglePopover();
                 }
             }
         },
@@ -203,9 +198,6 @@ export default function (props = {}) {
                 if (index > -1) {
                     this.selected = this.selected.filter(v => v !== value);
                 } else {
-                    if (this.maxSelected && this.selected.length >= this.maxSelected) {
-                        return;
-                    }
                     this.selected = [...this.selected, value];
                 }
             } else {

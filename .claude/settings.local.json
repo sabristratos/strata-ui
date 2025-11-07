@@ -9,7 +9,14 @@
       "Bash(powershell -Command \"php vendor/bin/pint resources/views/livewire/time-picker-demo.blade.php\")",
       "Bash(nul)",
       "Bash(powershell -Command \"php vendor/bin/pint packages/strata-ui/src/View/Components/Select.php packages/strata-ui/src/Config/ComponentSizeConfig.php packages/strata-ui/resources/views/components/select/index.blade.php packages/strata-ui/resources/views/components/select/option.blade.php packages/strata-ui/resources/views/components/select/group.blade.php packages/strata-ui/tests/Feature/Components/SelectRenderingTest.php\")",
-      "Bash(powershell -Command \"php vendor/bin/pint packages/strata-ui/resources/views/components/time-picker/ packages/strata-ui/resources/js/time-picker.js\")"
+      "Bash(powershell -Command \"php vendor/bin/pint packages/strata-ui/resources/views/components/time-picker/ packages/strata-ui/resources/js/time-picker.js\")",
+      "mcp__playwright__browser_navigate",
+      "Bash(powershell:*)",
+      "mcp__playwright__browser_console_messages",
+      "Bash(dir:*)",
+      "WebSearch",
+      "WebFetch(domain:m3.material.io)",
+      "WebFetch(domain:www.eleken.co)"
     ],
     "deny": [],
     "ask": []
