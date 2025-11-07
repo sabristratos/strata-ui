@@ -3,7 +3,10 @@
     "allow": [
       "Bash(powershell -Command \"php vendor/bin/pint packages/strata-ui/resources/views/components/popover/\")",
       "Bash(move:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(cmd /c php vendor/bin/pint packages/strata-ui/resources/views/components/select/index.blade.php)",
+      "Bash(dir \"C:\\Work\\Swift\\strata\\packages\\strata-ui\\resources\\views\\components\" /b /a:d)",
+      "Bash(dir \"C:\\Work\\Swift\\strata\\packages\\strata-ui\\resources\\views\\components\\badge\" /b)"
     ],
     "deny": [],
     "ask": []

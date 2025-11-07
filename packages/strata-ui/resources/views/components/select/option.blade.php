@@ -21,10 +21,11 @@ $optionAttributes = $attributes->except(['class']);
 @endphp
 
 <div
+    :id="$id('option-{{ $value }}')"
     data-strata-select-option
     data-value="{{ $value }}"
     @if($disabled) data-disabled @endif
-    @click.stop.prevent="select('{{ $value }}')"
+    @click.stop.prevent="!isDisabled() && select('{{ $value }}')"
     {{ $optionAttributes->merge(['class' => $classes]) }}
     :class="{
         '{{ $selectedClasses }}': isSelected('{{ $value }}'),

@@ -88,7 +88,7 @@ document.addEventListener('alpine:init', () => {
             data-strata-tooltip
             class="bg-popover text-popover-foreground
                    border border-border rounded-md
-                   shadow-lg ring-1 ring-black/5 dark:ring-white/10
+                   shadow-lg
                    text-sm px-3 py-1.5
                    max-w-xs
                    transition-all transition-discrete duration-150 ease-out

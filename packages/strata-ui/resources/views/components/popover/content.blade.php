@@ -24,7 +24,7 @@ $paddings = [
 
 $paddingClasses = $paddings[$padding] ?? $paddings['normal'];
 
-$baseClasses = 'bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm ring-1 ring-black/5 dark:ring-white/10 focus:outline-none';
+$baseClasses = 'bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm focus:outline-none';
 $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,overlay_150ms_allow-discrete,display_150ms_allow-discrete] ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95';
 
 $classes = trim("$baseClasses $sizeClasses $paddingClasses $animationClasses");

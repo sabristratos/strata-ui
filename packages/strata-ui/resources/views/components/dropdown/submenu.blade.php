@@ -179,7 +179,7 @@ document.addEventListener('alpine:init', () => {
         role="menu"
         wire:ignore.self
         style="{{ $positioningStyle }}"
-        class="min-w-64 max-w-96 bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm ring-1 ring-black/5 dark:ring-white/10 py-1 transition-all transition-discrete duration-150 ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95"
+        class="min-w-64 max-w-96 bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm py-1 transition-all transition-discrete duration-150 ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95"
     >
         <div class="max-h-96 overflow-y-auto overflow-x-hidden p-1 space-y-1">
             {{ $slot }}

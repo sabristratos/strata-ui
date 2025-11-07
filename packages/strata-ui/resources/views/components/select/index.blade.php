@@ -13,7 +13,7 @@
  * @prop bool $disabled - Disable the select (default: false)
  * @prop string|null $name - Form input name (default: null)
  * @prop mixed $value - Selected value(s) - array for multiple, string/int for single (default: null)
- * @prop string $chips - Chip display mode: 'inline'|'below'|'summary' (default: 'inline')
+ * @prop bool $chips - Show selected items as removable chip badges (default: false)
  * @prop bool $searchable - Enable search functionality (default: false)
  * @prop int $minItemsForSearch - Minimum options before search shows (default: 0)
  * @prop string $searchPlaceholder - Search input placeholder (default: 'Search...')
@@ -30,12 +30,12 @@
  *     <x-strata::select.option value="2" label="Category 2" />
  * </x-strata::select>
  *
- * @example Multi-select with search
+ * @example Multi-select with search and chips
  * <x-strata::select
  *     wire:model="tags"
  *     :multiple="true"
  *     :searchable="true"
- *     chips="below"
+ *     :chips="true"
  *     placeholder="Select tags">
  *     <x-strata::select.option value="laravel" label="Laravel" />
  *     <x-strata::select.option value="php" label="PHP" />
@@ -112,7 +112,7 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
     data-strata-select
     data-strata-field-type="select"
     @keydown="!isDisabled() && handleKeyboardNavigation($event)"
-    tabindex="0"
+    :tabindex="isDisabled() ? -1 : 0"
     {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative overflow-visible']) }}
 >
     <div class="hidden" hidden>
@@ -131,14 +131,14 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         <div
             x-ref="trigger"
             :style="`anchor-name: --select-${$id('select-dropdown')};`"
+            x-effect="isDisabled() ? $refs.trigger.setAttribute('inert', '') : $refs.trigger.removeAttribute('inert')"
             data-strata-select-trigger
             {{ $attributes->only(['aria-label', 'aria-describedby']) }}
-            @click.prevent.stop="!isDisabled() && toggleDropdown()"
-            @keydown.enter.prevent="!isDisabled() && toggleDropdown()"
-            @keydown.space.prevent="!isDisabled() && toggleDropdown()"
-            @keydown="handleKeyboardNavigation"
+            @click.prevent.stop="toggleDropdown()"
+            @keydown.enter.prevent="toggleDropdown()"
+            @keydown.space.prevent="toggleDropdown()"
             role="button"
-            tabindex="0"
+            :tabindex="isDisabled() ? -1 : 0"
             :aria-disabled="isDisabled()"
             class="{{ $triggerClasses }}"
             aria-haspopup="listbox"
@@ -152,9 +152,12 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
                             <template x-if="chips">
                                 <div class="flex flex-wrap gap-1 max-h-20 overflow-y-auto">
                                     <template x-for="value in selected" :key="value">
-                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-sm rounded">
-                                            <span x-text="getLabelForValue(value)"></span>
-                                        </span>
+                                        <x-strata::select.chip
+                                            size="sm"
+                                            ::label="getLabelForValue(value)"
+                                            ::disabled="isDisabled()"
+                                            @remove.stop="!isDisabled() && remove(value)"
+                                        />
                                     </template>
                                 </div>
                             </template>
@@ -193,34 +196,24 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         tabindex="-1"
         data-strata-select-dropdown
         wire:ignore.self
-        class="overflow-hidden bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm ring-1 ring-black/5 dark:ring-white/10 p-0 m-0 {{ $animationClasses }} {{ $dropdownSizeClasses }}"
+        class="overflow-hidden bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm p-0 m-0 {{ $animationClasses }} {{ $dropdownSizeClasses }}"
         role="listbox"
         :aria-multiselectable="multiple"
     >
             <template x-if="shouldShowSearch()">
                 <div class="sticky top-0 z-10 bg-popover border-b border-border p-2">
-                    <div class="relative">
-                        <input
-                            type="text"
-                            data-strata-select-search
-                            x-model="search"
-                            @keydown.escape="close()"
-                            @keydown.enter.prevent
-                            placeholder="{{ $searchPlaceholder }}"
-                            class="w-full px-3 py-2 pr-8 text-sm bg-input border border-border rounded-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:border-border transition-all duration-150"
-                        />
-                        <template x-if="search.length > 0">
-                            <x-strata::button.icon
-                                icon="x"
-                                size="sm"
-                                variant="secondary"
-                                appearance="ghost"
-                                @click="clearSearch()"
-                                aria-label="Clear search"
-                                class="absolute right-2 top-1/2 -translate-y-1/2 !p-1"
-                            />
-                        </template>
-                    </div>
+                    <x-strata::input
+                        type="text"
+                        size="sm"
+                        data-strata-select-search
+                        x-model="search"
+                        @keydown.stop
+                        @keydown.escape="close()"
+                        @keydown.enter.prevent
+                        placeholder="{{ $searchPlaceholder }}"
+                    >
+                        <x-strata::input.clear @click="clearSearch()" />
+                    </x-strata::input>
                 </div>
             </template>
 

@@ -37,7 +37,9 @@ export default function (props = {}) {
         clearable: props.clearable || false,
         search: '',
         display: '',
+        disabled: false,
         _optionsObserver: null,
+        _disabledObserver: null,
 
         get selected() {
             return this.entangleable?.get() ?? (this.multiple ? [] : null);
@@ -71,12 +73,29 @@ export default function (props = {}) {
         },
 
         isDisabled() {
-            return this.$el?.dataset?.disabled === 'true';
+            return this.disabled === true;
         },
 
         init() {
             this.initEntangleable();
             this.initKeyboardNavigation();
+
+            // Initialize disabled state from DOM
+            this.disabled = this.$el?.dataset?.disabled === 'true';
+
+            // Watch for disabled attribute changes (Livewire morphing)
+            this._disabledObserver = new MutationObserver((mutations) => {
+                for (const mutation of mutations) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'data-disabled') {
+                        this.disabled = this.$el?.dataset?.disabled === 'true';
+                    }
+                }
+            });
+
+            this._disabledObserver.observe(this.$el, {
+                attributes: true,
+                attributeFilter: ['data-disabled']
+            });
 
             this.$nextTick(() => {
                 this.collectOptions();
@@ -128,7 +147,7 @@ export default function (props = {}) {
         collectOptions() {
             const optionElements = this.$el.querySelectorAll('[data-strata-select-option]');
             this.options = Array.from(optionElements).map(el => ({
-                value: el.dataset.value,
+                value: String(el.dataset.value),
                 label: el.textContent.trim(),
                 disabled: el.hasAttribute('data-disabled'),
                 element: el
@@ -142,13 +161,15 @@ export default function (props = {}) {
 
         toggleDropdown() {
             if (!this.isDisabled()) {
-                if (!this.open) {
-                    this.collectOptions();
-                    this.display = this.computeDisplay(this.entangleable.value);
-                }
                 const dropdown = document.getElementById(this.$id('select-dropdown'));
                 if (dropdown) {
-                    dropdown.togglePopover();
+                    if (this.open) {
+                        dropdown.hidePopover();
+                    } else {
+                        this.collectOptions();
+                        this.display = this.computeDisplay(this.entangleable.value);
+                        dropdown.showPopover();
+                    }
                 }
             }
         },
@@ -249,6 +270,10 @@ export default function (props = {}) {
             if (this._optionsObserver) {
                 this._optionsObserver.disconnect();
                 this._optionsObserver = null;
+            }
+            if (this._disabledObserver) {
+                this._disabledObserver.disconnect();
+                this._disabledObserver = null;
             }
             if (this.entangleable) {
                 this.entangleable.destroy();
