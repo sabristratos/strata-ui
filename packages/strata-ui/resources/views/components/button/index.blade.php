@@ -32,7 +32,7 @@ $outlinedVariants = [
 
 $ghostVariants = [
     'primary' => 'bg-transparent text-primary hover:bg-primary/10 active:bg-primary/20',
-    'secondary' => 'bg-transparent text-secondary-foreground hover:bg-neutral-200 active:bg-neutral-300',
+    'secondary' => 'bg-secondary-subtle text-secondary-foreground hover:bg-neutral-200 active:bg-neutral-300',
     'success' => 'bg-transparent text-success hover:bg-success/10 active:bg-success/20',
     'warning' => 'bg-transparent text-warning hover:bg-warning/10 active:bg-warning/20',
     'destructive' => 'bg-transparent text-destructive hover:bg-destructive/10 active:bg-destructive/20',

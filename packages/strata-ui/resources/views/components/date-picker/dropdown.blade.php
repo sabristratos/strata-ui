@@ -3,32 +3,34 @@
     'showPresets' => false,
     'minDate' => null,
     'maxDate' => null,
+    'placement' => 'bottom-start',
+    'positioningStyle' => '',
+    'animationClasses' => '',
 ])
 
 @php
 $dropdownClasses = [
     'bg-popover text-popover-foreground border border-border rounded-lg shadow-lg',
-    'transition-all transition-discrete duration-150 ease-out will-change-[transform,opacity]',
-    'opacity-100 scale-100',
-    'starting:opacity-0 starting:scale-95',
+    $animationClasses,
 ];
 @endphp
 
 <div
-    x-ref="dropdown"
-    x-cloak
-    x-show="open"
-    :style="positionable.styles"
-    class="absolute z-50"
+    :id="$id('datepicker-dropdown')"
+    popover="auto"
+    @toggle="open = $event.newState === 'open'"
+    :style="`{{ $positioningStyle }} position-anchor: --datepicker-${$id('datepicker-dropdown')};`"
+    @keydown.escape.window="open = false"
+    @date-selected="handleDateSelected($event.detail)"
+    data-strata-datepicker-dropdown
+    data-placement="{{ $placement }}"
+    x-trap.nofocus="open"
+    wire:ignore.self
+    tabindex="-1"
+    {{ $attributes->merge(['class' => implode(' ', $dropdownClasses)]) }}
+    role="dialog"
+    aria-modal="true"
 >
-    <div
-        @click.outside="open = false"
-        @keydown.escape.window="open = false"
-        @date-selected="handleDateSelected($event.detail)"
-        {{ $attributes->merge(['class' => implode(' ', $dropdownClasses)]) }}
-        role="dialog"
-        aria-modal="true"
-    >
         <div class="flex">
         <div class="flex-1 p-4">
             <x-strata::calendar
@@ -160,5 +162,4 @@ $dropdownClasses = [
             </div>
         @endif
         </div>
-    </div>
 </div>

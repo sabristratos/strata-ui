@@ -11,11 +11,7 @@ export default function (props = {}) {
             }
         }),
 
-        ...window.createPositionableMixin({
-            placement: 'bottom-start',
-            offset: 8,
-            floatingRef: 'dropdown'
-        }),
+        open: false,
         format: props.format || 'hex',
         initialValue: props.initialValue || null,
         placeholder: props.placeholder || 'Select color',
@@ -37,7 +33,6 @@ export default function (props = {}) {
 
         init() {
             this.initEntangleable();
-            this.initPositionable();
 
             if (this.initialValue) {
                 this.parseColor(this.initialValue);
@@ -107,11 +102,23 @@ export default function (props = {}) {
             this.entangleable.set(color);
         },
 
+        toggleDropdown() {
+            const dropdown = document.getElementById(this.$id('colorpicker-dropdown'));
+            if (dropdown) {
+                if (this.open) {
+                    dropdown.hidePopover();
+                } else {
+                    dropdown.showPopover();
+                }
+            }
+        },
+
         selectColor(color) {
             if (this.disabled) return;
             this.parseColor(color);
             this.updateColor();
-            this.open = false;
+            const dropdown = document.getElementById(this.$id('colorpicker-dropdown'));
+            if (dropdown) dropdown.hidePopover();
         },
 
         clear() {
@@ -121,7 +128,8 @@ export default function (props = {}) {
                 this.saturation = 100;
                 this.lightness = 50;
                 this.alpha = 100;
-                this.open = false;
+                const dropdown = document.getElementById(this.$id('colorpicker-dropdown'));
+                if (dropdown) dropdown.hidePopover();
             }
         },
 
@@ -326,7 +334,6 @@ export default function (props = {}) {
             if (this.entangleable) {
                 this.entangleable.destroy();
             }
-            this.destroyPositionable();
         },
     };
 }

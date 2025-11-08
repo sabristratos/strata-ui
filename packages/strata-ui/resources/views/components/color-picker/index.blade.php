@@ -11,12 +11,15 @@
     'allowAlpha' => false,
     'showPresets' => true,
     'presets' => [],
+    'placement' => 'bottom-start',
+    'offset' => 8,
 ])
 
 @php
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
 use Stratos\StrataUI\Support\ComponentHelpers;
+use Stratos\StrataUI\Support\PositioningHelper;
 
 $componentId = ComponentHelpers::generateId('color-picker', $id, $attributes);
 
@@ -39,6 +42,11 @@ $defaultPresets = [
 ];
 
 $finalPresets = empty($presets) ? $defaultPresets : $presets;
+
+$positioning = PositioningHelper::getAnchorPositioning($placement, $offset);
+$positioningStyle = $positioning['style'];
+
+$animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,overlay_150ms_allow-discrete,display_150ms_allow-discrete] ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95';
 @endphp
 
 @once
@@ -60,6 +68,7 @@ document.addEventListener('alpine:init', () => {
         showPresets: {{ $showPresets ? 'true' : 'false' }},
         presets: {{ json_encode(array_keys($finalPresets)) }},
     })"
+    x-id="['colorpicker-dropdown']"
     data-strata-colorpicker
     data-strata-field-type="color"
     {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative overflow-visible']) }}
@@ -98,5 +107,8 @@ document.addEventListener('alpine:init', () => {
         :show-presets="$showPresets"
         :presets="$finalPresets"
         :allow-alpha="$allowAlpha"
+        :placement="$placement"
+        :positioning-style="$positioningStyle"
+        :animation-classes="$animationClasses"
     />
 </div>

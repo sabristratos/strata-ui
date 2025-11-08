@@ -111,6 +111,71 @@
         </div>
 
         <div class="bg-card border border-border rounded-lg p-6 space-y-6">
+            <h2 class="text-2xl font-bold text-card-foreground">Options with Icons</h2>
+            <p class="text-muted-foreground">Enhance your select options with icons for better visual recognition</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="space-y-4 p-4 border border-border rounded-lg">
+                    <h3 class="text-lg font-semibold text-card-foreground">Single Select with Icons</h3>
+                    <p class="text-sm text-muted-foreground">Choose your preferred notification method</p>
+                    <x-strata::select
+                        wire:model.live="iconSingleValue"
+                        placeholder="Select notification type">
+                        @foreach($this->getNotificationOptions() as $option)
+                            <x-strata::select.option :value="$option['value']" :label="$option['label']">
+                                <x-slot:icon>
+                                    <x-dynamic-component :component="'strata::icon.' . $option['icon']" class="w-5 h-5 text-muted-foreground" />
+                                </x-slot:icon>
+                            </x-strata::select.option>
+                        @endforeach
+                    </x-strata::select>
+                    <p class="text-sm text-muted-foreground">Selected: <span class="font-mono">{{ $iconSingleValue ?? 'null' }}</span></p>
+                </div>
+
+                <div class="space-y-4 p-4 border border-border rounded-lg">
+                    <h3 class="text-lg font-semibold text-card-foreground">Multi-Select with Icons</h3>
+                    <p class="text-sm text-muted-foreground">Select multiple file types</p>
+                    <x-strata::select
+                        wire:model.live="iconMultipleValue"
+                        :multiple="true"
+                        :chips="true"
+                        placeholder="Choose file types">
+                        @foreach($this->getFileTypeOptions() as $option)
+                            <x-strata::select.option :value="$option['value']" :label="$option['label']">
+                                <x-slot:icon>
+                                    <x-dynamic-component :component="'strata::icon.' . $option['icon']" class="w-5 h-5 text-muted-foreground" />
+                                </x-slot:icon>
+                            </x-strata::select.option>
+                        @endforeach
+                    </x-strata::select>
+                    <p class="text-sm text-muted-foreground">Selected: <span class="font-mono">{{ count($iconMultipleValue) }} types</span></p>
+                </div>
+
+                <div class="space-y-4 p-4 border border-border rounded-lg">
+                    <h3 class="text-lg font-semibold text-card-foreground">Icons with Descriptions</h3>
+                    <p class="text-sm text-muted-foreground">Options with icons and helpful descriptions</p>
+                    <x-strata::select
+                        wire:model.live="iconSearchableValue"
+                        :searchable="true"
+                        :minItemsForSearch="0"
+                        placeholder="Select status">
+                        @foreach($this->getStatusOptions() as $option)
+                            <x-strata::select.option
+                                :value="$option['value']"
+                                :label="$option['label']"
+                                :description="$option['description']">
+                                <x-slot:icon>
+                                    <x-dynamic-component :component="'strata::icon.' . $option['icon']" class="w-5 h-5 text-muted-foreground" />
+                                </x-slot:icon>
+                            </x-strata::select.option>
+                        @endforeach
+                    </x-strata::select>
+                    <p class="text-sm text-muted-foreground">Selected: <span class="font-mono">{{ $iconSearchableValue ?? 'null' }}</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-card border border-border rounded-lg p-6 space-y-6">
             <h2 class="text-2xl font-bold text-card-foreground">Cascading Selects - Real-World Examples</h2>
             <p class="text-muted-foreground">Demonstrates how one select can dynamically update another using Livewire</p>
 
@@ -259,7 +324,7 @@
         <div class="bg-card border border-border rounded-lg p-6 space-y-6">
             <h2 class="text-2xl font-bold text-card-foreground">Common Features & Edge Cases</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-4 p-4 border border-border rounded-lg">
                     <h3 class="text-lg font-semibold text-card-foreground">Clearable Select</h3>
                     <p class="text-sm text-muted-foreground">Shows clear button when value is selected</p>
@@ -300,6 +365,28 @@
                         @endforeach
                     </x-strata::select>
                     <p class="text-sm text-muted-foreground">Selected: <span class="font-mono">{{ count($chipsValue) }} items</span></p>
+                </div>
+
+                <div class="space-y-4 p-4 border border-border rounded-lg">
+                    <h3 class="text-lg font-semibold text-card-foreground">Max Selected Limit</h3>
+                    <p class="text-sm text-muted-foreground">Limit selection to 3 items max</p>
+                    <x-strata::select
+                        wire:model.live="maxSelectedValue"
+                        :multiple="true"
+                        :maxSelected="3"
+                        :chips="true"
+                        :clearable="true"
+                        placeholder="Select up to 3 technologies">
+                        @foreach($this->getTechnologies() as $tech)
+                            <x-strata::select.option :value="$tech['value']" :label="$tech['label']" />
+                        @endforeach
+                    </x-strata::select>
+                    <p class="text-sm text-muted-foreground">
+                        Selected: <span class="font-mono">{{ count($maxSelectedValue) }}/3 items</span>
+                        @if(count($maxSelectedValue) >= 3)
+                            <span class="text-warning"> - Max reached!</span>
+                        @endif
+                    </p>
                 </div>
             </div>
         </div>
@@ -441,6 +528,13 @@
                     <div>
                         <h4 class="font-semibold text-sm text-foreground">Chips Display</h4>
                         <p class="text-sm text-muted-foreground">Visual chips for multi-select</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-2">
+                    <div class="mt-1 text-success">✓</div>
+                    <div>
+                        <h4 class="font-semibold text-sm text-foreground">Max Selected</h4>
+                        <p class="text-sm text-muted-foreground">Limit selection count in multi-select</p>
                     </div>
                 </div>
             </div>

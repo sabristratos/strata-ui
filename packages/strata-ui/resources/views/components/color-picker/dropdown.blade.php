@@ -3,40 +3,37 @@
     'showPresets' => true,
     'presets' => [],
     'allowAlpha' => false,
+    'placement' => 'bottom-start',
+    'positioningStyle' => '',
+    'animationClasses' => '',
 ])
 
 @php
 $dropdownClasses = [
     'bg-popover text-popover-foreground border border-border rounded-lg shadow-lg',
-    'transition-all transition-discrete duration-150 ease-out will-change-[transform,opacity]',
-    'opacity-100 scale-100',
-    'starting:opacity-0 starting:scale-95',
+    $animationClasses,
 ];
 @endphp
 
 <div
-    x-ref="dropdown"
-    x-cloak
-    x-show="open"
-    :style="positionable.styles"
-    class="absolute z-50"
+    :id="$id('colorpicker-dropdown')"
+    popover="auto"
+    @toggle="open = $event.newState === 'open'"
+    :style="`{{ $positioningStyle }} position-anchor: --colorpicker-${$id('colorpicker-dropdown')};`"
     data-strata-colorpicker-dropdown
+    data-placement="{{ $placement }}"
+    x-trap.nofocus="open"
+    wire:ignore.self
+    tabindex="-1"
+    class="{{ implode(' ', $dropdownClasses) }} p-4 space-y-4 w-72"
+    role="dialog"
+    aria-modal="true"
 >
-    <div
-        @click.outside="open = false"
-        @keydown.escape.window="open = false"
-        class="{{ implode(' ', $dropdownClasses) }}"
-        role="dialog"
-        aria-modal="true"
-    >
-        <div class="p-4 space-y-4 w-72">
-            <x-strata::color-picker.picker :allow-alpha="$allowAlpha" />
+    <x-strata::color-picker.picker :allow-alpha="$allowAlpha" />
 
-            @if($showPresets && !empty($presets))
-            <x-strata::color-picker.palette :presets="$presets" />
-            @endif
+    @if($showPresets && !empty($presets))
+    <x-strata::color-picker.palette :presets="$presets" />
+    @endif
 
-            <x-strata::color-picker.inputs :format="$format" :allow-alpha="$allowAlpha" />
-        </div>
-    </div>
+    <x-strata::color-picker.inputs :format="$format" :allow-alpha="$allowAlpha" />
 </div>

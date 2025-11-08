@@ -22,12 +22,13 @@ $optionAttributes = $attributes->except(['class']);
 
 <div
     data-strata-select-option
-    data-value="{{ $value }}"
-    @if($disabled) data-disabled @endif
+    data-strata-value="{{ $value }}"
+    @if($disabled) data-strata-disabled @endif
     @click.stop.prevent="select('{{ $value }}')"
     {{ $optionAttributes->merge(['class' => $classes]) }}
     :class="{
         '{{ $selectedClasses }}': isSelected('{{ $value }}'),
+        'opacity-50 cursor-not-allowed': !isSelected('{{ $value }}') && isMaxSelected(),
         'ring-2 ring-inset ring-primary/50': highlighted === options.findIndex(opt => opt.value === '{{ $value }}' && !opt.disabled)
     }"
     x-show="filteredOptions.some(opt => opt.value === '{{ $value }}')"

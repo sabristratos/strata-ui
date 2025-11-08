@@ -442,4 +442,93 @@ describe('Time Picker Component', function () {
             ->toContain('hover:bg-accent')
             ->toContain('text-sm');
     });
+
+    test('renders with clock display mode by default', function () {
+        expectComponent('time-picker')
+            ->toContain("displayMode: 'clock'");
+    });
+
+    test('renders clock face when display mode is clock', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain('x-text="clockMode === \'hour\' ? \'Select hour\' : \'Select minute\'"')
+            ->toContain('x-text="clockDisplay"');
+    });
+
+    test('renders list when display mode is list', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'list'])
+            ->toContain('x-ref="timeList"');
+    });
+
+    test('renders mode toggle when display mode is both', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'both'])
+            ->toContain('@click="displayMode = \'clock\'"')
+            ->toContain('@click="displayMode = \'list\'"')
+            ->toContain('Clock')
+            ->toContain('List');
+    });
+
+    test('clock face has keyboard navigation', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain('@keydown="handleClockKeydown($event)"');
+    });
+
+    test('clock face has accessibility attributes', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain('role="group"')
+            ->toContain('aria-describedby="clock-instructions"')
+            ->toContain('tabindex="0"');
+    });
+
+    test('clock face has screen reader announcements', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain('aria-live="polite"')
+            ->toContain('x-text="clockAnnouncement"')
+            ->toContain('role="status"');
+    });
+
+    test('clock face has instructions for screen readers', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain('Use arrow keys to select hour or minute')
+            ->toContain('Press Tab to switch between hour and minute selection')
+            ->toContain('Press Escape to close');
+    });
+
+    test('clock face renders SVG clock', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain('<svg')
+            ->toContain('viewBox="0 0 280 280"');
+    });
+
+    test('clock face renders hour mode', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain("x-if=\"clockMode === 'hour'\"");
+    });
+
+    test('clock face renders minute mode', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain("x-if=\"clockMode === 'minute'\"");
+    });
+
+    test('clock face renders AM/PM buttons in 12-hour format', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock', 'format' => '12'])
+            ->toContain('@click="selectPeriod(\'AM\')"')
+            ->toContain('@click="selectPeriod(\'PM\')"');
+    });
+
+    test('clock face handles click events', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain('@click="handleClockClick($event)"');
+    });
+
+    test('clock face handles touch events', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain('@touchstart="handleClockTouchStart($event)"')
+            ->toContain('@touchmove="handleClockTouchMove($event)"')
+            ->toContain('@touchend="handleClockTouchEnd($event)"');
+    });
+
+    test('passes displayMode to Alpine component', function () {
+        expectComponent($this, 'time-picker', ['display-mode' => 'clock'])
+            ->toContain("displayMode: 'clock'");
+    });
 });

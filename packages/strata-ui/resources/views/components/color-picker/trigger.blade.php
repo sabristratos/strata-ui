@@ -26,15 +26,17 @@ if ($disabled) {
 
 <div
     class="{{ implode(' ', $triggerClasses) }}"
-    @click="disabled ? null : (open = true)"
+    :style="`anchor-name: --colorpicker-${$id('colorpicker-dropdown')};`"
+    @click="disabled ? null : toggleDropdown()"
     x-ref="trigger"
     tabindex="{{ $disabled ? '-1' : '0' }}"
-    @keydown.enter.prevent="disabled ? null : (open = true)"
-    @keydown.space.prevent="disabled ? null : (open = true)"
+    @keydown.enter.prevent="disabled ? null : toggleDropdown()"
+    @keydown.space.prevent="disabled ? null : toggleDropdown()"
     role="button"
     aria-haspopup="true"
     :aria-expanded="open"
     :aria-disabled="disabled"
+    :aria-controls="$id('colorpicker-dropdown')"
     data-strata-colorpicker-trigger
 >
     <div

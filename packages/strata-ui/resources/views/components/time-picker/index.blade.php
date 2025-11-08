@@ -82,6 +82,7 @@
     'clearable' => true,
     'placement' => 'bottom-start',
     'offset' => 8,
+    'displayMode' => 'clock',
 ])
 
 @php
@@ -125,6 +126,7 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         readonly: {{ $readonly ? 'true' : 'false' }},
         required: {{ $required ? 'true' : 'false' }},
         clearable: {{ $clearable ? 'true' : 'false' }},
+        displayMode: '{{ $displayMode }}',
     })"
     x-id="['timepicker-dropdown']"
     data-strata-timepicker
@@ -162,5 +164,6 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         :positioning-style="$positioningStyle"
         :animation-classes="$animationClasses"
         :placement="$placement"
+        :display-mode="$displayMode"
     />
 </div>

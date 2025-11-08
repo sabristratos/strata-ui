@@ -71,7 +71,5 @@ class TimeValueSynthesizer extends Synth
         return $target->$key ?? null;
     }
 
-    public function set(&$target, $key, $value): void
-    {
-    }
+    public function set(&$target, $key, $value): void {}
 }

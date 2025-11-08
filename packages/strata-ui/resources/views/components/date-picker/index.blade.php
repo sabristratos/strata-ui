@@ -12,12 +12,15 @@
     'disabled' => false,
     'clearable' => true,
     'chips' => false,
+    'placement' => 'bottom-start',
+    'offset' => 8,
 ])
 
 @php
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
 use Stratos\StrataUI\Support\ComponentHelpers;
+use Stratos\StrataUI\Support\PositioningHelper;
 
 $componentId = ComponentHelpers::generateId('date-picker', $id, $attributes);
 $placeholder = $placeholder ?? ($mode === 'range' ? 'Select date range' : 'Select date');
@@ -36,6 +39,11 @@ $initialValue = $value instanceof \Stratos\StrataUI\Data\DateValue
     : ($value instanceof \Stratos\StrataUI\Data\DateRange
         ? ['start' => $value->start->toDateString(), 'end' => $value->end->toDateString()]
         : $value);
+
+$positioning = PositioningHelper::getAnchorPositioning($placement, $offset);
+$positioningStyle = $positioning['style'];
+
+$animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,overlay_150ms_allow-discrete,display_150ms_allow-discrete] ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95';
 @endphp
 
 <div
@@ -49,8 +57,10 @@ $initialValue = $value instanceof \Stratos\StrataUI\Data\DateValue
         clearable: {{ $clearable ? 'true' : 'false' }},
         chips: {{ $chips ? 'true' : 'false' }},
     })"
+    x-id="['datepicker-dropdown']"
     data-strata-datepicker
     data-strata-field-type="date"
+    data-disabled="{{ $disabled ? 'true' : 'false' }}"
     {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative overflow-visible']) }}
 >
     <div class="hidden" hidden>
@@ -87,5 +97,8 @@ $initialValue = $value instanceof \Stratos\StrataUI\Data\DateValue
         :show-presets="$showPresets"
         :min-date="$minDate"
         :max-date="$maxDate"
+        :placement="$placement"
+        :positioning-style="$positioningStyle"
+        :animation-classes="$animationClasses"
     />
 </div>

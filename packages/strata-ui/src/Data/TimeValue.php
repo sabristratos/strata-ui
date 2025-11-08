@@ -23,7 +23,7 @@ class TimeValue implements Wireable
             if ($this->hour < 1 || $this->hour > 12) {
                 throw new InvalidArgumentException('Hour must be between 1 and 12 for 12-hour format.');
             }
-            if (!in_array(strtoupper($this->meridiem), ['AM', 'PM'])) {
+            if (! in_array(strtoupper($this->meridiem), ['AM', 'PM'])) {
                 throw new InvalidArgumentException('Meridiem must be AM or PM.');
             }
         } else {

@@ -61,6 +61,7 @@
     'clearable' => false,
     'placement' => 'bottom-start',
     'offset' => 8,
+    'maxSelected' => null,
 ])
 
 @php
@@ -105,27 +106,26 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         chips: {{ $chips ? 'true' : 'false' }},
         searchable: {{ $searchable ? 'true' : 'false' }},
         minItemsForSearch: {{ $minItemsForSearch }},
-        clearable: {{ $clearable ? 'true' : 'false' }}
+        clearable: {{ $clearable ? 'true' : 'false' }},
+        maxSelected: {{ $maxSelected ?? 'null' }}
     })"
     x-id="['select-dropdown']"
-    data-disabled="{{ $disabled ? 'true' : 'false' }}"
+    data-strata-disabled="{{ $disabled ? 'true' : 'false' }}"
     data-strata-select
     data-strata-field-type="select"
     @keydown="!isDisabled() && handleKeyboardNavigation($event)"
     tabindex="0"
     {{ $attributes->whereDoesntStartWith('wire:model')->merge(['class' => 'relative overflow-visible']) }}
 >
-    <div class="hidden" hidden>
-        <input
-            type="hidden"
-            id="{{ $componentId }}"
-            name="{{ $name ?? '' }}"
-            x-ref="input"
-            x-bind:value="{{ $multiple ? 'JSON.stringify(entangleable.value)' : 'entangleable.value' }}"
-            data-strata-select-input
-            {{ $attributes->whereStartsWith('wire:model') }}
-        />
-    </div>
+    <input
+        type="hidden"
+        id="{{ $componentId }}"
+        name="{{ $name ?? '' }}"
+        x-ref="input"
+        x-bind:value="{{ $multiple ? 'JSON.stringify(entangleable.value)' : 'entangleable.value' }}"
+        data-strata-select-input
+        {{ $attributes->whereStartsWith('wire:model') }}
+    />
 
     <div class="relative">
         <div
@@ -153,8 +153,16 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
                             <template x-if="chips">
                                 <div class="flex flex-wrap gap-1 max-h-20 overflow-y-auto">
                                     <template x-for="value in selected" :key="value">
-                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-sm rounded">
+                                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary/10 text-primary text-sm rounded">
                                             <span x-text="getLabelForValue(value)"></span>
+                                            <button
+                                                type="button"
+                                                @click.stop="remove(value)"
+                                                aria-label="Remove"
+                                                class="inline-flex items-center justify-center rounded hover:bg-primary/20 transition-colors duration-150 -mr-0.5"
+                                            >
+                                                <x-strata::icon.x class="w-3 h-3" />
+                                            </button>
                                         </span>
                                     </template>
                                 </div>
@@ -174,12 +182,12 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
                     </template>
                 </div>
 
+                <x-strata::select.clear />
+
                 <x-strata::icon.chevron-down
-                    class="{{ $iconSize }} text-muted-foreground transition-transform duration-150 ease-out"
+                    class="{{ $iconSize }} text-muted-foreground transition-transform duration-150 ease-out self-center"
                     ::class="{ 'rotate-180': open }"
                 />
-
-                <x-strata::select.clear size="sm" />
         </div>
     </div>
 
@@ -189,7 +197,7 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         @toggle="open = $event.newState === 'open'"
         :style="`{{ $positioningStyle }} position-anchor: --select-${$id('select-dropdown')};`"
         data-strata-select-content
-        data-placement="{{ $placement }}"
+        data-strata-placement="{{ $placement }}"
         x-trap.nofocus="open"
         tabindex="-1"
         data-strata-select-dropdown
@@ -205,9 +213,9 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
                             type="text"
                             data-strata-select-search
                             x-model="search"
-                            @keydown.stop
-                            @keydown.escape="close()"
-                            @keydown.enter.prevent
+                            @keydown.escape.stop="close()"
+                            @keydown.enter.stop.prevent
+                            @keydown.tab.stop
                             placeholder="{{ $searchPlaceholder }}"
                             class="w-full px-3 py-2 pr-8 text-sm bg-input border border-border rounded-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:border-border transition-all duration-150"
                         />

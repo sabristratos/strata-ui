@@ -2,6 +2,8 @@
 
 use Stratos\StrataUI\Tests\TestCase;
 
+require_once __DIR__.'/helpers.php';
+
 pest()->extend(TestCase::class)->in(__DIR__);
 
 expect()->extend('toHaveClasses', function (string ...$classes) {

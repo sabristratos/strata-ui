@@ -21,6 +21,7 @@ import TimePicker from './time-picker.js';
 import ColorPicker from './color-picker.js';
 import RangeSlider from './range-slider.js';
 import Select from './select.js';
+import PhoneInput from './phone-input.js';
 import popoverTrigger from './popover-trigger.js';
 import './lightbox.js';
 import './alpine-helpers.js';
@@ -104,6 +105,12 @@ if (typeof window !== 'undefined') {
      * @type {function}
      */
     window.strataSelect = Select;
+
+    /**
+     * Phone input component with country selector and validation
+     * @type {function}
+     */
+    window.strataPhoneInput = PhoneInput;
 
     /**
      * Display a toast notification

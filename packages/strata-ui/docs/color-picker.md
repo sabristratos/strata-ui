@@ -1,6 +1,6 @@
 # Color Picker
 
-An interactive color selection component with HSL/RGB picker, preset palette, and multiple format support.
+An interactive color selection component with HSL/RGB picker, preset palette, and multiple format support. Built with Popover API and CSS Anchor Positioning for optimal performance.
 
 ## Features
 
@@ -14,6 +14,8 @@ An interactive color selection component with HSL/RGB picker, preset palette, an
 - **Validation States** - Default, success, error, and warning states
 - **Livewire Integration** - Full `wire:model` support via Entangleable
 - **Clearable** - Optional clear button to reset selection
+- **Popover API** - Native browser popover for top-layer management
+- **CSS Anchor Positioning** - Automatic positioning relative to trigger
 - **Accessible** - ARIA attributes, keyboard navigation, screen reader support
 
 ## Basic Usage
@@ -78,6 +80,45 @@ With HSL:
     :allow-alpha="true"
     value="hsla(217, 91%, 60%, 0.8)"
 />
+```
+
+## Positioning
+
+Control where the dropdown appears relative to the trigger:
+
+```blade
+{{-- Bottom start (default) --}}
+<x-strata::color-picker placement="bottom-start" />
+
+{{-- Bottom end --}}
+<x-strata::color-picker placement="bottom-end" />
+
+{{-- Top start --}}
+<x-strata::color-picker placement="top-start" />
+
+{{-- Top end --}}
+<x-strata::color-picker placement="top-end" />
+
+{{-- Right side --}}
+<x-strata::color-picker placement="right-start" />
+
+{{-- Left side --}}
+<x-strata::color-picker placement="left-start" />
+```
+
+### Custom Offset
+
+Adjust the gap between trigger and dropdown:
+
+```blade
+{{-- Default 8px offset --}}
+<x-strata::color-picker offset="8" />
+
+{{-- Custom 16px offset --}}
+<x-strata::color-picker offset="16" />
+
+{{-- No offset --}}
+<x-strata::color-picker offset="0" />
 ```
 
 ## Size Variants
@@ -161,6 +202,8 @@ Provide custom preset colors:
     :allow-alpha="true"
     size="md"
     state="default"
+    placement="bottom-start"
+    offset="8"
     placeholder="Choose your theme color"
     :clearable="true"
     :show-presets="true"
@@ -236,6 +279,8 @@ class ThemeSettings extends Component
 | `allowAlpha` | `boolean` | `false` | Enable alpha/transparency control |
 | `showPresets` | `boolean` | `true` | Show preset color palette |
 | `presets` | `array` | Tailwind colors | Custom preset colors `['#color' => 'Label']` |
+| `placement` | `string` | `'bottom-start'` | Dropdown placement: `'bottom-start'`, `'bottom-end'`, `'top-start'`, `'top-end'`, `'right-start'`, `'left-start'`, etc. |
+| `offset` | `int` | `8` | Gap in pixels between trigger and dropdown |
 
 ## Accessibility
 
@@ -311,18 +356,36 @@ The component automatically converts between HEX and HSL formats:
 </form>
 ```
 
+## Technical Implementation
+
+### Popover API
+The dropdown uses the native Popover API for:
+- Top-layer rendering (always on top)
+- Light dismiss behavior (click outside to close)
+- Automatic focus management
+- Better accessibility
+
+### CSS Anchor Positioning
+Positioning is handled by CSS Anchor Positioning:
+- No JavaScript calculations needed
+- Smooth performance
+- Automatic repositioning
+- Polyfill included for unsupported browsers
+
 ## Styling
 
-The color picker uses Tailwind CSS v4 and follows Strata UI's design system. All colors are themeable through CSS variables.
+The color picker uses Tailwind CSS v4 and follows Strata UI's design system. All colors are themeable through CSS variables defined in `theme.css`.
 
 ## Browser Support
 
-- Chrome/Edge 90+
-- Firefox 88+
-- Safari 14+
+- Chrome/Edge 114+ (native Popover API)
+- Firefox 125+ (native Popover API)
+- Safari 17+ (native Popover API)
+- Older browsers supported via polyfill
 
 ## Related Components
 
 - [Input](/docs/input.md) - Basic text input
 - [Select](/docs/select.md) - Dropdown selection
-- [Dropdown](/docs/dropdown.md) - Generic dropdown
+- [Date Picker](/docs/date-picker.md) - Date selection
+- [Time Picker](/docs/time-picker.md) - Time selection

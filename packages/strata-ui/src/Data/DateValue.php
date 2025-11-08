@@ -75,7 +75,7 @@ class DateValue implements Wireable
         return $this->date->isWeekday();
     }
 
-    public function diffInDays(DateValue|Carbon|string $date = null): int
+    public function diffInDays(DateValue|Carbon|string|null $date = null): int
     {
         $date = match (true) {
             $date instanceof DateValue => $date->date,

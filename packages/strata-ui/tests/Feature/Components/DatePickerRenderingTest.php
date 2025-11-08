@@ -22,7 +22,8 @@ describe('Date Picker Component', function () {
 
     test('renders dropdown with calendar', function () {
         expectComponent('date-picker')
-            ->toContain('x-ref="dropdown"')
+            ->toContain('data-strata-datepicker-dropdown')
+            ->toContain('popover="auto"')
             ->toContain('data-strata-calendar');
     });
 
@@ -72,7 +73,7 @@ describe('Date Picker Component', function () {
 
     test('renders with default placeholder for single mode', function () {
         expectComponent($this, 'date-picker', ['mode' => 'single'])
-            ->toContain("x-text=\"placeholder\"");
+            ->toContain('x-text="placeholder"');
     });
 
     test('renders with default placeholder for range mode', function () {
@@ -142,16 +143,17 @@ describe('Date Picker Component', function () {
             ->toContain('disabled: true');
     });
 
-    test('trigger has role button', function () {
+    test('trigger has role combobox', function () {
         expectComponent('date-picker')
-            ->toContain('role="button"');
+            ->toContain('role="combobox"');
     });
 
     test('trigger has aria attributes', function () {
         expectComponent('date-picker')
-            ->toContain('aria-haspopup="true"')
+            ->toContain('aria-haspopup="dialog"')
             ->toContain(':aria-expanded="open"')
-            ->toContain(':aria-disabled="disabled"');
+            ->toContain(':aria-disabled="isDisabled()"')
+            ->toContain(':aria-controls="$id(\'datepicker-dropdown\')"');
     });
 
     test('dropdown has dialog role', function () {
@@ -178,18 +180,23 @@ describe('Date Picker Component', function () {
 
     test('trigger is clickable and opens dropdown', function () {
         expectComponent('date-picker')
-            ->toContain('@click="disabled ? null : (open = true)"');
+            ->toContain('@click.prevent.stop="isDisabled() ? null : toggleDropdown()"');
     });
 
     test('trigger supports keyboard navigation', function () {
         expectComponent('date-picker')
-            ->toContain('@keydown.enter.prevent="disabled ? null : (open = true)"')
-            ->toContain('@keydown.space.prevent="disabled ? null : (open = true)"');
+            ->toContain('@keydown.enter.prevent="isDisabled() ? null : toggleDropdown()"')
+            ->toContain('@keydown.space.prevent="isDisabled() ? null : toggleDropdown()"');
     });
 
-    test('dropdown closes on click outside', function () {
+    test('trigger has CSS anchor name', function () {
         expectComponent('date-picker')
-            ->toContain('@click.outside="open = false"');
+            ->toContain('anchor-name: --datepicker-');
+    });
+
+    test('dropdown uses popover API for dismissal', function () {
+        expectComponent('date-picker')
+            ->toContain('popover="auto"');
     });
 
     test('dropdown closes on escape key', function () {
@@ -234,9 +241,9 @@ describe('Date Picker Component', function () {
             ->toContain('focus-within:ring-ring');
     });
 
-    test('dropdown has positioned styles binding', function () {
+    test('dropdown has CSS anchor positioning', function () {
         expectComponent('date-picker')
-            ->toContain(':style="positionable.styles"');
+            ->toContain('position-anchor: --datepicker-');
     });
 
     test('dropdown has transition classes', function () {
@@ -260,9 +267,10 @@ describe('Date Picker Component', function () {
             ->toContain('text-popover-foreground');
     });
 
-    test('dropdown has proper positioning classes', function () {
+    test('dropdown has popover attributes', function () {
         expectComponent('date-picker')
-            ->toContain('absolute z-50');
+            ->toContain('popover="auto"')
+            ->toContain('@toggle="open = $event.newState === \'open\'"');
     });
 
     test('passes wire:model to hidden input only', function () {
@@ -369,12 +377,12 @@ describe('Date Picker Component', function () {
 
     test('trigger has tabindex when not disabled', function () {
         expectComponent('date-picker')
-            ->toContain('tabindex="0"');
+            ->toContain(':tabindex="isDisabled() ? -1 : 0"');
     });
 
     test('trigger has negative tabindex when disabled', function () {
         expectComponent($this, 'date-picker', ['disabled' => true])
-            ->toContain('tabindex="-1"');
+            ->toContain(':tabindex="isDisabled() ? -1 : 0"');
     });
 
     test('component properly filters wire:model attributes', function () {

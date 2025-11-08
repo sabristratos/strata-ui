@@ -7,8 +7,8 @@ use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Stratos\StrataUI\Commands\BuildCommand;
 use Stratos\StrataUI\Services\FileService;
-use Stratos\StrataUI\Synthesizers\DateValueSynthesizer;
 use Stratos\StrataUI\Synthesizers\DateRangeSynthesizer;
+use Stratos\StrataUI\Synthesizers\DateValueSynthesizer;
 use Stratos\StrataUI\Synthesizers\TimeValueSynthesizer;
 use Stratos\StrataUI\View\Components\Image;
 
@@ -28,6 +28,7 @@ class StrataUIServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'strata-ui');
+        $this->loadJsonTranslationsFrom(__DIR__.'/../lang');
 
         $this->registerBladeDirectives();
         $this->registerComponentNamespace();
@@ -72,6 +73,10 @@ class StrataUIServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../resources/views' => resource_path('views/vendor/strata-ui'),
             ], 'strata-ui-views');
+
+            $this->publishes([
+                __DIR__.'/../lang' => $this->app->langPath('vendor/strata-ui'),
+            ], 'strata-ui-lang');
         }
     }
 

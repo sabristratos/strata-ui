@@ -82,6 +82,12 @@ $inputAttributes = $attributes->except(['class', 'style']);
         <x-dynamic-component :component="'strata::icon.' . $iconLeft" class="w-5 h-5 text-muted-foreground flex-shrink-0" />
     @endif
 
+    @if(isset($prefixSlot))
+        <div class="flex items-center flex-shrink-0">
+            {{ $prefixSlot }}
+        </div>
+    @endif
+
     @if($prefix)
         <span class="text-muted-foreground flex-shrink-0">{{ $prefix }}</span>
     @endif

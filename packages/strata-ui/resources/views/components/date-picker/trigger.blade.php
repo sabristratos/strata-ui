@@ -26,15 +26,17 @@ if ($disabled) {
 
 <div
     {{ $attributes->merge(['class' => implode(' ', $triggerClasses)]) }}
-    @click="disabled ? null : (open = true)"
+    :style="`anchor-name: --datepicker-${$id('datepicker-dropdown')};`"
+    @click.prevent.stop="isDisabled() ? null : toggleDropdown()"
     x-ref="trigger"
-    tabindex="{{ $disabled ? '-1' : '0' }}"
-    @keydown.enter.prevent="disabled ? null : (open = true)"
-    @keydown.space.prevent="disabled ? null : (open = true)"
-    role="button"
-    aria-haspopup="true"
+    :tabindex="isDisabled() ? -1 : 0"
+    @keydown.enter.prevent="isDisabled() ? null : toggleDropdown()"
+    @keydown.space.prevent="isDisabled() ? null : toggleDropdown()"
+    role="combobox"
+    aria-haspopup="dialog"
     :aria-expanded="open"
-    :aria-disabled="disabled"
+    :aria-disabled="isDisabled()"
+    :aria-controls="$id('datepicker-dropdown')"
 >
     <x-strata::icon.calendar
         class="w-5 h-5 shrink-0 text-muted-foreground"

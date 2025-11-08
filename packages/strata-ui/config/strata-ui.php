@@ -6,4 +6,8 @@ return [
     'asset_path' => env('STRATA_UI_ASSET_PATH', 'vendor/strata-ui'),
 
     'component_namespace' => env('STRATA_UI_COMPONENT_NAMESPACE', 'strata'),
+
+    'locale' => env('STRATA_UI_LOCALE', null),
+
+    'fallback_locale' => env('STRATA_UI_FALLBACK_LOCALE', 'en'),
 ];

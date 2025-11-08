@@ -9,39 +9,71 @@ use Livewire\Component;
 class SelectDemo extends Component
 {
     public $singleValue = null;
+
     public $multipleValues = [];
+
     public $searchableValue = null;
+
     public $sizeSmall = null;
+
     public $sizeMedium = null;
+
     public $sizeLarge = null;
+
     public $stateDefault = null;
+
     public $stateSuccess = 'success';
+
     public $stateError = null;
+
     public $stateWarning = null;
+
     public $clearableValue = 'option2';
+
     public $disabledValue = null;
+
     public $chipsValue = [];
 
+    public $maxSelectedValue = [];
+
+    public $iconSingleValue = null;
+
+    public $iconMultipleValue = [];
+
+    public $iconSearchableValue = null;
+
     public $country = null;
+
     public $state = null;
+
     public array $availableStates = [];
 
     public $category = null;
+
     public $subcategory = null;
+
     public array $availableSubcategories = [];
 
     public $department = null;
+
     public $employee = null;
+
     public array $availableEmployees = [];
 
     public $formProduct = null;
+
     public $formTags = [];
+
     public $formPriority = null;
 
     public $projectName = '';
+
     public $projectCategory = null;
+
     public $projectTags = [];
+
     public $projectStatus = null;
+
     public $projectMessage = null;
 
     public function mount()
@@ -90,7 +122,7 @@ class SelectDemo extends Component
             'projectStatus' => 'required',
         ]);
 
-        $this->projectMessage = "Project '{$this->projectName}' created successfully with " . count($this->projectTags) . " tags!";
+        $this->projectMessage = "Project '{$this->projectName}' created successfully with ".count($this->projectTags).' tags!';
 
         $this->reset(['projectName', 'projectCategory', 'projectTags', 'projectStatus']);
     }
@@ -107,7 +139,7 @@ class SelectDemo extends Component
 
     private function getStatesForCountry(?string $country): array
     {
-        return match($country) {
+        return match ($country) {
             'us' => [
                 ['value' => 'ca', 'label' => 'California'],
                 ['value' => 'ny', 'label' => 'New York'],
@@ -148,7 +180,7 @@ class SelectDemo extends Component
 
     private function getSubcategoriesForCategory(?string $category): array
     {
-        return match($category) {
+        return match ($category) {
             'electronics' => [
                 ['value' => 'laptops', 'label' => 'Laptops'],
                 ['value' => 'phones', 'label' => 'Smartphones'],
@@ -189,7 +221,7 @@ class SelectDemo extends Component
 
     private function getEmployeesForDepartment(?string $department): array
     {
-        return match($department) {
+        return match ($department) {
             'engineering' => [
                 ['value' => 'john', 'label' => 'John Smith - Senior Developer'],
                 ['value' => 'jane', 'label' => 'Jane Doe - Tech Lead'],
@@ -271,6 +303,39 @@ class SelectDemo extends Component
             ['value' => 'in_progress', 'label' => 'In Progress'],
             ['value' => 'review', 'label' => 'In Review'],
             ['value' => 'completed', 'label' => 'Completed'],
+        ];
+    }
+
+    public function getNotificationOptions(): array
+    {
+        return [
+            ['value' => 'email', 'label' => 'Email Notifications', 'icon' => 'mail'],
+            ['value' => 'bell', 'label' => 'Push Notifications', 'icon' => 'bell'],
+            ['value' => 'message', 'label' => 'SMS Messages', 'icon' => 'message-square'],
+            ['value' => 'phone', 'label' => 'Phone Calls', 'icon' => 'phone'],
+        ];
+    }
+
+    public function getFileTypeOptions(): array
+    {
+        return [
+            ['value' => 'document', 'label' => 'Documents', 'icon' => 'file-text'],
+            ['value' => 'image', 'label' => 'Images', 'icon' => 'image'],
+            ['value' => 'video', 'label' => 'Videos', 'icon' => 'video'],
+            ['value' => 'audio', 'label' => 'Audio Files', 'icon' => 'headphones'],
+            ['value' => 'archive', 'label' => 'Archives', 'icon' => 'archive'],
+            ['value' => 'code', 'label' => 'Source Code', 'icon' => 'code'],
+        ];
+    }
+
+    public function getStatusOptions(): array
+    {
+        return [
+            ['value' => 'pending', 'label' => 'Pending', 'icon' => 'clock', 'description' => 'Awaiting review'],
+            ['value' => 'active', 'label' => 'Active', 'icon' => 'check-circle', 'description' => 'Currently running'],
+            ['value' => 'paused', 'label' => 'Paused', 'icon' => 'pause-circle', 'description' => 'Temporarily stopped'],
+            ['value' => 'completed', 'label' => 'Completed', 'icon' => 'check', 'description' => 'Successfully finished'],
+            ['value' => 'failed', 'label' => 'Failed', 'icon' => 'x-circle', 'description' => 'Encountered an error'],
         ];
     }
 

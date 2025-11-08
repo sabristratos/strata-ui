@@ -9,14 +9,6 @@ export default function (props = {}) {
             }
         }),
 
-        ...window.createPositionableMixin({
-            placement: 'bottom-start',
-            offset: 8,
-            floatingRef: 'dropdown',
-            enableSize: true,
-            maxHeight: true
-        }),
-
         open: false,
         mode: props.mode || 'single',
         initialValue: props.initialValue || null,
@@ -27,11 +19,38 @@ export default function (props = {}) {
         clearable: props.clearable || false,
         chips: props.chips || false,
         display: '',
+        _disabledObserver: null,
 
         init() {
             this.initEntangleable();
-            this.initPositionable();
             this.display = this.computeDisplay(this.entangleable.value);
+
+            this.disabled = this.$el?.dataset?.disabled === 'true';
+
+            this._disabledObserver = new MutationObserver((mutations) => {
+                for (const mutation of mutations) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'data-disabled') {
+                        this.disabled = this.$el?.dataset?.disabled === 'true';
+                    }
+                }
+            });
+
+            this._disabledObserver.observe(this.$el, {
+                attributes: true,
+                attributeFilter: ['data-disabled']
+            });
+
+            this.$watch('open', (isOpen) => {
+                if (!isOpen) {
+                    this.$nextTick(() => {
+                        this.$refs.trigger?.focus();
+                    });
+                }
+            });
+        },
+
+        isDisabled() {
+            return this.disabled === true;
         },
 
         get dates() {
@@ -130,14 +149,16 @@ export default function (props = {}) {
             if (mode === 'single') {
                 const selectedDate = Array.isArray(dates) ? dates[0] : dates;
                 this.entangleable.set(selectedDate);
-                this.open = false;
+                const dropdown = document.getElementById(this.$id('datepicker-dropdown'));
+                if (dropdown) dropdown.hidePopover();
             } else if (mode === 'range') {
                 if (Array.isArray(dates) && dates.length === 2) {
                     this.entangleable.set({
                         start: dates[0],
                         end: dates[1],
                     });
-                    this.open = false;
+                    const dropdown = document.getElementById(this.$id('datepicker-dropdown'));
+                    if (dropdown) dropdown.hidePopover();
                 }
             }
         },
@@ -248,7 +269,8 @@ export default function (props = {}) {
             if (presets[presetName]) {
                 const value = presets[presetName]();
                 this.entangleable.set(value);
-                this.open = false;
+                const dropdown = document.getElementById(this.$id('datepicker-dropdown'));
+                if (dropdown) dropdown.hidePopover();
             }
         },
 
@@ -264,18 +286,32 @@ export default function (props = {}) {
 
         clear() {
             this.entangleable.set(null);
-            this.open = false;
+            const dropdown = document.getElementById(this.$id('datepicker-dropdown'));
+            if (dropdown) dropdown.hidePopover();
         },
 
         hasValue() {
             return this.entangleable.value !== null && this.entangleable.value !== '';
         },
 
+        toggleDropdown() {
+            const dropdown = document.getElementById(this.$id('datepicker-dropdown'));
+            if (dropdown) {
+                if (this.open) {
+                    dropdown.hidePopover();
+                } else {
+                    dropdown.showPopover();
+                }
+            }
+        },
+
         destroy() {
             if (this.entangleable) {
                 this.entangleable.destroy();
             }
-            this.destroyPositionable();
+            if (this._disabledObserver) {
+                this._disabledObserver.disconnect();
+            }
         },
     };
 }

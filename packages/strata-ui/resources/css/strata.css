@@ -2,6 +2,7 @@
 @import "./theme.css";
 @import "./lightbox.css";
 @import "./anchor-positioning.css";
+@import "flag-icons/css/flag-icons.min.css";
 @plugin "@tailwindcss/typography";
 
 @layer base {

@@ -2,22 +2,17 @@
     'monthOffset' => 0,
 ])
 
-@php
-$dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-@endphp
-
 <div data-strata-calendar-grid>
     <div class="grid grid-cols-7 gap-1 mb-2">
-        @foreach($dayNames as $index => $dayName)
+        @for($index = 0; $index < 7; $index++)
             <div
                 class="text-center text-xs font-medium text-muted-foreground p-2"
                 x-text="(() => {
-                    const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
                     const adjustedIndex = ({{ $index }} + weekStartsOn) % 7;
-                    return days[adjustedIndex];
+                    return getWeekdayName(adjustedIndex, true);
                 })()"
             ></div>
-        @endforeach
+        @endfor
     </div>
 
     <div

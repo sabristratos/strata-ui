@@ -35,11 +35,93 @@
             </button>
         </div>
 
-        <livewire:select-demo />
+        {{-- Toast Demo --}}
+        <div class="space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold mb-2">Toast Notifications</h2>
+                <p class="text-muted mb-4">Test toast notifications with Popover API</p>
+            </div>
 
-        <div class="border-t border-border my-12"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{-- Variants --}}
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold">Variants</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <button
+                            @click="window.toast.success('Success!', 'Your changes have been saved successfully.')"
+                            class="px-4 py-2 rounded-lg bg-success text-white hover:bg-success/90 transition-colors"
+                        >
+                            Success Toast
+                        </button>
+                        <button
+                            @click="window.toast.error('Error!', 'Something went wrong. Please try again.')"
+                            class="px-4 py-2 rounded-lg bg-destructive text-white hover:bg-destructive/90 transition-colors"
+                        >
+                            Error Toast
+                        </button>
+                        <button
+                            @click="window.toast.warning('Warning!', 'This action cannot be undone.')"
+                            class="px-4 py-2 rounded-lg bg-warning text-white hover:bg-warning/90 transition-colors"
+                        >
+                            Warning Toast
+                        </button>
+                        <button
+                            @click="window.toast.info('Info', 'New features are now available.')"
+                            class="px-4 py-2 rounded-lg bg-info text-white hover:bg-info/90 transition-colors"
+                        >
+                            Info Toast
+                        </button>
+                    </div>
+                </div>
 
-        <livewire:time-picker-demo />
+                {{-- Quick Tests --}}
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold">Quick Tests</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <button
+                            @click="window.toast('Simple message')"
+                            class="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                        >
+                            Simple Toast
+                        </button>
+                        <button
+                            @click="window.toast({ title: 'No Description', variant: 'success' })"
+                            class="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                        >
+                            Title Only
+                        </button>
+                        <button
+                            @click="window.toast({ description: 'Description only', variant: 'info' })"
+                            class="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                        >
+                            Description Only
+                        </button>
+                        <button
+                            @click="window.toast({ title: 'Persistent', description: 'This toast will not auto-dismiss', variant: 'warning', duration: 0 })"
+                            class="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                        >
+                            No Auto-dismiss
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Multiple Toasts --}}
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold">Multiple Toasts</h3>
+                <button
+                    @click="
+                        window.toast.success('First', 'This is the first toast');
+                        setTimeout(() => window.toast.info('Second', 'This is the second toast'), 500);
+                        setTimeout(() => window.toast.warning('Third', 'This is the third toast'), 1000);
+                    "
+                    class="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                    Show Multiple Toasts
+                </button>
+            </div>
+        </div>
+
     </div>
 
     @livewireScripts

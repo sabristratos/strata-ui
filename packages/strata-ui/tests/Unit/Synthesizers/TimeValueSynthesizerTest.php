@@ -6,7 +6,7 @@ use Stratos\StrataUI\Synthesizers\TimeValueSynthesizer;
 
 beforeEach(function () {
     Carbon::setTestNow('2024-11-04 14:30:45');
-    $this->synthesizer = new TimeValueSynthesizer();
+    $this->synthesizer = new TimeValueSynthesizer;
 });
 
 afterEach(function () {

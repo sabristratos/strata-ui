@@ -2,42 +2,20 @@
     'monthOffset' => 0,
 ])
 
+@php
+$pickerId = 'monthpicker-' . $monthOffset . '-' . uniqid();
+@endphp
+
 <div
     data-strata-calendar-header
     class="flex items-center justify-between mb-4"
     x-data="{
         showMonthPicker: false,
-        monthPickerPositionable{{ $monthOffset }}: null,
-        months: ['January', 'February', 'March', 'April', 'May', 'June',
-                 'July', 'August', 'September', 'October', 'November', 'December'],
         years: [],
         selectedYear: null,
         selectedMonth: null,
 
         init() {
-            this.monthPickerPositionable{{ $monthOffset }} = new window.StrataPositionable({
-                placement: 'bottom',
-                offset: 8,
-                strategy: 'absolute'
-            });
-
-            const button = this.$refs.monthPickerButton{{ $monthOffset }};
-            const dropdown = this.$refs.monthPickerDropdown{{ $monthOffset }};
-
-            if (button && dropdown) {
-                this.monthPickerPositionable{{ $monthOffset }}.start(this, button, dropdown);
-            }
-
-            this.$watch('showMonthPicker', (value) => {
-                if (value && this.monthPickerPositionable{{ $monthOffset }}) {
-                    this.$nextTick(() => {
-                        this.monthPickerPositionable{{ $monthOffset }}.state = true;
-                    });
-                } else if (this.monthPickerPositionable{{ $monthOffset }}) {
-                    this.monthPickerPositionable{{ $monthOffset }}.state = false;
-                }
-            });
-
             for (let i = yearRangeStart; i <= yearRangeEnd; i++) {
                 this.years.push(i);
             }
@@ -47,10 +25,24 @@
             this.selectedMonth = validMonth.getMonth() + {{ $monthOffset }};
         },
 
+        toggleMonthPicker() {
+            const dropdown = document.getElementById('{{ $pickerId }}');
+            if (dropdown) {
+                if (this.showMonthPicker) {
+                    dropdown.hidePopover();
+                } else {
+                    dropdown.showPopover();
+                }
+            }
+        },
+
         selectMonth(index) {
             this.selectedMonth = index;
             goToMonth(this.selectedMonth - {{ $monthOffset }}, this.selectedYear);
-            this.showMonthPicker = false;
+            const dropdown = document.getElementById('{{ $pickerId }}');
+            if (dropdown) {
+                dropdown.hidePopover();
+            }
         },
 
         changeYear() {
@@ -64,7 +56,7 @@
         variant="secondary"
         appearance="ghost"
         @click="previousMonth()"
-        aria-label="Previous month"
+        aria-label="{{ __('Previous month') }}"
         x-show="{{ $monthOffset }} === 0"
     />
 
@@ -76,18 +68,32 @@
 
         <x-strata::button.icon
             x-ref="monthPickerButton{{ $monthOffset }}"
+            style="anchor-name: --monthpicker-{{ $pickerId }};"
             icon="calendar"
             size="sm"
             variant="secondary"
             appearance="ghost"
-            @click="showMonthPicker = !showMonthPicker"
-            aria-label="Select month and year"
+            @click="toggleMonthPicker()"
+            x-bind:aria-expanded="showMonthPicker"
+            aria-label="{{ __('Select month and year') }}"
         />
 
         <x-strata::calendar.month-picker
             :month-offset="$monthOffset"
+            :picker-id="$pickerId"
         />
     </div>
+
+    <x-strata::button
+        size="sm"
+        variant="secondary"
+        appearance="ghost"
+        @click="goToToday()"
+        x-show="{{ $monthOffset }} === (monthsToShow - 1)"
+        class="mr-2"
+    >
+        {{ __('Today') }}
+    </x-strata::button>
 
     <x-strata::button.icon
         icon="chevron-right"
@@ -95,7 +101,7 @@
         variant="secondary"
         appearance="ghost"
         @click="nextMonth()"
-        aria-label="Next month"
+        aria-label="{{ __('Next month') }}"
         x-show="{{ $monthOffset }} === (monthsToShow - 1)"
     />
 </div>

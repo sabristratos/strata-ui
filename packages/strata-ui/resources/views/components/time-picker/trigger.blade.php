@@ -37,7 +37,7 @@ if ($disabled) {
         aria-hidden="true"
     />
 
-    <div class="flex-1 truncate">
+    <div class="flex-1 min-w-0 truncate">
         <span
             x-show="display"
             x-text="display"

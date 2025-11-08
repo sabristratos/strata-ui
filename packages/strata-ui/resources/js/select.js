@@ -9,7 +9,7 @@ export default function (props = {}) {
         }),
 
         ...window.createKeyboardNavigationMixin({
-            itemSelector: '[data-strata-select-option]:not([data-disabled])',
+            itemSelector: '[data-strata-select-option]:not([data-strata-disabled])',
             itemsProperty: 'items',
             highlightedProperty: 'highlighted',
             filteredItemsGetter: 'filteredOptions',
@@ -35,6 +35,7 @@ export default function (props = {}) {
         searchable: props.searchable || false,
         minItemsForSearch: props.minItemsForSearch || 0,
         clearable: props.clearable || false,
+        maxSelected: props.maxSelected || null,
         search: '',
         display: '',
         disabled: false,
@@ -81,20 +82,20 @@ export default function (props = {}) {
             this.initKeyboardNavigation();
 
             // Initialize disabled state from DOM
-            this.disabled = this.$el?.dataset?.disabled === 'true';
+            this.disabled = this.$el?.dataset?.strataDisabled === 'true';
 
             // Watch for disabled attribute changes (Livewire morphing)
             this._disabledObserver = new MutationObserver((mutations) => {
                 for (const mutation of mutations) {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'data-disabled') {
-                        this.disabled = this.$el?.dataset?.disabled === 'true';
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'data-strata-disabled') {
+                        this.disabled = this.$el?.dataset?.strataDisabled === 'true';
                     }
                 }
             });
 
             this._disabledObserver.observe(this.$el, {
                 attributes: true,
-                attributeFilter: ['data-disabled']
+                attributeFilter: ['data-strata-disabled']
             });
 
             this.$nextTick(() => {
@@ -147,9 +148,9 @@ export default function (props = {}) {
         collectOptions() {
             const optionElements = this.$el.querySelectorAll('[data-strata-select-option]');
             this.options = Array.from(optionElements).map(el => ({
-                value: el.dataset.value,
+                value: el.dataset.strataValue,
                 label: el.textContent.trim(),
-                disabled: el.hasAttribute('data-disabled'),
+                disabled: el.hasAttribute('data-strata-disabled'),
                 element: el
             }));
 
@@ -191,13 +192,16 @@ export default function (props = {}) {
         },
 
         select(value) {
-            if (this.isDisabled()) return;
+            if (this.isDisabled() || this.readonly) return;
 
             if (this.multiple) {
                 const index = this.selected.indexOf(value);
                 if (index > -1) {
                     this.selected = this.selected.filter(v => v !== value);
                 } else {
+                    if (this.maxSelected && this.selected.length >= this.maxSelected) {
+                        return;
+                    }
                     this.selected = [...this.selected, value];
                 }
             } else {
@@ -239,6 +243,10 @@ export default function (props = {}) {
                 return this.selected.length > 0;
             }
             return this.selected !== null && this.selected !== '';
+        },
+
+        isMaxSelected() {
+            return this.multiple && this.maxSelected && this.selected.length >= this.maxSelected;
         },
 
         computeDisplay(value) {

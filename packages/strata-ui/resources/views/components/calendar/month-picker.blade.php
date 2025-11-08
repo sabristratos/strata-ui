@@ -1,14 +1,34 @@
 @props([
     'monthOffset' => 0,
+    'placement' => 'bottom',
+    'pickerId',
 ])
 
+@php
+$positioningStyle = 'inset-area: ' . match($placement) {
+    'bottom', 'bottom-start' => 'bottom span-left',
+    'bottom-end' => 'bottom span-right',
+    'top', 'top-start' => 'top span-left',
+    'top-end' => 'top span-right',
+    default => 'bottom span-left',
+} . ';';
+@endphp
+
 <div
-    x-cloak
-    x-show="showMonthPicker"
-    @click.outside="showMonthPicker = false"
-    x-ref="monthPickerDropdown{{ $monthOffset }}"
-    class="absolute z-50"
-    :style="monthPickerPositionable{{ $monthOffset }} ? monthPickerPositionable{{ $monthOffset }}.styles : {}"
+    id="{{ $pickerId }}"
+    popover="auto"
+    @toggle="showMonthPicker = $event.newState === 'open'"
+    style="{{ $positioningStyle }} position-anchor: --monthpicker-{{ $pickerId }};"
+    @keydown.escape="showMonthPicker = false"
+    x-trap.nofocus="showMonthPicker"
+    data-strata-monthpicker-dropdown
+    data-placement="{{ $placement }}"
+    wire:ignore.self
+    tabindex="-1"
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ __('Select month and year') }}"
+    class="m-0 p-0 border-none bg-transparent inset-[unset]"
     x-data="{
         scrollToCurrentYear() {
             this.$nextTick(() => {
@@ -59,16 +79,16 @@
                 </div>
                 <div class="p-4">
                     <div class="grid grid-cols-3 gap-2 w-56">
-                        <template x-for="(month, index) in months" :key="index">
+                        <template x-for="index in 12" :key="index">
                             <button
                                 type="button"
-                                @click="selectMonth(index)"
+                                @click="selectMonth(index - 1)"
                                 x-bind:class="{
-                                    'bg-primary text-primary-foreground font-semibold': selectedMonth === index,
-                                    'hover:bg-primary/10 text-foreground': selectedMonth !== index
+                                    'bg-primary text-primary-foreground font-semibold': selectedMonth === (index - 1),
+                                    'hover:bg-primary/10 text-foreground': selectedMonth !== (index - 1)
                                 }"
                                 class="px-3 py-2 text-sm rounded-lg border border-border transition-colors"
-                                x-text="month.substring(0, 3)"
+                                x-text="getMonthName(index - 1).substring(0, 3)"
                             ></button>
                         </template>
                     </div>
