@@ -10,7 +10,11 @@ use Stratos\StrataUI\Services\FileService;
 use Stratos\StrataUI\Synthesizers\DateRangeSynthesizer;
 use Stratos\StrataUI\Synthesizers\DateValueSynthesizer;
 use Stratos\StrataUI\Synthesizers\TimeValueSynthesizer;
+use Stratos\StrataUI\View\Components\Carousel;
+use Stratos\StrataUI\View\Components\FileInput;
 use Stratos\StrataUI\View\Components\Image;
+use Stratos\StrataUI\View\Components\PhoneInput;
+use Stratos\StrataUI\View\Components\Select;
 
 class StrataUIServiceProvider extends ServiceProvider
 {
@@ -35,6 +39,7 @@ class StrataUIServiceProvider extends ServiceProvider
         $this->registerPublishing();
         $this->registerCommands();
         $this->registerLivewireSynthesizers();
+        $this->registerViewComposer();
     }
 
     protected function registerBladeDirectives(): void
@@ -47,6 +52,32 @@ class StrataUIServiceProvider extends ServiceProvider
             return "<?php echo '<script src=\"' . asset('vendor/strata-ui/strata.js') . '\" defer></script>'; ?>";
         });
 
+        Blade::directive('strataTranslations', function () {
+            return <<<'PHP'
+<?php
+    $locale = config('strata-ui.locale') ?: app()->getLocale();
+    $fallbackLocale = config('strata-ui.fallback_locale', 'en');
+
+    $translationPath = __DIR__.'/../../vendor/stratos/strata-ui/lang/'.$locale.'.json';
+    $fallbackPath = __DIR__.'/../../vendor/stratos/strata-ui/lang/'.$fallbackLocale.'.json';
+
+    $translations = [];
+    if (file_exists($fallbackPath)) {
+        $translations = json_decode(file_get_contents($fallbackPath), true) ?: [];
+    }
+    if (file_exists($translationPath) && $locale !== $fallbackLocale) {
+        $localeTranslations = json_decode(file_get_contents($translationPath), true) ?: [];
+        $translations = array_merge($translations, $localeTranslations);
+    }
+
+    echo '<script>';
+    echo 'window.__strataTranslations = ' . json_encode($translations, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) . ';';
+    echo 'window.__strataLocale = ' . json_encode($locale) . ';';
+    echo '</script>';
+?>
+PHP;
+        });
+
         Blade::directive('strataLightbox', function () {
             return "<?php echo view('strata-ui::components.lightbox.index')->render(); ?>";
         });
@@ -56,7 +87,11 @@ class StrataUIServiceProvider extends ServiceProvider
     {
         Blade::anonymousComponentNamespace('strata-ui::components', 'strata');
 
+        Blade::component('strata::carousel', Carousel::class);
+        Blade::component('strata::file-input', FileInput::class);
         Blade::component('strata::image', Image::class);
+        Blade::component('strata::phone-input', PhoneInput::class);
+        Blade::component('strata::select', Select::class);
     }
 
     protected function registerPublishing(): void
@@ -105,5 +140,16 @@ class StrataUIServiceProvider extends ServiceProvider
         Livewire::propertySynthesizer(DateValueSynthesizer::class);
         Livewire::propertySynthesizer(DateRangeSynthesizer::class);
         Livewire::propertySynthesizer(TimeValueSynthesizer::class);
+    }
+
+    protected function registerViewComposer(): void
+    {
+        view()->composer('*', function ($view) {
+            $locale = config('strata-ui.locale') ?: app()->getLocale();
+            $isRTL = in_array($locale, ['ar', 'he', 'fa', 'ur']);
+
+            $view->with('__strataIsRTL', $isRTL);
+            $view->with('__strataLocale', $locale);
+        });
     }
 }

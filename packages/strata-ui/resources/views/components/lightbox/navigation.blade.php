@@ -5,7 +5,7 @@
             data-strata-lightbox-nav-button
             x-on:click="prev()"
             x-bind:disabled="!hasPrev"
-            aria-label="Previous image"
+            :aria-label="$__('Previous image')"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="m15 18-6-6 6-6"/>
@@ -17,7 +17,7 @@
             data-strata-lightbox-nav-button
             x-on:click="next()"
             x-bind:disabled="!hasNext"
-            aria-label="Next image"
+            :aria-label="$__('Next image')"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="m9 18 6-6-6-6"/>
@@ -34,7 +34,7 @@
             type="button"
             data-strata-lightbox-nav-button
             x-on:click="close()"
-            aria-label="Close lightbox"
+            :aria-label="$__('Close')"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 6 6 18"/>

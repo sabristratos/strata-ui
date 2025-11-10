@@ -3,21 +3,30 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Stratos\StrataUI\Data\DateValue;
 use Stratos\StrataUI\Data\DateRange;
+use Stratos\StrataUI\Data\DateValue;
 use Stratos\StrataUI\Data\TimeValue;
 
 class UserProfileDemo extends Component
 {
     public ?string $name = null;
+
     public ?string $email = null;
+
     public ?string $department = null;
+
     public array $skills = [];
+
     public ?DateValue $birthDate = null;
+
     public ?DateRange $employmentPeriod = null;
+
     public ?TimeValue $preferredContactTime = null;
+
     public bool $saving = false;
+
     public bool $saved = false;
+
     public ?string $savedData = null;
 
     public function mount(): void
@@ -44,8 +53,9 @@ class UserProfileDemo extends Component
             'department' => ['required', 'string'],
             'skills' => ['required', 'array', 'min:1'],
             'birthDate' => ['required', function ($attribute, $value, $fail) {
-                if (!$value instanceof DateValue) {
+                if (! $value instanceof DateValue) {
                     $fail('Please select a valid birth date');
+
                     return;
                 }
                 if ($value->isFuture()) {
@@ -57,8 +67,9 @@ class UserProfileDemo extends Component
                 }
             }],
             'employmentPeriod' => ['required', function ($attribute, $value, $fail) {
-                if (!$value instanceof DateRange) {
+                if (! $value instanceof DateRange) {
                     $fail('Please select an employment period');
+
                     return;
                 }
                 if ($value->getStartDate()->isFuture()) {
@@ -66,7 +77,7 @@ class UserProfileDemo extends Component
                 }
             }],
             'preferredContactTime' => ['required', function ($attribute, $value, $fail) {
-                if (!$value instanceof TimeValue) {
+                if (! $value instanceof TimeValue) {
                     $fail('Please select a preferred contact time');
                 }
             }],
@@ -84,7 +95,7 @@ class UserProfileDemo extends Component
             'employmentPeriod' => [
                 'start' => $this->employmentPeriod?->getStartDate()->format('Y-m-d'),
                 'end' => $this->employmentPeriod?->getEndDate()->format('Y-m-d'),
-                'formatted' => $this->employmentPeriod?->getStartDate()->format('M d, Y') . ' - ' . $this->employmentPeriod?->getEndDate()->format('M d, Y'),
+                'formatted' => $this->employmentPeriod?->getStartDate()->format('M d, Y').' - '.$this->employmentPeriod?->getEndDate()->format('M d, Y'),
             ],
             'preferredContactTime' => $this->preferredContactTime?->to12HourFormat(),
         ], JSON_PRETTY_PRINT);

@@ -9,6 +9,7 @@
     'placeholder' => null,
     'state' => 'default',
     'size' => 'md',
+    'variant' => 'faded',
     'disabled' => false,
     'clearable' => true,
     'chips' => false,
@@ -19,6 +20,7 @@
 @php
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Config\ComponentVariantConfig;
 use Stratos\StrataUI\Support\ComponentHelpers;
 use Stratos\StrataUI\Support\PositioningHelper;
 
@@ -31,8 +33,11 @@ $sizes = $chips
 
 $states = ComponentStateConfig::pickerStates();
 
+$variants = ComponentVariantConfig::inputVariants();
+
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $stateClasses = $states[$state] ?? $states['default'];
+$variantClasses = $variants[$variant] ?? $variants['faded'];
 
 $initialValue = $value instanceof \Stratos\StrataUI\Data\DateValue
     ? $value->toString()
@@ -42,8 +47,6 @@ $initialValue = $value instanceof \Stratos\StrataUI\Data\DateValue
 
 $positioning = PositioningHelper::getAnchorPositioning($placement, $offset);
 $positioningStyle = $positioning['style'];
-
-$animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,overlay_150ms_allow-discrete,display_150ms_allow-discrete] ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95';
 @endphp
 
 <div
@@ -85,6 +88,7 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
             :chips="$chips"
             :size-classes="$sizeClasses"
             :state-classes="$stateClasses"
+            :variant-classes="$variantClasses"
         />
 
         <div class="absolute right-10 top-1/2 -translate-y-1/2 pointer-events-auto">
@@ -99,6 +103,5 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         :max-date="$maxDate"
         :placement="$placement"
         :positioning-style="$positioningStyle"
-        :animation-classes="$animationClasses"
     />
 </div>

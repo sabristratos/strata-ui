@@ -18,23 +18,23 @@
             role="alert"
             class="pointer-events-auto max-w-md m-0
                    [bottom:var(--toast-bottom)] [right:var(--toast-right)] [left:var(--toast-left)] [top:var(--toast-top)]
-                   bg-card text-card-foreground border rounded-lg shadow-lg overflow-hidden
-                   [transition:opacity_200ms,transform_200ms,overlay_200ms_allow-discrete,display_200ms_allow-discrete]
-                   transition-[opacity,transform,overlay,display] ease-out will-change-[transform,opacity]"
+                   bg-card text-card-foreground border rounded-lg shadow-lg overflow-hidden"
             :class="{
-                'border-info/20 bg-info/10': toast.variant === 'info',
-                'border-success/20 bg-success/10': toast.variant === 'success',
-                'border-warning/20 bg-warning/10': toast.variant === 'warning',
-                'border-destructive/20 bg-destructive/10': toast.variant === 'error',
-                'toast-slide-right': ['top-right', 'bottom-right'].includes('{{ $position }}'),
-                'toast-slide-left': ['top-left', 'bottom-left'].includes('{{ $position }}'),
-                'toast-slide-down': ['top-center', 'bottom-center'].includes('{{ $position }}'),
+                'border-secondary/20 bg-secondary-subtle': toast.variant === 'neutral',
+                'border-info/20 bg-info-subtle': toast.variant === 'info',
+                'border-success/20 bg-success-subtle': toast.variant === 'success',
+                'border-warning/20 bg-warning-subtle': toast.variant === 'warning',
+                'border-destructive/20 bg-destructive-subtle': toast.variant === 'error',
+                'animate-slide-right': ['top-right', 'bottom-right'].includes('{{ $position }}'),
+                'animate-slide-left': ['top-left', 'bottom-left'].includes('{{ $position }}'),
+                'animate-slide-up': ['top-center', 'bottom-center'].includes('{{ $position }}'),
             }"
         >
             <div
                 x-show="toast.duration > 0 && toast.progress !== null"
                 class="absolute bottom-0 left-0 h-1 transition-all duration-100 rounded-bl-lg rounded-br-lg"
                 :class="{
+                    'bg-secondary-subtle': toast.variant === 'neutral',
                     'bg-info-subtle': toast.variant === 'info',
                     'bg-success-subtle': toast.variant === 'success',
                     'bg-warning-subtle': toast.variant === 'warning',
@@ -44,7 +44,10 @@
             ></div>
 
             <div class="flex items-start gap-3 p-4">
-                <div class="flex-shrink-0 pt-0.5">
+                <div class="flex-shrink-0">
+                    <div x-show="toast.variant === 'neutral'">
+                        <x-strata::icon.bell class="size-5 text-secondary-foreground" />
+                    </div>
                     <div x-show="toast.variant === 'info'">
                         <x-strata::icon.info class="size-5 text-info" />
                     </div>
@@ -59,12 +62,13 @@
                     </div>
                 </div>
 
-                <div class="flex-1 min-w-0">
+                <div class="flex-1 min-w-0 flex flex-col gap-1">
                     <h5
                         x-show="toast.title"
                         x-text="toast.title"
-                        class="font-semibold text-sm mb-1"
+                        class="font-semibold text-sm"
                         :class="{
+                            'text-secondary-foreground': toast.variant === 'neutral',
                             'text-info': toast.variant === 'info',
                             'text-success': toast.variant === 'success',
                             'text-warning': toast.variant === 'warning',
@@ -95,24 +99,12 @@
 
 @once
 <style>
-@starting-style {
-    [popover][id^="toast-"]:popover-open {
-        opacity: 0;
-    }
-    [popover][id^="toast-"]:popover-open.toast-slide-right {
-        transform: translateX(100%);
-    }
-    [popover][id^="toast-"]:popover-open.toast-slide-left {
-        transform: translateX(-100%);
-    }
-    [popover][id^="toast-"]:popover-open.toast-slide-down {
-        transform: translateY(1rem);
-    }
-}
-
-[popover][id^="toast-"]:popover-open {
-    opacity: 1;
-    transform: translate(0, 0);
+[popover][id^="toast-"] {
+    transition:
+        opacity var(--animation-duration-slow),
+        transform var(--animation-duration-slow),
+        overlay var(--animation-duration-slow) allow-discrete,
+        display var(--animation-duration-slow) allow-discrete;
 }
 </style>
 
@@ -212,13 +204,11 @@ document.addEventListener('alpine:init', () => {
 
                 const toastElement = document.getElementById(`toast-${id}`);
                 if (toastElement) {
-                    toastElement.addEventListener('toggle', (e) => {
-                        if (e.newState === 'closed') {
-                            this.toasts.splice(this.toasts.findIndex(t => t.id === id), 1);
-                        }
-                    }, { once: true });
-
                     toastElement.hidePopover();
+
+                    setTimeout(() => {
+                        this.toasts.splice(this.toasts.findIndex(t => t.id === id), 1);
+                    }, 400);
                 } else {
                     this.toasts.splice(index, 1);
                 }

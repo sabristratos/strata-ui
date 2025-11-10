@@ -1,8 +1,9 @@
 @php
 $triggerClasses = [
-    'w-full inline-flex items-center gap-2 bg-input border rounded-lg inset-shadow-sm',
+    'w-full inline-flex items-center gap-2 rounded-lg',
     'transition-all duration-150',
     'focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2',
+    $variantClasses,
     $sizeClasses,
     $stateClasses,
 ];

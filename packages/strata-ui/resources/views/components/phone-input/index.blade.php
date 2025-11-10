@@ -205,9 +205,9 @@ $disabledClasses = $disabled || $readonly ? 'opacity-50 cursor-not-allowed' : 'c
                 x-model="countrySearch"
                 @keydown.escape="closeCountryDropdown()"
                 @keydown="handleDropdownKeydown"
-                placeholder="Search countries..."
+                :placeholder="$__('Search countries...')"
                 role="searchbox"
-                aria-label="Search countries"
+                :aria-label="$__('Search countries')"
                 class="w-full px-3 py-2 text-sm bg-input border border-border rounded-md transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 data-strata-phone-country-search
             />

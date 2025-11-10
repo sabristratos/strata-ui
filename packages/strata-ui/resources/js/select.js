@@ -260,7 +260,7 @@ export default function (props = {}) {
                     return labels.join(', ');
                 }
 
-                return `${value.length} ${value.length === 1 ? 'selection' : 'selections'}`;
+                return this.$__choice('{count} selection|{count} selections', value.length);
             }
 
             const option = this.options.find(opt => opt.value === value);

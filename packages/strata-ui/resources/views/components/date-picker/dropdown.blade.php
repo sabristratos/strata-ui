@@ -5,15 +5,7 @@
     'maxDate' => null,
     'placement' => 'bottom-start',
     'positioningStyle' => '',
-    'animationClasses' => '',
 ])
-
-@php
-$dropdownClasses = [
-    'bg-popover text-popover-foreground border border-border rounded-lg shadow-lg',
-    $animationClasses,
-];
-@endphp
 
 <div
     :id="$id('datepicker-dropdown')"
@@ -27,7 +19,7 @@ $dropdownClasses = [
     x-trap.nofocus="open"
     wire:ignore.self
     tabindex="-1"
-    {{ $attributes->merge(['class' => implode(' ', $dropdownClasses)]) }}
+    {{ $attributes->merge(['class' => 'animate-dropdown-bounce bg-popover text-popover-foreground border border-border rounded-lg shadow-lg']) }}
     role="dialog"
     aria-modal="true"
 >
@@ -44,7 +36,7 @@ $dropdownClasses = [
 
         @if ($showPresets && $mode === 'range')
             <div class="border-l border-border w-48 p-4">
-                <h3 class="text-sm font-semibold text-foreground mb-3">Quick Select</h3>
+                <h3 class="text-sm font-semibold text-foreground mb-3">{{ __('Quick Select') }}</h3>
 
                 <div class="space-y-1">
                     <button
@@ -52,7 +44,7 @@ $dropdownClasses = [
                         @click="selectPreset('today')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        Today
+                        {{ __('Today') }}
                     </button>
 
                     <button
@@ -60,7 +52,7 @@ $dropdownClasses = [
                         @click="selectPreset('yesterday')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        Yesterday
+                        {{ __('Yesterday') }}
                     </button>
 
                     <button
@@ -68,7 +60,7 @@ $dropdownClasses = [
                         @click="selectPreset('thisWeek')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        This Week
+                        {{ __('This week') }}
                     </button>
 
                     <button
@@ -76,7 +68,7 @@ $dropdownClasses = [
                         @click="selectPreset('lastWeek')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        Last Week
+                        {{ __('Last Week') }}
                     </button>
 
                     <button
@@ -84,7 +76,7 @@ $dropdownClasses = [
                         @click="selectPreset('last7Days')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        Last 7 Days
+                        {{ __('Last 7 days') }}
                     </button>
 
                     <button
@@ -92,7 +84,7 @@ $dropdownClasses = [
                         @click="selectPreset('last30Days')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        Last 30 Days
+                        {{ __('Last 30 days') }}
                     </button>
 
                     <button
@@ -100,7 +92,7 @@ $dropdownClasses = [
                         @click="selectPreset('thisMonth')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        This Month
+                        {{ __('This month') }}
                     </button>
 
                     <button
@@ -108,7 +100,7 @@ $dropdownClasses = [
                         @click="selectPreset('lastMonth')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        Last Month
+                        {{ __('Last month') }}
                     </button>
 
                     <button
@@ -116,7 +108,7 @@ $dropdownClasses = [
                         @click="selectPreset('thisYear')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        This Year
+                        {{ __('This year') }}
                     </button>
                 </div>
             </div>
@@ -124,7 +116,7 @@ $dropdownClasses = [
 
         @if ($showPresets && $mode === 'single')
             <div class="border-l border-border w-40 p-4">
-                <h3 class="text-sm font-semibold text-foreground mb-3">Quick Select</h3>
+                <h3 class="text-sm font-semibold text-foreground mb-3">{{ __('Quick Select') }}</h3>
 
                 <div class="space-y-1">
                     <button
@@ -132,7 +124,7 @@ $dropdownClasses = [
                         @click="selectPreset('today')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        Today
+                        {{ __('Today') }}
                     </button>
 
                     <button
@@ -140,7 +132,7 @@ $dropdownClasses = [
                         @click="selectPreset('tomorrow')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        Tomorrow
+                        {{ __('Tomorrow') }}
                     </button>
 
                     <button
@@ -148,7 +140,7 @@ $dropdownClasses = [
                         @click="selectPreset('nextWeek')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        Next Week
+                        {{ __('Next Week') }}
                     </button>
 
                     <button
@@ -156,7 +148,7 @@ $dropdownClasses = [
                         @click="selectPreset('nextMonth')"
                         class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
                     >
-                        Next Month
+                        {{ __('Next Month') }}
                     </button>
                 </div>
             </div>

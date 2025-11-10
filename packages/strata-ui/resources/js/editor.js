@@ -25,6 +25,10 @@ export default (initialValue = null) => {
         activeStates: {},
 
         init() {
+            if (editor) {
+                return;
+            }
+
             this.initEntangleable();
 
             editor = new Editor({
@@ -51,7 +55,7 @@ export default (initialValue = null) => {
                 ],
                 editorProps: {
                     attributes: {
-                        class: 'prose prose-sm sm:prose lg:prose-lg dark:prose-invert focus:outline-none p-4',
+                        class: 'prose prose-sm sm:prose lg:prose-lg dark:prose-invert max-w-none focus:outline-none p-4',
                     },
                 },
                 onCreate: () => {
@@ -136,8 +140,13 @@ export default (initialValue = null) => {
                 return;
             }
 
-            const base64 = await this.blobToBase64(file);
-            editor.chain().focus().setImage({ src: base64 }).run();
+            try {
+                const base64 = await this.blobToBase64(file);
+                editor.chain().focus().setImage({ src: base64 }).run();
+            } catch (error) {
+                window.toast.error('Image Upload Failed', 'Could not read the selected image file.');
+                console.error('[Editor] Image upload error:', error);
+            }
 
             event.target.value = '';
         },
@@ -198,6 +207,7 @@ export default (initialValue = null) => {
         },
 
         destroy() {
+            clearTimeout(syncTimeout);
             editor?.destroy();
             this.entangleable?.destroy();
         },

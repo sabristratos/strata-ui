@@ -52,7 +52,7 @@
  *
  * @note This component uses wire:ignore and manages its own state through Alpine.js
  * @note Content is synced to Livewire via Entangleable on change (with debouncing)
- * @note Link and image insertion currently use window.prompt() (planned improvement)
+ * @note Link insertion uses window.prompt(); images use file input (planned: modal dialogs for both)
  */
 --}}
 
@@ -82,34 +82,37 @@
     }
 @endphp
 
-<div
-    wire:ignore
-    x-data="strataEditor(@js($initialValue))"
-    data-strata-editor
-    data-strata-field-type="editor"
-    {{ $attributes->merge(['class' => 'rounded-lg border bg-background transition-colors ' . $stateClasses]) }}
->
-    <input
-        type="hidden"
-        data-strata-editor-input
-        id="{{ $componentId }}"
-        {{ $attributes->only(['wire:model', 'wire:model.live', 'name']) }}
-    />
-
-    <x-strata::editor.toolbar />
-
+<div {{ $attributes->whereDoesntStartWith('wire:model') }}>
     <div
-        x-ref="editor"
-        data-strata-editor-content
-        class="text-foreground {{ $sizeClasses }}"
-    ></div>
+        wire:ignore
+        x-data="strataEditor(@js($initialValue))"
+        data-strata-editor
+        data-strata-field-type="editor"
+        class="rounded-lg border bg-background transition-colors {{ $stateClasses }}"
+    >
+        <input
+            type="hidden"
+            data-strata-editor-input
+            id="{{ $componentId }}"
+            x-bind:value="JSON.stringify(entangleable.value)"
+            {{ $attributes->whereStartsWith('wire:model') }}
+        />
 
-    <input
-        type="file"
-        x-ref="imageInput"
-        accept="image/*"
-        class="hidden"
-        data-strata-editor-image-input
-        @change="handleImageSelect($event)"
-    />
+        <x-strata::editor.toolbar />
+
+        <div
+            x-ref="editor"
+            data-strata-editor-content
+            class="text-foreground {{ $sizeClasses }}"
+        ></div>
+
+        <input
+            type="file"
+            x-ref="imageInput"
+            accept="image/*"
+            class="hidden"
+            data-strata-editor-image-input
+            @change="handleImageSelect($event)"
+        />
+    </div>
 </div>

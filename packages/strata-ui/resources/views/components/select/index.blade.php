@@ -48,6 +48,7 @@
     'multiple' => false,
     'size' => 'md',
     'state' => 'default',
+    'variant' => 'faded',
     'placeholder' => 'Select an option',
     'disabled' => false,
     'name' => null,
@@ -67,13 +68,14 @@
 @php
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Config\ComponentVariantConfig;
 use Stratos\StrataUI\Support\ComponentHelpers;
 use Stratos\StrataUI\Support\PositioningHelper;
 
 $chips = filter_var($chips, FILTER_VALIDATE_BOOLEAN);
 
 $itemsAlignment = $chips ? 'items-start' : 'items-center';
-$baseClasses = 'w-full inline-flex justify-between gap-2 bg-input border rounded-lg transition-all duration-150 inset-shadow-sm';
+$baseClasses = 'w-full inline-flex justify-between gap-2 rounded-lg transition-all duration-150';
 
 $sizes = $chips ? ComponentSizeConfig::selectSizesWithChips() : ComponentSizeConfig::selectSizes();
 
@@ -81,9 +83,11 @@ $dropdownSizeClasses = $sizes[$size]['dropdown'] ?? $sizes['md']['dropdown'];
 
 $stateClasses = ComponentStateConfig::focusableStates();
 
+$variants = ComponentVariantConfig::inputVariants();
+
 $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary/50';
 
-$triggerClasses = $baseClasses . ' ' . $itemsAlignment . ' ' . ($sizes[$size]['trigger'] ?? $sizes['md']['trigger']) . ' ' . ($stateClasses[$state] ?? $stateClasses['default']) . ' ' . $disabledClasses;
+$triggerClasses = $baseClasses . ' ' . ($variants[$variant] ?? $variants['faded']) . ' ' . $itemsAlignment . ' ' . ($sizes[$size]['trigger'] ?? $sizes['md']['trigger']) . ' ' . ($stateClasses[$state] ?? $stateClasses['default']) . ' ' . $disabledClasses;
 
 $iconSize = $sizes[$size]['icon'] ?? $sizes['md']['icon'];
 
@@ -95,8 +99,6 @@ $componentId = ComponentHelpers::generateId('select', $id, $attributes);
 
 $positioning = PositioningHelper::getAnchorPositioning($placement, $offset);
 $positioningStyle = $positioning['style'];
-
-$animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,overlay_150ms_allow-discrete,display_150ms_allow-discrete] ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95';
 @endphp
 
 <div
@@ -158,7 +160,7 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
                                             <button
                                                 type="button"
                                                 @click.stop="remove(value)"
-                                                aria-label="Remove"
+                                                :aria-label="$__('Remove')"
                                                 class="inline-flex items-center justify-center rounded hover:bg-primary/20 transition-colors duration-150 -mr-0.5"
                                             >
                                                 <x-strata::icon.x class="w-3 h-3" />
@@ -202,7 +204,7 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         tabindex="-1"
         data-strata-select-dropdown
         wire:ignore.self
-        class="overflow-hidden bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm ring-1 ring-black/5 dark:ring-white/10 p-0 m-0 {{ $animationClasses }} {{ $dropdownSizeClasses }}"
+        class="animate-dropdown-bounce overflow-hidden bg-popover text-popover-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm ring-1 ring-black/5 dark:ring-white/10 p-0 m-0 {{ $dropdownSizeClasses }}"
         role="listbox"
         :aria-multiselectable="multiple"
     >

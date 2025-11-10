@@ -33,13 +33,6 @@ class FileInput extends Component
 
     public function mount(): void
     {
-        \Log::info('FileInput::mount() called', [
-            'existingFiles_isset' => isset($this->existingFiles),
-            'existingFiles_is_array' => is_array($this->existingFiles),
-            'existingFiles_count' => is_array($this->existingFiles) ? count($this->existingFiles) : 0,
-            'existingFiles_data' => $this->existingFiles,
-        ]);
-
         if ($this->existingFiles && is_array($this->existingFiles) && count($this->existingFiles) > 0) {
             $fileService = app(FileService::class);
 
@@ -50,19 +43,11 @@ class FileInput extends Component
 
             $this->recommendedLayout = $fileService->recommendLayout($this->existingFiles);
             $this->hasExistingFiles = true;
-
-            \Log::info('FileInput::mount() processed files', [
-                'processedCount' => count($this->processedExistingFiles),
-                'recommendedLayout' => $this->recommendedLayout,
-                'hasExistingFiles' => $this->hasExistingFiles,
-            ]);
-        } else {
-            \Log::warning('FileInput::mount() - No existing files to process');
         }
     }
 
     public function render()
     {
-        return view('strata-ui::components.file-input');
+        return view('strata-ui::components.file-input.index');
     }
 }

@@ -80,10 +80,10 @@ Date picker component with dropdown calendar, chips display for multiple selecti
 ### Form Field Composition
 
 ```blade
-<x-strata::form.field>
-    <x-strata::form.label for="start-date" required>
+<x-strata::field>
+    <x-strata::field.label for="start-date" required>
         Project Start Date
-    </x-strata::form.label>
+    </x-strata::field.label>
 
     <x-strata::date-picker
         id="start-date"
@@ -92,14 +92,14 @@ Date picker component with dropdown calendar, chips display for multiple selecti
         :state="$errors->has('projectStart') ? 'error' : 'default'"
     />
 
-    <x-strata::form.hint>
+    <x-strata::field.hint>
         Project must start in the future
-    </x-strata::form.hint>
+    </x-strata::field.hint>
 
     @error('projectStart')
-        <x-strata::form.error>{{ $message }}</x-strata::form.error>
+        <x-strata::field.error>{{ $message }}</x-strata::field.error>
     @enderror
-</x-strata::form.field>
+</x-strata::field>
 ```
 
 ### Clearable Control

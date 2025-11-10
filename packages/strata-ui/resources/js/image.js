@@ -1,97 +1,71 @@
-/**
- * Image - Alpine.js data function for image component with loading/error states
- *
- * Provides loading states, error handling, and fallback chain for images.
- *
- * @param {string} src - Primary image source URL
- * @param {string|null} [fallbackSrc=null] - Fallback image URL if primary fails
- * @param {string} [fallbackIcon='image'] - Icon name to show if all images fail
- * @returns {Object} Alpine.js data object with image state management
- *
- * @example
- * // In Blade component
- * <div x-data="window.StrataImage('image.jpg', 'fallback.jpg', 'image')">
- *     <img x-show="shouldShowImage"
- *          :src="currentSrc"
- *          @load="handleLoad"
- *          @error="handleError" />
- *
- *     <div x-show="shouldShowSkeleton">Loading...</div>
- *     <div x-show="shouldShowFallback">
- *         <x-strata::icon :name="fallbackIcon" />
- *     </div>
- * </div>
- */
-export default (src, fallbackSrc = null, fallbackIcon = 'image') => ({
-    /** @type {boolean} Whether image is currently loading */
-    isLoading: true,
+import { decode } from 'blurhash';
 
-    /** @type {boolean} Whether image failed to load */
-    hasError: false,
+export default function imageComponent({
+    src,
+    fallback = null,
+    blurHash = null,
+    placeholder = null,
+    placeholderType = 'skeleton',
+}) {
+    return {
+        state: 'loading',
 
-    /** @type {string} Current image source (switches to fallback on error) */
-    currentSrc: src,
+        init() {
+            if (this.blurHash && this.$refs.blurHashCanvas) {
+                this.renderBlurHash(this.blurHash);
+            }
 
-    /** @type {string} Icon name for ultimate fallback */
-    fallbackIcon: fallbackIcon,
+            if (this.$refs.image && this.$refs.image.complete) {
+                this.handleLoad();
+            }
+        },
 
-    /** @type {boolean} Whether to show placeholder state */
-    showPlaceholder: true,
+        handleLoad() {
+            this.state = 'loaded';
+            this.dispatchEvent('loaded');
+        },
 
-    /**
-     * Initialize image state
-     * If no source provided, immediately show fallback
-     */
-    init() {
-        if (!this.currentSrc) {
-            this.handleError();
-        }
-    },
+        handleError() {
+            if (this.fallback) {
+                this.state = 'error';
+                this.dispatchEvent('error');
+            } else {
+                this.dispatchEvent('error');
+            }
+        },
 
-    /**
-     * Handle successful image load
-     * Hides loading and error states
-     */
-    handleLoad() {
-        this.isLoading = false;
-        this.hasError = false;
-        this.showPlaceholder = false;
-    },
+        renderBlurHash(hash) {
+            if (!hash || !this.$refs.blurHashCanvas) return;
 
-    /**
-     * Handle image load error
-     * Attempts fallback source if available, otherwise shows icon
-     */
-    handleError() {
-        this.isLoading = false;
-        this.hasError = true;
-        this.showPlaceholder = false;
+            const canvas = this.$refs.blurHashCanvas;
+            const ctx = canvas.getContext('2d');
 
-        if (fallbackSrc && this.currentSrc !== fallbackSrc) {
-            this.currentSrc = fallbackSrc;
-            this.hasError = false;
-            this.isLoading = true;
-        }
-    },
+            const width = 32;
+            const height = 32;
+            canvas.width = width;
+            canvas.height = height;
 
-    /**
-     * @returns {boolean} Whether to display the image element
-     */
-    get shouldShowImage() {
-        return this.currentSrc && !this.hasError;
-    },
+            try {
+                const pixels = decode(hash, width, height);
+                const imageData = ctx.createImageData(width, height);
+                imageData.data.set(pixels);
+                ctx.putImageData(imageData, 0, 0);
+            } catch (error) {
+                console.error('Failed to render BlurHash:', error);
+            }
+        },
 
-    /**
-     * @returns {boolean} Whether to display fallback icon
-     */
-    get shouldShowFallback() {
-        return this.hasError || !this.currentSrc;
-    },
+        dispatchEvent(eventName) {
+            this.$dispatch(`image-${eventName}`, {
+                src: this.src,
+                fallback: this.fallback,
+            });
+        },
 
-    /**
-     * @returns {boolean} Whether to display loading skeleton
-     */
-    get shouldShowSkeleton() {
-        return this.isLoading && !this.hasError;
-    }
-});
+        src,
+        fallback,
+        blurHash,
+        placeholder,
+        placeholderType,
+    };
+}

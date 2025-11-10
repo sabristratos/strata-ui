@@ -5,15 +5,7 @@
     'allowAlpha' => false,
     'placement' => 'bottom-start',
     'positioningStyle' => '',
-    'animationClasses' => '',
 ])
-
-@php
-$dropdownClasses = [
-    'bg-popover text-popover-foreground border border-border rounded-lg shadow-lg',
-    $animationClasses,
-];
-@endphp
 
 <div
     :id="$id('colorpicker-dropdown')"
@@ -25,7 +17,7 @@ $dropdownClasses = [
     x-trap.nofocus="open"
     wire:ignore.self
     tabindex="-1"
-    class="{{ implode(' ', $dropdownClasses) }} p-4 space-y-4 w-72"
+    class="animate-dropdown-bounce bg-popover text-popover-foreground border border-border rounded-lg shadow-lg p-4 space-y-4 w-72"
     role="dialog"
     aria-modal="true"
 >

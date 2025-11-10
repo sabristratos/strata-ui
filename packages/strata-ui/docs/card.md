@@ -35,24 +35,11 @@ Flexible card components for displaying content in a contained, structured forma
 |------|------|---------|-------------|
 | `align` | string | `end` | Alignment: `start`, `center`, `end`, `between` |
 
-### Card Image
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `src` | string | `null` | Image source URL |
-| `alt` | string | `''` | Alternative text |
-| `aspectRatio` | string | `video` | Ratio: `square`, `video`, `wide`, `portrait`, `auto` |
-
 ## Example
 
 ```blade
 {{-- Full-featured card with all components --}}
 <x-strata::card style="elevated" hoverable>
-    <x-strata::card.image
-        src="/products/laptop.jpg"
-        alt="MacBook Pro"
-        aspectRatio="square"
-    />
     <x-strata::card.header title="MacBook Pro 16&quot;" subtitle="M3 Pro chip">
         <x-slot:actions>
             <x-strata::button.icon icon="heart" variant="secondary" appearance="ghost" aria-label="Like" />
@@ -81,5 +68,4 @@ Flexible card components for displaying content in a contained, structured forma
 - **Styles:** `elevated` (shadow), `outlined` (border), `filled` (background), `flat` (minimal)
 - **Interactive:** Use `hoverable` for hover effects or `clickable` with `href` for link cards
 - **Loading:** Set `loading` prop to show spinner overlay during async operations
-- **Images:** Automatic aspect ratio handling with responsive sizing
 - **Accessibility:** Clickable cards render as semantic `<a>` tags with proper ARIA attributes

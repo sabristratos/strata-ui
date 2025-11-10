@@ -101,7 +101,7 @@ document.addEventListener('alpine:init', () => {
             }
 
             if (maxSizeBytes && file.size > maxSizeBytes) {
-                this.validationError = `File ${file.name} exceeds maximum size of ${maxSizeMB}MB`;
+                this.validationError = this.$__('File {name} exceeds maximum size of {size}MB', { name: file.name, size: maxSizeMB });
                 return false;
             }
 
@@ -123,7 +123,7 @@ document.addEventListener('alpine:init', () => {
                 });
 
                 if (!isAccepted) {
-                    this.validationError = `File ${file.name} type not accepted. Allowed: ${acceptString}`;
+                    this.validationError = this.$__('File {name} type not accepted. Allowed: {types}', { name: file.name, types: acceptString });
                     return false;
                 }
             }
@@ -134,7 +134,7 @@ document.addEventListener('alpine:init', () => {
             this.validationError = null;
 
             if (maxFiles && files.length > maxFiles) {
-                this.validationError = `Maximum ${maxFiles} file(s) allowed. You selected ${files.length} file(s).`;
+                this.validationError = this.$__('Maximum {max} file(s) allowed. You selected {count} file(s).', { max: maxFiles, count: files.length });
                 return false;
             }
 
@@ -196,7 +196,7 @@ document.addEventListener('alpine:init', () => {
             <div class="flex items-center justify-between mb-3">
                 <h4 class="text-sm font-semibold text-foreground flex items-center gap-2">
                     <x-strata::icon.folder class="w-4 h-4 text-primary" />
-                    Existing Files
+                    {{ __('Existing Files') }}
                     <span class="px-2 py-0.5 text-xs bg-primary/10 text-primary rounded-full">{{ count($processedExistingFiles) }}</span>
                 </h4>
             </div>
@@ -232,7 +232,7 @@ document.addEventListener('alpine:init', () => {
                                             variant="secondary"
                                             appearance="filled"
                                             type="button"
-                                            aria-label="Download file"
+                                            aria-label="{{ __('Download file') }}"
                                         />
                                     </a>
                                     @if($onRemoveExisting)
@@ -243,7 +243,7 @@ document.addEventListener('alpine:init', () => {
                                             appearance="filled"
                                             wire:click="{{ $onRemoveExisting }}({{ $file->id }})"
                                             type="button"
-                                            aria-label="Remove file"
+                                            aria-label="{{ __('Remove file') }}"
                                         />
                                     @endif
                                 </div>
@@ -298,7 +298,7 @@ document.addEventListener('alpine:init', () => {
         <div x-show="isUploading" class="absolute inset-0 bg-secondary/80 flex items-center justify-center rounded-lg z-10" x-cloak>
             <div class="text-center">
                 <x-strata::icon.loader-circle class="w-8 h-8 text-primary animate-spin mx-auto mb-2" />
-                <p class="text-sm text-muted-foreground">Uploading...</p>
+                <p class="text-sm text-muted-foreground" x-text="$__('Uploading...')"></p>
             </div>
         </div>
 
@@ -354,7 +354,7 @@ document.addEventListener('alpine:init', () => {
                     :style="{ width: progress + '%' }"
                 ></div>
             </div>
-            <p class="text-xs text-muted-foreground mt-1" x-text="`Uploading: ${progress}%`"></p>
+            <p class="text-xs text-muted-foreground mt-1" x-text="$__('Uploading: {progress}%', { progress: progress })"></p>
         </div>
     @endif
 

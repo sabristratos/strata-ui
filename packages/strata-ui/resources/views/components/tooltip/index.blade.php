@@ -2,74 +2,81 @@
     'text' => null,
     'placement' => 'top',
     'offset' => 8,
-    'delay' => 200,
-    'hideDelay' => 100,
 ])
 
 @php
+    use Stratos\StrataUI\Support\PositioningHelper;
     use Stratos\StrataUI\Support\ComponentHelpers;
-
-    $tooltipId = ComponentHelpers::generateId('tooltip', null, null);
 
     $hasNamedSlot = isset($content);
     $tooltipContent = $hasNamedSlot ? $content : $text;
+
+    $positioning = PositioningHelper::getAnchorPositioning($placement, $offset);
+    $positioningStyle = $positioning['style'];
+
+    $tooltipId = ComponentHelpers::generateId('tooltip', null, null);
 @endphp
 
-@once
-<script>
-document.addEventListener('alpine:init', () => {
-    Alpine.data('strataTooltip', (placement, offset, delay, hideDelay) => ({
-        ...window.createPositionableMixin({
-            placement: placement,
-            offset: offset,
-            enableHide: true,
-            hideStrategy: 'referenceHidden',
-            floatingRef: 'tooltip'
-        }),
-
+<div
+    x-data="{
         open: false,
-        showTimeout: null,
-        hideTimeout: null,
 
         init() {
-            this.initPositionable();
+            console.log('Tooltip Alpine component initialized', this.$refs);
         },
 
         show() {
-            clearTimeout(this.hideTimeout);
-            this.showTimeout = setTimeout(() => {
-                this.open = true;
-            }, delay);
+            console.log('Tooltip show() called', { open: this.open, refs: this.$refs });
+            try {
+                const popover = this.$refs.tooltip;
+                console.log('Popover element:', popover);
+                if (popover) {
+                    console.log('Calling showPopover()');
+                    popover.showPopover();
+                    console.log('showPopover() completed');
+                } else {
+                    console.error('Popover ref not found');
+                }
+            } catch (e) {
+                console.error('Tooltip show error:', e);
+            }
         },
 
         hide() {
-            clearTimeout(this.showTimeout);
-            this.hideTimeout = setTimeout(() => {
-                this.open = false;
-            }, hideDelay);
+            console.log('Tooltip hide() called', { open: this.open });
+            try {
+                const popover = this.$refs.tooltip;
+                if (popover) {
+                    console.log('Calling hidePopover()');
+                    popover.hidePopover();
+                } else {
+                    console.error('Popover ref not found');
+                }
+            } catch (e) {
+                console.error('Tooltip hide error:', e);
+            }
         },
 
-        destroy() {
-            clearTimeout(this.showTimeout);
-            clearTimeout(this.hideTimeout);
-            this.destroyPositionable();
+        toggle() {
+            console.log('Tooltip toggle() called');
+            if (this.open) {
+                this.hide();
+            } else {
+                this.show();
+            }
         }
-    }));
-});
-</script>
-@endonce
-
-<div
-    x-data="strataTooltip('{{ $placement }}', {{ $offset }}, {{ $delay }}, {{ $hideDelay }})"
+    }"
+    @keydown.escape.window="hide()"
     data-strata-tooltip-wrapper
     class="inline-block"
 >
     <div
-        x-ref="trigger"
+        style="anchor-name: --tooltip-{{ $tooltipId }};"
         @mouseenter="show()"
         @mouseleave="hide()"
         @focus="show()"
         @blur="hide()"
+        @click="toggle()"
         class="inline-block"
     >
         {{ $slot }}
@@ -77,30 +84,25 @@ document.addEventListener('alpine:init', () => {
 
     <div
         x-ref="tooltip"
-        x-cloak
-        x-show="open"
-        :style="positionable?.styles"
-        @mouseenter="show()"
-        @mouseleave="hide()"
-        class="absolute z-50"
+        popover="hint"
+        @toggle="open = $event.newState === 'open'; console.log('Tooltip toggle event:', $event.newState, open)"
+        id="tooltip-{{ $tooltipId }}"
+        style="{{ $positioningStyle }} position-anchor: --tooltip-{{ $tooltipId }};"
+        role="tooltip"
+        data-strata-tooltip
+        data-placement="{{ $placement }}"
+        class="bg-popover text-popover-foreground
+               border border-border rounded-md
+               shadow-lg
+               text-sm px-3 py-1.5
+               max-w-xs
+               animate-tooltip-bounce"
+        {{ $attributes->except(['class', 'style']) }}
     >
-        <div
-            data-strata-tooltip
-            class="bg-popover text-popover-foreground
-                   border border-border rounded-md
-                   shadow-lg
-                   text-sm px-3 py-1.5
-                   max-w-xs
-                   transition-all transition-discrete duration-150 ease-out
-                   will-change-[transform,opacity]
-                   opacity-100 scale-100
-                   starting:opacity-0 starting:scale-95"
-        >
-            @if($hasNamedSlot)
-                {{ $tooltipContent }}
-            @else
-                {{ $text }}
-            @endif
-        </div>
+        @if($hasNamedSlot)
+            {{ $tooltipContent }}
+        @else
+            {{ $text }}
+        @endif
     </div>
 </div>

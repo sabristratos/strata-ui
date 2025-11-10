@@ -83,13 +83,13 @@ toggle/
 
 Some component folders contain only helper/child components with no base component:
 
-**form/** - Helper components for form layouts:
+**field/** - Helper components for form layouts:
 ```
-form/
-  error.blade.php       → <x-strata::form.error />
-  field.blade.php       → <x-strata::form.field />
-  hint.blade.php        → <x-strata::form.hint />
-  label.blade.php       → <x-strata::form.label />
+field/
+  index.blade.php       → <x-strata::field> (wrapper)
+  label.blade.php       → <x-strata::field.label />
+  error.blade.php       → <x-strata::field.error />
+  hint.blade.php        → <x-strata::field.hint />
 ```
 
 **icon/** - Icon library with individual icon files:
@@ -131,8 +131,8 @@ Current components in Strata UI:
 - **button/** - Buttons and button groups
 - **card/** - Content cards
 - **checkbox/** - Checkbox inputs
+- **field/** - Field helper components and shorthand form fields
 - **file-input/** - File upload inputs
-- **form/** - Form helper components
 - **group/** - Generic grouping component
 - **icon/** - Icon library
 - **input/** - Text inputs
@@ -172,15 +172,25 @@ Current components in Strata UI:
 </x-strata::card>
 ```
 
-### Using Helper Components
+### Using Field Components (Shorthand)
 
 ```blade
-<x-strata::form.field>
-    <x-strata::form.label for="email">Email Address</x-strata::form.label>
+{{-- Quick shorthand - props on input directly --}}
+<x-strata::input
+    label="Email Address"
+    hint="We'll never share your email"
+    wire:model="email"
+    type="email"
+    required
+/>
+
+{{-- Custom composition --}}
+<x-strata::field>
+    <x-strata::field.label for="email">Email Address</x-strata::field.label>
     <x-strata::input type="email" id="email" />
-    <x-strata::form.hint>We'll never share your email</x-strata::form.hint>
-    <x-strata::form.error name="email" />
-</x-strata::form.field>
+    <x-strata::field.hint>We'll never share your email</x-strata::field.hint>
+    <x-strata::field.error name="email" />
+</x-strata::field>
 ```
 
 ## Creating New Components

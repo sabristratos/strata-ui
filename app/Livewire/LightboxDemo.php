@@ -7,6 +7,7 @@ use Livewire\Component;
 class LightboxDemo extends Component
 {
     public array $images = [];
+
     public array $mixedMedia = [];
 
     public function mount(): void

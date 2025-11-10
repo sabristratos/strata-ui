@@ -66,7 +66,7 @@ class ComponentStateConfig
         ];
     }
 
-    public static function rangeSliderStates(): array
+    public static function sliderStates(): array
     {
         return [
             'default' => [
@@ -112,13 +112,23 @@ class ComponentStateConfig
         ];
     }
 
-    public static function sliderStates(): array
+    public static function carouselStates(): array
     {
         return [
-            'default' => 'border-border',
-            'success' => 'border-success',
-            'error' => 'border-destructive',
-            'warning' => 'border-warning',
+            'default' => [
+                'wrapper' => '',
+                'control-button' => 'bg-background/80 backdrop-blur-sm hover:bg-background text-foreground border border-border shadow-lg',
+                'dot-active' => 'bg-primary',
+                'dot-inactive' => 'bg-muted-foreground/30',
+                'counter' => 'text-muted-foreground',
+            ],
+            'primary' => [
+                'wrapper' => '',
+                'control-button' => 'bg-primary/80 backdrop-blur-sm hover:bg-primary text-primary-foreground shadow-lg',
+                'dot-active' => 'bg-primary',
+                'dot-inactive' => 'bg-primary/20',
+                'counter' => 'text-muted-foreground',
+            ],
         ];
     }
 }

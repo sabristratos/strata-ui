@@ -22,7 +22,7 @@ $filledVariants = [
 
 $outlinedVariants = [
     'primary' => 'bg-transparent text-primary border border-primary hover:bg-primary/10 active:bg-primary/20',
-    'secondary' => 'bg-transparent text-secondary-foreground border border-secondary-foreground hover:bg-neutral-200 active:bg-neutral-300',
+    'secondary' => 'bg-transparent text-secondary border border-secondary hover:bg-neutral-200 active:bg-neutral-300',
     'success' => 'bg-transparent text-success border border-success hover:bg-success/10 active:bg-success/20',
     'warning' => 'bg-transparent text-warning border border-warning hover:bg-warning/10 active:bg-warning/20',
     'destructive' => 'bg-transparent text-destructive border border-destructive hover:bg-destructive/10 active:bg-destructive/20',

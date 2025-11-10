@@ -6,6 +6,7 @@
     'placeholder' => 'Select color',
     'state' => 'default',
     'size' => 'md',
+    'variant' => 'faded',
     'disabled' => false,
     'clearable' => true,
     'allowAlpha' => false,
@@ -18,6 +19,7 @@
 @php
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Config\ComponentVariantConfig;
 use Stratos\StrataUI\Support\ComponentHelpers;
 use Stratos\StrataUI\Support\PositioningHelper;
 
@@ -27,8 +29,11 @@ $sizes = ComponentSizeConfig::inputSizes();
 
 $states = ComponentStateConfig::pickerStates();
 
+$variants = ComponentVariantConfig::inputVariants();
+
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $stateClasses = $states[$state] ?? $states['default'];
+$variantClasses = $variants[$variant] ?? $variants['faded'];
 
 $defaultPresets = [
     '#09090b' => 'Primary',
@@ -45,8 +50,6 @@ $finalPresets = empty($presets) ? $defaultPresets : $presets;
 
 $positioning = PositioningHelper::getAnchorPositioning($placement, $offset);
 $positioningStyle = $positioning['style'];
-
-$animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,overlay_150ms_allow-discrete,display_150ms_allow-discrete] ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95';
 @endphp
 
 @once
@@ -93,6 +96,7 @@ document.addEventListener('alpine:init', () => {
             :disabled="$disabled"
             :size-classes="$sizeClasses"
             :state-classes="$stateClasses"
+            :variant-classes="$variantClasses"
         />
 
         @if($clearable)
@@ -109,6 +113,5 @@ document.addEventListener('alpine:init', () => {
         :allow-alpha="$allowAlpha"
         :placement="$placement"
         :positioning-style="$positioningStyle"
-        :animation-classes="$animationClasses"
     />
 </div>

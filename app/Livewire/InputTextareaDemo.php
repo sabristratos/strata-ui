@@ -8,30 +8,47 @@ use Livewire\Component;
 class InputTextareaDemo extends Component
 {
     public $basicInput = '';
+
     public $emailInput = '';
+
     public $passwordInput = '';
+
     public $searchInput = '';
+
     public $numberInput = '';
+
     public $telInput = '';
+
     public $urlInput = '';
 
     public $inputSm = '';
+
     public $inputMd = '';
+
     public $inputLg = '';
 
     public $inputDefault = '';
+
     public $inputSuccess = 'valid@email.com';
+
     public $inputError = '';
+
     public $inputWarning = 'check@example';
 
     public $iconLeftInput = '';
+
     public $iconRightInput = '';
+
     public $iconBothInput = '';
 
     public $currencyInput = '';
+
     public $urlPrefixInput = '';
+
     public $domainInput = '';
+
     public $measurementInput = '';
+
     public $percentageInput = '';
 
     public $clearableInput = 'Clear me!';
@@ -41,22 +58,33 @@ class InputTextareaDemo extends Component
     public $allFeaturesInput = 'Full example';
 
     public $basicTextarea = '';
+
     public $commentTextarea = '';
+
     public $descriptionTextarea = '';
+
     public $messageTextarea = '';
 
     public $textareaSm = '';
+
     public $textareaMd = '';
+
     public $textareaLg = '';
 
     public $textareaDefault = '';
+
     public $textareaSuccess = 'This content looks great!';
+
     public $textareaError = '';
+
     public $textareaWarning = 'This might need review';
 
     public $resizeNone = '';
+
     public $resizeVertical = '';
+
     public $resizeHorizontal = '';
+
     public $resizeBoth = '';
 
     public $charCountTextarea = '';

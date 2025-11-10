@@ -682,68 +682,260 @@ describe('Editor Component', () => {
     });
 
     describe('Image Handler', () => {
-        it('prompts for image URL', () => {
-            global.window.prompt.mockReturnValue('https://example.com/image.jpg');
+        let mockImageInput;
 
-            const addImage = () => {
-                const url = global.window.prompt('Image URL');
-
-                if (url) {
-                    mockEditor.chain().focus().setImage({ src: url }).run();
-                }
+        beforeEach(() => {
+            mockImageInput = {
+                click: vi.fn(),
+                value: '',
             };
-
-            addImage();
-
-            expect(global.window.prompt).toHaveBeenCalledWith('Image URL');
         });
 
-        it('inserts image with provided URL', () => {
-            global.window.prompt.mockReturnValue('https://example.com/image.jpg');
+        it('triggers file input click when addImage is called', () => {
+            editorComponent.$refs.imageInput = mockImageInput;
 
-            const addImage = () => {
-                const url = global.window.prompt('Image URL');
-
-                if (url) {
-                    mockEditor.chain().focus().setImage({ src: url }).run();
-                }
+            const addImage = function() {
+                this.$refs.imageInput?.click();
             };
 
-            addImage();
+            addImage.call(editorComponent);
 
-            expect(mockChain.setImage).toHaveBeenCalledWith({ src: 'https://example.com/image.jpg' });
+            expect(mockImageInput.click).toHaveBeenCalled();
         });
 
-        it('does not insert image when prompt is cancelled', () => {
-            global.window.prompt.mockReturnValue(null);
+        it('does nothing gracefully when imageInput ref is null', () => {
+            editorComponent.$refs.imageInput = null;
 
-            const addImage = () => {
-                const url = global.window.prompt('Image URL');
-
-                if (url) {
-                    mockEditor.chain().focus().setImage({ src: url }).run();
-                }
+            const addImage = function() {
+                this.$refs.imageInput?.click();
             };
 
-            addImage();
+            expect(() => addImage.call(editorComponent)).not.toThrow();
+        });
 
+        it('processes valid image file and inserts into editor', async () => {
+            const mockFile = new File(['fake image data'], 'test.jpg', { type: 'image/jpeg' });
+            const mockEvent = {
+                target: {
+                    files: [mockFile],
+                    value: 'C:\\fakepath\\test.jpg',
+                },
+            };
+
+            const base64Result = 'data:image/jpeg;base64,fakebase64data';
+
+            const blobToBase64 = vi.fn().mockResolvedValue(base64Result);
+
+            const handleImageSelect = async function(event) {
+                const file = event.target.files?.[0];
+                if (!file || !file.type.includes('image')) {
+                    return;
+                }
+
+                try {
+                    const base64 = await blobToBase64(file);
+                    mockEditor.chain().focus().setImage({ src: base64 }).run();
+                } catch (error) {
+                    global.window.toast.error('Image Upload Failed', 'Could not read the selected image file.');
+                    console.error('[Editor] Image upload error:', error);
+                }
+
+                event.target.value = '';
+            };
+
+            await handleImageSelect(mockEvent);
+
+            expect(blobToBase64).toHaveBeenCalledWith(mockFile);
+            expect(mockChain.setImage).toHaveBeenCalledWith({ src: base64Result });
+            expect(mockEvent.target.value).toBe('');
+        });
+
+        it('ignores event when no file is selected', async () => {
+            const mockEvent = {
+                target: {
+                    files: [],
+                    value: '',
+                },
+            };
+
+            const blobToBase64 = vi.fn();
+
+            const handleImageSelect = async function(event) {
+                const file = event.target.files?.[0];
+                if (!file || !file.type.includes('image')) {
+                    return;
+                }
+
+                const base64 = await blobToBase64(file);
+                mockEditor.chain().focus().setImage({ src: base64 }).run();
+            };
+
+            await handleImageSelect(mockEvent);
+
+            expect(blobToBase64).not.toHaveBeenCalled();
             expect(mockChain.setImage).not.toHaveBeenCalled();
         });
 
-        it('does not insert image when empty URL is provided', () => {
-            global.window.prompt.mockReturnValue('');
-
-            const addImage = () => {
-                const url = global.window.prompt('Image URL');
-
-                if (url) {
-                    mockEditor.chain().focus().setImage({ src: url }).run();
-                }
+        it('ignores non-image files', async () => {
+            const mockFile = new File(['fake data'], 'test.txt', { type: 'text/plain' });
+            const mockEvent = {
+                target: {
+                    files: [mockFile],
+                    value: 'C:\\fakepath\\test.txt',
+                },
             };
 
-            addImage();
+            const blobToBase64 = vi.fn();
 
+            const handleImageSelect = async function(event) {
+                const file = event.target.files?.[0];
+                if (!file || !file.type.includes('image')) {
+                    return;
+                }
+
+                const base64 = await blobToBase64(file);
+                mockEditor.chain().focus().setImage({ src: base64 }).run();
+            };
+
+            await handleImageSelect(mockEvent);
+
+            expect(blobToBase64).not.toHaveBeenCalled();
             expect(mockChain.setImage).not.toHaveBeenCalled();
+        });
+
+        it('shows error toast when blobToBase64 fails', async () => {
+            const mockFile = new File(['fake image data'], 'test.jpg', { type: 'image/jpeg' });
+            const mockEvent = {
+                target: {
+                    files: [mockFile],
+                    value: 'C:\\fakepath\\test.jpg',
+                },
+            };
+
+            const mockError = new Error('FileReader error');
+            const blobToBase64 = vi.fn().mockRejectedValue(mockError);
+
+            global.window.toast = {
+                error: vi.fn(),
+            };
+            global.console.error = vi.fn();
+
+            const handleImageSelect = async function(event) {
+                const file = event.target.files?.[0];
+                if (!file || !file.type.includes('image')) {
+                    return;
+                }
+
+                try {
+                    const base64 = await blobToBase64(file);
+                    mockEditor.chain().focus().setImage({ src: base64 }).run();
+                } catch (error) {
+                    global.window.toast.error('Image Upload Failed', 'Could not read the selected image file.');
+                    console.error('[Editor] Image upload error:', error);
+                }
+
+                event.target.value = '';
+            };
+
+            await handleImageSelect(mockEvent);
+
+            expect(global.window.toast.error).toHaveBeenCalledWith(
+                'Image Upload Failed',
+                'Could not read the selected image file.'
+            );
+            expect(console.error).toHaveBeenCalledWith('[Editor] Image upload error:', mockError);
+            expect(mockChain.setImage).not.toHaveBeenCalled();
+            expect(mockEvent.target.value).toBe('');
+        });
+
+        it('clears input value after successful upload', async () => {
+            const mockFile = new File(['fake image data'], 'test.jpg', { type: 'image/jpeg' });
+            const mockEvent = {
+                target: {
+                    files: [mockFile],
+                    value: 'C:\\fakepath\\test.jpg',
+                },
+            };
+
+            const blobToBase64 = vi.fn().mockResolvedValue('data:image/jpeg;base64,fake');
+
+            const handleImageSelect = async function(event) {
+                const file = event.target.files?.[0];
+                if (!file || !file.type.includes('image')) {
+                    return;
+                }
+
+                try {
+                    const base64 = await blobToBase64(file);
+                    mockEditor.chain().focus().setImage({ src: base64 }).run();
+                } catch (error) {
+                    global.window.toast.error('Image Upload Failed', 'Could not read the selected image file.');
+                }
+
+                event.target.value = '';
+            };
+
+            await handleImageSelect(mockEvent);
+
+            expect(mockEvent.target.value).toBe('');
+        });
+
+        it('blobToBase64 resolves with base64 data URL', async () => {
+            const mockBlob = new Blob(['fake image data'], { type: 'image/jpeg' });
+            const expectedBase64 = 'data:image/jpeg;base64,fakedata';
+
+            const mockFileReader = {
+                readAsDataURL: vi.fn(),
+                onload: null,
+                onerror: null,
+                result: expectedBase64,
+            };
+
+            global.FileReader = vi.fn(() => mockFileReader);
+
+            const blobToBase64 = (blob) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = (error) => reject(error);
+                });
+            };
+
+            const promise = blobToBase64(mockBlob);
+            mockFileReader.onload();
+
+            const result = await promise;
+
+            expect(mockFileReader.readAsDataURL).toHaveBeenCalledWith(mockBlob);
+            expect(result).toBe(expectedBase64);
+        });
+
+        it('blobToBase64 rejects when FileReader fails', async () => {
+            const mockBlob = new Blob(['fake image data'], { type: 'image/jpeg' });
+            const expectedError = new Error('Read failed');
+
+            const mockFileReader = {
+                readAsDataURL: vi.fn(),
+                onload: null,
+                onerror: null,
+            };
+
+            global.FileReader = vi.fn(() => mockFileReader);
+
+            const blobToBase64 = (blob) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = (error) => reject(error);
+                });
+            };
+
+            const promise = blobToBase64(mockBlob);
+            mockFileReader.onerror(expectedError);
+
+            await expect(promise).rejects.toEqual(expectedError);
         });
     });
 
@@ -782,166 +974,6 @@ describe('Editor Component', () => {
         });
 
         it('checks if redo is available', () => {
-            const canMock = {
-                undo: vi.fn(() => false),
-                redo: vi.fn(() => false),
-            };
-            mockEditor.can.mockReturnValue(canMock);
-
-            const canRedo = () => {
-                return mockEditor.can().redo();
-            };
-
-            const result = canRedo();
-
-            expect(result).toBe(false);
-            expect(mockEditor.can).toHaveBeenCalled();
-        });
-        it("checks if redo is available", () => {
-            const canMock = {
-                undo: vi.fn(() => false),
-                redo: vi.fn(() => false),
-            };
-            mockEditor.can.mockReturnValue(canMock);
-
-            const canRedo = () => {
-                return mockEditor.can().redo();
-            };
-
-            const result = canRedo();
-
-            expect(result).toBe(false);
-            expect(mockEditor.can).toHaveBeenCalled();
-        });
-        it("checks if redo is available", () => {
-            const canMock = {
-                undo: vi.fn(() => false),
-                redo: vi.fn(() => false),
-            };
-            mockEditor.can.mockReturnValue(canMock);
-
-            const canRedo = () => {
-                return mockEditor.can().redo();
-            };
-
-            const result = canRedo();
-
-            expect(result).toBe(false);
-            expect(mockEditor.can).toHaveBeenCalled();
-        });
-        it("checks if redo is available", () => {
-            const canMock = {
-                undo: vi.fn(() => false),
-                redo: vi.fn(() => false),
-            };
-            mockEditor.can.mockReturnValue(canMock);
-
-            const canRedo = () => {
-                return mockEditor.can().redo();
-            };
-
-            const result = canRedo();
-
-            expect(result).toBe(false);
-            expect(mockEditor.can).toHaveBeenCalled();
-        });
-        it("checks if redo is available", () => {
-            const canMock = {
-                undo: vi.fn(() => false),
-                redo: vi.fn(() => false),
-            };
-            mockEditor.can.mockReturnValue(canMock);
-
-            const canRedo = () => {
-                return mockEditor.can().redo();
-            };
-
-            const result = canRedo();
-
-            expect(result).toBe(false);
-            expect(mockEditor.can).toHaveBeenCalled();
-        });
-        it("checks if redo is available", () => {
-            const canMock = {
-                undo: vi.fn(() => false),
-                redo: vi.fn(() => false),
-            };
-            mockEditor.can.mockReturnValue(canMock);
-
-            const canRedo = () => {
-                return mockEditor.can().redo();
-            };
-
-            const result = canRedo();
-
-            expect(result).toBe(false);
-            expect(mockEditor.can).toHaveBeenCalled();
-        });
-        it("checks if redo is available", () => {
-            const canMock = {
-                undo: vi.fn(() => false),
-                redo: vi.fn(() => false),
-            };
-            mockEditor.can.mockReturnValue(canMock);
-
-            const canRedo = () => {
-                return mockEditor.can().redo();
-            };
-
-            const result = canRedo();
-
-            expect(result).toBe(false);
-            expect(mockEditor.can).toHaveBeenCalled();
-        });
-        it("checks if redo is available", () => {
-            const canMock = {
-                undo: vi.fn(() => false),
-                redo: vi.fn(() => false),
-            };
-            mockEditor.can.mockReturnValue(canMock);
-
-            const canRedo = () => {
-                return mockEditor.can().redo();
-            };
-
-            const result = canRedo();
-
-            expect(result).toBe(false);
-            expect(mockEditor.can).toHaveBeenCalled();
-        });
-        it("checks if redo is available", () => {
-            const canMock = {
-                undo: vi.fn(() => false),
-                redo: vi.fn(() => false),
-            };
-            mockEditor.can.mockReturnValue(canMock);
-
-            const canRedo = () => {
-                return mockEditor.can().redo();
-            };
-
-            const result = canRedo();
-
-            expect(result).toBe(false);
-            expect(mockEditor.can).toHaveBeenCalled();
-        });
-        it("checks if redo is available", () => {
-            const canMock = {
-                undo: vi.fn(() => false),
-                redo: vi.fn(() => false),
-            };
-            mockEditor.can.mockReturnValue(canMock);
-
-            const canRedo = () => {
-                return mockEditor.can().redo();
-            };
-
-            const result = canRedo();
-
-            expect(result).toBe(false);
-            expect(mockEditor.can).toHaveBeenCalled();
-        });
-        it("checks if redo is available", () => {
             const canMock = {
                 undo: vi.fn(() => false),
                 redo: vi.fn(() => false),

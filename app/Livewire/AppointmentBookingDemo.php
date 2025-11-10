@@ -4,27 +4,35 @@ namespace App\Livewire;
 
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Stratos\StrataUI\Data\DateValue;
 use Stratos\StrataUI\Data\DateRange;
+use Stratos\StrataUI\Data\DateValue;
 use Stratos\StrataUI\Data\TimeValue;
 
 #[Layout('components.layouts.app')]
 class AppointmentBookingDemo extends Component
 {
     public ?string $bookingType = 'single';
+
     public int $currentStep = 1;
 
     public ?DateValue $appointmentDate = null;
+
     public ?TimeValue $appointmentTime = null;
+
     public ?string $patientName = null;
+
     public ?string $patientEmail = null;
+
     public ?string $notes = null;
 
     public ?DateRange $recurringDateRange = null;
+
     public ?TimeValue $recurringTime = null;
 
     public array $bookedSlots = [];
+
     public array $confirmedBookings = [];
+
     public array $bookedTimesForSelectedDate = [];
 
     public function mount(): void
@@ -56,7 +64,9 @@ class AppointmentBookingDemo extends Component
 
     public function getBookedTimesForDate(?DateValue $date): array
     {
-        if (!$date) return [];
+        if (! $date) {
+            return [];
+        }
 
         $dateString = $date->toDateString();
 
@@ -75,6 +85,7 @@ class AppointmentBookingDemo extends Component
     {
         try {
             $timeValue = TimeValue::make($time12);
+
             return $timeValue->toString(true, false);
         } catch (\Exception $e) {
             return '';
@@ -120,7 +131,7 @@ class AppointmentBookingDemo extends Component
                 'booked_at' => now()->format('M d, Y g:i A'),
             ];
 
-            session()->flash('message', "Appointment booked for {$this->patientName} on " . $this->appointmentDate->format('M d, Y') . " at {$this->appointmentTime->toString(false)}");
+            session()->flash('message', "Appointment booked for {$this->patientName} on ".$this->appointmentDate->format('M d, Y')." at {$this->appointmentTime->toString(false)}");
         } else {
             $startDate = $this->recurringDateRange->getStartDate();
             $endDate = $this->recurringDateRange->getEndDate();
@@ -157,7 +168,7 @@ class AppointmentBookingDemo extends Component
     public function cancelBooking($bookingId): void
     {
         $this->confirmedBookings = collect($this->confirmedBookings)
-            ->reject(fn($booking) => $booking['id'] === $bookingId)
+            ->reject(fn ($booking) => $booking['id'] === $bookingId)
             ->values()
             ->toArray();
 
@@ -171,21 +182,23 @@ class AppointmentBookingDemo extends Component
         if ($this->currentStep === 1) {
             if ($this->bookingType === 'single') {
                 $rules['appointmentDate'] = ['required', function ($attribute, $value, $fail) {
-                    if (!$value instanceof DateValue) {
+                    if (! $value instanceof DateValue) {
                         $fail('Please select an appointment date');
+
                         return;
                     }
-                    if ($value->isPast() && !$value->isToday()) {
+                    if ($value->isPast() && ! $value->isToday()) {
                         $fail('Appointment date must be today or in the future');
                     }
                 }];
             } else {
                 $rules['recurringDateRange'] = ['required', function ($attribute, $value, $fail) {
-                    if (!$value instanceof DateRange) {
+                    if (! $value instanceof DateRange) {
                         $fail('Please select a date range');
+
                         return;
                     }
-                    if ($value->getStartDate()->isPast() && !$value->getStartDate()->isToday()) {
+                    if ($value->getStartDate()->isPast() && ! $value->getStartDate()->isToday()) {
                         $fail('Start date must be today or in the future');
                     }
                 }];
@@ -195,13 +208,13 @@ class AppointmentBookingDemo extends Component
         if ($this->currentStep === 2) {
             if ($this->bookingType === 'single') {
                 $rules['appointmentTime'] = ['required', function ($attribute, $value, $fail) {
-                    if (!$value instanceof TimeValue) {
+                    if (! $value instanceof TimeValue) {
                         $fail('Please select an appointment time');
                     }
                 }];
             } else {
                 $rules['recurringTime'] = ['required', function ($attribute, $value, $fail) {
-                    if (!$value instanceof TimeValue) {
+                    if (! $value instanceof TimeValue) {
                         $fail('Please select a recurring time');
                     }
                 }];

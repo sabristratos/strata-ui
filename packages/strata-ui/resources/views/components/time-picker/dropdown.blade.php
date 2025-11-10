@@ -1,18 +1,10 @@
 @props([
     'positioningStyle' => '',
-    'animationClasses' => '',
     'placement' => 'bottom-start',
     'format' => '12',
     'showPresets' => false,
     'displayMode' => 'clock',
 ])
-
-@php
-$dropdownClasses = [
-    'bg-popover text-popover-foreground border border-border rounded-lg shadow-lg overflow-hidden p-0 m-0',
-    $animationClasses,
-];
-@endphp
 
 <div
     :id="$id('timepicker-dropdown')"
@@ -24,7 +16,7 @@ $dropdownClasses = [
     x-trap.nofocus="open"
     wire:ignore.self
     tabindex="-1"
-    {{ $attributes->merge(['class' => implode(' ', $dropdownClasses)]) }}
+    {{ $attributes->merge(['class' => 'animate-dropdown-bounce bg-popover text-popover-foreground border border-border rounded-lg shadow-lg overflow-hidden p-0 m-0']) }}
     role="dialog"
     aria-modal="true"
 >

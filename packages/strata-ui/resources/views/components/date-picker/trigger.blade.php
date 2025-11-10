@@ -3,15 +3,17 @@
     'disabled' => false,
     'sizeClasses' => '',
     'stateClasses' => '',
+    'variantClasses' => '',
 ])
 
 @php
 $itemsAlignment = $chips ? 'items-start' : 'items-center';
 
 $triggerClasses = [
-    'w-full inline-flex justify-between gap-2 bg-input border rounded-lg inset-shadow-sm',
+    'w-full inline-flex justify-between gap-2 rounded-lg',
     'transition-all duration-150',
     'focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2',
+    $variantClasses,
     $itemsAlignment,
     $sizeClasses,
     $stateClasses,
@@ -65,7 +67,7 @@ if ($disabled) {
                 ></span>
                 <span
                     x-show="!display"
-                    x-text="placeholder"
+                    x-text="getPlaceholder()"
                     class="text-muted-foreground"
                 ></span>
             </div>

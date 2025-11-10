@@ -51,13 +51,51 @@ Use `<x-strata::textarea.counter max="500" />` to show character count with colo
 </x-strata::textarea>
 ```
 
-## Form Composition
+## Form Fields
 
-Use form helper components for complete fields:
+### Quick Shorthand (Recommended)
+
+Add label, hint, and error props directly to the textarea component:
 
 ```blade
-<x-strata::form.field>
-    <x-strata::form.label for="bio" required>Bio</x-strata::form.label>
+{{-- Basic field with label and validation --}}
+<x-strata::textarea
+    label="Bio"
+    hint="Share a brief description of your background"
+    wire:model="bio"
+    rows="6"
+    maxlength="500"
+    required
+>
+    <x-strata::textarea.counter max="500" />
+</x-strata::textarea>
+
+{{-- With trailing hint --}}
+<x-strata::textarea
+    label="Comments"
+    hintTrailing="Maximum 500 characters"
+    wire:model="comments"
+    resize="none"
+/>
+```
+
+**Shorthand Props:**
+- `label` (string|null): Field label text
+- `hint` (string|null): Help text above textarea
+- `hintTrailing` (string|null): Help text below textarea
+- `error` (string|null): Manual error (auto-detected from `$errors` if not provided)
+- `required` (boolean): Show required indicator on label
+- `spacing` (string): Field spacing (`tight`, `default`, `loose`)
+
+All textarea props (size, state, resize, rows, etc.) work as normal.
+
+### Custom Composition
+
+For advanced layouts, compose fields manually:
+
+```blade
+<x-strata::field>
+    <x-strata::field.label for="bio" required>Bio</x-strata::field.label>
     <x-strata::textarea
         id="bio"
         wire:model="bio"
@@ -68,11 +106,11 @@ Use form helper components for complete fields:
     >
         <x-strata::textarea.counter max="500" />
     </x-strata::textarea>
-    <x-strata::form.hint>Share a brief description of your background</x-strata::form.hint>
+    <x-strata::field.hint>Share a brief description of your background</x-strata::field.hint>
     @error('bio')
-        <x-strata::form.error>{{ $message }}</x-strata::form.error>
+        <x-strata::field.error>{{ $message }}</x-strata::field.error>
     @enderror
-</x-strata::form.field>
+</x-strata::field>
 ```
 
 ## Livewire Integration

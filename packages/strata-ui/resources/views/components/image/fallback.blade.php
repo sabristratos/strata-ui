@@ -1,18 +1,29 @@
 @props([
-    'icon' => 'image',
-    'showIcon' => true,
+    'fallback' => null,
+    'aspect' => null,
+    'rounded' => 'rounded-md',
 ])
 
 <div
-    data-strata-image-fallback
-    {{ $attributes->merge(['class' => 'w-full h-full flex flex-col items-center justify-center bg-muted text-muted-foreground']) }}
+    {{ $attributes->merge(['class' => "flex items-center justify-center bg-[color:var(--color-muted)] {$rounded}"]) }}
+    @if ($aspect)
+        style="aspect-ratio: {{ $aspect }};"
+    @else
+        style="min-height: 200px;"
+    @endif
 >
-    @if($slot->isNotEmpty())
-        {{ $slot }}
-    @elseif($showIcon)
-        <x-dynamic-component
-            :component="'strata::icon.' . $icon"
-            class="w-1/3 h-1/3 opacity-50"
+    @if ($fallback)
+        {{-- Fallback Image --}}
+        <img
+            src="{{ $fallback }}"
+            alt="Fallback image"
+            class="w-full h-full object-cover {{ $rounded }}"
         />
+    @elseif ($slot->isNotEmpty())
+        {{-- Custom Fallback Slot --}}
+        {{ $slot }}
+    @else
+        {{-- Default Icon Fallback --}}
+        <x-strata::icon.image class="w-12 h-12 text-[color:var(--color-muted-foreground)]" />
     @endif
 </div>

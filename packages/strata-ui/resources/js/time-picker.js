@@ -43,14 +43,19 @@ export default function (props = {}) {
         minTime: props.minTime || null,
         maxTime: props.maxTime || null,
         disabledTimes: props.disabledTimes || [],
-        placeholder: props.placeholder || 'Select time',
+        placeholder: props.placeholder || null,
         disabled: props.disabled || false,
         readonly: props.readonly || false,
         required: props.required || false,
         clearable: props.clearable || false,
         displayMode: props.displayMode || 'clock',
+        locale: props.locale || null,
         display: '',
         _disabledObserver: null,
+
+        getPlaceholder() {
+            return this.placeholder !== null ? this.placeholder : this.$__('Select time');
+        },
 
         clockMode: 'hour',
         selectedHour: null,
@@ -173,7 +178,7 @@ export default function (props = {}) {
 
         formatTime(hour, minute) {
             if (this.format === '12') {
-                const meridiem = hour < 12 ? 'AM' : 'PM';
+                const meridiem = hour < 12 ? this.$__('AM') : this.$__('PM');
                 const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
                 return `${displayHour}:${String(minute).padStart(2, '0')} ${meridiem}`;
             }
@@ -405,10 +410,10 @@ export default function (props = {}) {
             this.selectedHour = hour;
             this.selectedMinute = null;
             this.clockMode = 'minute';
-            this.clockAnnouncement = `${hour} o'clock selected. Now select minutes.`;
+            this.clockAnnouncement = `${hour} ${this.$__('o\'clock selected. Now select minutes.')}`;
 
             if (this.selectedPeriod === null) {
-                this.selectedPeriod = 'AM';
+                this.selectedPeriod = this.$__('AM');
             }
         },
 
@@ -417,7 +422,7 @@ export default function (props = {}) {
             if (clockMinute && clockMinute.disabled) return;
 
             this.selectedMinute = minute;
-            this.clockAnnouncement = `${minute} minutes selected.`;
+            this.clockAnnouncement = `${minute} ${this.$__('minutes selected.')}`;
 
             if (this.selectedHour !== null) {
                 this.finalizeClockSelection();
@@ -428,7 +433,7 @@ export default function (props = {}) {
             if (this.selectedPeriod === period) return;
 
             this.selectedPeriod = period;
-            this.clockAnnouncement = `${period} selected.`;
+            this.clockAnnouncement = `${period} ${this.$__('selected.')}`;
 
             if (this.selectedHour !== null && this.selectedMinute !== null) {
                 this.updateTimeValue();

@@ -7,26 +7,37 @@ use Livewire\Component;
 class DateTimePickerDemo extends Component
 {
     public ?string $singleDate = null;
+
     public ?array $dateRange = null;
+
     public ?array $multipleDates = null;
 
     public ?string $time12h = null;
+
     public ?string $time24h = null;
+
     public ?string $timeWithSeconds = null;
 
     public ?string $appointmentDate = null;
+
     public ?string $appointmentTime = null;
 
     public ?string $eventStartDate = null;
+
     public ?string $eventEndDate = null;
+
     public ?string $eventStartTime = null;
+
     public ?string $eventEndTime = null;
 
     public ?string $birthDate = null;
+
     public ?string $meetingDate = null;
+
     public ?string $meetingTime = null;
 
     public ?string $deliveryDate = null;
+
     public ?string $deliveryTime = null;
 
     public function mount(): void

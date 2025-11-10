@@ -4,7 +4,9 @@ use Stratos\StrataUI\Tests\TestCase;
 
 require_once __DIR__.'/helpers.php';
 
-pest()->extend(TestCase::class)->in(__DIR__);
+pest()->extend(TestCase::class)->in('Feature');
+pest()->extend(TestCase::class)->in('Feature/Components');
+pest()->extend(TestCase::class)->in('Unit');
 
 expect()->extend('toHaveClasses', function (string ...$classes) {
     foreach ($classes as $class) {

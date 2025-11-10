@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class EditorDemo extends Component
 {
-    public array|null $content = null;
+    public ?array $content = null;
 
     public function mount(): void
     {
@@ -17,18 +17,18 @@ class EditorDemo extends Component
                     'type' => 'heading',
                     'attrs' => ['level' => 1],
                     'content' => [
-                        ['type' => 'text', 'text' => 'Welcome to Strata Editor']
-                    ]
+                        ['type' => 'text', 'text' => 'Welcome to Strata Editor'],
+                    ],
                 ],
                 [
                     'type' => 'paragraph',
                     'content' => [
                         ['type' => 'text', 'text' => 'This is a rich text editor powered by '],
                         ['type' => 'text', 'text' => 'Tiptap', 'marks' => [['type' => 'bold']]],
-                        ['type' => 'text', 'text' => '. Try editing this content!']
-                    ]
-                ]
-            ]
+                        ['type' => 'text', 'text' => '. Try editing this content!'],
+                    ],
+                ],
+            ],
         ];
     }
 

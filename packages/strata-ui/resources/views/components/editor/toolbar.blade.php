@@ -197,7 +197,7 @@
             @click="setLink()"
             ::class="{ 'bg-primary/20 text-primary': isActive('link') }"
             ::aria-pressed="isActive('link') ? 'true' : 'false'"
-            aria-label="Add link"
+            :aria-label="$__('Add link')"
             title="Link"
         >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -207,7 +207,7 @@
 
         <x-strata::editor.button
             @click="addImage()"
-            aria-label="Add image"
+            :aria-label="$__('Add image')"
             title="Image"
         >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

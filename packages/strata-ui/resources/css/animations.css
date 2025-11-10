@@ -1,0 +1,206 @@
+.animated-element {
+  opacity: 0;
+  transition: opacity var(--animation-duration-normal) var(--animation-easing-ease-out);
+  will-change: transform, opacity, clip-path;
+}
+
+.animated-element.is-visible {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+
+.animate-pop {
+  transform: scale(0.95);
+  transition: all var(--animation-duration-normal) var(--animation-easing-ease-out);
+}
+
+.animate-pop.is-visible {
+  transform: scale(1);
+}
+
+.animate-slide-up {
+  transform: translateY(20px);
+  transition: all var(--animation-duration-slow) var(--animation-easing-bounce);
+}
+
+.animate-slide-up.is-visible {
+  transform: translateY(0);
+}
+
+.animate-reveal {
+  clip-path: inset(100% 0 0 0);
+  transition: all var(--animation-duration-normal) var(--animation-easing-smooth);
+}
+
+.animate-rotate {
+  transform: scale(0.95) rotate(-3deg);
+  transition: all var(--animation-duration-normal) var(--animation-easing-ease-out);
+}
+
+.animate-rotate.is-visible {
+  transform: scale(1) rotate(0deg);
+}
+
+.animate-spring {
+  transform: scale(0.8);
+  transition: all var(--animation-duration-normal) var(--animation-easing-spring);
+}
+
+.animate-spring.is-visible {
+  transform: scale(1);
+}
+
+.animate-slide-left {
+  transform: translateX(-100%);
+  transition: all var(--animation-duration-slow) var(--animation-easing-bounce);
+}
+
+.animate-slide-left.is-visible {
+  transform: translateX(0);
+}
+
+.animate-slide-right {
+  transform: translateX(100%);
+  transition: all var(--animation-duration-slow) var(--animation-easing-bounce);
+}
+
+.animate-slide-right.is-visible {
+  transform: translateX(0);
+}
+
+[popover].animate-pop {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+[popover].animate-pop:popover-open {
+  opacity: 1;
+  transform: scale(1);
+  transition: all var(--animation-duration-normal) var(--animation-easing-ease-out);
+}
+
+@starting-style {
+  [popover].animate-pop:popover-open {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+[popover].animate-slide-up {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+[popover].animate-slide-up:popover-open {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all var(--animation-duration-slow) var(--animation-easing-bounce);
+}
+
+@starting-style {
+  [popover].animate-slide-up:popover-open {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+[popover].animate-slide-left {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+[popover].animate-slide-left:popover-open {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all var(--animation-duration-slow) var(--animation-easing-bounce);
+}
+
+@starting-style {
+  [popover].animate-slide-left:popover-open {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+[popover].animate-slide-right {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+[popover].animate-slide-right:popover-open {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all var(--animation-duration-slow) var(--animation-easing-bounce);
+}
+
+@starting-style {
+  [popover].animate-slide-right:popover-open {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+[popover].animate-spring {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+[popover].animate-spring:popover-open {
+  opacity: 1;
+  transform: scale(1);
+  transition: all var(--animation-duration-normal) var(--animation-easing-spring);
+}
+
+@starting-style {
+  [popover].animate-spring:popover-open {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+[popover].animate-dropdown-bounce {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+[popover].animate-dropdown-bounce:popover-open {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity var(--animation-duration-fast),
+    transform var(--animation-duration-fast),
+    overlay var(--animation-duration-fast) allow-discrete,
+    display var(--animation-duration-fast) allow-discrete;
+  transition-timing-function: var(--animation-easing-bounce);
+}
+
+@starting-style {
+  [popover].animate-dropdown-bounce:popover-open {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+[popover].animate-tooltip-bounce {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+[popover].animate-tooltip-bounce:popover-open {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity var(--animation-duration-fast),
+    transform var(--animation-duration-fast),
+    overlay var(--animation-duration-fast) allow-discrete,
+    display var(--animation-duration-fast) allow-discrete;
+  transition-timing-function: var(--animation-easing-bounce);
+}
+
+@starting-style {
+  [popover].animate-tooltip-bounce:popover-open {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}

@@ -71,13 +71,58 @@ Use `<x-strata::input.counter max="100" />` to show character count with color f
 </x-strata::input>
 ```
 
-## Form Composition
+## Form Fields
 
-Use form helper components for complete fields:
+### Quick Shorthand (Recommended)
+
+Add label, hint, and error props directly to the input component:
 
 ```blade
-<x-strata::form.field>
-    <x-strata::form.label for="email" required>Email</x-strata::form.label>
+{{-- Basic field with label and validation --}}
+<x-strata::input
+    label="Email Address"
+    hint="We'll never share your email"
+    wire:model="email"
+    type="email"
+    iconLeft="mail"
+    required
+/>
+
+{{-- With trailing hint --}}
+<x-strata::input
+    label="Username"
+    hint="Choose a unique username"
+    hintTrailing="Your username will be visible to others"
+    wire:model="username"
+    iconLeft="user"
+    required
+/>
+
+{{-- Manual error message --}}
+<x-strata::input
+    label="Custom Field"
+    error="This field has an error"
+    wire:model="customField"
+/>
+```
+
+**Shorthand Props:**
+- `label` (string|null): Field label text
+- `hint` (string|null): Help text above input
+- `hintTrailing` (string|null): Help text below input
+- `error` (string|null): Manual error (auto-detected from `$errors` if not provided)
+- `required` (boolean): Show required indicator on label
+- `spacing` (string): Field spacing (`tight`, `default`, `loose`)
+
+All input props (type, size, state, iconLeft, etc.) work as normal.
+
+### Custom Composition
+
+For advanced layouts, compose fields manually:
+
+```blade
+<x-strata::field>
+    <x-strata::field.label for="email" required>Email</x-strata::field.label>
     <x-strata::input
         id="email"
         type="email"
@@ -85,19 +130,19 @@ Use form helper components for complete fields:
         iconLeft="mail"
         :state="$errors->has('email') ? 'error' : 'default'"
     />
-    <x-strata::form.hint>We'll never share your email</x-strata::form.hint>
+    <x-strata::field.hint>We'll never share your email</x-strata::field.hint>
     @error('email')
-        <x-strata::form.error>{{ $message }}</x-strata::form.error>
+        <x-strata::field.error>{{ $message }}</x-strata::field.error>
     @enderror
-</x-strata::form.field>
+</x-strata::field>
 ```
 
-## Form Helper Components
+## Field Helper Components
 
 ### Label
 
 ```blade
-<x-strata::form.label for="email" required>Email Address</x-strata::form.label>
+<x-strata::field.label for="email" required>Email Address</x-strata::field.label>
 ```
 
 **Props:**
@@ -107,7 +152,7 @@ Use form helper components for complete fields:
 ### Hint
 
 ```blade
-<x-strata::form.hint>We'll send confirmation to this address</x-strata::form.hint>
+<x-strata::field.hint>We'll send confirmation to this address</x-strata::field.hint>
 ```
 
 **Props:**
@@ -116,7 +161,7 @@ Use form helper components for complete fields:
 ### Error
 
 ```blade
-<x-strata::form.error>{{ $errors->first('email') }}</x-strata::form.error>
+<x-strata::field.error>{{ $errors->first('email') }}</x-strata::field.error>
 ```
 
 **Props:**
@@ -125,9 +170,9 @@ Use form helper components for complete fields:
 ### Field Wrapper
 
 ```blade
-<x-strata::form.field spacing="default">
+<x-strata::field spacing="default">
     <!-- Label, input, hint, error components -->
-</x-strata::form.field>
+</x-strata::field>
 ```
 
 **Props:**

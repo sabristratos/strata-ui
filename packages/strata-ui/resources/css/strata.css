@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./theme.css";
+@import "./animations.css";
 @import "./lightbox.css";
 @import "./anchor-positioning.css";
 @import "flag-icons/css/flag-icons.min.css";
@@ -237,6 +238,17 @@
         &.ProseMirror-selectednode {
             outline: 3px solid var(--color-primary);
         }
+    }
+}
+
+@layer utilities {
+    .scrollbar-hide {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
     }
 }
 

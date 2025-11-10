@@ -14,12 +14,18 @@ export default function (props = {}) {
         initialValue: props.initialValue || null,
         minDate: props.minDate || null,
         maxDate: props.maxDate || null,
-        placeholder: props.placeholder || 'Select date',
+        placeholder: props.placeholder || null,
         disabled: props.disabled || false,
         clearable: props.clearable || false,
         chips: props.chips || false,
+        locale: props.locale || null,
         display: '',
         _disabledObserver: null,
+
+        getPlaceholder() {
+            if (this.placeholder !== null) return this.placeholder;
+            return this.mode === 'range' ? this.$__('Select date range') : this.$__('Select date');
+        },
 
         init() {
             this.initEntangleable();
@@ -103,7 +109,7 @@ export default function (props = {}) {
                     return '';
                 }
 
-                return `${value.length} ${value.length === 1 ? 'date' : 'dates'}`;
+                return this.$__choice('{count} date|{count} dates', value.length);
             }
 
             return '';
@@ -114,7 +120,8 @@ export default function (props = {}) {
                 const date = new Date(dateString);
                 if (isNaN(date.getTime())) return dateString;
 
-                return new Intl.DateTimeFormat('en-US', {
+                const locale = this.locale || this.$locale() || 'en';
+                return new Intl.DateTimeFormat(locale, {
                     month: 'short',
                     day: 'numeric',
                     year: 'numeric',
@@ -129,7 +136,8 @@ export default function (props = {}) {
                 const date = new Date(dateString);
                 if (isNaN(date.getTime())) return dateString;
 
-                return new Intl.DateTimeFormat('en-US', {
+                const locale = this.locale || this.$locale() || 'en';
+                return new Intl.DateTimeFormat(locale, {
                     month: 'short',
                     day: 'numeric',
                 }).format(date);

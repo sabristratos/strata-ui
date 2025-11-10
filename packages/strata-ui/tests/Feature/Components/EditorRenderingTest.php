@@ -2,7 +2,7 @@
 
 describe('Editor Component', function () {
     test('renders with default props', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toHaveDataAttribute('strata-editor')
             ->toHaveDataAttribute('strata-field-type', 'editor')
             ->toHaveDataAttribute('strata-editor-content')
@@ -10,13 +10,13 @@ describe('Editor Component', function () {
     });
 
     test('renders hidden input for Livewire binding', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('type="hidden"')
             ->toContain('data-strata-editor-input');
     });
 
     test('renders with wire:ignore directive', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('wire:ignore');
     });
 
@@ -50,7 +50,7 @@ describe('Editor Component', function () {
     });
 
     test('wrapper has base classes', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toHaveClasses('rounded-lg', 'border', 'bg-background', 'transition-colors');
     });
 
@@ -67,7 +67,7 @@ describe('Editor Component', function () {
     });
 
     test('generates unique ID when not provided', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('editor-')
             ->toContain('id="editor-');
     });
@@ -78,12 +78,12 @@ describe('Editor Component', function () {
     });
 
     test('includes toolbar component', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('data-strata-editor-toolbar');
     });
 
     test('toolbar has all formatting buttons', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('@click="toggleBold()"')
             ->toContain('@click="toggleItalic()"')
             ->toContain('@click="toggleStrike()"')
@@ -91,40 +91,40 @@ describe('Editor Component', function () {
     });
 
     test('toolbar has heading buttons', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('@click="toggleHeading(1)"')
             ->toContain('@click="toggleHeading(2)"')
             ->toContain('@click="toggleHeading(3)"');
     });
 
     test('toolbar has list buttons', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('@click="toggleBulletList()"')
             ->toContain('@click="toggleOrderedList()"');
     });
 
     test('toolbar has blockquote button', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('@click="toggleBlockquote()"');
     });
 
     test('toolbar has code block button', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('@click="toggleCodeBlock()"');
     });
 
     test('toolbar has link button', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('@click="setLink()"');
     });
 
     test('toolbar has image button', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('@click="addImage()"');
     });
 
     test('toolbar has text alignment buttons', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('@click="setTextAlign(\'left\')"')
             ->toContain('@click="setTextAlign(\'center\')"')
             ->toContain('@click="setTextAlign(\'right\')"')
@@ -132,13 +132,13 @@ describe('Editor Component', function () {
     });
 
     test('toolbar has undo and redo buttons', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('@click="undo()"')
             ->toContain('@click="redo()"');
     });
 
     test('toolbar buttons have aria-labels', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('aria-label="Toggle bold"')
             ->toContain('aria-label="Toggle italic"')
             ->toContain('aria-label="Add link"')
@@ -146,44 +146,44 @@ describe('Editor Component', function () {
     });
 
     test('toolbar buttons show active state', function () {
-        expectComponent('editor')
-            ->toContain('x-bind:active="isActive(\'bold\')"')
-            ->toContain('x-bind:active="isActive(\'italic\')"');
+        expectComponent($this, 'editor')
+            ->toContain(':class="{ \'bg-primary/20 text-primary\': isActive(\'bold\') }"')
+            ->toContain(':class="{ \'bg-primary/20 text-primary\': isActive(\'italic\') }"');
     });
 
     test('toolbar has separators between button groups', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('data-strata-editor-separator');
     });
 
     test('initializes Alpine component with strataEditor', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('x-data="strataEditor(');
     });
 
     test('passes initial value to Alpine component', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('x-data="strataEditor(')
             ->toContain('null)');
     });
 
     test('editor content div has correct x-ref', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('x-ref="editor"');
     });
 
     test('passes wire:model to hidden input', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('type="hidden"');
     });
 
     test('undo button is disabled when no history', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain(':disabled="!canUndo()"');
     });
 
     test('redo button is disabled when no future history', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain(':disabled="!canRedo()"');
     });
 
@@ -193,12 +193,12 @@ describe('Editor Component', function () {
     });
 
     test('default size is medium', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toHaveClasses('min-h-60', 'text-base');
     });
 
     test('default state is default', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toHaveClasses('border-border')
             ->toContain('focus-within:ring-ring');
     });
@@ -215,7 +215,7 @@ describe('Editor Component', function () {
     });
 
     test('toolbar buttons have tooltips', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('title="Bold (Ctrl+B)"')
             ->toContain('title="Italic (Ctrl+I)"')
             ->toContain('title="Strikethrough"')
@@ -223,19 +223,19 @@ describe('Editor Component', function () {
     });
 
     test('toolbar buttons have hover states', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('hover:bg-muted')
             ->toContain('hover:text-foreground');
     });
 
     test('toolbar has proper spacing', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('gap-1')
             ->toContain('p-2');
     });
 
     test('editor content area has proper styling', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('data-strata-editor-content')
             ->toHaveClasses('text-foreground');
     });
@@ -252,7 +252,7 @@ describe('Editor Component', function () {
     });
 
     test('component is properly scoped with data attributes', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toHaveDataAttribute('strata-editor')
             ->toHaveDataAttribute('strata-field-type', 'editor')
             ->toHaveDataAttribute('strata-editor-content')
@@ -275,13 +275,13 @@ describe('Editor Component', function () {
     });
 
     test('toolbar button SVG icons have correct size', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('w-4 h-4')
             ->toContain('class="w-4 h-4"');
     });
 
     test('toolbar separator has correct styling', function () {
-        expectComponent('editor')
+        expectComponent($this, 'editor')
             ->toContain('w-px')
             ->toContain('bg-border')
             ->toContain('mx-1');

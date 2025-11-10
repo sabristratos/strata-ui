@@ -1,27 +1,22 @@
 <?php
 
-if (! function_exists('expectComponent')) {
-    function expectComponent(mixed $testOrComponent, mixed $componentOrAttributes = null, mixed $attributesOrSlot = [], string $slot = ''): \Pest\Expectation
-    {
-        // Support both signatures: expectComponent('button', [...]) and expectComponent($this, 'button', [...])
-        if (is_string($testOrComponent) && (is_array($componentOrAttributes) || is_string($componentOrAttributes) || $componentOrAttributes === null)) {
-            // New signature: expectComponent('button', $attributes, $slot)
-            $test = test();
-            $componentName = $testOrComponent;
-            $attributes = is_array($componentOrAttributes) ? $componentOrAttributes : [];
-            $actualSlot = is_string($componentOrAttributes) ? $componentOrAttributes : (is_string($attributesOrSlot) ? $attributesOrSlot : '');
-            if (is_array($componentOrAttributes) && ! empty($attributesOrSlot)) {
-                $actualSlot = is_string($attributesOrSlot) ? $attributesOrSlot : $slot;
-            }
-        } else {
-            // Old signature: expectComponent($this, 'button', $attributes, $slot)
-            $test = $testOrComponent;
-            $componentName = $componentOrAttributes;
-            $attributes = is_array($attributesOrSlot) ? $attributesOrSlot : [];
-            $actualSlot = $slot;
-        }
+use Stratos\StrataUI\Tests\TestCase;
 
-        $rendered = $test->renderComponent($componentName, $attributes, $actualSlot);
+if (! function_exists('expectComponent')) {
+    function expectComponent(mixed $test, string $component, array $attributes = [], string $slot = ''): \Pest\Expectation
+    {
+        try {
+            $rendered = $test->renderComponent($component, $attributes, $slot);
+        } catch (\Error $e) {
+            throw new \RuntimeException(
+                'Failed to call renderComponent on test instance. '.
+                'Test class: '.get_class($test).'. '.
+                'Error: '.$e->getMessage().'. '.
+                'Make sure your tests extend '.TestCase::class,
+                0,
+                $e
+            );
+        }
 
         return expect($rendered);
     }

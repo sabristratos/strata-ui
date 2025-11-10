@@ -76,6 +76,7 @@
     'placeholder' => 'Select time',
     'state' => 'default',
     'size' => 'md',
+    'variant' => 'faded',
     'disabled' => false,
     'readonly' => false,
     'required' => false,
@@ -88,6 +89,7 @@
 @php
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 use Stratos\StrataUI\Config\ComponentStateConfig;
+use Stratos\StrataUI\Config\ComponentVariantConfig;
 use Stratos\StrataUI\Support\ComponentHelpers;
 use Stratos\StrataUI\Support\PositioningHelper;
 
@@ -97,8 +99,11 @@ $sizes = ComponentSizeConfig::inputSizes();
 
 $states = ComponentStateConfig::pickerStates();
 
+$variants = ComponentVariantConfig::inputVariants();
+
 $sizeClasses = $sizes[$size] ?? $sizes['md'];
 $stateClasses = $states[$state] ?? $states['default'];
+$variantClasses = $variants[$variant] ?? $variants['faded'];
 
 if ($value instanceof \Stratos\StrataUI\Data\TimeValue) {
     $hour = $value->to24HourFormat();
@@ -109,8 +114,6 @@ if ($value instanceof \Stratos\StrataUI\Data\TimeValue) {
 
 $positioning = PositioningHelper::getAnchorPositioning($placement, $offset);
 $positioningStyle = $positioning['style'];
-
-$animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,overlay_150ms_allow-discrete,display_150ms_allow-discrete] ease-out will-change-[transform,opacity] opacity-100 scale-100 starting:opacity-0 starting:scale-95';
 @endphp
 
 <div
@@ -156,13 +159,13 @@ $animationClasses = '[&[popover]]:[transition:opacity_150ms,transform_150ms,over
         :clearable="$clearable"
         :size-classes="$sizeClasses"
         :state-classes="$stateClasses"
+        :variant-classes="$variantClasses"
     />
 
     <x-strata::time-picker.dropdown
         :format="$format"
         :show-presets="$showPresets"
         :positioning-style="$positioningStyle"
-        :animation-classes="$animationClasses"
         :placement="$placement"
         :display-mode="$displayMode"
     />

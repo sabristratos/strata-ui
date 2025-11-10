@@ -6,7 +6,7 @@
     @click.stop="clear()"
     class="flex items-center justify-center cursor-pointer text-muted-foreground hover:text-foreground transition-colors p-1"
     role="button"
-    aria-label="Clear selection"
+    :aria-label="$__('Clear')"
     tabindex="-1"
     {{ $attributes }}
 >

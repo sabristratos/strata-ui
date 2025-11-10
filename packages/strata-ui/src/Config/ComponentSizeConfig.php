@@ -317,7 +317,7 @@ class ComponentSizeConfig
         ];
     }
 
-    public static function rangeSliderSizes(): array
+    public static function sliderSizes(): array
     {
         return [
             'sm' => [
@@ -401,12 +401,79 @@ class ComponentSizeConfig
         return '';
     }
 
-    public static function sliderSizes(): array
+    public static function carouselSizes(): array
     {
         return [
-            'sm' => 'min-h-32',
-            'md' => 'min-h-48',
-            'lg' => 'min-h-64',
+            'xs' => [
+                'wrapper' => 'relative',
+                'viewport' => '',
+                'container' => 'gap-2',
+                'control-button' => 'w-8 h-8',
+                'control-icon' => 'w-4 h-4',
+                'controls-wrapper' => 'px-2',
+                'dot-size' => 'w-1.5 h-1.5',
+                'dots-gap' => 'gap-1.5',
+                'counter' => 'text-xs',
+                'navigation' => 'mt-2',
+                'progress-height' => 'h-1',
+                'progress-ring-size' => 'w-8 h-8',
+            ],
+            'sm' => [
+                'wrapper' => 'relative',
+                'viewport' => '',
+                'container' => 'gap-3',
+                'control-button' => 'w-9 h-9',
+                'control-icon' => 'w-4 h-4',
+                'controls-wrapper' => 'px-3',
+                'dot-size' => 'w-2 h-2',
+                'dots-gap' => 'gap-2',
+                'counter' => 'text-sm',
+                'navigation' => 'mt-3',
+                'progress-height' => 'h-1.5',
+                'progress-ring-size' => 'w-10 h-10',
+            ],
+            'md' => [
+                'wrapper' => 'relative',
+                'viewport' => '',
+                'container' => 'gap-4',
+                'control-button' => 'w-10 h-10',
+                'control-icon' => 'w-5 h-5',
+                'controls-wrapper' => 'px-4',
+                'dot-size' => 'w-2.5 h-2.5',
+                'dots-gap' => 'gap-2',
+                'counter' => 'text-sm',
+                'navigation' => 'mt-4',
+                'progress-height' => 'h-2',
+                'progress-ring-size' => 'w-12 h-12',
+            ],
+            'lg' => [
+                'wrapper' => 'relative',
+                'viewport' => '',
+                'container' => 'gap-5',
+                'control-button' => 'w-12 h-12',
+                'control-icon' => 'w-6 h-6',
+                'controls-wrapper' => 'px-5',
+                'dot-size' => 'w-3 h-3',
+                'dots-gap' => 'gap-2.5',
+                'counter' => 'text-base',
+                'navigation' => 'mt-5',
+                'progress-height' => 'h-2.5',
+                'progress-ring-size' => 'w-14 h-14',
+            ],
+            'xl' => [
+                'wrapper' => 'relative',
+                'viewport' => '',
+                'container' => 'gap-6',
+                'control-button' => 'w-14 h-14',
+                'control-icon' => 'w-7 h-7',
+                'controls-wrapper' => 'px-6',
+                'dot-size' => 'w-3.5 h-3.5',
+                'dots-gap' => 'gap-3',
+                'counter' => 'text-lg',
+                'navigation' => 'mt-6',
+                'progress-height' => 'h-3',
+                'progress-ring-size' => 'w-16 h-16',
+            ],
         ];
     }
 

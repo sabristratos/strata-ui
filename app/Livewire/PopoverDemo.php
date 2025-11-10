@@ -9,15 +9,25 @@ use Livewire\Component;
 class PopoverDemo extends Component
 {
     public int $notificationCount = 3;
+
     public string $quickNote = '';
+
     public bool $noteSubmitted = false;
+
     public bool $darkModeEnabled = false;
+
     public bool $notificationsEnabled = true;
+
     public bool $emailUpdates = false;
+
     public ?string $selectedColor = null;
+
     public ?string $selectedAction = null;
+
     public bool $itemDeleted = false;
+
     public string $username = 'John Doe';
+
     public string $email = 'john@example.com';
 
     public function submitQuickNote(): void
@@ -50,17 +60,17 @@ class PopoverDemo extends Component
 
     public function toggleDarkMode(): void
     {
-        $this->darkModeEnabled = !$this->darkModeEnabled;
+        $this->darkModeEnabled = ! $this->darkModeEnabled;
     }
 
     public function toggleNotifications(): void
     {
-        $this->notificationsEnabled = !$this->notificationsEnabled;
+        $this->notificationsEnabled = ! $this->notificationsEnabled;
     }
 
     public function toggleEmailUpdates(): void
     {
-        $this->emailUpdates = !$this->emailUpdates;
+        $this->emailUpdates = ! $this->emailUpdates;
     }
 
     public function resetDemo(): void

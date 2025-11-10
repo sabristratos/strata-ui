@@ -1,290 +1,508 @@
-class SliderEngine {
-    constructor(config = {}) {
-        this.config = {
-            mode: config.mode || 'presentational',
-            loop: config.loop || false,
-            autoplay: config.autoplay || false,
-            autoplayDelay: config.autoplayDelay || 3000,
-            peek: config.peek || false,
-            ...config
-        };
+export default function (props = {}) {
+    const mode = props.mode ?? 'range';
+    const isSingleMode = mode === 'single';
+    const defaultValue = isSingleMode ? (props.min ?? 0) : { min: props.min ?? 0, max: props.max ?? 100 };
 
-        this.component = null;
-        this.container = null;
-        this.entangleable = null;
-        this.autoplayInterval = null;
-        this.isFormMode = this.config.mode === 'form';
-        this.navigating = false;
-        this.touchStartX = 0;
-        this.touchEndX = 0;
-    }
-
-    init(component) {
-        this.component = component;
-
-        this.container = component.$refs.container;
-        component.totalSlides = component.$el.querySelectorAll('[data-strata-slider-item]').length;
-
-        if (this.isFormMode) {
-            this.setupFormMode(component);
-        }
-
-        if (this.config.autoplay && !this.prefersReducedMotion()) {
-            this.startAutoplay(component);
-        }
-
-        this.updateCurrentSlide(component);
-        this.setupScrollListener();
-        this.setupFocusListener(component);
-        this.setupTouchHandlers(component);
-    }
-
-    setupFormMode(component) {
-        const entangleableMixin = window.createEntangleableMixin({
-            initialValue: component.currentSlide,
+    return {
+        ...window.createEntangleableMixin({
+            initialValue: props.initialValue ?? defaultValue,
             inputSelector: '[data-strata-slider-input]',
-            afterWatch: (newValue) => {
-                if (typeof newValue === 'number' && newValue !== component.currentSlide) {
-                    this.goTo(newValue, component);
+            afterWatch: function(newValue) {
+                this.display = this.computeDisplay(newValue);
+            }
+        }),
+
+        min: props.min ?? 0,
+        max: props.max ?? 100,
+        step: props.step ?? 1,
+        mode: mode,
+        initialValue: props.initialValue ?? null,
+        disabled: props.disabled ?? false,
+        prefix: props.prefix ?? '',
+        suffix: props.suffix ?? '',
+        showValues: props.showValues ?? true,
+        showLabels: props.showLabels ?? true,
+
+        isDraggingSingle: false,
+        isDraggingMin: false,
+        isDraggingMax: false,
+        isHoveringSingle: false,
+        isHoveringMin: false,
+        isHoveringMax: false,
+        touchIdentifier: null,
+        tooltipFlippedSingle: false,
+        tooltipFlippedMin: false,
+        tooltipFlippedMax: false,
+
+        localValue: null,
+
+        display: '',
+
+        init() {
+            this.initEntangleable();
+            this.localValue = this.entangleable.value;
+            this.display = this.computeDisplay(this.entangleable.value);
+
+            this.$watch('entangleable.value', (newValue) => {
+                if (!this.isDraggingSingle && !this.isDraggingMin && !this.isDraggingMax) {
+                    this.localValue = newValue;
                 }
+            });
+        },
+
+        get singlePercent() {
+            const range = this.max - this.min;
+            if (range === 0) return 0;
+
+            const value = this.localValue ?? this.min;
+            return ((value - this.min) / range) * 100;
+        },
+
+        get minPercent() {
+            const range = this.max - this.min;
+            if (range === 0) return 0;
+
+            const value = this.localValue?.min ?? this.min;
+            return ((value - this.min) / range) * 100;
+        },
+
+        get maxPercent() {
+            const range = this.max - this.min;
+            if (range === 0) return 100;
+
+            const value = this.localValue?.max ?? this.max;
+            return ((value - this.min) / range) * 100;
+        },
+
+        computeDisplay(value) {
+            if (this.mode === 'single') {
+                if (value === null || value === undefined) return '';
+                return this.formatValue(value);
             }
-        });
 
-        Object.assign(component, entangleableMixin);
-        component.initEntangleable();
-
-        this.entangleable = component.entangleable;
-
-        component.$watch('currentSlide', (value) => {
-            if (this.entangleable) {
-                this.entangleable.set(value);
+            if (!value || typeof value !== 'object') {
+                return '';
             }
-        });
-    }
 
-    setupScrollListener() {
-        if (!this.container) return;
+            const minFormatted = this.formatValue(value.min);
+            const maxFormatted = this.formatValue(value.max);
 
-        let scrollTimeout;
-        this.container.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                this.updateCurrentSlide(this.component);
-            }, 150);
-        });
-    }
+            return `${minFormatted} - ${maxFormatted}`;
+        },
 
-    setupFocusListener(component) {
-        if (!component.$el) return;
+        formatValue(value) {
+            if (value === null || value === undefined) return '';
 
-        component.$el.addEventListener('focusin', () => {
-            if (component.isPlaying) {
-                this.stopAutoplay(component);
-            }
-        });
-    }
+            const formatted = Number(value).toLocaleString();
+            return `${this.prefix}${formatted}${this.suffix}`;
+        },
 
-    goTo(index, component, { smooth = true, scrollToSlide = true } = {}) {
-        if (this.navigating || index < 0 || index >= component.totalSlides) return;
+        checkTooltipOverflow(handle, isMin) {
+            if (!handle) return;
 
-        this.navigating = true;
+            this.$nextTick(() => {
+                const tooltip = handle.querySelector('[data-tooltip]');
+                if (!tooltip) return;
 
-        const items = component.$el.querySelectorAll('[data-strata-slider-item]');
-        const item = items[index];
+                const tooltipRect = tooltip.getBoundingClientRect();
+                const flipped = tooltipRect.top < 0;
 
-        if (item) {
-            if (scrollToSlide) {
-                item.scrollIntoView({
-                    behavior: smooth ? 'smooth' : 'auto',
-                    block: 'nearest',
-                    inline: this.config.peek ? 'start' : 'center'
-                });
+                if (isMin) {
+                    this.tooltipFlippedMin = flipped;
+                } else {
+                    this.tooltipFlippedMax = flipped;
+                }
+            });
+        },
+
+        handleMinMouseDown(e) {
+            if (this.disabled) return;
+
+            e.preventDefault();
+            this.isDraggingMin = true;
+            this.checkTooltipOverflow(this.$refs.minHandle, true);
+
+            const moveHandler = (e) => this.updateMinValue(e);
+            const upHandler = () => {
+                this.isDraggingMin = false;
+                document.removeEventListener('mousemove', moveHandler);
+                document.removeEventListener('mouseup', upHandler);
+            };
+
+            document.addEventListener('mousemove', moveHandler);
+            document.addEventListener('mouseup', upHandler);
+        },
+
+        handleMaxMouseDown(e) {
+            if (this.disabled) return;
+
+            e.preventDefault();
+            this.isDraggingMax = true;
+            this.checkTooltipOverflow(this.$refs.maxHandle, false);
+
+            const moveHandler = (e) => this.updateMaxValue(e);
+            const upHandler = () => {
+                this.isDraggingMax = false;
+                document.removeEventListener('mousemove', moveHandler);
+                document.removeEventListener('mouseup', upHandler);
+            };
+
+            document.addEventListener('mousemove', moveHandler);
+            document.addEventListener('mouseup', upHandler);
+        },
+
+        handleMinTouchStart(e) {
+            if (this.disabled) return;
+
+            e.preventDefault();
+            this.isDraggingMin = true;
+
+            const touch = e.changedTouches[0];
+            this.touchIdentifier = touch.identifier;
+
+            const moveHandler = (e) => this.handleMinTouchMove(e);
+            const endHandler = () => {
+                this.isDraggingMin = false;
+                this.touchIdentifier = null;
+                document.removeEventListener('touchmove', moveHandler);
+                document.removeEventListener('touchend', endHandler);
+            };
+
+            document.addEventListener('touchmove', moveHandler);
+            document.addEventListener('touchend', endHandler);
+        },
+
+        handleMinTouchMove(e) {
+            if (!this.isDraggingMin) return;
+
+            const touches = Array.from(e.changedTouches);
+            const touch = touches.find(t => t.identifier === this.touchIdentifier);
+            if (!touch) return;
+
+            this.updateMinValue({ clientX: touch.clientX });
+        },
+
+        handleMaxTouchStart(e) {
+            if (this.disabled) return;
+
+            e.preventDefault();
+            this.isDraggingMax = true;
+
+            const touch = e.changedTouches[0];
+            this.touchIdentifier = touch.identifier;
+
+            const moveHandler = (e) => this.handleMaxTouchMove(e);
+            const endHandler = () => {
+                this.isDraggingMax = false;
+                this.touchIdentifier = null;
+                document.removeEventListener('touchmove', moveHandler);
+                document.removeEventListener('touchend', endHandler);
+            };
+
+            document.addEventListener('touchmove', moveHandler);
+            document.addEventListener('touchend', endHandler);
+        },
+
+        handleMaxTouchMove(e) {
+            if (!this.isDraggingMax) return;
+
+            const touches = Array.from(e.changedTouches);
+            const touch = touches.find(t => t.identifier === this.touchIdentifier);
+            if (!touch) return;
+
+            this.updateMaxValue({ clientX: touch.clientX });
+        },
+
+        updateMinValue(e) {
+            const track = this.$refs.track;
+            if (!track) return;
+
+            const rect = track.getBoundingClientRect();
+            const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+            const percent = x / rect.width;
+
+            const range = this.max - this.min;
+            let newValue = this.min + (percent * range);
+
+            newValue = Math.round(newValue / this.step) * this.step;
+
+            const currentMax = this.localValue?.max ?? this.max;
+            newValue = Math.max(this.min, Math.min(newValue, currentMax - this.step));
+
+            const updatedValue = {
+                min: newValue,
+                max: currentMax
+            };
+
+            this.localValue = updatedValue;
+            this.entangleable.set(updatedValue);
+        },
+
+        updateMaxValue(e) {
+            const track = this.$refs.track;
+            if (!track) return;
+
+            const rect = track.getBoundingClientRect();
+            const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+            const percent = x / rect.width;
+
+            const range = this.max - this.min;
+            let newValue = this.min + (percent * range);
+
+            newValue = Math.round(newValue / this.step) * this.step;
+
+            const currentMin = this.localValue?.min ?? this.min;
+            newValue = Math.min(this.max, Math.max(newValue, currentMin + this.step));
+
+            const updatedValue = {
+                min: currentMin,
+                max: newValue
+            };
+
+            this.localValue = updatedValue;
+            this.entangleable.set(updatedValue);
+        },
+
+        handleTrackClick(e) {
+            if (this.disabled) return;
+            if (e.target !== this.$refs.track && e.target !== this.$refs.range) return;
+
+            const rect = this.$refs.track.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percent = x / rect.width;
+
+            const range = this.max - this.min;
+            const clickValue = this.min + (percent * range);
+
+            const currentMin = this.localValue?.min ?? this.min;
+            const currentMax = this.localValue?.max ?? this.max;
+
+            const distToMin = Math.abs(clickValue - currentMin);
+            const distToMax = Math.abs(clickValue - currentMax);
+
+            let updatedValue;
+            if (distToMin < distToMax) {
+                let newValue = Math.round(clickValue / this.step) * this.step;
+                newValue = Math.max(this.min, Math.min(newValue, currentMax - this.step));
+
+                updatedValue = {
+                    min: newValue,
+                    max: currentMax
+                };
             } else {
-                const container = this.container;
-                if (container) {
-                    const scrollPosition = this.config.peek
-                        ? item.offsetLeft
-                        : item.offsetLeft - (container.clientWidth / 2) + (item.clientWidth / 2);
+                let newValue = Math.round(clickValue / this.step) * this.step;
+                newValue = Math.min(this.max, Math.max(newValue, currentMin + this.step));
 
-                    container.scrollTo({
-                        left: scrollPosition,
-                        behavior: smooth ? 'smooth' : 'auto'
-                    });
-                }
+                updatedValue = {
+                    min: currentMin,
+                    max: newValue
+                };
             }
 
-            component.currentSlide = index;
-            this.announceSlideChange(index, component);
-        }
+            this.localValue = updatedValue;
+            this.entangleable.set(updatedValue);
+        },
 
-        setTimeout(() => {
-            this.navigating = false;
-        }, 150);
-    }
+        handleMinKeydown(e) {
+            if (this.disabled) return;
 
-    next(component) {
-        const nextIndex = this.config.loop
-            ? (component.currentSlide + 1) % component.totalSlides
-            : Math.min(component.currentSlide + 1, component.totalSlides - 1);
-        this.goTo(nextIndex, component);
-    }
+            const currentMin = this.localValue?.min ?? this.min;
+            const currentMax = this.localValue?.max ?? this.max;
+            let newValue = currentMin;
 
-    prev(component) {
-        const prevIndex = this.config.loop
-            ? (component.currentSlide - 1 + component.totalSlides) % component.totalSlides
-            : Math.max(component.currentSlide - 1, 0);
-        this.goTo(prevIndex, component);
-    }
-
-    updateCurrentSlide(component) {
-        if (!this.container) return;
-
-        const items = component.$el.querySelectorAll('[data-strata-slider-item]');
-        const scrollLeft = this.container.scrollLeft;
-
-        let closestIndex = 0;
-        let closestDistance = Infinity;
-
-        items.forEach((item, index) => {
-            const distance = Math.abs(item.offsetLeft - scrollLeft);
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestIndex = index;
+            switch (e.key) {
+                case 'ArrowLeft':
+                case 'ArrowDown':
+                    e.preventDefault();
+                    newValue = Math.max(this.min, currentMin - this.step);
+                    break;
+                case 'ArrowRight':
+                case 'ArrowUp':
+                    e.preventDefault();
+                    newValue = Math.min(currentMax - this.step, currentMin + this.step);
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    newValue = this.min;
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    newValue = currentMax - this.step;
+                    break;
+                case 'PageDown':
+                    e.preventDefault();
+                    newValue = Math.max(this.min, currentMin - (this.step * 10));
+                    break;
+                case 'PageUp':
+                    e.preventDefault();
+                    newValue = Math.min(currentMax - this.step, currentMin + (this.step * 10));
+                    break;
+                default:
+                    return;
             }
-        });
 
-        component.currentSlide = closestIndex;
-    }
+            const updatedValue = {
+                min: newValue,
+                max: currentMax
+            };
 
-    announceSlideChange(index, component) {
-        const liveRegion = component.$el.querySelector('[data-strata-slider-live-region]');
-        if (liveRegion) {
-            liveRegion.textContent = `Slide ${index + 1} of ${component.totalSlides}`;
+            this.localValue = updatedValue;
+            this.entangleable.set(updatedValue);
+        },
+
+        handleMaxKeydown(e) {
+            if (this.disabled) return;
+
+            const currentMin = this.localValue?.min ?? this.min;
+            const currentMax = this.localValue?.max ?? this.max;
+            let newValue = currentMax;
+
+            switch (e.key) {
+                case 'ArrowLeft':
+                case 'ArrowDown':
+                    e.preventDefault();
+                    newValue = Math.max(currentMin + this.step, currentMax - this.step);
+                    break;
+                case 'ArrowRight':
+                case 'ArrowUp':
+                    e.preventDefault();
+                    newValue = Math.min(this.max, currentMax + this.step);
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    newValue = currentMin + this.step;
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    newValue = this.max;
+                    break;
+                case 'PageDown':
+                    e.preventDefault();
+                    newValue = Math.max(currentMin + this.step, currentMax - (this.step * 10));
+                    break;
+                case 'PageUp':
+                    e.preventDefault();
+                    newValue = Math.min(this.max, currentMax + (this.step * 10));
+                    break;
+                default:
+                    return;
+            }
+
+            const updatedValue = {
+                min: currentMin,
+                max: newValue
+            };
+
+            this.localValue = updatedValue;
+            this.entangleable.set(updatedValue);
+        },
+
+        handleSingleMouseDown(e) {
+            if (this.disabled) return;
+
+            e.preventDefault();
+            this.isDraggingSingle = true;
+            this.checkTooltipOverflow(this.$refs.singleHandle, true);
+
+            const moveHandler = (e) => this.updateSingleValue(e);
+            const upHandler = () => {
+                this.isDraggingSingle = false;
+                document.removeEventListener('mousemove', moveHandler);
+                document.removeEventListener('mouseup', upHandler);
+            };
+
+            document.addEventListener('mousemove', moveHandler);
+            document.addEventListener('mouseup', upHandler);
+        },
+
+        handleSingleTouchStart(e) {
+            if (this.disabled) return;
+
+            e.preventDefault();
+            this.isDraggingSingle = true;
+
+            const touch = e.changedTouches[0];
+            this.touchIdentifier = touch.identifier;
+
+            const moveHandler = (e) => this.handleSingleTouchMove(e);
+            const endHandler = () => {
+                this.isDraggingSingle = false;
+                this.touchIdentifier = null;
+                document.removeEventListener('touchmove', moveHandler);
+                document.removeEventListener('touchend', endHandler);
+            };
+
+            document.addEventListener('touchmove', moveHandler);
+            document.addEventListener('touchend', endHandler);
+        },
+
+        handleSingleTouchMove(e) {
+            if (!this.isDraggingSingle) return;
+
+            const touches = Array.from(e.changedTouches);
+            const touch = touches.find(t => t.identifier === this.touchIdentifier);
+            if (!touch) return;
+
+            this.updateSingleValue({ clientX: touch.clientX });
+        },
+
+        updateSingleValue(e) {
+            const track = this.$refs.track;
+            if (!track) return;
+
+            const rect = track.getBoundingClientRect();
+            const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+            const percent = x / rect.width;
+
+            const range = this.max - this.min;
+            let newValue = this.min + (percent * range);
+
+            newValue = Math.round(newValue / this.step) * this.step;
+            newValue = Math.max(this.min, Math.min(newValue, this.max));
+
+            this.localValue = newValue;
+            this.entangleable.set(newValue);
+        },
+
+        handleSingleKeydown(e) {
+            if (this.disabled) return;
+
+            const currentValue = this.localValue ?? this.min;
+            let newValue = currentValue;
+
+            switch (e.key) {
+                case 'ArrowLeft':
+                case 'ArrowDown':
+                    e.preventDefault();
+                    newValue = Math.max(this.min, currentValue - this.step);
+                    break;
+                case 'ArrowRight':
+                case 'ArrowUp':
+                    e.preventDefault();
+                    newValue = Math.min(this.max, currentValue + this.step);
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    newValue = this.min;
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    newValue = this.max;
+                    break;
+                case 'PageDown':
+                    e.preventDefault();
+                    newValue = Math.max(this.min, currentValue - (this.step * 10));
+                    break;
+                case 'PageUp':
+                    e.preventDefault();
+                    newValue = Math.min(this.max, currentValue + (this.step * 10));
+                    break;
+                default:
+                    return;
+            }
+
+            this.localValue = newValue;
+            this.entangleable.set(newValue);
         }
-    }
-
-    startAutoplay(component) {
-        if (this.autoplayInterval) return;
-        component.isPlaying = true;
-        this.autoplayInterval = setInterval(() => {
-            const nextIndex = this.config.loop
-                ? (component.currentSlide + 1) % component.totalSlides
-                : Math.min(component.currentSlide + 1, component.totalSlides - 1);
-            this.goTo(nextIndex, component, { scrollToSlide: false });
-        }, this.config.autoplayDelay);
-    }
-
-    stopAutoplay(component) {
-        if (this.autoplayInterval) {
-            clearInterval(this.autoplayInterval);
-            this.autoplayInterval = null;
-            component.isPlaying = false;
-        }
-    }
-
-    pauseAutoplay(component) {
-        this.stopAutoplay(component);
-    }
-
-    resumeAutoplay(component) {
-        const canResume = this.config.autoplay && !this.prefersReducedMotion() && !this.autoplayInterval;
-        if (canResume) {
-            this.startAutoplay(component);
-        }
-    }
-
-    togglePlayPause(component) {
-        if (component.isPlaying) {
-            this.pauseAutoplay(component);
-        } else {
-            this.resumeAutoplay(component);
-        }
-    }
-
-    prefersReducedMotion() {
-        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    }
-
-    setupTouchHandlers(component) {
-        if (!this.container) return;
-
-        this.container.addEventListener('touchstart', (e) => {
-            this.touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-
-        this.container.addEventListener('touchend', (e) => {
-            this.touchEndX = e.changedTouches[0].screenX;
-            this.handleSwipe(component);
-        }, { passive: true });
-    }
-
-    handleSwipe(component) {
-        if (!this.container) return;
-
-        const swipeThreshold = this.container.clientWidth * 0.3;
-        const swipeDistance = this.touchStartX - this.touchEndX;
-
-        if (Math.abs(swipeDistance) < swipeThreshold) return;
-
-        if (swipeDistance > 0) {
-            this.pauseAutoplay(component);
-            this.next(component);
-        } else {
-            this.pauseAutoplay(component);
-            this.prev(component);
-        }
-    }
-
-    destroy(component) {
-        this.stopAutoplay(component);
-        if (this.entangleable) {
-            this.entangleable.destroy();
-        }
-        this.component = null;
-        this.container = null;
-    }
+    };
 }
-
-export default (config = {}) => ({
-    currentSlide: config.value ?? 0,
-    totalSlides: 0,
-    isPlaying: false,
-    engine: null,
-
-    init() {
-        this.engine = new SliderEngine(config);
-        this.$nextTick(() => {
-            this.engine.init(this);
-        });
-    },
-
-    goTo(index) {
-        this.engine.goTo(index, this);
-    },
-
-    next() {
-        this.engine.next(this);
-    },
-
-    prev() {
-        this.engine.prev(this);
-    },
-
-    pauseAutoplay() {
-        this.engine.pauseAutoplay(this);
-    },
-
-    resumeAutoplay() {
-        this.engine.resumeAutoplay(this);
-    },
-
-    togglePlayPause() {
-        this.engine.togglePlayPause(this);
-    },
-
-    destroy() {
-        if (this.engine) {
-            this.engine.destroy(this);
-        }
-    }
-});

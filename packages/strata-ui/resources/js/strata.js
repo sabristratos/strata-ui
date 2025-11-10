@@ -2,7 +2,7 @@
  * Strata UI - Main entry point
  *
  * Exports core utilities and helpers to window global scope.
- * Modules: Entangleable, Positionable, Image, Slider, Editor, DatePicker, TimePicker, ColorPicker, Lightbox, Toast API
+ * Modules: Entangleable, Positionable, Image, Slider, Carousel, Editor, DatePicker, TimePicker, ColorPicker, Lightbox, Toast API
  */
 
 // CSS Anchor Positioning Polyfill
@@ -15,11 +15,11 @@ import { createEntangleableMixin } from './entangleable-mixin.js';
 import { createKeyboardNavigationMixin } from './keyboard-navigation-mixin.js';
 import Image from './image.js';
 import Slider from './slider.js';
+import Carousel from './carousel.js';
 import Editor from './editor.js';
 import DatePicker from './date-picker.js';
 import TimePicker from './time-picker.js';
 import ColorPicker from './color-picker.js';
-import RangeSlider from './range-slider.js';
 import Select from './select.js';
 import PhoneInput from './phone-input.js';
 import popoverTrigger from './popover-trigger.js';
@@ -62,13 +62,19 @@ if (typeof window !== 'undefined') {
      * Image component with loading/error states
      * @type {function}
      */
-    window.StrataImage = Image;
+    window.imageComponent = Image;
 
     /**
-     * Slider component with carousel and form modes
+     * Slider component with dual handles for numeric ranges
      * @type {function}
      */
     window.strataSlider = Slider;
+
+    /**
+     * Carousel component with autoplay, loop, and drag support
+     * @type {function}
+     */
+    window.strataCarousel = Carousel;
 
     /**
      * Rich text editor component powered by Tiptap
@@ -93,12 +99,6 @@ if (typeof window !== 'undefined') {
      * @type {function}
      */
     window.strataColorPicker = ColorPicker;
-
-    /**
-     * Range slider component with dual handles for numeric ranges
-     * @type {function}
-     */
-    window.strataRangeSlider = RangeSlider;
 
     /**
      * Select component with search, multi-select, and chips support
@@ -202,6 +202,23 @@ if (typeof window !== 'undefined') {
     window.toast.info = function(title, description = null) {
         window.toast({
             variant: 'info',
+            title: title,
+            description: description
+        });
+    };
+
+    /**
+     * Display a neutral toast
+     *
+     * @param {string} title - Toast title
+     * @param {string|null} [description=null] - Optional description
+     *
+     * @example
+     * window.toast.neutral('Notification', 'A new message has arrived');
+     */
+    window.toast.neutral = function(title, description = null) {
+        window.toast({
+            variant: 'neutral',
             title: title,
             description: description
         });

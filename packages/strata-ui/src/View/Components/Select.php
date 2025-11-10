@@ -11,6 +11,8 @@ class Select extends Component
 
     protected array $allowedStates = ['default', 'success', 'error', 'warning'];
 
+    protected array $allowedVariants = ['faded', 'flat', 'bordered', 'underlined'];
+
     protected array $allowedPlacements = [
         'bottom-start', 'bottom-end', 'bottom',
         'top-start', 'top-end', 'top',
@@ -21,6 +23,7 @@ class Select extends Component
     public function __construct(
         public string $size = 'md',
         public string $state = 'default',
+        public string $variant = 'faded',
         public string $placement = 'bottom-start',
         public bool $multiple = false,
         public bool $searchable = false,
@@ -59,6 +62,16 @@ class Select extends Component
                     'Invalid state "%s" for Select component. Allowed values: %s',
                     $this->state,
                     implode(', ', $this->allowedStates)
+                )
+            );
+        }
+
+        if (! in_array($this->variant, $this->allowedVariants)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Invalid variant "%s" for Select component. Allowed values: %s',
+                    $this->variant,
+                    implode(', ', $this->allowedVariants)
                 )
             );
         }
