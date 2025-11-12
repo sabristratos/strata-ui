@@ -143,7 +143,7 @@ $positioningStyle = $positioning['style'];
             id="{{ $componentId }}"
             name="{{ $name ?? '' }}"
             x-ref="input"
-            x-bind:value="entangleable.value"
+            x-bind:value="entangleable?.value !== undefined ? JSON.stringify(entangleable.value) : ''"
             data-strata-timepicker-input
             {{ $attributes->whereStartsWith('wire:model') }}
         />

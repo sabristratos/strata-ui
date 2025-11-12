@@ -11,8 +11,6 @@
 </head>
 <body class="bg-body text-foreground">
     {{ $slot }}
-
-    @strataLightbox
     @livewireScripts
 </body>
 </html>

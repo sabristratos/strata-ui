@@ -5,13 +5,14 @@ use App\Livewire\ColorPickerDemo;
 use App\Livewire\EditorDemo;
 use App\Livewire\LightboxDemo;
 use App\Livewire\RangeSliderDemo;
+use App\Livewire\RtlShowcase;
 use App\Livewire\SidebarDemo;
 use App\Livewire\UserProfileDemo;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/test-tooltip', function () {
     return view('test-tooltip');
@@ -24,3 +25,4 @@ Route::get('/appointment-booking', AppointmentBookingDemo::class)->name('appoint
 Route::get('/profile-demo', UserProfileDemo::class)->name('profile.demo');
 Route::get('/color-picker', ColorPickerDemo::class)->name('color-picker.demo');
 Route::get('/range-slider', RangeSliderDemo::class)->name('range-slider.demo');
+Route::get('/rtl-showcase', RtlShowcase::class)->name('rtl-showcase');

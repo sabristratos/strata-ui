@@ -168,7 +168,11 @@ export default function (props = {}) {
                 }
                 const dropdown = document.getElementById(this.$id('select-dropdown'));
                 if (dropdown) {
-                    dropdown.togglePopover();
+                    if (this.open) {
+                        dropdown.hidePopover();
+                    } else {
+                        dropdown.showPopover();
+                    }
                 }
             }
         },

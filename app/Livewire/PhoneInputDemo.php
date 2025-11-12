@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class PhoneInputDemo extends Component
 {
-    public $phone = null;
+    public $phone = '+14155552671';
 
     public $countries = [
         ['code' => 'US', 'name' => 'United States', 'dialCode' => '+1', 'flag' => 'us'],
@@ -38,6 +38,12 @@ class PhoneInputDemo extends Component
         ]);
 
         session()->flash('message', 'Phone number saved: '.$this->phone);
+    }
+
+    public function resetPhone()
+    {
+        $this->phone = '+14155552671';
+        session()->forget('message');
     }
 
     public function render()

@@ -82,7 +82,7 @@ document.addEventListener('alpine:init', () => {
             id="{{ $componentId }}"
             name="{{ $name ?? '' }}"
             x-ref="input"
-            x-bind:value="entangleable.value"
+            x-bind:value="inputValue"
             data-strata-colorpicker-input
             {{ $attributes->whereStartsWith('wire:model') }}
         />
@@ -100,7 +100,7 @@ document.addEventListener('alpine:init', () => {
         />
 
         @if($clearable)
-        <div class="absolute right-10 top-1/2 -translate-y-1/2 pointer-events-auto">
+        <div class="absolute right-10 rtl:left-10 rtl:right-auto top-1/2 -translate-y-1/2 pointer-events-auto">
             <x-strata::color-picker.clear size="sm" />
         </div>
         @endif

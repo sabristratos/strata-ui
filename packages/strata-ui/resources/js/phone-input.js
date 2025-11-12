@@ -7,6 +7,13 @@ export default function (props = {}) {
             initialValue: props.initialValue || null,
             inputSelector: '[data-strata-phone-input-value]',
             afterWatch: function(newValue) {
+                console.log('[PhoneInput] afterWatch triggered', {
+                    newValue,
+                    lastSetValue: this.lastSetValue,
+                    willParse: newValue && newValue !== this.lastSetValue,
+                    activeElement: document.activeElement?.tagName
+                });
+
                 if (newValue && newValue !== this.lastSetValue) {
                     this.parseE164Value(newValue);
                 }
@@ -54,21 +61,38 @@ export default function (props = {}) {
         },
 
         init() {
+            console.log('[PhoneInput] init START', {
+                propsInitialValue: props.initialValue,
+                activeElement: document.activeElement?.tagName
+            });
+
             this.initEntangleable();
 
-            if (props.initialValue) {
-                this.parseE164Value(props.initialValue);
-            } else if (this.initialCountry) {
-                this.selectedCountry = this.initialCountry;
-                this.setSelectedFlag();
-                this.updateDialCodeAndPlaceholder();
-            } else if (this.countries.length > 0) {
-                this.selectedCountry = this.countries[0].value;
-                this.setSelectedFlag();
-                this.updateDialCodeAndPlaceholder();
-            }
+            this.$nextTick(() => {
+                const initialValue = this.entangleable.value || props.initialValue;
+                console.log('[PhoneInput] init $nextTick', {
+                    entangleableValue: this.entangleable.value,
+                    propsInitialValue: props.initialValue,
+                    finalInitialValue: initialValue,
+                    activeElement: document.activeElement?.tagName
+                });
+
+                if (initialValue) {
+                    this.parseE164Value(initialValue);
+                } else if (this.initialCountry) {
+                    this.selectedCountry = this.initialCountry;
+                    this.setSelectedFlag();
+                    this.updateDialCodeAndPlaceholder();
+                } else if (this.countries.length > 0) {
+                    this.selectedCountry = this.countries[0].value;
+                    this.setSelectedFlag();
+                    this.updateDialCodeAndPlaceholder();
+                }
+            });
 
             this.disabled = this.$el?.dataset?.disabled === 'true';
+
+            console.log('[PhoneInput] init END');
 
             this._countryObserver = new MutationObserver((mutations) => {
                 for (const mutation of mutations) {
@@ -122,10 +146,17 @@ export default function (props = {}) {
         },
 
         parseE164Value(e164Value) {
+            console.log('[PhoneInput] parseE164Value START', {
+                e164Value,
+                currentDisplayNumber: this.displayNumber,
+                activeElement: document.activeElement?.tagName
+            });
+
             if (!e164Value || e164Value.trim() === '') {
                 this.displayNumber = '';
                 this.validationMessage = '';
                 this.isValid = false;
+                console.log('[PhoneInput] parseE164Value - cleared (empty input)');
                 return;
             }
 
@@ -143,11 +174,19 @@ export default function (props = {}) {
                         this.displayNumber = phoneNumber.nationalNumber;
                         this.updatePlaceholder();
                         this.validateNumber();
+
+                        console.log('[PhoneInput] parseE164Value - parsed successfully', {
+                            newDisplayNumber: this.displayNumber,
+                            country: this.selectedCountry,
+                            activeElement: document.activeElement?.tagName
+                        });
                     }
                 }
             } catch (error) {
-                console.warn('Failed to parse phone number:', error);
+                console.warn('[PhoneInput] Failed to parse phone number:', error);
             }
+
+            console.log('[PhoneInput] parseE164Value END');
         },
 
         setSelectedFlag() {
@@ -185,6 +224,13 @@ export default function (props = {}) {
         },
 
         handleNumberInput(event) {
+            console.log('[PhoneInput] handleNumberInput START', {
+                inputValue: event.target.value,
+                displayNumber: this.displayNumber,
+                activeElement: document.activeElement?.tagName,
+                hasWireIgnore: event.target.hasAttribute('wire:ignore')
+            });
+
             const inputValue = event.target.value;
 
             if (inputValue.startsWith('+')) {
@@ -194,7 +240,19 @@ export default function (props = {}) {
             }
 
             this.validateNumber();
-            this.updateE164Value();
+
+            if (this._syncTimeout) {
+                clearTimeout(this._syncTimeout);
+            }
+
+            this._syncTimeout = setTimeout(() => {
+                this.updateE164Value();
+            }, 300);
+
+            console.log('[PhoneInput] handleNumberInput END', {
+                displayNumber: this.displayNumber,
+                activeElement: document.activeElement?.tagName
+            });
         },
 
         detectCountryFromNumber(value) {
@@ -264,9 +322,16 @@ export default function (props = {}) {
         },
 
         updateE164Value() {
+            console.log('[PhoneInput] updateE164Value START', {
+                displayNumber: this.displayNumber,
+                selectedCountry: this.selectedCountry,
+                activeElement: document.activeElement?.tagName
+            });
+
             if (!this.displayNumber || this.displayNumber.trim() === '') {
                 this.lastSetValue = null;
                 this.entangleable.set(null);
+                console.log('[PhoneInput] updateE164Value - cleared (empty)');
                 return;
             }
 
@@ -326,6 +391,11 @@ export default function (props = {}) {
                     this.entangleable.set(fullNumber);
                 }
             }
+
+            console.log('[PhoneInput] updateE164Value END', {
+                lastSetValue: this.lastSetValue,
+                activeElement: document.activeElement?.tagName
+            });
         },
 
         handleKeydown(event) {
@@ -407,7 +477,14 @@ export default function (props = {}) {
             this.dialCode = country.dialCode;
             this.updatePlaceholder();
             this.reformatNumber();
-            this.validateNumber();
+
+            if (this.displayNumber && this.displayNumber.trim() !== '') {
+                this.validateNumber();
+            } else {
+                this.validationMessage = '';
+                this.isValid = false;
+            }
+
             this.updateE164Value();
             this.closeCountryDropdown();
         },

@@ -93,6 +93,10 @@ export default class Entangleable {
         return this.value;
     }
 
+    toJSON() {
+        return this.value;
+    }
+
     /**
      * Notify all registered watchers of a value change
      *

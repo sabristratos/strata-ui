@@ -114,6 +114,7 @@ $disabledClasses = $disabled || $readonly ? 'opacity-50 cursor-not-allowed' : 'c
 @endphp
 
 <div
+    wire:ignore
     x-data="window.strataPhoneInput({
         countries: {{ json_encode($countryOptions) }},
         initialValue: {{ json_encode($value) }},
@@ -136,7 +137,7 @@ $disabledClasses = $disabled || $readonly ? 'opacity-50 cursor-not-allowed' : 'c
             id="{{ $componentId }}"
             name="{{ $name ?? '' }}"
             x-ref="hiddenInput"
-            x-bind:value="entangleable.value"
+            x-bind:value="entangleable?.value !== undefined ? JSON.stringify(entangleable.value) : ''"
             data-strata-phone-input-value
             {{ $attributes->whereStartsWith('wire:model') }}
         />
@@ -158,7 +159,7 @@ $disabledClasses = $disabled || $readonly ? 'opacity-50 cursor-not-allowed' : 'c
     >
         <x-slot:prefixSlot>
             <div
-                class="relative border-r border-border/50 pr-2 mr-2"
+                class="relative border-inline-end border-border/50 pe-2 me-2"
                 x-ref="flagTriggerWrapper"
                 :style="`anchor-name: --country-${$id('country-dropdown')};`"
             >
@@ -190,6 +191,7 @@ $disabledClasses = $disabled || $readonly ? 'opacity-50 cursor-not-allowed' : 'c
         :id="$id('country-dropdown')"
         x-ref="countryDropdown"
         popover="auto"
+        wire:ignore.self
         @toggle="countryDropdownOpen = $event.newState === 'open'"
         @keydown="handleDropdownKeydown"
         :style="`{{ $positioningStyle }} position-anchor: --country-${$id('country-dropdown')};`"

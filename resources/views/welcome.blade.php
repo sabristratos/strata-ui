@@ -28,6 +28,12 @@
             </button>
         </div>
 
+        <x-strata::card >
+            <livewire:color-picker-demo />
+            <livewire:select-demo />
+            <livewire:phone-input-demo />
+        </x-strata::card>
+
         {{-- Toast Demo --}}
         <div class="space-y-6">
             <div>
@@ -216,7 +222,7 @@
             {{-- Basic Carousel --}}
             <div class="space-y-4">
                 <h3 class="text-lg font-semibold">Basic Carousel</h3>
-                <x-strata::carousel>
+                <x-strata::carousel id="basic-carousel">
                     <x-strata::carousel.slide>
                         <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg p-12 text-white text-center min-h-[300px] flex items-center justify-center">
                             <div>
@@ -247,7 +253,7 @@
             {{-- Hero Carousel with Loop & Autoplay --}}
             <div class="space-y-4">
                 <h3 class="text-lg font-semibold">Hero Carousel (Loop + Autoplay)</h3>
-                <x-strata::carousel loop autoplay :autoplay-delay="4000" size="lg">
+                <x-strata::carousel id="hero-carousel" loop autoplay :autoplay-delay="4000" size="lg">
                     <x-strata::carousel.slide>
                         <div class="relative bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-lg p-16 text-white min-h-[400px] flex items-center justify-center">
                             <div class="text-center max-w-2xl">
@@ -287,7 +293,7 @@
             {{-- Product Cards Carousel --}}
             <div class="space-y-4">
                 <h3 class="text-lg font-semibold">Product Gallery</h3>
-                <x-strata::carousel size="sm">
+                <x-strata::carousel id="product-gallery-carousel" size="sm">
                     <x-strata::carousel.slide>
                         <div class="bg-card border border-border rounded-lg p-6 min-h-[280px] flex flex-col">
                             <div class="bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-lg h-40 mb-4"></div>
@@ -347,7 +353,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold">Extra Small (xs)</h3>
-                    <x-strata::carousel size="xs">
+                    <x-strata::carousel id="xs-carousel" size="xs">
                         <x-strata::carousel.slide>
                             <div class="bg-gradient-to-br from-violet-400 to-violet-600 rounded-lg p-8 text-white text-center min-h-[200px] flex items-center justify-center">
                                 <p class="font-semibold">XS Slide 1</p>
@@ -363,7 +369,7 @@
 
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold">Extra Large (xl)</h3>
-                    <x-strata::carousel size="xl">
+                    <x-strata::carousel id="xl-carousel" size="xl">
                         <x-strata::carousel.slide>
                             <div class="bg-gradient-to-br from-sky-400 to-sky-600 rounded-lg p-8 text-white text-center min-h-[200px] flex items-center justify-center">
                                 <p class="font-semibold">XL Slide 1</p>
@@ -382,7 +388,7 @@
             <div class="space-y-4">
                 <h3 class="text-lg font-semibold">Without Navigation Controls</h3>
                 <p class="text-sm text-muted">Drag or swipe only</p>
-                <x-strata::carousel :arrows="false" :dots="false">
+                <x-strata::carousel id="no-navigation-carousel" :arrows="false" :dots="false">
                     <x-strata::carousel.slide>
                         <div class="bg-gradient-to-br from-red-500 to-red-700 rounded-lg p-12 text-white text-center min-h-[250px] flex items-center justify-center">
                             <p class="text-xl font-semibold">Drag me!</p>
@@ -405,7 +411,7 @@
             <div class="space-y-4">
                 <h3 class="text-lg font-semibold">Start Index (Starts at Slide 3)</h3>
                 <p class="text-sm text-muted">Carousel initialized to start at a specific slide</p>
-                <x-strata::carousel :start-index="2">
+                <x-strata::carousel id="start-index-carousel" :start-index="2">
                     <x-strata::carousel.slide>
                         <div class="bg-gradient-to-br from-slate-400 to-slate-600 rounded-lg p-12 text-white text-center min-h-[250px] flex items-center justify-center">
                             <p class="text-xl font-semibold">Slide 1 (Not visible on load)</p>
@@ -434,7 +440,7 @@
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold">Stop on Last Slide</h3>
                     <p class="text-sm text-muted">Autoplay stops at the last slide instead of looping</p>
-                    <x-strata::carousel autoplay :autoplay-delay="2000" :stop-on-last-snap="true">
+                    <x-strata::carousel id="stop-on-last-carousel" autoplay :autoplay-delay="2000" :stop-on-last-snap="true">
                         <x-strata::carousel.slide>
                             <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg p-8 text-white text-center min-h-[200px] flex items-center justify-center">
                                 <p class="font-semibold">Slide 1</p>
@@ -456,7 +462,7 @@
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold">Continue After Interaction</h3>
                     <p class="text-sm text-muted">Autoplay continues even after user interaction</p>
-                    <x-strata::carousel autoplay :autoplay-delay="2000" :stop-on-interaction="false">
+                    <x-strata::carousel id="continue-interaction-carousel" autoplay :autoplay-delay="2000" :stop-on-interaction="false">
                         <x-strata::carousel.slide>
                             <div class="bg-gradient-to-br from-red-400 to-red-600 rounded-lg p-8 text-white text-center min-h-[200px] flex items-center justify-center">
                                 <p class="font-semibold">Slide 1</p>
@@ -480,7 +486,7 @@
             <div class="space-y-4">
                 <h3 class="text-lg font-semibold">Jump Mode (Instant Transitions)</h3>
                 <p class="text-sm text-muted">No animations - instant slide changes</p>
-                <x-strata::carousel :jump="true">
+                <x-strata::carousel id="jump-mode-carousel" :jump="true">
                     <x-strata::carousel.slide>
                         <div class="bg-gradient-to-br from-cyan-500 to-cyan-700 rounded-lg p-12 text-white text-center min-h-[250px] flex items-center justify-center">
                             <p class="text-xl font-semibold">Instant Jump 1</p>
@@ -503,7 +509,7 @@
             <div class="space-y-4" x-data="{ progress: 0 }">
                 <h3 class="text-lg font-semibold">Progress Indicator</h3>
                 <p class="text-sm text-muted">Track scroll progress with custom progress bar</p>
-                <x-strata::carousel x-on:carousel-settle="progress = $event.detail.scrollProgress">
+                <x-strata::carousel id="progress-carousel" x-on:carousel-settle="progress = $event.detail.scrollProgress">
                     <x-strata::carousel.slide>
                         <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-lg p-12 text-white text-center min-h-[250px] flex items-center justify-center">
                             <p class="text-xl font-semibold">Progress: Start (0%)</p>

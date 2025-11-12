@@ -101,7 +101,7 @@ $alpineData = $isInteractive ? "rating(" . json_encode($alpineConfig) . ")" : '{
                     <span class="relative inline-block">
                         <x-dynamic-component
                             :component="'strata::icon.' . $icon"
-                            class="{{ $sizeClasses }} text-gray-300"
+                            class="{{ $sizeClasses }} text-muted-foreground"
                             fill="none"
                         />
                         <span
@@ -154,7 +154,7 @@ $alpineData = $isInteractive ? "rating(" . json_encode($alpineConfig) . ")" : '{
                 <span
                     data-strata-star
                     data-star-index="{{ $fullStars + ($hasHalfStar ? 1 : 0) + $i }}"
-                    class="{{ $sizeClasses }} text-gray-300"
+                    class="{{ $sizeClasses }} text-muted-foreground"
                 >
                     <x-dynamic-component :component="'strata::icon.' . $icon" class="{{ $sizeClasses }}" fill="none" />
                 </span>

@@ -10,7 +10,7 @@
 use Stratos\StrataUI\Config\ComponentSizeConfig;
 
 $baseClasses = 'fixed @container p-0 border-0 bg-transparent overflow-visible';
-$backdropClasses = 'backdrop:bg-neutral-950/80 backdrop:backdrop-blur-sm backdrop:transition-all backdrop:duration-150';
+$backdropClasses = 'backdrop:bg-neutral-950/80 dark:backdrop:bg-neutral-950/95 backdrop:backdrop-blur-sm backdrop:transition-all backdrop:duration-150';
 
 if ($variant === 'flyout') {
     $flyoutSizes = ComponentSizeConfig::flyoutSizes();

@@ -91,7 +91,7 @@ $positioningStyle = $positioning['style'];
             :variant-classes="$variantClasses"
         />
 
-        <div class="absolute right-10 top-1/2 -translate-y-1/2 pointer-events-auto">
+        <div class="absolute right-10 rtl:left-10 rtl:right-auto top-1/2 -translate-y-1/2 pointer-events-auto">
             <x-strata::date-picker.clear size="sm" />
         </div>
     </div>

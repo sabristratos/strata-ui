@@ -84,7 +84,6 @@
 
 <div {{ $attributes->whereDoesntStartWith('wire:model') }}>
     <div
-        wire:ignore
         x-data="strataEditor(@js($initialValue))"
         data-strata-editor
         data-strata-field-type="editor"
@@ -98,21 +97,23 @@
             {{ $attributes->whereStartsWith('wire:model') }}
         />
 
-        <x-strata::editor.toolbar />
+        <div wire:ignore.self>
+            <x-strata::editor.toolbar />
 
-        <div
-            x-ref="editor"
-            data-strata-editor-content
-            class="text-foreground {{ $sizeClasses }}"
-        ></div>
+            <div
+                x-ref="editor"
+                data-strata-editor-content
+                class="text-foreground {{ $sizeClasses }}"
+            ></div>
 
-        <input
-            type="file"
-            x-ref="imageInput"
-            accept="image/*"
-            class="hidden"
-            data-strata-editor-image-input
-            @change="handleImageSelect($event)"
-        />
+            <input
+                type="file"
+                x-ref="imageInput"
+                accept="image/*"
+                class="hidden"
+                data-strata-editor-image-input
+                @change="handleImageSelect($event)"
+            />
+        </div>
     </div>
 </div>

@@ -31,6 +31,10 @@ export default function (props = {}) {
         isDraggingHue: false,
         isDraggingAlpha: false,
 
+        get inputValue() {
+            return this.entangleable?.value ?? '';
+        },
+
         init() {
             this.initEntangleable();
 

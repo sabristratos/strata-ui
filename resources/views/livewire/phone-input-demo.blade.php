@@ -18,7 +18,7 @@
 
             <div class="space-y-4">
                 <div>
-                    <x-strata::form.label for="phone-basic" required>Phone Number</x-strata::form.label>
+                    <x-strata::field.label for="phone-basic" required>Phone Number</x-strata::field.label>
                     <x-strata::phone-input
                         wire:model="phone"
                         id="phone-basic"
@@ -27,12 +27,15 @@
                         required
                         placeholder="Enter your phone number"
                     />
-                    <x-strata::form.hint>Enter phone number in E.164 format (e.g., +15551234567)</x-strata::form.hint>
+                    <x-strata::field.hint>Enter phone number in E.164 format (e.g., +15551234567)</x-strata::field.hint>
                 </div>
 
-                <div>
+                <div class="flex gap-2">
                     <x-strata::button wire:click="submit" variant="primary">
                         Submit
+                    </x-strata::button>
+                    <x-strata::button wire:click="resetPhone" variant="outline">
+                        Reset
                     </x-strata::button>
                 </div>
 
@@ -52,7 +55,7 @@
 
             <div class="space-y-6">
                 <div>
-                    <x-strata::form.label>Small</x-strata::form.label>
+                    <x-strata::field.label>Small</x-strata::field.label>
                     <x-strata::phone-input
                         :countries="$countries"
                         default-country="GB"
@@ -61,7 +64,7 @@
                 </div>
 
                 <div>
-                    <x-strata::form.label>Medium (Default)</x-strata::form.label>
+                    <x-strata::field.label>Medium (Default)</x-strata::field.label>
                     <x-strata::phone-input
                         :countries="$countries"
                         default-country="CA"
@@ -70,7 +73,7 @@
                 </div>
 
                 <div>
-                    <x-strata::form.label>Large</x-strata::form.label>
+                    <x-strata::field.label>Large</x-strata::field.label>
                     <x-strata::phone-input
                         :countries="$countries"
                         default-country="AU"
@@ -87,7 +90,7 @@
 
             <div class="space-y-6">
                 <div>
-                    <x-strata::form.label>Default State</x-strata::form.label>
+                    <x-strata::field.label>Default State</x-strata::field.label>
                     <x-strata::phone-input
                         :countries="$countries"
                         default-country="DE"
@@ -96,28 +99,28 @@
                 </div>
 
                 <div>
-                    <x-strata::form.label>Success State</x-strata::form.label>
+                    <x-strata::field.label>Success State</x-strata::field.label>
                     <x-strata::phone-input
                         :countries="$countries"
                         default-country="FR"
                         state="success"
                         value="+33612345678"
                     />
-                    <x-strata::form.hint>Phone number is valid!</x-strata::form.hint>
+                    <x-strata::field.hint>Phone number is valid!</x-strata::field.hint>
                 </div>
 
                 <div>
-                    <x-strata::form.label>Error State</x-strata::form.label>
+                    <x-strata::field.label>Error State</x-strata::field.label>
                     <x-strata::phone-input
                         :countries="$countries"
                         default-country="IT"
                         state="error"
                     />
-                    <x-strata::form.error>Please enter a valid phone number</x-strata::form.error>
+                    <x-strata::field.error>Please enter a valid phone number</x-strata::field.error>
                 </div>
 
                 <div>
-                    <x-strata::form.label>Warning State</x-strata::form.label>
+                    <x-strata::field.label>Warning State</x-strata::field.label>
                     <x-strata::phone-input
                         :countries="$countries"
                         default-country="ES"
@@ -134,7 +137,7 @@
 
             <div class="space-y-6">
                 <div>
-                    <x-strata::form.label>Disabled</x-strata::form.label>
+                    <x-strata::field.label>Disabled</x-strata::field.label>
                     <x-strata::phone-input
                         :countries="$countries"
                         default-country="MX"
@@ -144,7 +147,7 @@
                 </div>
 
                 <div>
-                    <x-strata::form.label>Readonly</x-strata::form.label>
+                    <x-strata::field.label>Readonly</x-strata::field.label>
                     <x-strata::phone-input
                         :countries="$countries"
                         default-country="BR"
